@@ -1,17 +1,17 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native'
 
 export const colors = {
-  bluePrimary: "#026CD2",
-  darkBlue: "#04444F",
-  green: "#62C471",
-  lightGreen: "#85FE9D",
-  danger: "#EE6055",
-  lightBlue: "#F3F9FF",
-};
+  bluePrimary: '#026CD2',
+  darkBlue: '#04444F',
+  green: '#62C471',
+  lightGreen: '#85FE9D',
+  danger: '#EE6055',
+  lightBlue: '#F3F9FF',
+}
 
 export const GlobalStyles = StyleSheet.create({
   boxShadow: {
-    shadowColor: "#3B3B3B",
+    shadowColor: '#3B3B3B',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 9,
@@ -23,7 +23,7 @@ export const GlobalStyles = StyleSheet.create({
     paddingVertical: 12,
     borderRadius: 30,
     margin: 0.5,
-    alignItems: "center",
+    alignItems: 'center',
   },
   btnSecundary: {
     backgroundColor: colors.darkBlue,
@@ -31,44 +31,44 @@ export const GlobalStyles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 30,
     margin: 0.5,
-    alignItems: "center",
+    alignItems: 'center',
   },
   textBtnSecundary: {
-    color: "white",
+    color: 'white',
     fontSize: 16,
-    textAlign: "center",
-    fontFamily: "PoppinsSemi",
+    textAlign: 'center',
+    fontFamily: '',
   },
   btnWhite: {
-    backgroundColor: "white",
+    backgroundColor: 'white',
     paddingHorizontal: 25,
     paddingVertical: 12,
     borderRadius: 30,
     marginVertical: 16,
-    alignItems: "center",
+    alignItems: 'center',
   },
   textBtnW: {
     color: colors.darkBlue,
-    fontWeight: "500",
+    fontWeight: '500',
     fontSize: 16,
-    textAlign: "center",
-    fontFamily: "PoppinsSemi",
+    textAlign: 'center',
+    fontFamily: '',
   },
   btnOutline: {
-    backgroundColor: "white",
+    backgroundColor: 'white',
     paddingHorizontal: 25,
     paddingVertical: 12,
     borderRadius: 30,
     margin: 0.5,
-    alignItems: "center",
+    alignItems: 'center',
     borderWidth: 1,
     borderColor: colors.bluePrimary,
   },
   textBtnOutline: {
     color: colors.bluePrimary,
-    fontWeight: "500",
+    fontWeight: '500',
     fontSize: 16,
-    textAlign: "center",
-    fontFamily: "PoppinsSemi",
+    textAlign: 'center',
+    fontFamily: '',
   },
-});
+})
