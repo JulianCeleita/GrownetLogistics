@@ -7,12 +7,13 @@ import Svg, {
   ClipPath,
   Image as SvgImage,
 } from 'react-native-svg'
+import { LinearGradient } from 'expo-linear-gradient'
 
 const Packing = () => {
-  const radius = 35
+  const radius = 40
   const strokeWidth = 10
   const circumference = 2 * Math.PI * radius
-  const strokeDashoffset = circumference - (70 / 100) * circumference
+  const strokeDashoffset = circumference - (60 / 100) * circumference
 
   return (
     <View>
@@ -41,17 +42,30 @@ const Packing = () => {
             </Defs>
             <SvgImage
               href={require('../img/packing.png')}
-              width={radius * 2}
-              height={radius * 2}
+              width={45}
+              height={30}
               preserveAspectRatio="xMidYMid slice"
               clipPath="url(#clipCard)"
+              x={18}
+              y={25}
+              r={20}
             />
             <Circle
               cx={radius}
               cy={radius}
               r={radius - strokeWidth / 2}
               fill="transparent"
-              stroke="#4285F4"
+              stroke="#8FDE9B"
+              strokeWidth={strokeWidth}
+              strokeDasharray={`${circumference} ${circumference}`}
+              strokeDashoffset={0}
+            />
+            <Circle
+              cx={radius}
+              cy={radius}
+              r={radius - strokeWidth / 2}
+              fill="transparent"
+              stroke="#62C471"
               strokeWidth={strokeWidth}
               strokeDasharray={`${circumference} ${circumference}`}
               strokeDashoffset={strokeDashoffset}
@@ -59,7 +73,7 @@ const Packing = () => {
           </Svg>
           <View>
             <Text style={DeliveryStyles.tittleRoute}>Ruta 1</Text>
-            <Text>Paula Vanegas</Text>
+            <Text style={DeliveryStyles.textRoute}>Paula Vanegas</Text>
           </View>
         </View>
         <View style={DeliveryStyles.card}>
@@ -75,17 +89,30 @@ const Packing = () => {
             </Defs>
             <SvgImage
               href={require('../img/packing.png')}
-              width={radius * 2}
-              height={radius * 2}
+              width={45}
+              height={30}
               preserveAspectRatio="xMidYMid slice"
               clipPath="url(#clipCard)"
+              x={18}
+              y={25}
+              r={20}
             />
             <Circle
               cx={radius}
               cy={radius}
               r={radius - strokeWidth / 2}
               fill="transparent"
-              stroke="#4285F4"
+              stroke="#8FDE9B"
+              strokeWidth={strokeWidth}
+              strokeDasharray={`${circumference} ${circumference}`}
+              strokeDashoffset={0}
+            />
+            <Circle
+              cx={radius}
+              cy={radius}
+              r={radius - strokeWidth / 2}
+              fill="transparent"
+              stroke="#62C471"
               strokeWidth={strokeWidth}
               strokeDasharray={`${circumference} ${circumference}`}
               strokeDashoffset={strokeDashoffset}
@@ -93,7 +120,7 @@ const Packing = () => {
           </Svg>
           <View>
             <Text style={DeliveryStyles.tittleRoute}>Ruta 1</Text>
-            <Text>Julian Celeita</Text>
+            <Text style={DeliveryStyles.textRoute}>Paula Vanegas</Text>
           </View>
         </View>
         <View style={DeliveryStyles.card}>
@@ -109,17 +136,30 @@ const Packing = () => {
             </Defs>
             <SvgImage
               href={require('../img/packing.png')}
-              width={radius * 2}
-              height={radius * 2}
+              width={45}
+              height={30}
               preserveAspectRatio="xMidYMid slice"
               clipPath="url(#clipCard)"
+              x={18}
+              y={25}
+              r={20}
             />
             <Circle
               cx={radius}
               cy={radius}
               r={radius - strokeWidth / 2}
               fill="transparent"
-              stroke="#4285F4"
+              stroke="#8FDE9B"
+              strokeWidth={strokeWidth}
+              strokeDasharray={`${circumference} ${circumference}`}
+              strokeDashoffset={0}
+            />
+            <Circle
+              cx={radius}
+              cy={radius}
+              r={radius - strokeWidth / 2}
+              fill="transparent"
+              stroke="#62C471"
               strokeWidth={strokeWidth}
               strokeDasharray={`${circumference} ${circumference}`}
               strokeDashoffset={strokeDashoffset}
@@ -127,7 +167,7 @@ const Packing = () => {
           </Svg>
           <View>
             <Text style={DeliveryStyles.tittleRoute}>Ruta 1</Text>
-            <Text>Heiner Arevalo</Text>
+            <Text style={DeliveryStyles.textRoute}>Paula Vanegas</Text>
           </View>
         </View>
       </View>

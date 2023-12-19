@@ -10,19 +10,19 @@ export const DeliveryStyles = StyleSheet.create({
   },
   tittle: {
     backgroundColor: colors.bluePrimary,
-    padding: 10,
+    paddingHorizontal: 20,
+    paddingVertical: 15,
     borderRadius: 15,
     fontWeight: 500,
     flexDirection: 'row',
-    width: 300,
     marginBottom: 20,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 30,
+    marginTop: 40,
     marginBottom: -12,
   },
   textTittle: {
-    fontSize: 20,
+    fontSize: 25,
     color: 'white',
   },
   imageTittle: {
@@ -32,10 +32,16 @@ export const DeliveryStyles = StyleSheet.create({
   },
   tittleRoute: {
     backgroundColor: colors.bluePrimary,
-    padding: 10,
-    borderRadius: 15,
+    paddingHorizontal: 1,
+    paddingVertical: 5,
+    borderRadius: 10,
     color: 'white',
     textAlign: 'center',
+    fontSize: 20,
+    width: 90,
+  },
+  textRoute: {
+    marginTop: 5,
     fontSize: 17,
   },
   delivery: {
@@ -48,8 +54,9 @@ export const DeliveryStyles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     width: '100%',
+    marginTop: 10,
   },
   circle: {
-    marginRight: 15,
+    marginRight: 50,
   },
 })
