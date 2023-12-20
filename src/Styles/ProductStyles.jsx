@@ -10,6 +10,7 @@ export const ProductStyles = StyleSheet.create({
   card: {
     width: 320,
     backgroundColor: 'white',
+    margin: 1,
     borderRadius: 15,
     marginTop: 15,
     flexDirection: 'row',
@@ -39,6 +40,18 @@ export const ProductStyles = StyleSheet.create({
     alignItems: 'center',
     paddingTop: 25,
   },
+  ventana: {
+    marginTop: 15,
+    marginLeft: 10,
+    width: 70,
+    height: '85%',
+    textAlign: 'center',
+    backgroundColor: 'orange',
+    padding: 10,
+    borderRadius: 15,
+    paddingTop: 25,
+    paddingLeft: 20,
+  },
 })
 
 export const SearchStyles = StyleSheet.create({
@@ -47,9 +60,9 @@ export const SearchStyles = StyleSheet.create({
     flexDirection: 'row',
     marginHorizontal: 30,
     height: 50,
-    //borderColor: colors.gray,
-    //borderWidth: 1,
-    borderRadius: 30,
+    borderColor: colors.bluePrimary,
+    borderWidth: 1,
+    borderRadius: 40,
     marginTop: 20,
   },
 
