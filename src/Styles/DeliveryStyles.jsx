@@ -3,15 +3,14 @@ import { colors } from './GlobalStyles'
 
 export const DeliveryStyles = StyleSheet.create({
   packing: {
-    backgroundColor: '#00478C',
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
   },
   tittle: {
     backgroundColor: colors.bluePrimary,
-    paddingHorizontal: 20,
-    paddingVertical: 15,
+    paddingHorizontal: 30,
+    paddingVertical: 20,
     borderRadius: 15,
     fontWeight: 500,
     flexDirection: 'row',
@@ -24,11 +23,17 @@ export const DeliveryStyles = StyleSheet.create({
   textTittle: {
     fontSize: 25,
     color: 'white',
+    fontFamily: 'PoppinsBold',
   },
   imageTittle: {
+    width: 65,
+    height: 47,
+    marginRight: 20,
+  },
+  imageTittlePacking: {
     width: 60,
-    height: 40,
-    marginRight: 15,
+    height: 52,
+    marginRight: 20,
   },
   tittleRoute: {
     backgroundColor: colors.bluePrimary,
@@ -39,10 +44,12 @@ export const DeliveryStyles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 20,
     width: 90,
+    fontFamily: 'PoppinsSemi',
   },
   textRoute: {
     marginTop: 5,
     fontSize: 17,
+    fontFamily: 'PoppinsRegular',
   },
   delivery: {
     flexDirection: 'column',
