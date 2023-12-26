@@ -6,7 +6,6 @@ import { GlobalStyles, colors } from '../Styles/GlobalStyles'
 import { ProductStyles } from '../Styles/ProductStyles'
 import ProductSearcher from '../components/ProductSearch'
 //import Swipelist from 'react-native-swipeable-list-view'
-import { PanGestureHandler, State } from 'react-native-gesture-handler'
 
 function Products() {
   const [isPressed, setPressed] = useState(false)
@@ -36,9 +35,6 @@ function Products() {
   return (
     <SafeAreaView style={ProductStyles.products}>
       <ProductSearcher />
-      <PanGestureHandler
-        onGestureEvent={handleGestureEvent}
-      ></PanGestureHandler>
       <TouchableOpacity onPress={handlePress} style={ProductStyles.card}>
         <View style={ProductStyles.productTittle}>
           <Text style={ProductStyles.tittleCard}>Orange Juice</Text>
