@@ -8,7 +8,7 @@ import { GlobalStyles } from '../Styles/GlobalStyles'
 import { useNavigation } from '@react-navigation/native'
 import CircleProgress from '../components/CircleProgress'
 
-const Packing = () => {
+function ShortsVan() {
   const navigation = useNavigation()
   return (
     <SafeAreaView>
@@ -24,7 +24,7 @@ const Packing = () => {
             source={require('../img/packingBlanco.png')}
             alt="Loading"
           />
-          <Text style={DeliveryStyles.textTittle}>Packing</Text>
+          <Text style={DeliveryStyles.textTittle}>Shorts Van</Text>
         </View>
       </LinearGradient>
 
@@ -41,4 +41,4 @@ const Packing = () => {
   )
 }
 
-export default Packing
+export default ShortsVan
