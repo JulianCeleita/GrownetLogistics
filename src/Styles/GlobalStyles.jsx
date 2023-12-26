@@ -7,6 +7,7 @@ export const colors = {
   lightGreen: '#85FE9D',
   danger: '#EE6055',
   lightBlue: '#F3F9FF',
+  gray: '#969696',
 }
 
 export const GlobalStyles = StyleSheet.create({
@@ -37,7 +38,7 @@ export const GlobalStyles = StyleSheet.create({
     color: 'white',
     fontSize: 16,
     textAlign: 'center',
-    fontFamily: '',
+    fontFamily: 'PoppinsSemi',
   },
   btnWhite: {
     backgroundColor: 'white',
@@ -52,7 +53,7 @@ export const GlobalStyles = StyleSheet.create({
     fontWeight: '500',
     fontSize: 16,
     textAlign: 'center',
-    fontFamily: '',
+    fontFamily: 'PoppinsSemi',
   },
   btnOutline: {
     backgroundColor: 'white',
@@ -69,6 +70,6 @@ export const GlobalStyles = StyleSheet.create({
     fontWeight: '500',
     fontSize: 16,
     textAlign: 'center',
-    fontFamily: '',
+    fontFamily: 'PoppinsSemi',
   },
 })

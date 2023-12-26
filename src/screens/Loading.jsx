@@ -1,12 +1,44 @@
-import React from "react";
-import { View, Text } from "react-native";
+import React from 'react'
+import { View, Text, Image } from 'react-native'
+import { DeliveryStyles } from '../Styles/DeliveryStyles'
+import { LinearGradient } from 'expo-linear-gradient'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import { TouchableOpacity } from 'react-native'
+import { GlobalStyles } from '../Styles/GlobalStyles'
+import CircleProgress from '../components/CircleProgress'
+import { useNavigation } from '@react-navigation/native'
 
 const Loading = () => {
+  const navigation = useNavigation()
   return (
-    <View>
-      <Text>Loading</Text>
-    </View>
-  );
-};
+    <SafeAreaView>
+      <LinearGradient
+        colors={['#00478C', '#026CD2']}
+        start={{ x: 0, y: 0.5 }}
+        end={{ x: 1, y: 0.5 }}
+        style={DeliveryStyles.packing}
+      >
+        <View style={[DeliveryStyles.tittle, GlobalStyles.boxShadow]}>
+          <Image
+            style={DeliveryStyles.imageTittle}
+            source={require('../img/loadingBlanco.png')}
+            alt="Loading"
+          />
+          <Text style={DeliveryStyles.textTittle}>Loading</Text>
+        </View>
+      </LinearGradient>
 
-export default Loading;
+      <View style={DeliveryStyles.delivery}>
+        <TouchableOpacity
+          style={DeliveryStyles.card}
+          onPress={() => navigation.navigate('Products')}
+        >
+          <CircleProgress />
+          <Text style={DeliveryStyles.tittleRoute}>Ruta 1</Text>
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
+  )
+}
+
+export default Loading
