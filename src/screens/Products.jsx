@@ -19,19 +19,11 @@ function Products() {
   const [isPressed, setPressed] = useState(false)
   const [right, setRight] = useState(false)
   const [left, setLeft] = useState(false)
-  const [translateX] = useState(new Animated.Value(0))
   const handlePress = () => {
     setPressed(!isPressed)
     setLeft(false)
     setRight(false)
   }
-  const data = [
-    { name: 'Tomate' },
-    { name: 'Apple' },
-    { name: 'Avocado' },
-    { name: 'Banana' },
-  ]
-
   const handleGestureEvent = (event) => {
     const { translationX } = event.nativeEvent
     if (translationX > 0) {
@@ -50,10 +42,11 @@ function Products() {
   return (
     <SafeAreaView style={ProductStyles.products}>
       <ProductSearcher />
+      <Text>Bulk</Text>
       <TouchableOpacity onPress={handlePress}>
         <PanGestureHandler onGestureEvent={handleGestureEvent}>
           <View>
-            <View style={ProductStyles.card}>
+            <View style={[ProductStyles.card, GlobalStyles.boxShadow]}>
               <View style={ProductStyles.productTittle}>
                 <Text style={ProductStyles.tittleCard}>Orange Juice</Text>
                 <Text style={ProductStyles.textCard}>15 Kg - Box </Text>
@@ -89,7 +82,11 @@ function Products() {
             </View>
             {left ? (
               <View
-                style={[ProductStyles.details, { borderColor: colors.orange }]}
+                style={[
+                  ProductStyles.details,
+                  GlobalStyles.boxShadow,
+                  { borderColor: colors.orange },
+                ]}
               >
                 <View style={ProductStyles.information}>
                   <View>
@@ -120,7 +117,11 @@ function Products() {
             ) : null}
             {right ? (
               <View
-                style={[ProductStyles.details, { borderColor: colors.danger }]}
+                style={[
+                  ProductStyles.details,
+                  GlobalStyles.boxShadow,
+                  { borderColor: colors.danger },
+                ]}
               >
                 <View style={ProductStyles.information}>
                   <View>
