@@ -56,9 +56,7 @@ const CustomerDayPacking = () => {
               <Text
                 style={{
                   ...GlobalStyles.textBtnSecundary,
-                  fontSize: 24,
-                  fontFamily: 'PoppinsSemi',
-                  color: colors.bluePrimary,
+                  ...CustomerDayStyles.tittleText
                 }}
               >
                 Customer Day
@@ -74,16 +72,13 @@ const CustomerDayPacking = () => {
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <View
                 style={{
-                  backgroundColor: 'white',
-                  borderRadius: 30,
-                  padding: 8,
-                  marginRight: 10,
+                  ...CustomerDayStyles.searchIcon,
                 }}
               >
                 <Ionicons
                   name={isIOS ? 'ios-search' : 'md-search'}
                   size={24}
-                  color="#00478C"
+                  color="04444f"
                 />
               </View>
               <Text
@@ -91,7 +86,7 @@ const CustomerDayPacking = () => {
                   ...GlobalStyles.textBtnSecundary,
                   fontSize: 18,
                   fontFamily: 'PoppinsRegular',
-                  color: colors.bluePrimary,
+                  color: "#04444f",
                 }}
               >
                 Búsqueda
@@ -99,7 +94,7 @@ const CustomerDayPacking = () => {
             </View>
           </View>
 
-          <View style={{ width: '80%' }}>
+          <View style={{ width: '85%' }}>
             <TouchableOpacity
               style={{
                 ...CustomerDayStyles.card,
@@ -109,10 +104,7 @@ const CustomerDayPacking = () => {
             >
               <View
                 style={{
-                  width: '20%',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  margin: 10,
+                  ...CustomerDayStyles.cardsLayout
                 }}
               >
                 <Svg
@@ -155,7 +147,7 @@ const CustomerDayPacking = () => {
               </View>
               <View
                 style={{
-                  width: '110%',
+                  width: '100%',
                   flexDirection: 'column',
                   justifyContent: 'center',
                   alignItems: 'flex-end',
