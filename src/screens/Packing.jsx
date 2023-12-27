@@ -31,7 +31,7 @@ const Packing = () => {
       <View style={DeliveryStyles.delivery}>
         <TouchableOpacity
           style={DeliveryStyles.card}
-          onPress={() => navigation.navigate('Products')}
+          onPress={() => navigation.navigate('CustomerDayPackingScreen')}
         >
           <CircleProgress />
           <Text style={DeliveryStyles.tittleRoute}>Ruta 1</Text>

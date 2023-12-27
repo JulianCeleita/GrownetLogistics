@@ -23,6 +23,7 @@ import {
 import ShortsBulk from '../screens/ShortsBulk'
 import ShortsVan from '../screens/ShortsVan'
 import Products from '../screens/Products'
+import CustomerDayPacking from '../screens/CustomerDayPacking'
 
 const Tab = createBottomTabNavigator()
 const Stack = createNativeStackNavigator()
@@ -38,6 +39,7 @@ function MyStacks() {
       <Stack.Screen name="Products" component={Products} />
       <Stack.Screen name="ShortsVanScreen" component={ShortsVan} />
       <Stack.Screen name="ShortsBulkScreen" component={ShortsBulk} />
+      <Stack.Screen name="CustomerDayPackingScreen" component={CustomerDayPacking} />
     </Stack.Navigator>
   )
 }
