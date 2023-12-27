@@ -52,6 +52,31 @@ export const ProductStyles = StyleSheet.create({
     paddingTop: 25,
     paddingLeft: 20,
   },
+  //Detalles
+  details: {
+    backgroundColor: 'white',
+    borderRadius: 15,
+    padding: 10,
+    alignItems: 'center',
+    borderRightWidth: 8,
+  },
+  information: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  inputsCard: {
+    width: '60%',
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: colors.gray,
+    borderRadius: 8,
+    height: 40,
+    marginLeft: 10,
+    paddingHorizontal: 15,
+    fontFamily: 'PoppinsRegular',
+  },
 })
 
 export const SearchStyles = StyleSheet.create({
