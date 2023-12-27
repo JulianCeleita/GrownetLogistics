@@ -25,7 +25,7 @@ const CustomerDayPacking = () => {
 
   return (
     <LinearGradient
-    colors={['#001529', '#3489d9']}
+    colors={['#00478C', '#026CD2']}
       style={{ flex: 1 }}
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 1 }}
