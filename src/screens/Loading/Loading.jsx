@@ -1,14 +1,14 @@
 import React from 'react'
 import { View, Text, Image } from 'react-native'
-import { DeliveryStyles } from '../Styles/DeliveryStyles'
+import { DeliveryStyles } from '../../Styles/DeliveryStyles'
 import { LinearGradient } from 'expo-linear-gradient'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { TouchableOpacity } from 'react-native'
-import { GlobalStyles } from '../Styles/GlobalStyles'
+import { GlobalStyles } from '../../Styles/GlobalStyles'
+import CircleProgress from '../../components/CircleProgress'
 import { useNavigation } from '@react-navigation/native'
-import CircleProgress from '../components/CircleProgress'
 
-function ShortsVan() {
+const Loading = () => {
   const navigation = useNavigation()
   return (
     <SafeAreaView>
@@ -20,18 +20,18 @@ function ShortsVan() {
       >
         <View style={[DeliveryStyles.tittle, GlobalStyles.boxShadow]}>
           <Image
-            style={DeliveryStyles.imageTittlePacking}
-            source={require('../img/packingBlanco.png')}
+            style={DeliveryStyles.imageTittle}
+            source={require('../../img/loadingBlanco.png')}
             alt="Loading"
           />
-          <Text style={DeliveryStyles.textTittle}>Shorts Van</Text>
+          <Text style={DeliveryStyles.textTittle}>Loading</Text>
         </View>
       </LinearGradient>
 
       <View style={DeliveryStyles.delivery}>
         <TouchableOpacity
           style={DeliveryStyles.card}
-          onPress={() => navigation.navigate('Products')}
+          onPress={() => navigation.navigate('CustomerDayLoading')}
         >
           <CircleProgress />
           <Text style={DeliveryStyles.tittleRoute}>Ruta 1</Text>
@@ -41,4 +41,4 @@ function ShortsVan() {
   )
 }
 
-export default ShortsVan
+export default Loading

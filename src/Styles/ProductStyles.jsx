@@ -3,7 +3,7 @@ import { colors } from './GlobalStyles'
 
 export const ProductStyles = StyleSheet.create({
   products: {
-    backgroundColor: colors.bluePrimary,
+    backgroundColor: 'white',
     height: '100%',
     alignItems: 'center',
   },
@@ -12,10 +12,16 @@ export const ProductStyles = StyleSheet.create({
     backgroundColor: 'white',
     margin: 1,
     borderRadius: 15,
-    marginTop: 15,
+    marginTop: 10,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+  },
+  category: {
+    fontFamily: 'PoppinsSemi',
+    marginTop: 10,
+    fontSize: 18,
+    color: colors.bluePrimary,
   },
   productTittle: {
     paddingVertical: 10,
@@ -86,9 +92,10 @@ export const SearchStyles = StyleSheet.create({
     marginHorizontal: 30,
     height: 50,
     borderColor: colors.bluePrimary,
-    borderWidth: 1,
+    //borderWidth: 1,
     borderRadius: 40,
     marginTop: 20,
+    backgroundColor: '#f2f2f2',
   },
 
   BgInput: {

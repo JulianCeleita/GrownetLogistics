@@ -11,8 +11,6 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { GlobalStyles, colors } from '../Styles/GlobalStyles'
 import { ProductStyles } from '../Styles/ProductStyles'
-import ProductSearcher from '../components/ProductSearch'
-//import Swipelist from 'react-native-swipeable-list-view'
 import { PanGestureHandler, State } from 'react-native-gesture-handler'
 
 function Products() {
@@ -40,9 +38,8 @@ function Products() {
   }
 
   return (
-    <SafeAreaView style={ProductStyles.products}>
-      <ProductSearcher />
-      <Text>Bulk</Text>
+    <View>
+      <Text style={ProductStyles.category}>Bulk</Text>
       <TouchableOpacity onPress={handlePress}>
         <PanGestureHandler onGestureEvent={handleGestureEvent}>
           <View>
@@ -153,7 +150,7 @@ function Products() {
           </View>
         </PanGestureHandler>
       </TouchableOpacity>
-    </SafeAreaView>
+    </View>
   )
 }
 
