@@ -35,7 +35,10 @@ function CustomerDayLoading() {
         colors={['#00478C', '#026CD2']}
         start={{ x: 0, y: 0.5 }}
         end={{ x: 1, y: 0.5 }}
-        style={DeliveryStyles.packing}
+        style={[
+          DeliveryStyles.packing,
+          Platform.OS === 'ios' && { paddingTop: 30 }, // Ajuste para iOS
+        ]}
       >
         <View style={[DeliveryStyles.tittle, GlobalStyles.boxShadow]}>
           <Text style={DeliveryStyles.textTittle}>Customer day</Text>
