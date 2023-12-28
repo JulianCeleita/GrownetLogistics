@@ -28,28 +28,53 @@ import ProductsVan from '../screens/ShortsVan/ProductVan'
 const Tab = createBottomTabNavigator()
 const Stack = createNativeStackNavigator()
 
-function MyStacks() {
+function StackPacking() {
   return (
     <Stack.Navigator
       initialRouteName="PackingScreen"
       screenOptions={{ headerShown: false }}
     >
       <Stack.Screen name="PackingScreen" component={Packing} />
-      <Stack.Screen name="LoadingScreen" component={Loading} />
-      <Stack.Screen name="Products" component={ProductsCard} />
-      <Stack.Screen name="ShortsVanScreen" component={ShortsVan} />
-      <Stack.Screen name="ShortsBulkScreen" component={ShortsBulk} />
-      <Stack.Screen name="CustomerDayLoading" component={CustomerDayLoading} />
       <Stack.Screen name="CustomerDayPacking" component={CustomerDayPacking} />
-      <Stack.Screen name="CustomerDayBulk" component={CustomerDayBulk} />
-      <Stack.Screen name="ProductsLoading" component={ProductsLoading} />
       <Stack.Screen name="ProductsPacking" component={ProductsPacking} />
+    </Stack.Navigator>
+  )
+}
+function StackLoading() {
+  return (
+    <Stack.Navigator
+      initialRouteName="LoadingScreen"
+      screenOptions={{ headerShown: false }}
+    >
+      <Stack.Screen name="LoadingScreen" component={Loading} />
+      <Stack.Screen name="CustomerDayLoading" component={CustomerDayLoading} />
+      <Stack.Screen name="ProductsLoading" component={ProductsLoading} />
+    </Stack.Navigator>
+  )
+}
+function StackBulk() {
+  return (
+    <Stack.Navigator
+      initialRouteName="ShortsBulkScreen"
+      screenOptions={{ headerShown: false }}
+    >
+      <Stack.Screen name="ShortsBulkScreen" component={ShortsBulk} />
+      <Stack.Screen name="CustomerDayBulk" component={CustomerDayBulk} />
       <Stack.Screen name="ProductsBulk" component={ProductsBulk} />
+    </Stack.Navigator>
+  )
+}
+function StackVan() {
+  return (
+    <Stack.Navigator
+      initialRouteName="ShortsVanScreen"
+      screenOptions={{ headerShown: false }}
+    >
+      <Stack.Screen name="ShortsVanScreen" component={ShortsVan} />
       <Stack.Screen name="ProductsVan" component={ProductsVan} />
     </Stack.Navigator>
   )
 }
-
 function MyTabs() {
   return (
     <Tab.Navigator
@@ -61,7 +86,7 @@ function MyTabs() {
     >
       <Tab.Screen
         name="Packing"
-        component={MyStacks}
+        component={StackPacking}
         options={{
           tabBarIcon: ({ color, size }) => (
             <Feather name="package" size={size} color={color} />
@@ -70,7 +95,7 @@ function MyTabs() {
       />
       <Tab.Screen
         name="Loading"
-        component={Loading}
+        component={StackLoading}
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
@@ -83,7 +108,7 @@ function MyTabs() {
       />
       <Tab.Screen
         name="Shorts Bulk"
-        component={ShortsBulk}
+        component={StackBulk}
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
@@ -96,7 +121,7 @@ function MyTabs() {
       />
       <Tab.Screen
         name="Shorts Van"
-        component={ShortsVan}
+        component={StackVan}
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
