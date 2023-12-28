@@ -14,7 +14,7 @@ import { DeliveryStyles } from '../../Styles/DeliveryStyles'
 import { GlobalStyles, colors } from '../../Styles/GlobalStyles'
 import CustomerDaySearch from '../../components/CustomerDaySearch'
 
-function CustomerDayBulk() {
+function CustomerDayVan() {
   const navigation = useNavigation()
   const isIOS = Platform.OS === 'ios'
   const { width, height } = Dimensions.get('window')
@@ -26,7 +26,7 @@ function CustomerDayBulk() {
   const strokeDashoffset = circumference - (percentage / 100) * circumference
 
   const handleNavigateToProducts = () => {
-    navigation.navigate('ProductsBulk')
+    navigation.navigate('ProductsVan')
   }
   return (
     <View style={{ flex: 1, backgroundColor: 'white', paddingLeft: 0 }}>
@@ -140,4 +140,4 @@ function CustomerDayBulk() {
   )
 }
 
-export default CustomerDayBulk
+export default CustomerDayVan

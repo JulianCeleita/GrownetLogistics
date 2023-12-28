@@ -10,6 +10,7 @@ import CircleProgress from '../../components/CircleProgress'
 
 const Packing = () => {
   const navigation = useNavigation()
+
   return (
     <SafeAreaView>
       <LinearGradient

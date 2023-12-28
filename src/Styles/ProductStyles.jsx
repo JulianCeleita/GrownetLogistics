@@ -22,6 +22,7 @@ export const ProductStyles = StyleSheet.create({
     marginTop: 10,
     fontSize: 18,
     color: colors.bluePrimary,
+    textAlign: 'left',
   },
   productTittle: {
     paddingVertical: 10,
