@@ -8,44 +8,53 @@ export const ProductStyles = StyleSheet.create({
     alignItems: 'center',
   },
   card: {
-    width: 320,
+    width: 330,
     backgroundColor: 'white',
     margin: 1,
     borderRadius: 15,
-    marginTop: 10,
+    marginTop: 8,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    height: 80,
   },
   category: {
     fontFamily: 'PoppinsSemi',
     marginTop: 10,
+    marginBottom: 0,
     fontSize: 18,
-    color: colors.bluePrimary,
+    color: colors.darkBlue,
     textAlign: 'left',
+  },
+  qty: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   productTittle: {
     paddingVertical: 10,
     paddingLeft: 20,
+    width: '75%',
   },
   tittleCard: {
-    fontSize: 20,
-    color: colors.darkBlue,
-    fontFamily: 'PoppinsSemi',
-  },
-  textCard: {
     fontSize: 16,
     color: colors.darkBlue,
+    fontFamily: 'PoppinsSemi',
+    marginTop: 15,
+  },
+  textCard: {
+    fontSize: 15,
+    color: colors.darkBlue,
     fontFamily: 'PoppinsMedium',
+    marginBottom: 15,
   },
   checkBox: {
     height: '100%',
     backgroundColor: colors.gray,
-    width: 75,
+    width: '25%',
     borderTopRightRadius: 15,
     borderBottomRightRadius: 15,
+    justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: 25,
   },
   ventana: {
     marginTop: 15,
@@ -84,19 +93,38 @@ export const ProductStyles = StyleSheet.create({
     paddingHorizontal: 15,
     fontFamily: 'PoppinsRegular',
   },
+  iconSearch: {
+    position: 'absolute',
+    right: 0,
+    zIndex: 1,
+    top: 5,
+  },
+  icon: {
+    position: 'absolute',
+    right: 0,
+  },
+  customerTitle: {
+    fontSize: 22,
+    color: colors.bluePrimary,
+    fontFamily: 'PoppinsBold',
+    textAlign: 'center',
+  },
 })
 
 export const SearchStyles = StyleSheet.create({
   // SEARCH BAR
+  view: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   containerSearch: {
     flexDirection: 'row',
-    marginHorizontal: 30,
     height: 50,
-    borderColor: colors.bluePrimary,
-    //borderWidth: 1,
     borderRadius: 40,
     marginTop: 20,
     backgroundColor: '#f2f2f2',
+    width: 320,
   },
 
   BgInput: {
@@ -112,5 +140,9 @@ export const SearchStyles = StyleSheet.create({
     position: 'absolute',
     right: 20,
     top: 13,
+  },
+  iconClose: {
+    marginLeft: 5,
+    marginTop: 20,
   },
 })

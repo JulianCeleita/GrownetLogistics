@@ -32,7 +32,7 @@ function ShortsVans() {
       <View style={DeliveryStyles.delivery}>
         <TouchableOpacity
           style={DeliveryStyles.card}
-          onPress={() => navigation.navigate('CustomerDayVan')}
+          onPress={() => navigation.navigate('ProductsVan')}
         >
           <CircleProgress />
           <Text style={DeliveryStyles.tittleRoute}>Ruta 1</Text>
