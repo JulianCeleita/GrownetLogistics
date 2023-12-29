@@ -16,7 +16,7 @@ import mainAxios from '../../axios.Config'
 import { insertLoading } from '../config/urls.config'
 import useTokenStore from '../store/useTokenStore'
 
-function Products() {
+function Products({ item }) {
   const [isPressed, setPressed] = useState(false)
   const [right, setRight] = useState(false)
   const [left, setLeft] = useState(false)
@@ -34,12 +34,10 @@ function Products() {
   const handleGestureEvent = (event) => {
     const { translationX } = event.nativeEvent
     if (translationX > 0) {
-      console.log('Deslizamiento hacia la derecha')
       setRight(true)
       setLeft(false)
       setPressed(false)
     } else if (translationX < 0) {
-      console.log('Deslizamiento hacia la izquierda')
       setRight(false)
       setLeft(true)
       setPressed(false)
@@ -82,14 +80,14 @@ function Products() {
   console.log('derecha', quantityRight, notesRight)
   return (
     <View>
-      <Text style={ProductStyles.category}>Bulk</Text>
+      {/* <Text style={ProductStyles.category}>Bulk</Text> */}
       <TouchableOpacity onPress={handlePress}>
         <PanGestureHandler onGestureEvent={handleGestureEvent}>
           <View>
             <View style={[ProductStyles.card, GlobalStyles.boxShadow]}>
               <View style={ProductStyles.productTittle}>
-                <Text style={ProductStyles.tittleCard}>Orange Juice</Text>
-                <Text style={ProductStyles.textCard}>15 Kg - Box </Text>
+                <Text style={ProductStyles.tittleCard}>{item.name}</Text>
+                <Text style={ProductStyles.textCard}>{`${item.packsize} - ${item.uom}`}</Text>
               </View>
               <View
                 style={[
@@ -204,6 +202,8 @@ function Products() {
       </TouchableOpacity>
     </View>
   )
+
+
 }
 
 export default Products
