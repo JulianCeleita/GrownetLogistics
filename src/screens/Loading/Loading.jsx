@@ -12,15 +12,6 @@ import useTokenStore from '../../store/useTokenStore'
 
 const Loading = () => {
   const navigation = useNavigation()
-  const { Orders, setOrders } = useLoadingStore()
-  // console.log('setOrders', Orders)
-  const { token, setToken } = useTokenStore()
-  console.log('Orders', Orders)
-  console.log('token', token)
-
-  useEffect(() => {
-    setOrders(token)
-  }, [])
 
   return (
     <SafeAreaView>
