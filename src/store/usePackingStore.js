@@ -1,10 +1,22 @@
 import { create } from 'zustand'
 import mainAxios from '../../axios.Config';
+import { productHasOrder } from '../config/urls.config'
 
 export const usePackingStore = create((set) => ({
     packingProducts: [],
-    getProducts: async (accountNumber) => {
-        const resp = await mainAxios.get(`${process.env.EXPO_PUBLIC_PRODUCT_HAS_ORDER}/${accountNumber}`)
-        console.log(resp);
+    setProducts: async (token, accountNumber) => {
+        try {
+            const resp = await mainAxios.get(`${productHasOrder}${accountNumber}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
+            })
+
+            const products = await resp.data
+            console.log('reponse Products', products)
+            set({ packingProducts: products.orders })
+        } catch (error) {
+            console.error('Error during request packing:', error)
+        }
     }
 }))

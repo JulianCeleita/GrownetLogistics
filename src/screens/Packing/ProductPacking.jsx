@@ -3,20 +3,39 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { ProductStyles } from '../../Styles/ProductStyles'
 import ProductSearcher from '../../components/ProductSearch'
 import ProductsCard from '../../components/ProductsCard'
-import { useProducts } from '../../store/useProducts'
+import { usePackingStore } from '../../store/usePackingStore'
+import { FlatList } from 'react-native'
+import useTokenStore from '../../store/useTokenStore'
 
-function ProductsPacking() {
+function ProductsPacking({ route }) {
 
-  const { getProducts, products } = useProducts()
+  // const { accountNumber } = route.params
+
+  const { token } = useTokenStore()
+  console.log(token);
+
+  const { setProducts, packingProducts } = usePackingStore()
 
   useEffect(() => {
-    // getProducts();
+    setProducts(token, 'SF004')
   }, [])
 
   return (
     <SafeAreaView style={ProductStyles.products}>
       <ProductSearcher />
-      <ProductsCard />
+
+      {
+        packingProducts.length === 0 ? (
+          <ProductsCard />
+        ) : (
+          <FlatList
+            data={packingProducts}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => <ProductsCard />}
+          />
+        )
+      }
+
     </SafeAreaView>
   )
 }
