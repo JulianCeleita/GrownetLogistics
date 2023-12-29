@@ -24,9 +24,22 @@ import ProductsPacking from '../screens/Packing/ProductPacking'
 import ProductsBulk from '../screens/ShortsBulk/ProductsBulk'
 import CustomerDayBulk from '../screens/ShortsBulk/CustomerDayBulk'
 import ProductsVan from '../screens/ShortsVan/ProductVan'
+import LoginPage from '../screens/Login/LoginPage'
+import ConfirmationLogin from '../screens/Login/ConfirmationLogin'
 
 const Tab = createBottomTabNavigator()
 const Stack = createNativeStackNavigator()
+function StackLogin() {
+  return (
+    <Stack.Navigator initialRouteName="LoginPage" headerMode="none"
+    screenOptions={{ headerShown: false }}
+    >
+      <Stack.Screen name="LoginPage" component={LoginPage} />
+      <Stack.Screen name="ConfirmationPage" component={ConfirmationLogin} />
+      <Stack.Screen name="PackingScreen" component={StackPacking} />
+    </Stack.Navigator>
+  )
+}
 
 function StackPacking() {
   return (
@@ -40,6 +53,7 @@ function StackPacking() {
     </Stack.Navigator>
   )
 }
+
 function StackLoading() {
   return (
     <Stack.Navigator
@@ -52,6 +66,7 @@ function StackLoading() {
     </Stack.Navigator>
   )
 }
+
 function StackBulk() {
   return (
     <Stack.Navigator
@@ -64,6 +79,7 @@ function StackBulk() {
     </Stack.Navigator>
   )
 }
+
 function StackVan() {
   return (
     <Stack.Navigator
@@ -75,6 +91,7 @@ function StackVan() {
     </Stack.Navigator>
   )
 }
+
 function MyTabs() {
   return (
     <Tab.Navigator
@@ -151,7 +168,8 @@ export default function Navigation() {
   }
   return (
     <NavigationContainer>
-      <MyTabs />
+      <StackLogin />
     </NavigationContainer>
   )
 }
+
