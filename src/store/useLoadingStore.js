@@ -1,19 +1,24 @@
 import { create } from 'zustand'
 import mainAxios from '../../axios.Config'
 import { productsLoading } from '../config/urls.config'
-import useTokenStore from './useTokenStore'
 
 const useLoadingStore = create((set) => {
-  const { token } = useTokenStore()
-
   return {
-    products: [],
-    setProducts: async () => {
-      const response = await mainAxios.get(productsLoading, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      const products = await response.data
-      set({ products: products })
+    Orders: [],
+    setOrders: async (token) => {
+      try {
+        const response = await mainAxios.get(`${productsLoading}SF004`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        const orders = await response.data
+
+        console.log('response', orders)
+        set({ Orders: orders })
+      } catch (error) {
+        console.error('Error during request:', error)
+      }
     },
   }
 })
