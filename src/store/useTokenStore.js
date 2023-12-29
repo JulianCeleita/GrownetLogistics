@@ -5,12 +5,12 @@ import { persist } from 'zustand/middleware'
 const useTokenStore = create(
   persist(
     (set) => ({
-      token: null,
+      token: '1553|HbMwQIJNPcEcN0OgBsFJGJi64EiReI7chF9l9og8',
       countryCode: null,
       phoneNumber: '',
       setPhoneNumber: (newPhoneNumber) => set({ phoneNumber: newPhoneNumber }),
       setToken: (newToken) => {
-        set({ token: '1553|HbMwQIJNPcEcN0OgBsFJGJi64EiReI7chF9l9og8' })
+        set({ token: newToken })
         console.log('Token guardado:', newToken)
       },
       initializeToken: async () => {

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { View, Text, Image } from 'react-native'
 import { DeliveryStyles } from '../../Styles/DeliveryStyles'
 import { LinearGradient } from 'expo-linear-gradient'
@@ -7,9 +7,21 @@ import { TouchableOpacity } from 'react-native'
 import { GlobalStyles } from '../../Styles/GlobalStyles'
 import CircleProgress from '../../components/CircleProgress'
 import { useNavigation } from '@react-navigation/native'
+import useLoadingStore from '../../store/useLoadingStore'
+import useTokenStore from '../../store/useTokenStore'
 
 const Loading = () => {
   const navigation = useNavigation()
+  const { Orders, setOrders } = useLoadingStore()
+  // console.log('setOrders', Orders)
+  const { token, setToken } = useTokenStore()
+  console.log('Orders', Orders)
+  console.log('token', token)
+
+  useEffect(() => {
+    setOrders(token)
+  }, [])
+
   return (
     <SafeAreaView>
       <LinearGradient
