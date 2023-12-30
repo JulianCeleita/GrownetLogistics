@@ -1,16 +1,9 @@
 import { AntDesign } from '@expo/vector-icons'
 import React, { useState } from 'react'
-import {
-  Alert,
-  Text,
-  TouchableOpacity,
-  View,
-  Animated,
-  TextInput,
-} from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import { GlobalStyles, colors } from '../styles/GlobalStyles'
-import { ProductStyles } from '../styles/ProductStyles'
+import { Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { PanGestureHandler } from 'react-native-gesture-handler'
+import { GlobalStyles, colors } from '../Styles/GlobalStyles'
+import { ProductStyles } from '../Styles/ProductStyles'
 import { PanGestureHandler, State } from 'react-native-gesture-handler'
 import mainAxios from '../../axios.Config'
 import { insertLoading } from '../config/urls.config'
@@ -87,7 +80,9 @@ function Products({ item }) {
             <View style={[ProductStyles.card, GlobalStyles.boxShadow]}>
               <View style={ProductStyles.productTittle}>
                 <Text style={ProductStyles.tittleCard}>{item.name}</Text>
-                <Text style={ProductStyles.textCard}>{`${item.packsize} - ${item.uom}`}</Text>
+                <Text
+                  style={ProductStyles.textCard}
+                >{`${item.packsize} - ${item.uom}`}</Text>
               </View>
               <View
                 style={[
@@ -98,7 +93,7 @@ function Products({ item }) {
                       : right
                         ? colors.danger
                         : left
-                          ? colors.orange
+                          ? colors.danger
                           : colors.gray,
                   },
                 ]}
@@ -110,7 +105,7 @@ function Products({ item }) {
                       : right
                         ? 'arrowright'
                         : left
-                          ? 'arrowleft'
+                          ? 'closecircleo'
                           : 'questioncircleo'
                   }
                   size={30}
@@ -202,8 +197,6 @@ function Products({ item }) {
       </TouchableOpacity>
     </View>
   )
-
-
 }
 
 export default Products

@@ -14,18 +14,17 @@ import React, { useEffect } from 'react'
 import { colors } from '../styles/GlobalStyles'
 import CustomerDayLoading from '../screens/Loading/CustomerDayLoading'
 import Loading from '../screens/Loading/Loading'
-import Packing from '../screens/Packing/Packing'
-import ProductsCard from '../components/ProductsCard'
-import ShortsBulk from '../screens/ShortsBulk/ShortsBulk'
-import ShortsVan from '../screens/ShortsVan/ShortsVan'
 import ProductsLoading from '../screens/Loading/ProductsLoading'
 import CustomerDayPacking from '../screens/Packing/CustomerDayPacking'
+import Packing from '../screens/Packing/Packing'
 import ProductsPacking from '../screens/Packing/ProductPacking'
 import ProductsBulk from '../screens/ShortsBulk/ProductsBulk'
-import CustomerDayBulk from '../screens/ShortsBulk/CustomerDayBulk'
+import ShortsBulk from '../screens/ShortsBulk/ShortsBulk'
+import ShortsVans from '../screens/ShortsVan/ShortsVans'
 import ProductsVan from '../screens/ShortsVan/ProductVan'
 import LoginPage from '../screens/Login/LoginPage'
 import ConfirmationLogin from '../screens/Login/ConfirmationLogin'
+import CustomerDayVan from '../screens/ShortsVan/CustomerDayVan'
 
 const Tab = createBottomTabNavigator()
 const Stack = createNativeStackNavigator()
@@ -74,7 +73,6 @@ function StackBulk() {
       screenOptions={{ headerShown: false }}
     >
       <Stack.Screen name="ShortsBulkScreen" component={ShortsBulk} />
-      <Stack.Screen name="CustomerDayBulk" component={CustomerDayBulk} />
       <Stack.Screen name="ProductsBulk" component={ProductsBulk} />
     </Stack.Navigator>
   )
@@ -83,10 +81,11 @@ function StackBulk() {
 function StackVan() {
   return (
     <Stack.Navigator
-      initialRouteName="ShortsVanScreen"
+      initialRouteName="ShortsVans"
       screenOptions={{ headerShown: false }}
     >
-      <Stack.Screen name="ShortsVanScreen" component={ShortsVan} />
+      <Stack.Screen name="ShortsVans" component={ShortsVans} />
+      <Stack.Screen name="CustomerDayVan" component={CustomerDayVan} />
       <Stack.Screen name="ProductsVan" component={ProductsVan} />
     </Stack.Navigator>
   )

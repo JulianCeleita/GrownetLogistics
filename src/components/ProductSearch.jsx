@@ -1,19 +1,33 @@
-import { Feather } from '@expo/vector-icons'
+import { Feather, Ionicons } from '@expo/vector-icons'
 import React from 'react'
 import { TextInput, TouchableOpacity, View } from 'react-native'
-import { SearchStyles } from '../styles/ProductStyles'
+import { SearchStyles } from '../Styles/ProductStyles'
+import { colors } from '../Styles/GlobalStyles'
 
-function ProductSearcher() {
+function ProductSearcher({ setSearch }) {
+  const handleClose = () => {
+    setSearch(false)
+  }
   return (
-    <View style={SearchStyles.containerSearch}>
-      <TextInput
-        style={SearchStyles.BgInput}
-        value=""
-        placeholder="Search your products"
-        placeholderTextColor="#969696"
-      />
-      <TouchableOpacity style={SearchStyles.iconSearch}>
-        <Feather name="search" size={24} color="#969696" />
+    <View style={SearchStyles.view}>
+      <View style={SearchStyles.containerSearch}>
+        <TextInput
+          style={SearchStyles.BgInput}
+          value=""
+          placeholder="Search products"
+          placeholderTextColor="#969696"
+        />
+        <TouchableOpacity style={SearchStyles.iconSearch}>
+          <Feather name="search" size={24} color="#969696" />
+        </TouchableOpacity>
+      </View>
+      <TouchableOpacity onPress={handleClose}>
+        <Ionicons
+          name="ios-close-circle-outline"
+          size={35}
+          color={colors.darkBlue}
+          style={SearchStyles.iconClose}
+        />
       </TouchableOpacity>
     </View>
   )

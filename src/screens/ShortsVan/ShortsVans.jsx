@@ -7,8 +7,8 @@ import { TouchableOpacity } from 'react-native'
 import { GlobalStyles } from '../../styles/GlobalStyles'
 import { useNavigation } from '@react-navigation/native'
 import CircleProgress from '../../components/CircleProgress'
-
-function ShortsVan() {
+import { Feather, MaterialCommunityIcons } from '@expo/vector-icons'
+function ShortsVans() {
   const navigation = useNavigation()
   return (
     <SafeAreaView>
@@ -19,10 +19,11 @@ function ShortsVan() {
         style={DeliveryStyles.packing}
       >
         <View style={[DeliveryStyles.tittle, GlobalStyles.boxShadow]}>
-          <Image
-            style={DeliveryStyles.imageTittlePacking}
-            source={require('../../img/packingBlanco.png')}
-            alt="Loading"
+          <MaterialCommunityIcons
+            name="truck-fast-outline"
+            style={{ marginRight: 10 }}
+            size={50}
+            color={'white'}
           />
           <Text style={DeliveryStyles.textTittle}>Shorts Van</Text>
         </View>
@@ -41,4 +42,4 @@ function ShortsVan() {
   )
 }
 
-export default ShortsVan
+export default ShortsVans
