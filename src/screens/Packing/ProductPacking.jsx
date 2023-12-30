@@ -190,13 +190,13 @@ function ProductsPacking() {
             />
           ) : null}
         </View>
-        <SectionList
+        {/* <SectionList
           sections={packingProducts}
           keyExtractor={(item, index) => `${index}`}
           renderItem={({ item }) => <ProductsCard item={item} />}
           renderSectionHeader={renderSeccionHeader}
           scrollEnabled
-        />
+          />*/}
       </ScrollView>
     </SafeAreaView>
   )
