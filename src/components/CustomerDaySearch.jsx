@@ -1,15 +1,14 @@
 import { Feather } from '@expo/vector-icons'
 import React from 'react'
 import { TextInput, TouchableOpacity, View } from 'react-native'
-import { SearchStyles } from '../Styles/ProductStyles'
-
-function ProductSearcher() {
+import { ProductStyles, SearchStyles } from '../Styles/ProductStyles'
+function CustomerDaySearch() {
   return (
     <View style={SearchStyles.containerSearch}>
       <TextInput
         style={SearchStyles.BgInput}
         value=""
-        placeholder="Search your products"
+        placeholder="Search routes"
         placeholderTextColor="#969696"
       />
       <TouchableOpacity style={SearchStyles.iconSearch}>
@@ -19,4 +18,4 @@ function ProductSearcher() {
   )
 }
 
-export default ProductSearcher
+export default CustomerDaySearch

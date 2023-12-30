@@ -1,6 +1,9 @@
+import { gestureHandlerRootHOC } from 'react-native-gesture-handler'
 import React from 'react'
 import Navigation from './src/navigation/Navigation'
 
-export default function App() {
+const App = () => {
   return <Navigation />
 }
+
+export default gestureHandlerRootHOC(App)

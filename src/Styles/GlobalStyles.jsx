@@ -8,6 +8,7 @@ export const colors = {
   danger: '#EE6055',
   lightBlue: '#F3F9FF',
   gray: '#969696',
+  orange: '#FF8A00',
 }
 
 export const GlobalStyles = StyleSheet.create({

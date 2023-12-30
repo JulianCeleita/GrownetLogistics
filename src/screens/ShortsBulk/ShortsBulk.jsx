@@ -1,14 +1,14 @@
 import React from 'react'
 import { View, Text, Image } from 'react-native'
-import { DeliveryStyles } from '../Styles/DeliveryStyles'
+import { DeliveryStyles } from '../../Styles/DeliveryStyles'
 import { LinearGradient } from 'expo-linear-gradient'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { TouchableOpacity } from 'react-native'
-import { GlobalStyles } from '../Styles/GlobalStyles'
+import { GlobalStyles } from '../../Styles/GlobalStyles'
 import { useNavigation } from '@react-navigation/native'
-import CircleProgress from '../components/CircleProgress'
+import CircleProgress from '../../components/CircleProgress'
 
-const Packing = () => {
+function ShortsBulk() {
   const navigation = useNavigation()
   return (
     <SafeAreaView>
@@ -21,17 +21,17 @@ const Packing = () => {
         <View style={[DeliveryStyles.tittle, GlobalStyles.boxShadow]}>
           <Image
             style={DeliveryStyles.imageTittlePacking}
-            source={require('../img/packingBlanco.png')}
+            source={require('../../img/packingBlanco.png')}
             alt="Loading"
           />
-          <Text style={DeliveryStyles.textTittle}>Packing</Text>
+          <Text style={DeliveryStyles.textTittle}>Shorts Bulk</Text>
         </View>
       </LinearGradient>
 
       <View style={DeliveryStyles.delivery}>
         <TouchableOpacity
           style={DeliveryStyles.card}
-          onPress={() => navigation.navigate('CustomerDayScreen')}
+          onPress={() => navigation.navigate('CustomerDayBulk')}
         >
           <CircleProgress />
           <Text style={DeliveryStyles.tittleRoute}>Ruta 1</Text>
@@ -41,4 +41,4 @@ const Packing = () => {
   )
 }
 
-export default Packing
+export default ShortsBulk

@@ -1,49 +1,80 @@
-import React, { useEffect } from 'react'
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import Loading from '../screens/Loading'
-import { NavigationContainer } from '@react-navigation/native'
-import Home from '../screens/Home'
-import { colors } from '../Styles/GlobalStyles'
-import Packing from '../screens/Packing'
 import {
-  AntDesign,
-  Feather,
-  MaterialCommunityIcons,
-  FontAwesome,
-} from '@expo/vector-icons'
-import {
-  useFonts,
-  Poppins_700Bold,
-  Poppins_400Regular,
-  Poppins_600SemiBold,
-  Poppins_500Medium,
   Poppins_300Light_Italic,
+  Poppins_400Regular,
+  Poppins_500Medium,
+  Poppins_600SemiBold,
+  Poppins_700Bold,
+  useFonts,
 } from '@expo-google-fonts/poppins'
-import ShortsBulk from '../screens/ShortsBulk'
-import ShortsVan from '../screens/ShortsVan'
-import Products from '../screens/Products'
-import CustomerDay from '../screens/CustomerDay'
+import { Feather, MaterialCommunityIcons } from '@expo/vector-icons'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import { NavigationContainer } from '@react-navigation/native'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import React, { useEffect } from 'react'
+import { colors } from '../Styles/GlobalStyles'
+import CustomerDayLoading from '../screens/Loading/CustomerDayLoading'
+import Loading from '../screens/Loading/Loading'
+import Packing from '../screens/Packing/Packing'
+import ProductsCard from '../components/ProductsCard'
+import ShortsBulk from '../screens/ShortsBulk/ShortsBulk'
+import ShortsVan from '../screens/ShortsVan/ShortsVan'
+import ProductsLoading from '../screens/Loading/ProductsLoading'
+import CustomerDayPacking from '../screens/Packing/CustomerDayPacking'
+import ProductsPacking from '../screens/Packing/ProductPacking'
+import ProductsBulk from '../screens/ShortsBulk/ProductsBulk'
+import CustomerDayBulk from '../screens/ShortsBulk/CustomerDayBulk'
+import ProductsVan from '../screens/ShortsVan/ProductVan'
 
 const Tab = createBottomTabNavigator()
 const Stack = createNativeStackNavigator()
 
-function MyStacks() {
+function StackPacking() {
   return (
     <Stack.Navigator
       initialRouteName="PackingScreen"
       screenOptions={{ headerShown: false }}
     >
       <Stack.Screen name="PackingScreen" component={Packing} />
-      <Stack.Screen name="LoadingScreen" component={Loading} />
-      <Stack.Screen name="Products" component={Products} />
-      <Stack.Screen name="ShortsVanScreen" component={ShortsVan} />
-      <Stack.Screen name="ShortsBulkScreen" component={ShortsBulk} />
-      <Stack.Screen name="CustomerDayScreen" component={CustomerDay} />
+      <Stack.Screen name="CustomerDayPacking" component={CustomerDayPacking} />
+      <Stack.Screen name="ProductsPacking" component={ProductsPacking} />
     </Stack.Navigator>
   )
 }
-
+function StackLoading() {
+  return (
+    <Stack.Navigator
+      initialRouteName="LoadingScreen"
+      screenOptions={{ headerShown: false }}
+    >
+      <Stack.Screen name="LoadingScreen" component={Loading} />
+      <Stack.Screen name="CustomerDayLoading" component={CustomerDayLoading} />
+      <Stack.Screen name="ProductsLoading" component={ProductsLoading} />
+    </Stack.Navigator>
+  )
+}
+function StackBulk() {
+  return (
+    <Stack.Navigator
+      initialRouteName="ShortsBulkScreen"
+      screenOptions={{ headerShown: false }}
+    >
+      <Stack.Screen name="ShortsBulkScreen" component={ShortsBulk} />
+      <Stack.Screen name="CustomerDayBulk" component={CustomerDayBulk} />
+      <Stack.Screen name="ProductsBulk" component={ProductsBulk} />
+    </Stack.Navigator>
+  )
+}
+function StackVan() {
+  return (
+    <Stack.Navigator
+      initialRouteName="ShortsVanScreen"
+      screenOptions={{ headerShown: false }}
+    >
+      <Stack.Screen name="ShortsVanScreen" component={ShortsVan} />
+      <Stack.Screen name="ProductsVan" component={ProductsVan} />
+    </Stack.Navigator>
+  )
+}
 function MyTabs() {
   return (
     <Tab.Navigator
@@ -55,7 +86,7 @@ function MyTabs() {
     >
       <Tab.Screen
         name="Packing"
-        component={MyStacks}
+        component={StackPacking}
         options={{
           tabBarIcon: ({ color, size }) => (
             <Feather name="package" size={size} color={color} />
@@ -64,7 +95,7 @@ function MyTabs() {
       />
       <Tab.Screen
         name="Loading"
-        component={Loading}
+        component={StackLoading}
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
@@ -77,7 +108,7 @@ function MyTabs() {
       />
       <Tab.Screen
         name="Shorts Bulk"
-        component={ShortsBulk}
+        component={StackBulk}
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
@@ -90,7 +121,7 @@ function MyTabs() {
       />
       <Tab.Screen
         name="Shorts Van"
-        component={ShortsVan}
+        component={StackVan}
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
