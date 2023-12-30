@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { StatusBar, View, TextInput, TouchableOpacity, Image, Text, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard } from 'react-native';
-import { LoginStyles } from '../../Styles/LoginStyles';
+import { LoginStyles } from '../../styles/LoginStyles';
 import logo from '../../img/Logo_Blanco.png';
 import { useNavigation } from '@react-navigation/native';
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Text, Image, ScrollView } from 'react-native'
-import { DeliveryStyles } from '../../Styles/DeliveryStyles'
+import { DeliveryStyles } from '../../styles/DeliveryStyles'
 import { LinearGradient } from 'expo-linear-gradient'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { TouchableOpacity } from 'react-native'

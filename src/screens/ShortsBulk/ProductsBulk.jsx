@@ -1,12 +1,12 @@
 import { AntDesign, Ionicons } from '@expo/vector-icons'
 import React, { useState } from 'react'
 import { Text, View, TouchableOpacity } from 'react-native'
-import { ProductStyles } from '../../Styles/ProductStyles'
+import { ProductStyles } from '../../styles/ProductStyles'
 import ProductSearcher from '../../components/ProductSearch'
-import { GlobalStyles, colors } from '../../Styles/GlobalStyles'
+import { GlobalStyles, colors } from '../../styles/GlobalStyles'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { PanGestureHandler } from 'react-native-gesture-handler'
-import { CustomerDayStyles } from '../../Styles/CustomerDayStyles'
+import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
 
 function ProductsBulk() {
   const [isPressed, setPressed] = useState(false)

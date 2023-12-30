@@ -6,9 +6,9 @@ import {
   Modal,
   TouchableWithoutFeedback,
 } from 'react-native'
-import { ModalStyle } from '../Styles/ModalStyles'
+import { ModalStyle } from '../styles/ModalStyles'
 import { MaterialIcons } from '@expo/vector-icons'
-import { GlobalStyles } from '../Styles/GlobalStyles'
+import { GlobalStyles } from '../styles/GlobalStyles'
 
 const ModalProduct = ({ showModal, setShowModal, setLeft }) => {
   const confirm = () => {

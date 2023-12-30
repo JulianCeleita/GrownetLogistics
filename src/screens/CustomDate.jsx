@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, TouchableOpacity, Text, Image, ScrollView } from 'react-native';
-import { CustomDateStyles } from '../../Styles/CustomDateStyles';
+import { CustomDateStyles } from '../../styles/CustomDateStyles';
 import FechaIcon from '../../img/Fecha.png';
 import moment from 'moment';
 
