@@ -1,5 +1,5 @@
 import { AntDesign, Ionicons } from '@expo/vector-icons'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   ScrollView,
   Text,
@@ -12,6 +12,10 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { GlobalStyles, colors } from '../../Styles/GlobalStyles'
 import { ProductStyles } from '../../Styles/ProductStyles'
 import ProductSearcher from '../../components/ProductSearch'
+import ProductsCard from '../../components/ProductsCard'
+import { usePackingStore } from '../../store/usePackingStore'
+import { View, Text, SectionList } from 'react-native'
+import useTokenStore from '../../store/useTokenStore'
 import { CustomerDayStyles } from '../../Styles/CustomerDayStyles'
 import ModalProduct from '../../components/ModalProduct'
 
@@ -23,6 +27,22 @@ function ProductsPacking() {
   const [search, setSearch] = useState(false)
   const [quantity, setQuantity] = useState(false)
   const [showModal, setShowModal] = useState(false)
+
+  // const { accountNumber } = route.params
+
+  const { token } = useTokenStore()
+
+  const { setProducts, packingProducts } = usePackingStore()
+
+  const renderSeccionHeader = ({ item }) => (
+    <View>
+      <Text style={ProductStyles.category}>{item}</Text>
+    </View>
+  )
+
+  useEffect(() => {
+    // setProducts(token, 'SF004')
+  }, [])
 
   const handlePress = () => {
     setPressed(!isPressed)
@@ -49,6 +69,7 @@ function ProductsPacking() {
   const handleSearch = () => {
     setSearch(true)
   }
+
   return (
     <SafeAreaView style={ProductStyles.products}>
       <ScrollView>
@@ -169,6 +190,13 @@ function ProductsPacking() {
             />
           ) : null}
         </View>
+        <SectionList
+          sections={packingProducts}
+          keyExtractor={(item, index) => `${index}`}
+          renderItem={({ item }) => <ProductsCard item={item} />}
+          renderSectionHeader={renderSeccionHeader}
+          scrollEnabled
+        />
       </ScrollView>
     </SafeAreaView>
   )

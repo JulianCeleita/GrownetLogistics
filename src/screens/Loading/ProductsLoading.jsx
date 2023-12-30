@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import {
   ScrollView,
@@ -9,11 +9,14 @@ import {
 } from 'react-native'
 import { ProductStyles } from '../../Styles/ProductStyles'
 import ProductSearcher from '../../components/ProductSearch'
+
 import { PanGestureHandler } from 'react-native-gesture-handler'
 import { GlobalStyles, colors } from '../../Styles/GlobalStyles'
 import { AntDesign, Ionicons } from '@expo/vector-icons'
 import { CustomerDayStyles } from '../../Styles/CustomerDayStyles'
 import ModalProduct from '../../components/ModalProduct'
+import useLoadingStore from '../../store/useLoadingStore'
+import useTokenStore from '../../store/useTokenStore'
 
 function ProductsLoading() {
   const [isPressed, setPressed] = useState(false)
@@ -21,6 +24,11 @@ function ProductsLoading() {
   const [left, setLeft] = useState(false)
   const [search, setSearch] = useState(false)
   const [showModal, setShowModal] = useState(false)
+  const { Orders, setOrders } = useLoadingStore()
+
+  const { token } = useTokenStore()
+  console.log('Orders', Orders)
+  console.log('token', token)
 
   const handlePress = () => {
     setPressed(!isPressed)
@@ -48,6 +56,10 @@ function ProductsLoading() {
     setPressed(true)
     setRight(false)
   }
+
+  useEffect(() => {
+    setOrders(token)
+  }, [])
   return (
     <SafeAreaView style={ProductStyles.products}>
       <ScrollView>
