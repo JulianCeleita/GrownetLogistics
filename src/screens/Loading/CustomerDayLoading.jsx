@@ -20,6 +20,13 @@ function CustomerDayLoading() {
   const isIOS = Platform.OS === 'ios'
   const { width, height } = Dimensions.get('window')
 
+  const titleStyle = {
+    ...DeliveryStyles.tittle,
+    ...GlobalStyles.boxShadow,
+    elevation: 5,
+    zIndex: 5,
+  }
+
   const radius = 40
   const strokeWidth = 10
   const circumference = 2 * Math.PI * radius
@@ -37,10 +44,10 @@ function CustomerDayLoading() {
         end={{ x: 1, y: 0.5 }}
         style={[
           DeliveryStyles.packing,
-          Platform.OS === 'ios' && { paddingTop: 30 }, // Ajuste para iOS
+          Platform.OS === 'ios' && { paddingTop: 30 }, 
         ]}
       >
-        <View style={[DeliveryStyles.tittle, GlobalStyles.boxShadow]}>
+        <View style={titleStyle}>
           <Text style={DeliveryStyles.textTittle}>Customer day</Text>
         </View>
       </LinearGradient>
