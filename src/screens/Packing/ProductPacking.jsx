@@ -9,14 +9,13 @@ import {
 } from 'react-native'
 import { PanGestureHandler } from 'react-native-gesture-handler'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { GlobalStyles, colors } from '../../Styles/GlobalStyles'
-import { ProductStyles } from '../../Styles/ProductStyles'
+import { GlobalStyles, colors } from '../../styles/GlobalStyles'
+import { ProductStyles } from '../../styles/ProductStyles'
 import ProductSearcher from '../../components/ProductSearch'
 import ProductsCard from '../../components/ProductsCard'
 import { usePackingStore } from '../../store/usePackingStore'
-import { View, Text, SectionList } from 'react-native'
 import useTokenStore from '../../store/useTokenStore'
-import { CustomerDayStyles } from '../../Styles/CustomerDayStyles'
+import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
 import ModalProduct from '../../components/ModalProduct'
 
 function ProductsPacking() {

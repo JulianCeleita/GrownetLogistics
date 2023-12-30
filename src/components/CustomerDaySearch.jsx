@@ -1,8 +1,8 @@
 import { Feather, Ionicons } from '@expo/vector-icons'
 import React from 'react'
 import { TextInput, TouchableOpacity, View } from 'react-native'
-import { SearchStyles } from '../Styles/ProductStyles'
-import { colors } from '../Styles/GlobalStyles'
+import { SearchStyles } from '../styles/ProductStyles'
+import { colors } from '../styles/GlobalStyles'
 
 function CustomerDaySearch({ setSearch }) {
   const handleClose = () => {

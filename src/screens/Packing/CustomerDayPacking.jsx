@@ -4,8 +4,8 @@ import React, { useState } from 'react'
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Svg, { Circle, Text as SvgText } from 'react-native-svg'
-import { CustomerDayStyles } from '../../Styles/CustomerDayStyles'
-import { GlobalStyles, colors } from '../../Styles/GlobalStyles'
+import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
+import { GlobalStyles, colors } from '../../styles/GlobalStyles'
 import CustomerDaySearch from '../../components/CustomerDaySearch'
 
 function CustomerDayPacking() {
