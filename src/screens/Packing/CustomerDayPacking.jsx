@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
 import React, { useState } from 'react'
-import { ScrollView, Text, TouchableOpacity, View } from 'react-native'
+import { ScrollView, Text, TouchableOpacity, View, Dimensions } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Svg, { Circle, Text as SvgText } from 'react-native-svg'
 import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
@@ -29,7 +29,7 @@ function CustomerDayPacking() {
   const strokeDashoffset = circumference - (percentage / 100) * circumference
 
   const handleNavigateToProducts = () => {
-    navigation.navigate('ProductsLoading')
+    navigation.navigate('ProductsPacking')
   }
   const handleSearch = () => {
     setSearch(true)
