@@ -1,6 +1,6 @@
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { ProductStyles } from '../../Styles/ProductStyles'
+import { ProductStyles } from '../../styles/ProductStyles'
 import ProductSearcher from '../../components/ProductSearch'
 import ProductsCard from '../../components/ProductsCard'
 
