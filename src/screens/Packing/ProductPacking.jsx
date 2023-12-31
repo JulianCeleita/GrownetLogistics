@@ -19,52 +19,133 @@ import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
 import ModalProduct from '../../components/ModalProduct'
 
 function ProductsPacking() {
-  const [isPressed, setPressed] = useState(false)
-  const [right, setRight] = useState(false)
-  const [left, setLeft] = useState(false)
+  const { packingProducts, setPackingProducts } = usePackingStore()
+  const [pressedStates, setPressedStates] = useState({})
+  const [rightStates, setRightStates] = useState({})
+  const [leftStates, setLeftStates] = useState({})
   const [showText, setShowText] = useState(false)
   const [search, setSearch] = useState(false)
-  const [quantity, setQuantity] = useState(false)
+  const [quantity, setQuantity] = useState('')
   const [showModal, setShowModal] = useState(false)
+  const [selectedProduct, setSelectedProduct] = useState(null)
+  const [addQuantity, setAddQuantity] = useState(false)
+
+  console.log(
+    'PressedStates',
+    pressedStates,
+    'RightStates',
+    rightStates,
+    'LeftStates',
+    leftStates,
+  )
 
   // const { accountNumber } = route.params
 
   const { token } = useTokenStore()
 
-  const { setProducts, packingProducts } = usePackingStore()
-
-  const renderSeccionHeader = ({ item }) => (
-    <View>
-      <Text style={ProductStyles.category}>{item}</Text>
-    </View>
-  )
-
   useEffect(() => {
-    // setProducts(token, 'SF004')
+    // setPackingProducts(token, 'SF004')
   }, [])
 
-  const handlePress = () => {
-    setPressed(!isPressed)
-    setLeft(false)
-    setRight(false)
+  const handlePress = (itemId) => {
+    setSelectedProduct(itemId)
+    const newPressedStates = Object.assign({}, pressedStates)
+    const newRightStates = { ...rightStates }
+    const newLeftStates = { ...leftStates }
+
+    newPressedStates[itemId] = !newPressedStates[itemId]
+    newRightStates[itemId] = false
+    newLeftStates[itemId] = false
+
+    const updatedProducts = packingProducts.map((section) => ({
+      ...section,
+      data: section.data.map((item) => {
+        if (item.id === itemId) {
+          return {
+            ...item,
+            packed: newPressedStates[itemId] ? item.quantity : '',
+          }
+        }
+        return item
+      }),
+    }))
+    setPressedStates(newPressedStates)
+    setRightStates(newRightStates)
+    setLeftStates(newLeftStates)
+    setPackingProducts(updatedProducts)
+    setAddQuantity(false)
   }
-  const handleGestureEvent = (event) => {
+
+  const handleGestureEvent = (event, itemId) => {
     const { translationX } = event.nativeEvent
+    setSelectedProduct(itemId)
+
     if (translationX > 0) {
-      console.log('Deslizamiento hacia la derecha')
-      setRight(true)
-      setLeft(false)
-      setPressed(false)
+      const newPressedStates = { ...pressedStates }
+      const newLeftStates = { ...leftStates }
+
+      newPressedStates[itemId] = false
+      newLeftStates[itemId] = false
+
+      setPressedStates(newPressedStates)
+      setLeftStates(newLeftStates)
+      setAddQuantity(true)
+      setQuantity('')
+
+      console.log('Dezlizamos a la derecha', itemId)
     } else if (translationX < 0) {
-      console.log('Deslizamiento hacia la izquierda')
-      setRight(false)
-      setPressed(false)
       setShowModal(true)
     }
   }
-  const handleSave = () => {
-    setShowText(true)
+
+  const declareNotAvailable = (itemId) => {
+    const newLeftStates = Object.assign({}, leftStates)
+    const newPressedStates = { ...pressedStates }
+    const newRightStates = { ...rightStates }
+
+    newLeftStates[itemId] = !newLeftStates[itemId]
+    newPressedStates[itemId] = false
+    newRightStates[itemId] = false
+
+    const updatedProducts = packingProducts.map((section) => ({
+      ...section,
+      data: section.data.map((item) => {
+        if (item.id === itemId) {
+          return { ...item, packed: newLeftStates[itemId] ? 0 : '' }
+        }
+        return item
+      }),
+    }))
+
+    setLeftStates(newLeftStates)
+    setPressedStates(newPressedStates)
+    setRightStates(newRightStates)
+    setPackingProducts(updatedProducts)
+    setAddQuantity(false)
+
+    console.log('Dezlizamos a la izquierda', itemId)
   }
+
+  const declareDifferentQty = (itemId) => {
+    const newRightStates = Object.assign({}, rightStates)
+    newRightStates[itemId] = true
+
+    const updatedProducts = packingProducts.map((section) => ({
+      ...section,
+      data: section.data.map((item) => {
+        if (item.id === itemId) {
+          return { ...item, packed: newRightStates[itemId] ? quantity : '' }
+        }
+        return item
+      }),
+    }))
+    setRightStates(newRightStates)
+    setShowText(true)
+    setPackingProducts(updatedProducts)
+    setSelectedProduct(null)
+    setAddQuantity(false)
+  }
+
   const handleSearch = () => {
     setSearch(true)
   }
@@ -86,112 +167,137 @@ function ProductsPacking() {
             </TouchableOpacity>
           </View>
         )}
-        <Text style={ProductStyles.category}>1. Bulk</Text>
-        <View style={{ alignItems: 'center' }}>
-          <TouchableOpacity onPress={handlePress}>
-            <PanGestureHandler onGestureEvent={handleGestureEvent}>
-              <View>
-                <View style={[ProductStyles.card, GlobalStyles.boxShadow]}>
-                  <View style={ProductStyles.productTittle}>
-                    <Text style={ProductStyles.tittleCard}>
-                      Banana x 18 kg - Box
-                    </Text>
-                    <View style={ProductStyles.qty}>
-                      <Text style={ProductStyles.textCard}>Qty: 10</Text>
-                      {showText ? (
-                        <Text
+        {packingProducts.map((section) => (
+          <View key={section.id_tittle}>
+            <Text style={ProductStyles.category}>
+              {section.id_tittle}. {section.title}
+            </Text>
+            {section.data.map((item) => (
+              <View style={{ alignItems: 'center' }} key={item.id}>
+                <TouchableOpacity onPress={() => handlePress(item.id)}>
+                  <PanGestureHandler
+                    onGestureEvent={(e) => handleGestureEvent(e, item.id)}
+                  >
+                    <View>
+                      <View
+                        style={[ProductStyles.card, GlobalStyles.boxShadow]}
+                      >
+                        <View style={ProductStyles.productTittle}>
+                          <Text style={ProductStyles.tittleCard}>
+                            {item.name} {item.packsize}
+                          </Text>
+                          <View style={ProductStyles.qty}>
+                            <Text style={ProductStyles.textCard}>
+                              Qty: {item.quantity} {item.uom} Packed:{' '}
+                              {item.packed || 0}
+                            </Text>
+                            {rightStates[item.id] ? (
+                              <Text
+                                style={[
+                                  ProductStyles.textCard,
+                                  { color: colors.danger, marginRight: 50 },
+                                ]}
+                              >
+                                Missing{' '}
+                                {item.quantity - item.packed || 0}
+                              </Text>
+                            ) : null}
+                          </View>
+                        </View>
+                        <View
                           style={[
-                            ProductStyles.textCard,
-                            { color: colors.danger, marginRight: 50 },
+                            ProductStyles.checkBox,
+                            {
+                              backgroundColor: pressedStates[item.id]
+                                ? colors.orange
+                                : rightStates[item.id]
+                                  ? colors.orange
+                                  : leftStates[item.id]
+                                    ? colors.danger
+                                    : colors.gray,
+                            },
                           ]}
                         >
-                          Missing 5
-                        </Text>
+                          <AntDesign
+                            name={
+                              pressedStates[item.id]
+                                ? 'checkcircleo'
+                                : rightStates[item.id]
+                                  ? 'arrowright'
+                                  : leftStates[item.id]
+                                    ? 'closecircleo'
+                                    : 'questioncircleo'
+                            }
+                            size={30}
+                            color="white"
+                          />
+                        </View>
+                      </View>
+                      {addQuantity && selectedProduct === item.id ? (
+                        <View
+                          style={[
+                            ProductStyles.details,
+                            GlobalStyles.boxShadow,
+                            { borderColor: colors.orange },
+                          ]}
+                        >
+                          <View style={ProductStyles.information}>
+                            <View>
+                              <Text style={ProductStyles.textCard}>
+                                Packed:
+                              </Text>
+                              <Text
+                                style={[
+                                  ProductStyles.textCard,
+                                  { marginTop: 12 },
+                                ]}
+                              >
+                                Note:
+                              </Text>
+                            </View>
+                            <View style={ProductStyles.inputsCard}>
+                              <TextInput
+                                style={ProductStyles.input}
+                                keyboardType="numeric"
+                                value={quantity}
+                                onChangeText={(num) => setQuantity(num)}
+                              />
+                              <TextInput
+                                style={[ProductStyles.input, { marginTop: 8 }]}
+                              />
+                            </View>
+                          </View>
+                          <TouchableOpacity
+                            style={[
+                              GlobalStyles.btnPrimary,
+                              { width: 150, marginTop: 10, paddingVertical: 8 },
+                            ]}
+                            onPress={() => declareDifferentQty(item.id)}
+                          >
+                            <Text style={GlobalStyles.textBtnSecundary}>
+                              Send
+                            </Text>
+                          </TouchableOpacity>
+                        </View>
                       ) : null}
                     </View>
-                  </View>
-                  <View
-                    style={[
-                      ProductStyles.checkBox,
-                      {
-                        backgroundColor: isPressed
-                          ? colors.orange
-                          : right
-                            ? colors.orange
-                            : left
-                              ? colors.danger
-                              : colors.gray,
-                      },
-                    ]}
-                  >
-                    <AntDesign
-                      name={
-                        isPressed
-                          ? 'checkcircleo'
-                          : right
-                            ? 'arrowright'
-                            : left
-                              ? 'closecircleo'
-                              : 'questioncircleo'
-                      }
-                      size={30}
-                      color="white"
-                    />
-                  </View>
-                </View>
-                {right ? (
-                  <View
-                    style={[
-                      ProductStyles.details,
-                      GlobalStyles.boxShadow,
-                      { borderColor: colors.orange },
-                    ]}
-                  >
-                    <View style={ProductStyles.information}>
-                      <View>
-                        <Text style={ProductStyles.textCard}>Quantity:</Text>
-                        <Text
-                          style={[ProductStyles.textCard, { marginTop: 12 }]}
-                        >
-                          Notes:
-                        </Text>
-                      </View>
-                      <View style={ProductStyles.inputsCard}>
-                        <TextInput
-                          style={ProductStyles.input}
-                          keyboardType="numeric"
-                          //value={quantity}
-                        />
-                        <TextInput
-                          style={[ProductStyles.input, { marginTop: 8 }]}
-                        />
-                      </View>
-                    </View>
-                    <TouchableOpacity
-                      style={[
-                        GlobalStyles.btnPrimary,
-                        { width: 150, marginTop: 10, paddingVertical: 8 },
-                      ]}
-                      onPress={handleSave}
-                    >
-                      <Text style={GlobalStyles.textBtnSecundary}>Save</Text>
-                    </TouchableOpacity>
-                  </View>
+                  </PanGestureHandler>
+                </TouchableOpacity>
+                {showModal && selectedProduct === item.id ? (
+                  <ModalProduct
+                    showModal={showModal}
+                    setShowModal={setShowModal}
+                    declareNotAvailable={declareNotAvailable}
+                    item={item}
+                  />
                 ) : null}
               </View>
-            </PanGestureHandler>
-          </TouchableOpacity>
-          {showModal ? (
-            <ModalProduct
-              showModal={showModal}
-              setShowModal={setShowModal}
-              setLeft={setLeft}
-            />
-          ) : null}
-        </View>
+            ))}
+          </View>
+        ))}
         {/* <SectionList
           sections={packingProducts}
-          keyExtractor={(item, index) => `${index}`}
+          keyExtractor={(item, itemId) => `${itemId}`}
           renderItem={({ item }) => <ProductsCard item={item} />}
           renderSectionHeader={renderSeccionHeader}
           scrollEnabled

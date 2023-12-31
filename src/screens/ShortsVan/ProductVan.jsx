@@ -8,12 +8,12 @@ import ProductSearcher from '../../components/ProductSearch'
 import { PanGestureHandler } from 'react-native-gesture-handler'
 
 function ProductsVan() {
-  const [isPressed, setPressed] = useState(false)
+  const [isPressed, setIsPressed] = useState(false)
   const [left, setLeft] = useState(false)
   const [search, setSearch] = useState(false)
 
   const handlePress = () => {
-    setPressed(!isPressed)
+    setIsPressed(!isPressed)
     setLeft(false)
   }
   const handleGestureEvent = (event) => {
@@ -21,7 +21,7 @@ function ProductsVan() {
     if (translationX < 0) {
       console.log('Deslizamiento hacia la izquierda')
       setLeft(true)
-      setPressed(false)
+      setIsPressed(false)
     }
   }
   const handleSearch = () => {
