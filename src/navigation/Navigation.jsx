@@ -176,7 +176,9 @@ export default function Navigation() {
   }
   return (
     <NavigationContainer>
-      {token ? <MyTabs /> : <StackLogin />}
+      {/* TODO DEJAR ESTA LOGICA PARA EL MENU INFERIOR */}
+      {/* {token ? <MyTabs /> : <StackLogin />} */}
+      <MyTabs />
     </NavigationContainer>
   )
 }
