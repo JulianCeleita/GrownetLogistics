@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native'
 
 export const LoginStyles = StyleSheet.create({
   container: {
@@ -9,15 +9,15 @@ export const LoginStyles = StyleSheet.create({
   },
   logo: {
     width: 300,
-    height: 200, 
-    resizeMode: 'contain', 
+    height: 200,
+    resizeMode: 'contain',
     marginBottom: 30,
   },
   loginHeaderText: {
     color: '#ffffff',
     fontSize: Platform.OS === 'ios' ? 18 : 15,
     marginBottom: 30,
-    fontFamily: 'Poppins', 
+    fontFamily: 'Poppins',
   },
   input: {
     height: 60,
@@ -40,6 +40,6 @@ export const LoginStyles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     textAlign: 'center',
-    fontFamily: 'PoppinsSemi', 
+    fontFamily: 'PoppinsSemi',
   },
-});
+})

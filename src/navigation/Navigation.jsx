@@ -26,11 +26,10 @@ import ShortsBulk from '../screens/ShortsBulk/ShortsBulk'
 import CustomerDayVan from '../screens/ShortsVan/CustomerDayVan'
 import ProductsVan from '../screens/ShortsVan/ProductVan'
 import ShortsVans from '../screens/ShortsVan/ShortsVans'
+import useTokenStore from '../store/useTokenStore'
 
 const Tab = createBottomTabNavigator()
 const Stack = createNativeStackNavigator()
-// TODO AGREGAR EL TOKEN OFICIAL LUEGO DE LOGUEARSE
-const token = 'ABCDEFGHIJKL'
 
 function StackLogin() {
   return (
@@ -160,6 +159,9 @@ function MyTabs() {
 }
 
 export default function Navigation() {
+  const { token } = useTokenStore()
+  console.log(token)
+
   const [fontsLoaded] = useFonts({
     PoppinsBold: Poppins_700Bold,
     PoppinsRegular: Poppins_400Regular,

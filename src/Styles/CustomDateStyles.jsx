@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native'
 
 export const CustomDateStyles = StyleSheet.create({
   container: {
@@ -7,9 +7,9 @@ export const CustomDateStyles = StyleSheet.create({
   },
   contentContainer: {
     justifyContent: 'center',
-    alignItems: 'center', 
+    alignItems: 'center',
     paddingTop: 60,
-    paddingHorizontal: 30, 
+    paddingHorizontal: 30,
   },
   whiteBackground: {
     backgroundColor: 'white',
@@ -23,7 +23,7 @@ export const CustomDateStyles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
     padding: 20,
-    alignItems: 'center', 
+    alignItems: 'center',
   },
   dateButtonContainer: {
     backgroundColor: 'white',
@@ -41,14 +41,13 @@ export const CustomDateStyles = StyleSheet.create({
     borderRadius: 20,
     alignItems: 'center',
     elevation: 5,
-    marginBottom: 10, 
-    
+    marginBottom: 10,
   },
   showMoreButton: {
     backgroundColor: 'white',
     borderWidth: 1,
     borderColor: 'white',
-    paddingVertical: 15, 
+    paddingVertical: 15,
     paddingHorizontal: Platform.OS === 'ios' ? 20 : 25,
     borderRadius: 20,
     marginTop: 15,
@@ -66,6 +65,6 @@ export const CustomDateStyles = StyleSheet.create({
     color: '#000',
     textAlign: 'center',
     fontFamily: 'Poppins',
-    fontSize: 18, 
+    fontSize: 18,
   },
-});
+})
