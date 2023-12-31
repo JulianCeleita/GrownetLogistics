@@ -167,7 +167,8 @@ export default function Navigation() {
   }
   return (
     <NavigationContainer>
-      <StackLogin />
+      <MyTabs />
+      {/* <StackLogin /> */}
     </NavigationContainer>
   )
 }
