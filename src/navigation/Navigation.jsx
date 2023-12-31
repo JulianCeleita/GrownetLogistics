@@ -12,29 +12,32 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import React, { useEffect } from 'react'
 import { colors } from '../styles/GlobalStyles'
+import CustomDate from '../screens/CustomDate'
 import CustomerDayLoading from '../screens/Loading/CustomerDayLoading'
 import Loading from '../screens/Loading/Loading'
 import ProductsLoading from '../screens/Loading/ProductsLoading'
+import ConfirmationLogin from '../screens/Login/ConfirmationLogin'
+import LoginPage from '../screens/Login/LoginPage'
 import CustomerDayPacking from '../screens/Packing/CustomerDayPacking'
 import Packing from '../screens/Packing/Packing'
 import ProductsPacking from '../screens/Packing/ProductPacking'
 import ProductsBulk from '../screens/ShortsBulk/ProductsBulk'
 import ShortsBulk from '../screens/ShortsBulk/ShortsBulk'
-import ShortsVans from '../screens/ShortsVan/ShortsVans'
-import ProductsVan from '../screens/ShortsVan/ProductVan'
-import LoginPage from '../screens/Login/LoginPage'
-import ConfirmationLogin from '../screens/Login/ConfirmationLogin'
 import CustomerDayVan from '../screens/ShortsVan/CustomerDayVan'
+import ProductsVan from '../screens/ShortsVan/ProductVan'
+import ShortsVans from '../screens/ShortsVan/ShortsVans'
 
 const Tab = createBottomTabNavigator()
 const Stack = createNativeStackNavigator()
 // TODO AGREGAR EL TOKEN OFICIAL LUEGO DE LOGUEARSE
-const token = "ABCDEFGHIJKL"
+const token = 'ABCDEFGHIJKL'
 
 function StackLogin() {
   return (
-    <Stack.Navigator initialRouteName="LoginPage" headerMode="none"
-    screenOptions={{ headerShown: false }}
+    <Stack.Navigator
+      initialRouteName="LoginPage"
+      headerMode="none"
+      screenOptions={{ headerShown: false }}
     >
       <Stack.Screen name="LoginPage" component={LoginPage} />
       <Stack.Screen name="ConfirmationPage" component={ConfirmationLogin} />
@@ -46,9 +49,10 @@ function StackLogin() {
 function StackPacking() {
   return (
     <Stack.Navigator
-      initialRouteName="PackingScreen"
+      initialRouteName="CustomDate"
       screenOptions={{ headerShown: false }}
     >
+      <Stack.Screen name="CustomDate" component={CustomDate} />
       <Stack.Screen name="PackingScreen" component={Packing} />
       <Stack.Screen name="CustomerDayPacking" component={CustomerDayPacking} />
       <Stack.Screen name="ProductsPacking" component={ProductsPacking} />
@@ -174,4 +178,3 @@ export default function Navigation() {
     </NavigationContainer>
   )
 }
-
