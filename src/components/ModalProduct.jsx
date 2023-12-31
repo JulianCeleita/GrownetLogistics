@@ -10,9 +10,9 @@ import { ModalStyle } from '../styles/ModalStyles'
 import { MaterialIcons } from '@expo/vector-icons'
 import { GlobalStyles } from '../styles/GlobalStyles'
 
-const ModalProduct = ({ showModal, setShowModal, setLeft }) => {
+const ModalProduct = ({ showModal, setShowModal, declareNotAvailable, item }) => {
   const confirm = () => {
-    setLeft(true)
+    declareNotAvailable(item.id)
     setShowModal(false)
   }
   const handleClose = () => {
