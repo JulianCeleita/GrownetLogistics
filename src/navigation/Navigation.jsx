@@ -28,6 +28,9 @@ import CustomerDayVan from '../screens/ShortsVan/CustomerDayVan'
 
 const Tab = createBottomTabNavigator()
 const Stack = createNativeStackNavigator()
+// TODO AGREGAR EL TOKEN OFICIAL LUEGO DE LOGUEARSE
+const token = "ABCDEFGHIJKL"
+
 function StackLogin() {
   return (
     <Stack.Navigator initialRouteName="LoginPage" headerMode="none"
@@ -167,8 +170,7 @@ export default function Navigation() {
   }
   return (
     <NavigationContainer>
-      <MyTabs />
-      {/* <StackLogin /> */}
+      {token ? <MyTabs /> : <StackLogin />}
     </NavigationContainer>
   )
 }
