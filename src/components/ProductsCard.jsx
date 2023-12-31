@@ -9,7 +9,7 @@ import { insertLoading } from '../config/urls.config'
 import useTokenStore from '../store/useTokenStore'
 
 function Products({ item }) {
-  const [isPressed, setPressed] = useState(false)
+  const [isPressed, setIsPressed] = useState(false)
   const [right, setRight] = useState(false)
   const [left, setLeft] = useState(false)
   const [quantityLeft, setQuantityLeft] = useState('')
@@ -19,7 +19,7 @@ function Products({ item }) {
   const { token } = useTokenStore()
 
   const handlePress = () => {
-    setPressed(!isPressed)
+    setIsPressed(!isPressed)
     setLeft(false)
     setRight(false)
   }
@@ -28,11 +28,11 @@ function Products({ item }) {
     if (translationX > 0) {
       setRight(true)
       setLeft(false)
-      setPressed(false)
+      setIsPressed(false)
     } else if (translationX < 0) {
       setRight(false)
       setLeft(true)
-      setPressed(false)
+      setIsPressed(false)
     }
   }
 
