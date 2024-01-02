@@ -34,14 +34,14 @@ const CustomDate = () => {
   const renderButton = (date) => {
     return (
       <View style={CustomDateStyles.whiteBackground}>
-        <Tou style={CustomDateStyles.dateButtonContainer}>
+        <View style={CustomDateStyles.dateButtonContainer}>
           <TouchableOpacity
             style={CustomDateStyles.dateButton}
             onPress={handleDatePress}
           >
             <Image source={FechaIcon} style={{ width: 50, height: 50 }} />
           </TouchableOpacity>
-        </Tou>
+        </View>
         <View style={CustomDateStyles.dateTextContainer}>
           <Text style={CustomDateStyles.buttonText}>{date}</Text>
         </View>
