@@ -1,19 +1,19 @@
 import { Ionicons } from '@expo/vector-icons'
 import React, { useEffect, useState } from 'react'
 import {
-  ScrollView,
+  FlatList,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { colors } from '../../styles/GlobalStyles'
-import { ProductStyles } from '../../styles/ProductStyles'
 import ProductSearcher from '../../components/ProductSearch'
+import { ProductsList } from '../../components/ProductsList'
 import { usePackingStore } from '../../store/usePackingStore'
 import useTokenStore from '../../store/useTokenStore'
 import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
-import { ProductsList } from '../../components/ProductsList'
+import { colors } from '../../styles/GlobalStyles'
+import { ProductStyles } from '../../styles/ProductStyles'
 
 
 function ProductsPacking() {
@@ -34,25 +34,28 @@ function ProductsPacking() {
 
   return (
     <SafeAreaView style={ProductStyles.products}>
-      <ScrollView>
-        {search ? (
-          <ProductSearcher setSearch={setSearch} />
-        ) : (
-          <View style={CustomerDayStyles.title2}>
-            <Text style={ProductStyles.customerTitle}>Restaurant 1</Text>
-            <TouchableOpacity onPress={handleSearch} style={ProductStyles.icon}>
-              <Ionicons
-                name="md-search-circle-outline"
-                size={35}
-                color={colors.darkBlue}
-              />
-            </TouchableOpacity>
-          </View>
-        )}
-        {packingProducts.map((section) => (
-          <ProductsList section={section} key={section.id} />
-        ))}
-      </ScrollView>
+      {search ? (
+        <ProductSearcher setSearch={setSearch} />
+      ) : (
+        <View style={CustomerDayStyles.title2}>
+          <Text style={ProductStyles.customerTitle}>Restaurant 1</Text>
+          <TouchableOpacity onPress={handleSearch} style={ProductStyles.icon}>
+            <Ionicons
+              name="md-search-circle-outline"
+              size={35}
+              color={colors.darkBlue}
+            />
+          </TouchableOpacity>
+        </View>
+      )}
+
+      <FlatList
+        data={packingProducts}
+        keyExtractor={(item, index) => `${index}`}
+        renderItem={({ item }) => <ProductsList section={item} />}
+        scrollEnabled
+      />
+
     </SafeAreaView>
   )
 }

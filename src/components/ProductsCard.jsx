@@ -2,13 +2,13 @@ import { AntDesign } from '@expo/vector-icons'
 import React, { useState } from 'react'
 import { Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { PanGestureHandler } from 'react-native-gesture-handler'
+import mainAxios from '../../axios.Config'
+import ModalProduct from '../components/ModalProduct'
+import { insertLoading } from '../config/urls.config'
+import { usePackingStore } from '../store/usePackingStore'
+import useTokenStore from '../store/useTokenStore'
 import { GlobalStyles, colors } from '../styles/GlobalStyles'
 import { ProductStyles } from '../styles/ProductStyles'
-import mainAxios from '../../axios.Config'
-import { insertLoading } from '../config/urls.config'
-import useTokenStore from '../store/useTokenStore'
-import ModalProduct from '../components/ModalProduct'
-import { usePackingStore } from '../store/usePackingStore'
 
 function Products({ item }) {
 
