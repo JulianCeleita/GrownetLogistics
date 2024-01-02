@@ -24,7 +24,7 @@ const CustomDate = () => {
 
   const handleDatePress = () => {
     console.log('Button pressed: Date')
-    navigation.navigate('PackingScreen')
+    navigation.navigate('MyTabs')
   }
 
   const handleShowMore = () => {
