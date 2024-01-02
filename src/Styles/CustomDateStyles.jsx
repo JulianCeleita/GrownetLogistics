@@ -64,7 +64,7 @@ export const CustomDateStyles = StyleSheet.create({
   buttonText: {
     color: '#000',
     textAlign: 'center',
-    fontFamily: 'Poppins',
+    fontFamily: 'PoppinsRegular',
     fontSize: 18,
   },
 })
