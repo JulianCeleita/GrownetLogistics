@@ -1,13 +1,12 @@
-import React from 'react'
-import { View, Text, Image } from 'react-native'
-import { DeliveryStyles } from '../../Styles/DeliveryStyles'
-import { LinearGradient } from 'expo-linear-gradient'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import { TouchableOpacity } from 'react-native'
-import { GlobalStyles } from '../../Styles/GlobalStyles'
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
+import { LinearGradient } from 'expo-linear-gradient'
+import React from 'react'
+import { Text, TouchableOpacity, View } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import { DeliveryStyles } from '../../styles/DeliveryStyles'
+import { GlobalStyles } from '../../styles/GlobalStyles'
 import CircleProgress from '../../components/CircleProgress'
-
 function ShortsBulk() {
   const navigation = useNavigation()
   return (
@@ -19,10 +18,11 @@ function ShortsBulk() {
         style={DeliveryStyles.packing}
       >
         <View style={[DeliveryStyles.tittle, GlobalStyles.boxShadow]}>
-          <Image
-            style={DeliveryStyles.imageTittlePacking}
-            source={require('../../img/packingBlanco.png')}
-            alt="Loading"
+          <MaterialCommunityIcons
+            name="package-variant"
+            style={{ marginRight: 10 }}
+            size={50}
+            color={'white'}
           />
           <Text style={DeliveryStyles.textTittle}>Shorts Bulk</Text>
         </View>
@@ -31,7 +31,7 @@ function ShortsBulk() {
       <View style={DeliveryStyles.delivery}>
         <TouchableOpacity
           style={DeliveryStyles.card}
-          onPress={() => navigation.navigate('CustomerDayBulk')}
+          onPress={() => navigation.navigate('ProductsBulk')}
         >
           <CircleProgress />
           <Text style={DeliveryStyles.tittleRoute}>Ruta 1</Text>
