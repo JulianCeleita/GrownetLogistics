@@ -5,7 +5,7 @@ import { PanGestureHandler } from 'react-native-gesture-handler'
 
 import mainAxios from '../../axios.Config'
 import ModalProduct from '../components/ModalProduct'
-import { insertLoading } from '../config/urls.config'
+import { insertPacking } from '../config/urls.config'
 import { usePackingStore } from '../store/usePackingStore'
 import useTokenStore from '../store/useTokenStore'
 import { GlobalStyles, colors } from '../styles/GlobalStyles'
@@ -20,20 +20,13 @@ function Products({ item }) {
   const [pressedStates, setPressedStates] = useState({})
   const [rightStates, setRightStates] = useState({})
   const [leftStates, setLeftStates] = useState({})
-  const [quantity, setQuantity] = useState('')
+  const [quantity, setQuantity] = useState(0)
   const { packingProducts, setPackingProducts } = usePackingStore()
-
-  console.log(
-    'PressedStates',
-    pressedStates,
-    'RightStates',
-    rightStates,
-    'LeftStates',
-    leftStates,
-  )
+  const [note, setNote] = useState('')
 
   const handlePress = (itemId) => {
     setSelectedProduct(itemId)
+    handleSubmit(itemId)
     const newPressedStates = Object.assign({}, pressedStates)
     const newRightStates = { ...rightStates }
     const newLeftStates = { ...leftStates }
@@ -131,40 +124,35 @@ function Products({ item }) {
     setAddQuantity(false)
   }
 
-  const handleSubmit = async () => {
-    let quantity
-    let notes
+  const handleSubmit = async (itemId) => {
 
-    if (left) {
-      quantity = quantityLeft
-      notes = notesLeft
-    } else if (right) {
-      quantity = quantityRight
-      notes = notesRight
+    if (quantity === 0) {
+      setQuantity(item.quantity)
     }
 
     const data = {
+      note,
       quantity: parseInt(quantity, 10),
-      id: parseInt(notes, 10),
+      id: itemId,
     }
 
     console.log('data', data)
 
-    try {
-      const response = await mainAxios.post(insertLoading, data, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+    // try {
+    //   const response = await mainAxios.post(insertLoading, data, {
+    //     headers: {
+    //       Authorization: `Bearer ${token}`,
+    //     },
+    //   })
 
-      if (response.status === 200) {
-        console.log('Datos enviados correctamente', response.data)
-      } else {
-        throw new Error('Error al enviar los datos')
-      }
-    } catch (error) {
-      console.error('Hubo un error al enviar los datos: ', error)
-    }
+    //   if (response.status === 200) {
+    //     console.log('Datos enviados correctamente', response.data)
+    //   } else {
+    //     throw new Error('Error al enviar los datos')
+    //   }
+    // } catch (error) {
+    //   console.error('Hubo un error al enviar los datos: ', error)
+    // }
   }
 
   return (
@@ -248,6 +236,8 @@ function Products({ item }) {
                     />
                     <TextInput
                       style={[ProductStyles.input, { marginTop: 8 }]}
+                      value={note}
+                      onChangeText={(note) => setNote(note)}
                     />
                   </View>
                 </View>
