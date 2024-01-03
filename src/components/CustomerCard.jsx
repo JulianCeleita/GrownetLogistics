@@ -3,8 +3,10 @@ import React from 'react'
 import { CustomerDayStyles } from '../styles/CustomerDayStyles'
 import { GlobalStyles, colors } from '../styles/GlobalStyles'
 import Svg, { Circle, Text as SvgText } from 'react-native-svg'
+import { useNavigation } from '@react-navigation/native'
 
 const CustomerCard = ({ customer }) => {
+  const navigation = useNavigation()
   const radius = 33
   const strokeWidth = 10
   const circumference = 2 * Math.PI * radius
@@ -15,7 +17,7 @@ const CustomerCard = ({ customer }) => {
     navigation.navigate('ProductsPacking')
   }
   return (
-    <View style={{ alignItems: 'center' }} key={customer.id_stateOrders}>
+    <View style={{ alignItems: 'center' }}>
       <TouchableOpacity
         style={[CustomerDayStyles.card, GlobalStyles.boxShadow]}
         onPress={handleNavigateToProducts}

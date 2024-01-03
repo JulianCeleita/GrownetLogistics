@@ -18,8 +18,6 @@ import CustomerCard from '../../components/CustomerCard'
 import useOrdersByDate from '../../store/useOrdersByDateStore'
 
 function CustomerDayPacking() {
-  const navigation = useNavigation()
-
   const { OrdersByDate } = useOrdersByDate()
 
   // const isIOS = Platform.OS === 'ios'
@@ -58,7 +56,11 @@ function CustomerDayPacking() {
           </View>
         )}
         {OrdersByDate?.map((order) => {
-          return <CustomerCard customer={order} />
+          return (
+            <View key={`${order.id_stateOrders}-${order.created_date}`}>
+              <CustomerCard customer={order} />
+            </View>
+          )
         })}
       </ScrollView>
     </SafeAreaView>
