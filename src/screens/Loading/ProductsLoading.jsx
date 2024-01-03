@@ -187,22 +187,28 @@ function ProductsLoading() {
                           </Text>
                           <View style={ProductStyles.qty}>
                             <Text style={ProductStyles.textCard}>
-                              Qty: {item.quantity} {item.uom} {/*  Loaded:{' '}
+                              Qty: {item.quantity} {item.uom}{' '}
+                              {/*  Loaded:{' '}
                               {item.loaded || 0} */}
                             </Text>
                             {rightStates[item.id] ? (
                               <Text
-                              style={[
-                                ProductStyles.textCard,
-                                {
-                                  color: item.quantity - item.loaded > 0 ? colors.danger : colors.green,
-                                  marginRight: 50,
-                                },
-                              ]}
-                            >
-                              {item.quantity - item.loaded > 0 ? 'Missing -' : 'Overweight +'}{' '}
-                              {Math.abs(item.quantity - item.loaded || 0)}
-                            </Text>
+                                style={[
+                                  ProductStyles.textCard,
+                                  {
+                                    color:
+                                      item.quantity - item.loaded > 0
+                                        ? colors.danger
+                                        : colors.green,
+                                    marginRight: 50,
+                                  },
+                                ]}
+                              >
+                                {item.quantity - item.loaded > 0
+                                  ? 'Missing -'
+                                  : 'Overweight +'}{' '}
+                                {Math.abs(item.quantity - item.loaded || 0)}
+                              </Text>
                             ) : null}
                           </View>
                         </View>
@@ -240,7 +246,7 @@ function ProductsLoading() {
                           style={[
                             ProductStyles.details,
                             GlobalStyles.boxShadow,
-                            { borderColor: colors.green },
+                            { borderColor: colors.orange },
                           ]}
                         >
                           <View style={ProductStyles.information}>
@@ -291,6 +297,10 @@ function ProductsLoading() {
                     setShowModal={setShowModal}
                     declareNotAvailable={declareNotAvailable}
                     item={item}
+                    title={'Item not available'}
+                    text={
+                      ' Are you sure you want to mark this item as unavailable?'
+                    }
                   />
                 ) : null}
               </View>

@@ -19,6 +19,7 @@ export const CustomerDayStyles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 10,
+    width: '100%',
   },
   customerTitle: {
     fontSize: 22,

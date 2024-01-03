@@ -2,16 +2,15 @@ import { AntDesign } from '@expo/vector-icons'
 import React, { useState } from 'react'
 import { Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { PanGestureHandler } from 'react-native-gesture-handler'
+import mainAxios from '../../axios.Config'
+import ModalProduct from '../components/ModalProduct'
+import { insertLoading } from '../config/urls.config'
+import { usePackingStore } from '../store/usePackingStore'
+import useTokenStore from '../store/useTokenStore'
 import { GlobalStyles, colors } from '../styles/GlobalStyles'
 import { ProductStyles } from '../styles/ProductStyles'
-import mainAxios from '../../axios.Config'
-import { insertLoading } from '../config/urls.config'
-import useTokenStore from '../store/useTokenStore'
-import ModalProduct from '../components/ModalProduct'
-import { usePackingStore } from '../store/usePackingStore'
 
 function Products({ item }) {
-
   const { token } = useTokenStore()
 
   const [showModal, setShowModal] = useState(false)
@@ -22,7 +21,6 @@ function Products({ item }) {
   const [leftStates, setLeftStates] = useState({})
   const [quantity, setQuantity] = useState('')
   const { packingProducts, setPackingProducts } = usePackingStore()
-
 
   console.log(
     'PressedStates',
@@ -81,6 +79,7 @@ function Products({ item }) {
       console.log('Dezlizamos a la derecha', itemId)
     } else if (translationX < 0) {
       setShowModal(true)
+      console.log('Dezlizamos a la izquierda')
     }
   }
 
@@ -174,17 +173,14 @@ function Products({ item }) {
           onGestureEvent={(e) => handleGestureEvent(e, item.id)}
         >
           <View>
-            <View
-              style={[ProductStyles.card, GlobalStyles.boxShadow]}
-            >
+            <View style={[ProductStyles.card, GlobalStyles.boxShadow]}>
               <View style={ProductStyles.productTittle}>
                 <Text style={ProductStyles.tittleCard}>
                   {item.name} {item.packsize}
                 </Text>
-                <View style={{ ...ProductStyles.qty, flexDirection: 'column' }}>
-                  <Text style={{ ...ProductStyles.textCard, marginBottom: 3 }}>
-                    Qty: {item.quantity} {item.uom} Packed:{' '}
-                    {item.packed || 0}
+                <View style={ProductStyles.qty}>
+                  <Text style={ProductStyles.textCard}>
+                    Qty: {item.quantity}
                   </Text>
                   {rightStates[item.id] ? (
                     <Text
@@ -203,7 +199,7 @@ function Products({ item }) {
                   ProductStyles.checkBox,
                   {
                     backgroundColor: pressedStates[item.id]
-                      ? colors.green
+                      ? colors.orange
                       : rightStates[item.id]
                         ? colors.orange
                         : leftStates[item.id]
@@ -237,15 +233,8 @@ function Products({ item }) {
               >
                 <View style={ProductStyles.information}>
                   <View>
-                    <Text style={ProductStyles.textCard}>
-                      Packed:
-                    </Text>
-                    <Text
-                      style={[
-                        ProductStyles.textCard,
-                        { marginTop: 12 },
-                      ]}
-                    >
+                    <Text style={ProductStyles.textCard}>Packed:</Text>
+                    <Text style={[ProductStyles.textCard, { marginTop: 12 }]}>
                       Note:
                     </Text>
                   </View>
@@ -268,9 +257,7 @@ function Products({ item }) {
                   ]}
                   onPress={() => declareDifferentQty(item.id)}
                 >
-                  <Text style={GlobalStyles.textBtnSecundary}>
-                    Send
-                  </Text>
+                  <Text style={GlobalStyles.textBtnSecundary}>Send</Text>
                 </TouchableOpacity>
               </View>
             ) : null}
@@ -283,6 +270,8 @@ function Products({ item }) {
           setShowModal={setShowModal}
           declareNotAvailable={declareNotAvailable}
           item={item}
+          title={'Item not available'}
+          text={' Are you sure you want to mark this item as unavailable?'}
         />
       ) : null}
     </View>
