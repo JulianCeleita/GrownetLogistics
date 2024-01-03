@@ -2,6 +2,7 @@ import { AntDesign } from '@expo/vector-icons'
 import React, { useState } from 'react'
 import { Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { PanGestureHandler } from 'react-native-gesture-handler'
+
 import mainAxios from '../../axios.Config'
 import ModalProduct from '../components/ModalProduct'
 import { insertPacking } from '../config/urls.config'

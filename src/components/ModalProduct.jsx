@@ -15,6 +15,7 @@ const ModalProduct = ({
   setShowModal,
   declareNotAvailable,
   item,
+
   title,
   text,
 }) => {
