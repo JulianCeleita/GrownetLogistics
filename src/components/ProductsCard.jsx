@@ -7,8 +7,8 @@ import ModalProduct from '../components/ModalProduct'
 import { insertLoading } from '../config/urls.config'
 import { usePackingStore } from '../store/usePackingStore'
 import useTokenStore from '../store/useTokenStore'
-import { GlobalStyles, colors } from '../Styles/GlobalStyles'
-import { ProductStyles } from '../Styles/ProductStyles'
+import { GlobalStyles, colors } from '../styles/GlobalStyles'
+import { ProductStyles } from '../styles/ProductStyles'
 
 function Products({ item }) {
   const { token } = useTokenStore()
@@ -79,6 +79,7 @@ function Products({ item }) {
       console.log('Dezlizamos a la derecha', itemId)
     } else if (translationX < 0) {
       setShowModal(true)
+      console.log('Dezlizamos a la izquierda')
     }
   }
 
@@ -177,9 +178,9 @@ function Products({ item }) {
                 <Text style={ProductStyles.tittleCard}>
                   {item.name} {item.packsize}
                 </Text>
-                <View style={{ ...ProductStyles.qty, flexDirection: 'column' }}>
-                  <Text style={{ ...ProductStyles.textCard, marginBottom: 3 }}>
-                    Qty: {item.quantity} {item.uom} Packed: {item.packed || 0}
+                <View style={ProductStyles.qty}>
+                  <Text style={ProductStyles.textCard}>
+                    Qty: {item.quantity}
                   </Text>
                   {rightStates[item.id] ? (
                     <Text
@@ -198,7 +199,7 @@ function Products({ item }) {
                   ProductStyles.checkBox,
                   {
                     backgroundColor: pressedStates[item.id]
-                      ? colors.green
+                      ? colors.orange
                       : rightStates[item.id]
                         ? colors.orange
                         : leftStates[item.id]
@@ -269,6 +270,8 @@ function Products({ item }) {
           setShowModal={setShowModal}
           declareNotAvailable={declareNotAvailable}
           item={item}
+          title={'Item not available'}
+          text={' Are you sure you want to mark this item as unavailable?'}
         />
       ) : null}
     </View>

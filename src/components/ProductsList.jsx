@@ -1,7 +1,7 @@
 import React from 'react'
 import { Text, View } from 'react-native'
 import ProductsCard from '../components/ProductsCard'
-import { ProductStyles } from '../Styles/ProductStyles'
+import { ProductStyles } from '../styles/ProductStyles'
 
 export const ProductsList = ({ section }) => {
   return (

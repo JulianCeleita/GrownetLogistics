@@ -6,9 +6,9 @@ import ProductSearcher from '../../components/ProductSearch'
 import { ProductsList } from '../../components/ProductsList'
 import { usePackingStore } from '../../store/usePackingStore'
 import useTokenStore from '../../store/useTokenStore'
-import { CustomerDayStyles } from '../../Styles/CustomerDayStyles'
-import { colors } from '../../Styles/GlobalStyles'
-import { ProductStyles } from '../../Styles/ProductStyles'
+import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
+import { colors } from '../../styles/GlobalStyles'
+import { ProductStyles } from '../../styles/ProductStyles'
 
 function ProductsPacking() {
   const { packingProducts, setPackingProducts } = usePackingStore()
@@ -33,7 +33,7 @@ function ProductsPacking() {
       ) : (
         <View style={CustomerDayStyles.title2}>
           <Text style={ProductStyles.customerTitle}>Restaurant 1</Text>
-          <TouchableOpacity onPress={handleSearch} style={ProductStyles.icon}>
+          <TouchableOpacity onPress={handleSearch} style={ProductStyles.icon2}>
             <Ionicons
               name="md-search-circle-outline"
               size={35}
