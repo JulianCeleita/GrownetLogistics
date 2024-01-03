@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native'
 
 export const LoginStyles = StyleSheet.create({
   container: {
@@ -9,37 +9,34 @@ export const LoginStyles = StyleSheet.create({
   },
   logo: {
     width: 300,
-    height: 200, 
-    resizeMode: 'contain', 
+    height: 200,
+    resizeMode: 'contain',
     marginBottom: 30,
   },
   loginHeaderText: {
     color: '#ffffff',
-    fontSize: Platform.OS === 'ios' ? 18 : 15,
+    fontSize: Platform.OS === 'ios' ? 17 : 14,
     marginBottom: 30,
-    fontFamily: 'Poppins', 
+    fontFamily: 'PoppinsRegular',
   },
   input: {
-    height: 60,
-    width: '80%',
-    borderColor: 'gray',
-    borderWidth: 1,
+    width: '79%',
     backgroundColor: '#fff',
     marginBottom: 20,
     paddingHorizontal: 10,
-    borderRadius: 35,
-    fontFamily: 'Poppins',
+    paddingVertical: 15,
+    borderRadius: 15,
+    fontFamily: 'PoppinsRegular',
   },
   signInButton: {
     backgroundColor: '#144D56',
     paddingVertical: 15,
-    paddingHorizontal: 20,
+    paddingHorizontal: 30,
     borderRadius: 35,
   },
   signInButtonText: {
     color: 'white',
-    fontWeight: 'bold',
     textAlign: 'center',
-    fontFamily: 'PoppinsSemi', 
+    fontFamily: 'PoppinsSemi',
   },
-});
+})
