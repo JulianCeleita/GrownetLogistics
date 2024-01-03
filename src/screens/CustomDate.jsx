@@ -8,7 +8,6 @@ import { CustomDateStyles } from '../styles/CustomDateStyles'
 import useOrdersByDate from '../store/useOrdersByDateStore'
 import useTokenStore from '../store/useTokenStore'
 
-
 const CustomDate = () => {
   const [currentDate, setCurrentDate] = useState(moment().format('MMM DD'))
   const [currentDay, setCurrentDay] = useState(moment().format('dddd'))

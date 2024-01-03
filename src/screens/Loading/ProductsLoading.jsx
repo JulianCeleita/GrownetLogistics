@@ -7,13 +7,13 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
-import { ProductStyles } from '../../Styles/ProductStyles'
+import { ProductStyles } from '../../styles/ProductStyles'
 import ProductSearcher from '../../components/ProductSearch'
 
 import { PanGestureHandler } from 'react-native-gesture-handler'
-import { GlobalStyles, colors } from '../../Styles/GlobalStyles'
+import { GlobalStyles, colors } from '../../styles/GlobalStyles'
 import { AntDesign, Ionicons } from '@expo/vector-icons'
-import { CustomerDayStyles } from '../../Styles/CustomerDayStyles'
+import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
 import ModalProduct from '../../components/ModalProduct'
 import useLoadingStore from '../../store/useLoadingStore'
 import useTokenStore from '../../store/useTokenStore'

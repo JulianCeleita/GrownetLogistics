@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react'
 import { FlatList, Text, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-
 import ProductSearcher from '../../components/ProductSearch'
 import { ProductsList } from '../../components/ProductsList'
 import { usePackingStore } from '../../store/usePackingStore'
@@ -12,7 +11,6 @@ import useTokenStore from '../../store/useTokenStore'
 import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
 import { colors } from '../../styles/GlobalStyles'
 import { ProductStyles } from '../../styles/ProductStyles'
-
 
 function ProductsPacking() {
   const { packingProducts, setPackingProducts } = usePackingStore()
@@ -32,7 +30,6 @@ function ProductsPacking() {
 
   return (
     <SafeAreaView style={ProductStyles.products}>
-
       {search ? (
         <ProductSearcher setSearch={setSearch} />
       ) : (
@@ -54,7 +51,6 @@ function ProductsPacking() {
         renderItem={({ item }) => <ProductsList section={item} />}
         scrollEnabled
       />
-
     </SafeAreaView>
   )
 }

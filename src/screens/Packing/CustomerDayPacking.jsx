@@ -20,10 +20,7 @@ import useOrdersByDate from '../../store/useOrdersByDateStore'
 function CustomerDayPacking() {
   const navigation = useNavigation()
 
-
-
   const { OrdersByDate } = useOrdersByDate()
-
 
   // const isIOS = Platform.OS === 'ios'
   // const { width, height } = Dimensions.get('window')
