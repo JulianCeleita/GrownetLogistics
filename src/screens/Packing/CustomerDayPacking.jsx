@@ -9,14 +9,18 @@ import {
   Dimensions,
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
+
 import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
 import { colors } from '../../styles/GlobalStyles'
+
 import CustomerDaySearch from '../../components/CustomerDaySearch'
 import CustomerCard from '../../components/CustomerCard'
 import useOrdersByDate from '../../store/useOrdersByDateStore'
 
 function CustomerDayPacking() {
   const navigation = useNavigation()
+
+
 
   const { OrdersByDate } = useOrdersByDate()
 

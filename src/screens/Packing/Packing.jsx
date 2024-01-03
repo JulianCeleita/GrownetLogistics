@@ -1,10 +1,10 @@
 import React from 'react'
 import { View, Text, Image, ScrollView } from 'react-native'
-import { DeliveryStyles } from '../../styles/DeliveryStyles'
+import { DeliveryStyles } from '../../Styles/DeliveryStyles'
 import { LinearGradient } from 'expo-linear-gradient'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { TouchableOpacity } from 'react-native'
-import { GlobalStyles } from '../../styles/GlobalStyles'
+import { GlobalStyles } from '../../Styles/GlobalStyles'
 import { useNavigation } from '@react-navigation/native'
 import CircleProgress from '../../components/CircleProgress'
 

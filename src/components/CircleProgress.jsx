@@ -5,7 +5,7 @@ import Svg, {
   ClipPath,
   Image as SvgImage,
 } from 'react-native-svg'
-import { DeliveryStyles } from '../styles/DeliveryStyles'
+import { DeliveryStyles } from '../Styles/DeliveryStyles'
 
 function CircleProgress() {
   const radius = 40
