@@ -7,13 +7,13 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
-import { ProductStyles } from '../../styles/ProductStyles'
+import { ProductStyles } from '../../Styles/ProductStyles'
 import ProductSearcher from '../../components/ProductSearch'
 
 import { PanGestureHandler } from 'react-native-gesture-handler'
-import { GlobalStyles, colors } from '../../styles/GlobalStyles'
+import { GlobalStyles, colors } from '../../Styles/GlobalStyles'
 import { AntDesign, Ionicons } from '@expo/vector-icons'
-import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
+import { CustomerDayStyles } from '../../Styles/CustomerDayStyles'
 import ModalProduct from '../../components/ModalProduct'
 import useLoadingStore from '../../store/useLoadingStore'
 import useTokenStore from '../../store/useTokenStore'
@@ -187,22 +187,28 @@ function ProductsLoading() {
                           </Text>
                           <View style={ProductStyles.qty}>
                             <Text style={ProductStyles.textCard}>
-                              Qty: {item.quantity} {item.uom} {/*  Loaded:{' '}
+                              Qty: {item.quantity} {item.uom}{' '}
+                              {/*  Loaded:{' '}
                               {item.loaded || 0} */}
                             </Text>
                             {rightStates[item.id] ? (
                               <Text
-                              style={[
-                                ProductStyles.textCard,
-                                {
-                                  color: item.quantity - item.loaded > 0 ? colors.danger : colors.green,
-                                  marginRight: 50,
-                                },
-                              ]}
-                            >
-                              {item.quantity - item.loaded > 0 ? 'Missing -' : 'Overweight +'}{' '}
-                              {Math.abs(item.quantity - item.loaded || 0)}
-                            </Text>
+                                style={[
+                                  ProductStyles.textCard,
+                                  {
+                                    color:
+                                      item.quantity - item.loaded > 0
+                                        ? colors.danger
+                                        : colors.green,
+                                    marginRight: 50,
+                                  },
+                                ]}
+                              >
+                                {item.quantity - item.loaded > 0
+                                  ? 'Missing -'
+                                  : 'Overweight +'}{' '}
+                                {Math.abs(item.quantity - item.loaded || 0)}
+                              </Text>
                             ) : null}
                           </View>
                         </View>

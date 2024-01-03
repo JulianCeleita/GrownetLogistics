@@ -7,11 +7,10 @@ import ModalProduct from '../components/ModalProduct'
 import { insertLoading } from '../config/urls.config'
 import { usePackingStore } from '../store/usePackingStore'
 import useTokenStore from '../store/useTokenStore'
-import { GlobalStyles, colors } from '../styles/GlobalStyles'
-import { ProductStyles } from '../styles/ProductStyles'
+import { GlobalStyles, colors } from '../Styles/GlobalStyles'
+import { ProductStyles } from '../Styles/ProductStyles'
 
 function Products({ item }) {
-
   const { token } = useTokenStore()
 
   const [showModal, setShowModal] = useState(false)
@@ -22,7 +21,6 @@ function Products({ item }) {
   const [leftStates, setLeftStates] = useState({})
   const [quantity, setQuantity] = useState('')
   const { packingProducts, setPackingProducts } = usePackingStore()
-
 
   console.log(
     'PressedStates',
@@ -174,17 +172,14 @@ function Products({ item }) {
           onGestureEvent={(e) => handleGestureEvent(e, item.id)}
         >
           <View>
-            <View
-              style={[ProductStyles.card, GlobalStyles.boxShadow]}
-            >
+            <View style={[ProductStyles.card, GlobalStyles.boxShadow]}>
               <View style={ProductStyles.productTittle}>
                 <Text style={ProductStyles.tittleCard}>
                   {item.name} {item.packsize}
                 </Text>
                 <View style={{ ...ProductStyles.qty, flexDirection: 'column' }}>
                   <Text style={{ ...ProductStyles.textCard, marginBottom: 3 }}>
-                    Qty: {item.quantity} {item.uom} Packed:{' '}
-                    {item.packed || 0}
+                    Qty: {item.quantity} {item.uom} Packed: {item.packed || 0}
                   </Text>
                   {rightStates[item.id] ? (
                     <Text
@@ -237,15 +232,8 @@ function Products({ item }) {
               >
                 <View style={ProductStyles.information}>
                   <View>
-                    <Text style={ProductStyles.textCard}>
-                      Packed:
-                    </Text>
-                    <Text
-                      style={[
-                        ProductStyles.textCard,
-                        { marginTop: 12 },
-                      ]}
-                    >
+                    <Text style={ProductStyles.textCard}>Packed:</Text>
+                    <Text style={[ProductStyles.textCard, { marginTop: 12 }]}>
                       Note:
                     </Text>
                   </View>
@@ -268,9 +256,7 @@ function Products({ item }) {
                   ]}
                   onPress={() => declareDifferentQty(item.id)}
                 >
-                  <Text style={GlobalStyles.textBtnSecundary}>
-                    Send
-                  </Text>
+                  <Text style={GlobalStyles.textBtnSecundary}>Send</Text>
                 </TouchableOpacity>
               </View>
             ) : null}
