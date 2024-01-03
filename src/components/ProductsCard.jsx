@@ -9,8 +9,8 @@ import {
   TextInput,
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { GlobalStyles, colors } from '../Styles/GlobalStyles'
-import { ProductStyles } from '../Styles/ProductStyles'
+import { GlobalStyles, colors } from '../styles/GlobalStyles'
+import { ProductStyles } from '../styles/ProductStyles'
 import { PanGestureHandler, State } from 'react-native-gesture-handler'
 
 function Products() {

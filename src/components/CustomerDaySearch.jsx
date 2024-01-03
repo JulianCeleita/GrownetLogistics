@@ -1,7 +1,7 @@
 import { Feather } from '@expo/vector-icons'
 import React from 'react'
 import { TextInput, TouchableOpacity, View } from 'react-native'
-import { ProductStyles, SearchStyles } from '../Styles/ProductStyles'
+import { ProductStyles, SearchStyles } from '../styles/ProductStyles'
 function CustomerDaySearch() {
   return (
     <View style={SearchStyles.containerSearch}>

@@ -25,7 +25,7 @@ export const LoginStyles = StyleSheet.create({
     marginBottom: 20,
     paddingHorizontal: 10,
     paddingVertical: 15,
-    borderRadius: 15,
+    borderRadius: 50,
     fontFamily: 'PoppinsRegular',
   },
   signInButton: {

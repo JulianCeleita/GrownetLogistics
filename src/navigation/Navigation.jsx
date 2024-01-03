@@ -11,7 +11,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import React, { useEffect } from 'react'
-import { colors } from '../Styles/GlobalStyles'
+import { colors } from '../styles/GlobalStyles'
 import CustomerDayLoading from '../screens/Loading/CustomerDayLoading'
 import Loading from '../screens/Loading/Loading'
 import Packing from '../screens/Packing/Packing'
@@ -31,8 +31,10 @@ const Tab = createBottomTabNavigator()
 const Stack = createNativeStackNavigator()
 function StackLogin() {
   return (
-    <Stack.Navigator initialRouteName="LoginPage" headerMode="none"
-    screenOptions={{ headerShown: false }}
+    <Stack.Navigator
+      initialRouteName="LoginPage"
+      headerMode="none"
+      screenOptions={{ headerShown: false }}
     >
       <Stack.Screen name="LoginPage" component={LoginPage} />
       <Stack.Screen name="ConfirmationPage" component={ConfirmationLogin} />
@@ -172,4 +174,3 @@ export default function Navigation() {
     </NavigationContainer>
   )
 }
-

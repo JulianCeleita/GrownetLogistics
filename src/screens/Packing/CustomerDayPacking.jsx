@@ -9,16 +9,16 @@ import {
   View,
 } from 'react-native'
 import Svg, { Circle, Text as SvgText } from 'react-native-svg'
-import { CustomerDayStyles } from '../../Styles/CustomerDayStyles'
-import { DeliveryStyles } from '../../Styles/DeliveryStyles'
-import { GlobalStyles, colors } from '../../Styles/GlobalStyles'
+import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
+import { DeliveryStyles } from '../../styles/DeliveryStyles'
+import { GlobalStyles, colors } from '../../styles/GlobalStyles'
 import CustomerDaySearch from '../../components/CustomerDaySearch'
 
 function CustomerDayPacking() {
   const navigation = useNavigation()
   const isIOS = Platform.OS === 'ios'
   const { width, height } = Dimensions.get('window')
-  
+
   const titleStyle = {
     ...DeliveryStyles.tittle,
     ...GlobalStyles.boxShadow,
@@ -43,7 +43,7 @@ function CustomerDayPacking() {
         end={{ x: 1, y: 0.5 }}
         style={[
           DeliveryStyles.packing,
-          Platform.OS === 'ios' && { paddingTop: 30 }, 
+          Platform.OS === 'ios' && { paddingTop: 30 },
         ]}
       >
         <View style={titleStyle}>

@@ -1,7 +1,7 @@
 import { Feather } from '@expo/vector-icons'
 import React from 'react'
 import { TextInput, TouchableOpacity, View } from 'react-native'
-import { SearchStyles } from '../Styles/ProductStyles'
+import { SearchStyles } from '../styles/ProductStyles'
 
 function ProductSearcher() {
   return (
