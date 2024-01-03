@@ -103,6 +103,10 @@ export const ProductStyles = StyleSheet.create({
     position: 'absolute',
     right: 0,
   },
+  icon2: {
+    position: 'absolute',
+    right: 26,
+  },
   customerTitle: {
     fontSize: 22,
     color: colors.bluePrimary,
