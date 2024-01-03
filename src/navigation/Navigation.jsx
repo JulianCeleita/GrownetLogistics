@@ -48,10 +48,9 @@ function StackLogin() {
 function StackPacking() {
   return (
     <Stack.Navigator
-      initialRouteName="CustomDate"
+      initialRouteName="PackingScreen"
       screenOptions={{ headerShown: false }}
     >
-      <Stack.Screen name="CustomDate" component={CustomDate} />
       <Stack.Screen name="PackingScreen" component={Packing} />
       <Stack.Screen name="CustomerDayPacking" component={CustomerDayPacking} />
       <Stack.Screen name="ProductsPacking" component={ProductsPacking} />
@@ -176,9 +175,20 @@ export default function Navigation() {
   }
   return (
     <NavigationContainer>
-      {/* TODO DEJAR ESTA LOGICA PARA EL MENU INFERIOR */}
-      {/* {token ? <MyTabs /> : <StackLogin />} */}
-      <MyTabs />
+      <Stack.Navigator initialRouteName="CustomDate">
+        {/* TODO DEJAR ESTA LOGICA PARA EL MENU INFERIOR */}
+        {/* {token ? <MyTabs /> : <StackLogin />} */}
+        <Stack.Screen
+          name="CustomDate"
+          component={CustomDate}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="MyTabs"
+          component={MyTabs}
+          options={{ headerShown: false }}
+        />
+      </Stack.Navigator>
     </NavigationContainer>
   )
 }

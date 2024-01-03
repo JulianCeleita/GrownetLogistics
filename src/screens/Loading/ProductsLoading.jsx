@@ -246,7 +246,7 @@ function ProductsLoading() {
                           style={[
                             ProductStyles.details,
                             GlobalStyles.boxShadow,
-                            { borderColor: colors.green },
+                            { borderColor: colors.orange },
                           ]}
                         >
                           <View style={ProductStyles.information}>
@@ -297,6 +297,10 @@ function ProductsLoading() {
                     setShowModal={setShowModal}
                     declareNotAvailable={declareNotAvailable}
                     item={item}
+                    title={'Item not available'}
+                    text={
+                      ' Are you sure you want to mark this item as unavailable?'
+                    }
                   />
                 ) : null}
               </View>

@@ -3,13 +3,19 @@ import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native'
 import FechaIcon from '../img/Fecha.png'
-import { CustomDateStyles } from '../Styles/CustomDateStyles'
+
+import { CustomDateStyles } from '../styles/CustomDateStyles'
+import useOrdersByDate from '../store/useOrdersByDateStore'
+import useTokenStore from '../store/useTokenStore'
+
 
 const CustomDate = () => {
   const [currentDate, setCurrentDate] = useState(moment().format('MMM DD'))
   const [currentDay, setCurrentDay] = useState(moment().format('dddd'))
   const [showMore, setShowMore] = useState(false)
   const navigation = useNavigation()
+  const { setOrdersByDate } = useOrdersByDate()
+  const { token } = useTokenStore()
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -21,10 +27,13 @@ const CustomDate = () => {
       clearInterval(interval)
     }
   }, [])
+  useEffect(() => {
+    setOrdersByDate(token)
+  }, [])
 
   const handleDatePress = () => {
     console.log('Button pressed: Date')
-    navigation.navigate('PackingScreen')
+    navigation.navigate('MyTabs')
   }
 
   const handleShowMore = () => {

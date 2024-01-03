@@ -11,7 +11,9 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from 'react-native'
-import { LoginStyles } from '../../Styles/LoginStyles'
+
+import { LoginStyles } from '../../styles/LoginStyles'
+
 import logo from '../../img/Logo_Blanco.png'
 import { useNavigation } from '@react-navigation/native'
 

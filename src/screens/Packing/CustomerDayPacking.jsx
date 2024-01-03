@@ -9,37 +9,37 @@ import {
   Dimensions,
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import Svg, { Circle, Text as SvgText } from 'react-native-svg'
-import { CustomerDayStyles } from '../../Styles/CustomerDayStyles'
-import { DeliveryStyles } from '../../Styles/DeliveryStyles'
-import { GlobalStyles, colors } from '../../Styles/GlobalStyles'
+
+import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
+import { colors } from '../../styles/GlobalStyles'
+
 import CustomerDaySearch from '../../components/CustomerDaySearch'
+import CustomerCard from '../../components/CustomerCard'
+import useOrdersByDate from '../../store/useOrdersByDateStore'
 
 function CustomerDayPacking() {
   const navigation = useNavigation()
-  const isIOS = Platform.OS === 'ios'
-  const { width, height } = Dimensions.get('window')
 
-  const titleStyle = {
-    ...DeliveryStyles.tittle,
-    ...GlobalStyles.boxShadow,
-    elevation: 5,
-    zIndex: 5,
-  }
+
+
+  const { OrdersByDate } = useOrdersByDate()
+
+
+  // const isIOS = Platform.OS === 'ios'
+  // const { width, height } = Dimensions.get('window')
+
+  // const titleStyle = {
+  //   ...DeliveryStyles.tittle,
+  //   ...GlobalStyles.boxShadow,
+  //   elevation: 5,
+  //   zIndex: 5,
+  // }
   const [search, setSearch] = useState(false)
 
-  const radius = 33
-  const strokeWidth = 10
-  const circumference = 2 * Math.PI * radius
-  const percentage = 60
-  const strokeDashoffset = circumference - (percentage / 100) * circumference
-
-  const handleNavigateToProducts = () => {
-    navigation.navigate('ProductsPacking')
-  }
   const handleSearch = () => {
     setSearch(true)
   }
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
       <ScrollView>
@@ -60,53 +60,9 @@ function CustomerDayPacking() {
             </TouchableOpacity>
           </View>
         )}
-        <View style={{ alignItems: 'center' }}>
-          <TouchableOpacity
-            style={[CustomerDayStyles.card, GlobalStyles.boxShadow]}
-            onPress={handleNavigateToProducts}
-          >
-            <View style={CustomerDayStyles.cardsLayout}>
-              <Svg height={radius * 2} width={radius * 2}>
-                <Circle
-                  cx={radius}
-                  cy={radius}
-                  r={radius - strokeWidth / 2}
-                  fill="transparent"
-                  stroke="#8FDE9B"
-                  strokeWidth={strokeWidth}
-                  strokeDasharray={`${circumference} ${circumference}`}
-                  strokeDashoffset={0}
-                />
-                <Circle
-                  cx={radius}
-                  cy={radius}
-                  r={radius - strokeWidth / 2}
-                  fill="transparent"
-                  stroke="#62C471"
-                  strokeWidth={strokeWidth}
-                  strokeDasharray={`${circumference} ${circumference}`}
-                  strokeDashoffset={strokeDashoffset}
-                />
-                <SvgText
-                  x={radius - 6}
-                  y={radius + 6}
-                  textAnchor="middle"
-                  stroke="#00478C"
-                  fontSize="16"
-                  fill={colors.darkBlue}
-                >
-                  {percentage}%
-                </SvgText>
-              </Svg>
-            </View>
-            <View style={CustomerDayStyles.cardText}>
-              <Text style={CustomerDayStyles.titleCustomer}>
-                (1) Customer 1:
-              </Text>
-              <Text style={CustomerDayStyles.textCustomer}>152659</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
+        {OrdersByDate?.map((order) => {
+          return <CustomerCard customer={order} />
+        })}
       </ScrollView>
     </SafeAreaView>
   )

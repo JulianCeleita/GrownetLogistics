@@ -15,6 +15,10 @@ const ModalProduct = ({
   setShowModal,
   declareNotAvailable,
   item,
+
+  title,
+  text,
+
 }) => {
   const confirm = () => {
     declareNotAvailable(item.id)
@@ -35,10 +39,8 @@ const ModalProduct = ({
           <View style={ModalStyle.centeredView}>
             <View style={ModalStyle.modalView}>
               <MaterialIcons name="error-outline" size={45} color="#ee6055" />
-              <Text style={ModalStyle.modalTextTitle}>Item not available</Text>
-              <Text style={ModalStyle.modalText}>
-                Are you sure you want to mark this item as unavailable?
-              </Text>
+              <Text style={ModalStyle.modalTextTitle}>{title}</Text>
+              <Text style={ModalStyle.modalText}>{text}</Text>
               <View style={[ModalStyle.buttons, { marginTop: 10 }]}>
                 <TouchableOpacity
                   onPress={confirm}
