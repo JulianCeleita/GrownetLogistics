@@ -9,13 +9,13 @@ import {
 } from 'react-native'
 import { PanGestureHandler } from 'react-native-gesture-handler'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { GlobalStyles, colors } from '../../styles/GlobalStyles'
-import { ProductStyles } from '../../styles/ProductStyles'
+import { GlobalStyles, colors } from '../../Styles/GlobalStyles'
+import { ProductStyles } from '../../Styles/ProductStyles'
 import ProductSearcher from '../../components/ProductSearch'
 import ProductsCard from '../../components/ProductsCard'
 import { usePackingStore } from '../../store/usePackingStore'
 import useTokenStore from '../../store/useTokenStore'
-import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
+import { CustomerDayStyles } from '../../Styles/CustomerDayStyles'
 import ModalProduct from '../../components/ModalProduct'
 
 function ProductsPacking() {
@@ -198,8 +198,7 @@ function ProductsPacking() {
                                   { color: colors.danger, marginRight: 50 },
                                 ]}
                               >
-                                Missing{' '}
-                                {item.quantity - item.packed || 0}
+                                Missing {item.quantity - item.packed || 0}
                               </Text>
                             ) : null}
                           </View>

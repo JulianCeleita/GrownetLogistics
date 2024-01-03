@@ -1,19 +1,25 @@
 import { Ionicons } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
 import React, { useState } from 'react'
-import { ScrollView, Text, TouchableOpacity, View, Dimensions } from 'react-native'
+import {
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+  Dimensions,
+} from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Svg, { Circle, Text as SvgText } from 'react-native-svg'
-import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
-import { DeliveryStyles } from '../../styles/DeliveryStyles'
-import { GlobalStyles, colors } from '../../styles/GlobalStyles'
+import { CustomerDayStyles } from '../../Styles/CustomerDayStyles'
+import { DeliveryStyles } from '../../Styles/DeliveryStyles'
+import { GlobalStyles, colors } from '../../Styles/GlobalStyles'
 import CustomerDaySearch from '../../components/CustomerDaySearch'
 
 function CustomerDayPacking() {
   const navigation = useNavigation()
   const isIOS = Platform.OS === 'ios'
   const { width, height } = Dimensions.get('window')
-  
+
   const titleStyle = {
     ...DeliveryStyles.tittle,
     ...GlobalStyles.boxShadow,

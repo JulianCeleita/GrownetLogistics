@@ -3,7 +3,7 @@ import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native'
 import FechaIcon from '../img/Fecha.png'
-import { CustomDateStyles } from '../styles/CustomDateStyles'
+import { CustomDateStyles } from '../Styles/CustomDateStyles'
 
 const CustomDate = () => {
   const [currentDate, setCurrentDate] = useState(moment().format('MMM DD'))
