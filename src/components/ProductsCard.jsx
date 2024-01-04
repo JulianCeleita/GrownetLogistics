@@ -11,7 +11,7 @@ import useTokenStore from '../store/useTokenStore'
 import { GlobalStyles, colors } from '../styles/GlobalStyles'
 import { ProductStyles } from '../styles/ProductStyles'
 
-function Products({ item }) {
+function Products({ item, setEnableScroll }) {
   const { token } = useTokenStore()
 
   const [showModal, setShowModal] = useState(false)
@@ -23,6 +23,8 @@ function Products({ item }) {
   const [quantity, setQuantity] = useState(item.quantity)
   const { packingProducts, setPackingProducts } = usePackingStore()
   const [note, setNote] = useState('')
+  const positiveOffset = 30
+  const negativeOffset = -30
 
   useEffect(() => {
     setQuantity(item.quantity)
@@ -60,6 +62,7 @@ function Products({ item }) {
 
   const handleGestureEvent = (event, itemId) => {
     const { translationX } = event.nativeEvent
+    console.log('Translation X:', translationX)
     setSelectedProduct(itemId)
 
     if (translationX > 0) {
@@ -70,6 +73,7 @@ function Products({ item }) {
       newLeftStates[itemId] = false
 
       setPressedStates(newPressedStates)
+
       setLeftStates(newLeftStates)
       setAddQuantity(true)
       setQuantity('')
@@ -162,8 +166,7 @@ function Products({ item }) {
         <PanGestureHandler
           enabled={!addQuantity}
           onGestureEvent={(e) => handleGestureEvent(e, item.id)}
-          minDeltaX={600}
-          minDeltaY={120}
+          activeOffsetX={[negativeOffset, positiveOffset]}
         >
           <View>
             <View style={[ProductStyles.card, GlobalStyles.boxShadow]}>
