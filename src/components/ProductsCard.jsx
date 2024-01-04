@@ -9,7 +9,9 @@ import { useProductSubmit } from '../hooks/useProductSubmit'
 import { GlobalStyles, colors } from '../styles/GlobalStyles'
 import { ProductStyles } from '../styles/ProductStyles'
 
-function Products({ item, setEnableScroll }) {
+
+function Products({ item }) {
+
   const positiveOffset = 30
   const negativeOffset = -30
 
@@ -32,7 +34,7 @@ function Products({ item, setEnableScroll }) {
     declareDifferentQty,
   } = useCardEvents(item.quantity)
 
-  console.log('pressedStates', pressedStates)
+
   return (
     <View style={{ alignItems: 'center' }} key={item.id}>
       <TouchableOpacity
