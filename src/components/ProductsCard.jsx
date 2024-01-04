@@ -13,7 +13,7 @@ import { ProductStyles } from '../styles/ProductStyles'
 import { useCardState } from '../hooks/useCardState'
 import { useProductSubmit } from '../hooks/useProductSubmit'
 
-function Products({ item }) {
+function Products({ item, setEnableScroll }) {
   const { token } = useTokenStore()
 
   const [showModal, setShowModal] = useState(false)
@@ -26,6 +26,8 @@ function Products({ item }) {
   const { packingProducts, setPackingProducts } = usePackingStore()
   const [note, setNote] = useState('')
   const { handleSubmit } = useProductSubmit()
+  const positiveOffset = 30
+  const negativeOffset = -30
 
   const {
     pressedStates,
@@ -33,14 +35,12 @@ function Products({ item }) {
     leftStates,
     setPressedStates,
     setRightStates,
-    setLeftStates
+    setLeftStates,
   } = useCardState()
-
 
   // useEffect(() => {
   //   setQuantity(item.quantity)
   // }, [item.quantity])
-
 
   const handlePress = (itemId) => {
     setSelectedProduct(itemId)
@@ -74,6 +74,7 @@ function Products({ item }) {
 
   const handleGestureEvent = (event, itemId) => {
     const { translationX } = event.nativeEvent
+    console.log('Translation X:', translationX)
     setSelectedProduct(itemId)
 
     if (translationX > 0) {
@@ -84,6 +85,7 @@ function Products({ item }) {
       newLeftStates[itemId] = false
 
       setPressedStates(newPressedStates)
+
       setLeftStates(newLeftStates)
       setAddQuantity(true)
       setQuantity('')
@@ -142,15 +144,13 @@ function Products({ item }) {
     setAddQuantity(false)
   }
 
-
   return (
     <View style={{ alignItems: 'center' }} key={item.id}>
       <TouchableOpacity onPress={() => handlePress(item.id)}>
         <PanGestureHandler
           enabled={!addQuantity}
           onGestureEvent={(e) => handleGestureEvent(e, item.id)}
-          minDeltaX={600}
-          minDeltaY={120}
+          activeOffsetX={[negativeOffset, positiveOffset]}
         >
           <View>
             <View style={[ProductStyles.card, GlobalStyles.boxShadow]}>
