@@ -1,3 +1,5 @@
+//LOGIN
+export const login = process.env.EXPO_PUBLIC_LOGIN
 //PACKING
 export const productsPacking = process.env.EXPO_PUBLIC_PRODUCTS_PACKING
 export const insertPacking = process.env.EXPO_PUBLIC_INSERT_PACKING
