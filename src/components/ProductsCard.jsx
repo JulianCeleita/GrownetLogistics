@@ -237,7 +237,10 @@ function Products({ item }) {
                     GlobalStyles.btnPrimary,
                     { width: 150, marginTop: 10, paddingVertical: 8 },
                   ]}
-                  onPress={() => declareDifferentQty(item.id)}
+                  onPress={() => {
+                    declareDifferentQty(item.id)
+                    handleSubmit(item.id, quantity, note)
+                  }}
                 >
                   <Text style={GlobalStyles.textBtnSecundary}>Send</Text>
                 </TouchableOpacity>
