@@ -16,7 +16,7 @@ import CustomDate from '../screens/CustomDate'
 import CustomerDayLoading from '../screens/Loading/CustomerDayLoading'
 import Loading from '../screens/Loading/Loading'
 import ProductsLoading from '../screens/Loading/ProductsLoading'
-import ConfirmationLogin from '../screens/Login/ConfirmationLogin'
+import PinLogin from '../screens/Login/PinLogin'
 import LoginPage from '../screens/Login/LoginPage'
 import CustomerDayPacking from '../screens/Packing/CustomerDayPacking'
 import Packing from '../screens/Packing/Packing'
@@ -39,7 +39,7 @@ function StackLogin() {
       screenOptions={{ headerShown: false }}
     >
       <Stack.Screen name="LoginPage" component={LoginPage} />
-      <Stack.Screen name="ConfirmationPage" component={ConfirmationLogin} />
+      <Stack.Screen name="PinPage" component={PinLogin} />
       <Stack.Screen name="PackingScreen" component={StackPacking} />
     </Stack.Navigator>
   )
