@@ -1,33 +1,31 @@
-import React, { useRef, useState } from 'react'
+import { useNavigation } from '@react-navigation/native'
+import React, { useState } from 'react'
 import {
-  StatusBar,
-  View,
-  TextInput,
-  TouchableOpacity,
   Image,
-  Text,
+  Keyboard,
   KeyboardAvoidingView,
   Platform,
+  StatusBar,
+  Text,
+  TextInput,
+  TouchableOpacity,
   TouchableWithoutFeedback,
-  Keyboard,
+  View,
 } from 'react-native'
-import { LoginStyles } from '../../styles/LoginStyles'
-import logo from '../../img/Logo_Blanco.png'
-import { useNavigation } from '@react-navigation/native'
-import useTokenStore from '../../store/useTokenStore'
 import mainAxios from '../../../axios.config.js'
-import { login } from '../../config/urls.config'
 import ModalAlert from '../../components/ModalAlert'
+import { login } from '../../config/urls.config'
+import logo from '../../img/Logo_Blanco.png'
+import useTokenStore from '../../store/useTokenStore'
+import { LoginStyles } from '../../styles/LoginStyles'
 
 const LoginPage = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  // TODO PONER EL MODAL DE ERROR
   const [showModal, setShowModal] = useState(false)
   const [loading, setLoading] = useState(false)
-  // TODO PONER EL MODAL DE EMPTY
   const [showEmptyInputModal, setShowEmptyInputModal] = useState(false)
-  const { token, setToken } = useTokenStore()
+  const { setToken } = useTokenStore()
   const navigation = useNavigation()
 
   const handleSignIn = async () => {
