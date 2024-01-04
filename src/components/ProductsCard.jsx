@@ -5,32 +5,46 @@ import { PanGestureHandler } from 'react-native-gesture-handler'
 
 import mainAxios from '../../axios.Config'
 import ModalProduct from '../components/ModalProduct'
-import { insertPacking } from '../config/urls.config'
+import { insertLoading, insertPacking } from '../config/urls.config'
 import { usePackingStore } from '../store/usePackingStore'
 import useTokenStore from '../store/useTokenStore'
 import { GlobalStyles, colors } from '../styles/GlobalStyles'
 import { ProductStyles } from '../styles/ProductStyles'
+import { useCardState } from '../hooks/useCardState'
+import { useProductSubmit } from '../hooks/useProductSubmit'
 
-function Products({ item }) {
+function Products({ item, setEnableScroll }) {
   const { token } = useTokenStore()
 
   const [showModal, setShowModal] = useState(false)
   const [selectedProduct, setSelectedProduct] = useState(null)
   const [addQuantity, setAddQuantity] = useState(false)
-  const [pressedStates, setPressedStates] = useState({})
-  const [rightStates, setRightStates] = useState({})
-  const [leftStates, setLeftStates] = useState({})
+  // const [pressedStates, setPressedStates] = useState({})
+  // const [rightStates, setRightStates] = useState({})
+  // const [leftStates, setLeftStates] = useState({})
   const [quantity, setQuantity] = useState(item.quantity)
   const { packingProducts, setPackingProducts } = usePackingStore()
   const [note, setNote] = useState('')
+  const { handleSubmit } = useProductSubmit()
+  const positiveOffset = 30
+  const negativeOffset = -30
 
-  useEffect(() => {
-    setQuantity(item.quantity)
-  }, [item.quantity])
+  const {
+    pressedStates,
+    rightStates,
+    leftStates,
+    setPressedStates,
+    setRightStates,
+    setLeftStates,
+  } = useCardState()
+
+  // useEffect(() => {
+  //   setQuantity(item.quantity)
+  // }, [item.quantity])
 
   const handlePress = (itemId) => {
     setSelectedProduct(itemId)
-    handleSubmit(itemId)
+    handleSubmit(itemId, quantity, note)
     const newPressedStates = Object.assign({}, pressedStates)
     const newRightStates = { ...rightStates }
     const newLeftStates = { ...leftStates }
@@ -60,6 +74,7 @@ function Products({ item }) {
 
   const handleGestureEvent = (event, itemId) => {
     const { translationX } = event.nativeEvent
+    console.log('Translation X:', translationX)
     setSelectedProduct(itemId)
 
     if (translationX > 0) {
@@ -70,6 +85,7 @@ function Products({ item }) {
       newLeftStates[itemId] = false
 
       setPressedStates(newPressedStates)
+
       setLeftStates(newLeftStates)
       setAddQuantity(true)
       setQuantity('')
@@ -128,39 +144,13 @@ function Products({ item }) {
     setAddQuantity(false)
   }
 
-  const handleSubmit = async (itemId) => {
-    console.log('item', item.quantity)
-
-    const data = {
-      note,
-      quantity: quantity,
-      id: itemId,
-    }
-
-    console.log('data', data)
-
-    // try {
-    //   const response = await mainAxios.post(insertLoading, data, {
-    //     headers: {
-    //       Authorization: `Bearer ${token}`,
-    //     },
-    //   })
-
-    //   if (response.status === 200) {
-    //     console.log('Datos enviados correctamente', response.data)
-    //   } else {
-    //     throw new Error('Error al enviar los datos')
-    //   }
-    // } catch (error) {
-    //   console.error('Hubo un error al enviar los datos: ', error)
-    // }
-  }
-
   return (
     <View style={{ alignItems: 'center' }} key={item.id}>
       <TouchableOpacity onPress={() => handlePress(item.id)}>
         <PanGestureHandler
+          enabled={!addQuantity}
           onGestureEvent={(e) => handleGestureEvent(e, item.id)}
+          activeOffsetX={[negativeOffset, positiveOffset]}
         >
           <View>
             <View style={[ProductStyles.card, GlobalStyles.boxShadow]}>
@@ -247,7 +237,10 @@ function Products({ item }) {
                     GlobalStyles.btnPrimary,
                     { width: 150, marginTop: 10, paddingVertical: 8 },
                   ]}
-                  onPress={() => declareDifferentQty(item.id)}
+                  onPress={() => {
+                    declareDifferentQty(item.id)
+                    handleSubmit(item.id, quantity, note)
+                  }}
                 >
                   <Text style={GlobalStyles.textBtnSecundary}>Send</Text>
                 </TouchableOpacity>
@@ -262,7 +255,7 @@ function Products({ item }) {
           setShowModal={setShowModal}
           declareNotAvailable={declareNotAvailable}
           item={item}
-          title={'Item not available'}
+          title={item.name + ' not available'}
           text={' Are you sure you want to mark this item as unavailable?'}
         />
       ) : null}

@@ -9,6 +9,7 @@ import {
 import { ModalStyle } from '../styles/ModalStyles'
 import { MaterialIcons } from '@expo/vector-icons'
 import { GlobalStyles } from '../styles/GlobalStyles'
+import { useProductSubmit } from '../hooks/useProductSubmit'
 
 const ModalProduct = ({
   showModal,
@@ -19,9 +20,13 @@ const ModalProduct = ({
   title,
   text,
 }) => {
+
+  const { handleSubmit } = useProductSubmit()
+
   const confirm = () => {
     declareNotAvailable(item.id)
     setShowModal(false)
+    handleSubmit(item.id)
   }
   const handleClose = () => {
     setShowModal(false)
