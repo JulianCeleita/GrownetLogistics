@@ -21,7 +21,7 @@ const ConfirmationLogin = () => {
 
   const handleSignIn = () => {
     // Lógica de confirmación de identificación
-    navigation.navigate('PackingScreen')
+    navigation.navigate('CustomDate')
   }
 
   const dismissKeyboard = () => {

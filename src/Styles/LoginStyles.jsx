@@ -43,7 +43,7 @@ export const LoginStyles = StyleSheet.create({
   signInButton: {
     backgroundColor: '#144D56',
     paddingVertical: 15,
-    paddingHorizontal: 30,
+    paddingHorizontal: 40,
     borderRadius: 35,
   },
   signInButtonText: {
