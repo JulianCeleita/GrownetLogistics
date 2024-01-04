@@ -12,23 +12,25 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import React, { useEffect } from 'react'
 import { colors } from '../styles/GlobalStyles'
+import CustomDate from '../screens/CustomDate'
 import CustomerDayLoading from '../screens/Loading/CustomerDayLoading'
 import Loading from '../screens/Loading/Loading'
-import Packing from '../screens/Packing/Packing'
-import ProductsCard from '../components/ProductsCard'
-import ShortsBulk from '../screens/ShortsBulk/ShortsBulk'
-import ShortsVan from '../screens/ShortsVan/ShortsVan'
 import ProductsLoading from '../screens/Loading/ProductsLoading'
+import ConfirmationLogin from '../screens/Login/ConfirmationLogin'
+import LoginPage from '../screens/Login/LoginPage'
 import CustomerDayPacking from '../screens/Packing/CustomerDayPacking'
+import Packing from '../screens/Packing/Packing'
 import ProductsPacking from '../screens/Packing/ProductPacking'
 import ProductsBulk from '../screens/ShortsBulk/ProductsBulk'
-import CustomerDayBulk from '../screens/ShortsBulk/CustomerDayBulk'
+import ShortsBulk from '../screens/ShortsBulk/ShortsBulk'
+import CustomerDayVan from '../screens/ShortsVan/CustomerDayVan'
 import ProductsVan from '../screens/ShortsVan/ProductVan'
-import LoginPage from '../screens/Login/LoginPage'
-import ConfirmationLogin from '../screens/Login/ConfirmationLogin'
+import ShortsVans from '../screens/ShortsVan/ShortsVans'
+import useTokenStore from '../store/useTokenStore'
 
 const Tab = createBottomTabNavigator()
 const Stack = createNativeStackNavigator()
+
 function StackLogin() {
   return (
     <Stack.Navigator
@@ -76,7 +78,6 @@ function StackBulk() {
       screenOptions={{ headerShown: false }}
     >
       <Stack.Screen name="ShortsBulkScreen" component={ShortsBulk} />
-      <Stack.Screen name="CustomerDayBulk" component={CustomerDayBulk} />
       <Stack.Screen name="ProductsBulk" component={ProductsBulk} />
     </Stack.Navigator>
   )
@@ -85,10 +86,11 @@ function StackBulk() {
 function StackVan() {
   return (
     <Stack.Navigator
-      initialRouteName="ShortsVanScreen"
+      initialRouteName="ShortsVans"
       screenOptions={{ headerShown: false }}
     >
-      <Stack.Screen name="ShortsVanScreen" component={ShortsVan} />
+      <Stack.Screen name="ShortsVans" component={ShortsVans} />
+      <Stack.Screen name="CustomerDayVan" component={CustomerDayVan} />
       <Stack.Screen name="ProductsVan" component={ProductsVan} />
     </Stack.Navigator>
   )
@@ -156,6 +158,9 @@ function MyTabs() {
 }
 
 export default function Navigation() {
+  const { token } = useTokenStore()
+  console.log(token)
+
   const [fontsLoaded] = useFonts({
     PoppinsBold: Poppins_700Bold,
     PoppinsRegular: Poppins_400Regular,
@@ -170,7 +175,20 @@ export default function Navigation() {
   }
   return (
     <NavigationContainer>
-      <StackLogin />
+      <Stack.Navigator initialRouteName="CustomDate">
+        {/* TODO DEJAR ESTA LOGICA PARA EL MENU INFERIOR */}
+        {/* {token ? <MyTabs /> : <StackLogin />} */}
+        <Stack.Screen
+          name="CustomDate"
+          component={CustomDate}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="MyTabs"
+          component={MyTabs}
+          options={{ headerShown: false }}
+        />
+      </Stack.Navigator>
     </NavigationContainer>
   )
 }

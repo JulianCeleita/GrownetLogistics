@@ -2,6 +2,35 @@ import { StyleSheet } from 'react-native'
 import { colors } from './GlobalStyles'
 
 export const CustomerDayStyles = StyleSheet.create({
+  tittle: {
+    backgroundColor: colors.bluePrimary,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 15,
+    flexDirection: 'row',
+    marginBottom: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 25,
+    marginBottom: -12,
+  },
+  title2: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 10,
+    width: '100%',
+  },
+  customerTitle: {
+    fontSize: 22,
+    color: colors.bluePrimary,
+    fontFamily: 'PoppinsBold',
+    textAlign: 'center',
+  },
+  icon: {
+    position: 'absolute',
+    right: 18,
+  },
   //Tittle
   tittleText: {
     fontSize: 24,
@@ -25,33 +54,34 @@ export const CustomerDayStyles = StyleSheet.create({
   card: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: 'white',
     borderRadius: 20,
-    paddingVertical: 15,
-    paddingHorizontal: 50,
-    marginBottom: 10,
-    marginTop: 15,
+    marginBottom: 2,
+    marginTop: 10,
+    width: 320,
+    paddingVertical: 10,
+    paddingHorizontal: 5,
   },
   cardsLayout: {
     width: Platform.OS === 'ios' ? '20%' : '8%',
     justifyContent: 'center',
     alignItems: 'center',
-    margin: 10,
+    width: '30%',
   },
-  //Search bar
-  searchContainer: {
-    width: '80%',
-    backgroundColor: 'white',
-    borderRadius: 25,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 1,
-    marginTop: 20,
+  cardText: {
+    alignItems: 'left',
+    paddingLeft: 15,
+    width: '60%',
   },
-  searchIcon: {
-    backgroundColor: 'white',
-    borderRadius: 30,
-    padding: 8,
-    marginRight: 10,
+  titleCustomer: {
+    fontSize: 16,
+    fontFamily: 'PoppinsSemi',
+    color: colors.darkBlue,
+  },
+  textCustomer: {
+    fontSize: 15,
+    fontFamily: 'PoppinsRegular',
+    color: colors.darkBlue,
   },
 })

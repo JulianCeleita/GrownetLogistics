@@ -12,12 +12,11 @@ export const DeliveryStyles = StyleSheet.create({
     paddingHorizontal: 30,
     paddingVertical: 20,
     borderRadius: 15,
-    fontWeight: 500,
     flexDirection: 'row',
     marginBottom: 20,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 40,
+    marginTop: 25,
     marginBottom: -12,
   },
   textTittle: {

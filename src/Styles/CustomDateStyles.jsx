@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native'
 
 export const CustomDateStyles = StyleSheet.create({
   container: {
@@ -7,9 +7,9 @@ export const CustomDateStyles = StyleSheet.create({
   },
   contentContainer: {
     justifyContent: 'center',
-    alignItems: 'center', 
-    paddingTop: 60,
-    paddingHorizontal: 30, 
+    alignItems: 'center',
+    paddingTop: Platform.OS === 'ios' ? 22 : 15,
+    paddingHorizontal: 30,
   },
   whiteBackground: {
     backgroundColor: 'white',
@@ -23,7 +23,7 @@ export const CustomDateStyles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
     padding: 20,
-    alignItems: 'center', 
+    alignItems: 'center',
   },
   dateButtonContainer: {
     backgroundColor: 'white',
@@ -41,17 +41,23 @@ export const CustomDateStyles = StyleSheet.create({
     borderRadius: 20,
     alignItems: 'center',
     elevation: 5,
-    marginBottom: 10, 
-    
+    marginBottom: 10,
+  },
+  buttonText: {
+    color: '#144D56',
+    textAlign: 'center',
+    fontFamily: 'PoppinsRegular',
+    fontSize: 18,
   },
   showMoreButton: {
     backgroundColor: 'white',
     borderWidth: 1,
     borderColor: 'white',
-    paddingVertical: 15, 
+    paddingVertical: Platform.OS === 'ios' ? 15 : 13,
     paddingHorizontal: Platform.OS === 'ios' ? 20 : 25,
     borderRadius: 20,
     marginTop: 15,
+    marginBottom:15,
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {
@@ -62,10 +68,10 @@ export const CustomDateStyles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
   },
-  buttonText: {
-    color: '#000',
+  showMoreButtonText: {
+    color: '#144D56',
     textAlign: 'center',
-    fontFamily: 'Poppins',
-    fontSize: 18, 
+    fontFamily: 'PoppinsRegular',
+    fontSize: Platform.OS === 'ios' ? 15 : 13,
   },
-});
+})

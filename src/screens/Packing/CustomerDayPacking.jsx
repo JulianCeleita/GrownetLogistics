@@ -1,152 +1,73 @@
+import { Ionicons } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
-import { LinearGradient } from 'expo-linear-gradient'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
-  Dimensions,
-  Platform,
+  ScrollView,
   Text,
   TouchableOpacity,
   View,
+  Dimensions,
 } from 'react-native'
-import Svg, { Circle, Text as SvgText } from 'react-native-svg'
+import { SafeAreaView } from 'react-native-safe-area-context'
 import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
-import { DeliveryStyles } from '../../styles/DeliveryStyles'
-import { GlobalStyles, colors } from '../../styles/GlobalStyles'
+import { colors } from '../../styles/GlobalStyles'
 import CustomerDaySearch from '../../components/CustomerDaySearch'
+import CustomerCard from '../../components/CustomerCard'
+import useOrdersByDate from '../../store/useOrdersByDateStore'
+import useTokenStore from '../../store/useTokenStore'
 
 function CustomerDayPacking() {
-  const navigation = useNavigation()
-  const isIOS = Platform.OS === 'ios'
-  const { width, height } = Dimensions.get('window')
+  const { OrdersByDate, setOrdersByDate } = useOrdersByDate()
+  const { token } = useTokenStore()
 
-  const titleStyle = {
-    ...DeliveryStyles.tittle,
-    ...GlobalStyles.boxShadow,
-    elevation: 5,
-    zIndex: 5,
+  // const isIOS = Platform.OS === 'ios'
+  // const { width, height } = Dimensions.get('window')
+
+  // const titleStyle = {
+  //   ...DeliveryStyles.tittle,
+  //   ...GlobalStyles.boxShadow,
+  //   elevation: 5,
+  //   zIndex: 5,
+  // }
+  const [search, setSearch] = useState(false)
+
+  useEffect(() => {
+    setOrdersByDate(token)
+  }, [])
+
+  const handleSearch = () => {
+    setSearch(true)
   }
 
-  const radius = 40
-  const strokeWidth = 10
-  const circumference = 2 * Math.PI * radius
-  const percentage = 60
-  const strokeDashoffset = circumference - (percentage / 100) * circumference
-
-  const handleNavigateToProducts = () => {
-    navigation.navigate('ProductsLoading')
-  }
   return (
-    <View style={{ flex: 1, backgroundColor: 'white', paddingLeft: 0 }}>
-      <LinearGradient
-        colors={['#00478C', '#026CD2']}
-        start={{ x: 0, y: 0.5 }}
-        end={{ x: 1, y: 0.5 }}
-        style={[
-          DeliveryStyles.packing,
-          Platform.OS === 'ios' && { paddingTop: 30 },
-        ]}
-      >
-        <View style={titleStyle}>
-          <Text style={DeliveryStyles.textTittle}>Customer day</Text>
-        </View>
-      </LinearGradient>
-      <View
-        style={{
-          flex: 1,
-          alignItems: 'center',
-          paddingTop: 5,
-          paddingLeft: 0,
-        }}
-      >
-        <CustomerDaySearch />
-        <View style={{ width: '85%' }}>
-          <TouchableOpacity
-            style={{
-              ...CustomerDayStyles.card,
-              ...GlobalStyles.boxShadow,
-            }}
-            onPress={handleNavigateToProducts}
-          >
-            <View
-              style={{
-                ...CustomerDayStyles.cardsLayout,
-              }}
+    <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+      <ScrollView>
+        {search ? (
+          <CustomerDaySearch setSearch={setSearch} />
+        ) : (
+          <View style={CustomerDayStyles.title2}>
+            <Text style={CustomerDayStyles.customerTitle}>Route 1</Text>
+            <TouchableOpacity
+              onPress={handleSearch}
+              style={CustomerDayStyles.icon}
             >
-              <Svg
-                style={{ width: '100%' }}
-                height={radius * 2}
-                width={radius * 2}
-              >
-                <Circle
-                  cx={radius}
-                  cy={radius}
-                  r={radius - strokeWidth / 2}
-                  fill="transparent"
-                  stroke="#8FDE9B"
-                  strokeWidth={strokeWidth}
-                  strokeDasharray={`${circumference} ${circumference}`}
-                  strokeDashoffset={0}
-                />
-                <Circle
-                  cx={radius}
-                  cy={radius}
-                  r={radius - strokeWidth / 2}
-                  fill="transparent"
-                  stroke="#62C471"
-                  strokeWidth={strokeWidth}
-                  strokeDasharray={`${circumference} ${circumference}`}
-                  strokeDashoffset={strokeDashoffset}
-                />
-                <SvgText
-                  x={radius - 6}
-                  y={radius + 6}
-                  textAnchor="middle"
-                  stroke="#00478C"
-                  fontSize="18"
-                  fontFamily="PoppinsRegular"
-                  fill="#00478C"
-                >
-                  {percentage}%
-                </SvgText>
-              </Svg>
+              <Ionicons
+                name="md-search-circle-outline"
+                size={35}
+                color={colors.darkBlue}
+              />
+            </TouchableOpacity>
+          </View>
+        )}
+        {OrdersByDate?.map((order) => {
+          return (
+            <View key={`${order.id_stateOrders}-${order.created_date}`}>
+              <CustomerCard customer={order} />
             </View>
-            <View
-              style={{
-                width: '100%',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'flex-end',
-              }}
-            >
-              <View
-                style={{ width: '90%', alignItems: 'left', marginBottom: 10 }}
-              >
-                <Text
-                  style={{
-                    ...GlobalStyles.textBtnSecundary,
-                    fontSize: 16,
-                    fontFamily: 'PoppinsRegular',
-                    color: colors.darkBlue,
-                  }}
-                >
-                  Customer 1:
-                </Text>
-                <Text
-                  style={{
-                    ...GlobalStyles.textBtnSecundary,
-                    fontSize: 14,
-                    fontFamily: 'PoppinsRegular',
-                    color: colors.darkBlue,
-                  }}
-                >
-                  Tech Point 1. Grownet
-                </Text>
-              </View>
-            </View>
-          </TouchableOpacity>
-        </View>
-      </View>
-    </View>
+          )
+        })}
+      </ScrollView>
+    </SafeAreaView>
   )
 }
 
