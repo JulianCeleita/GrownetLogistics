@@ -9,14 +9,13 @@ import useTokenStore from '../../store/useTokenStore'
 import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
 import { colors } from '../../styles/GlobalStyles'
 import { ProductStyles } from '../../styles/ProductStyles'
-import { ScrollView } from 'react-native-gesture-handler'
 
 function ProductsPacking() {
   const { packingProducts, setFetchPackingProducts, selectedCustomer } =
     usePackingStore()
   const { token } = useTokenStore()
   const [search, setSearch] = useState(false)
-  const [enableScroll, setEnableScroll] = useState(true)
+
   // const { accountNumber } = route.params
   console.log('selectedCustomer', selectedCustomer)
 
@@ -45,18 +44,12 @@ function ProductsPacking() {
         </View>
       )}
 
-      <View
-        onTouchStart={() => setEnableScroll(false)}
-        onTouchEnd={() => setEnableScroll(true)}
-      >
-        <FlatList
-          data={packingProducts}
-          keyExtractor={(item, index) => `${index}`}
-          renderItem={({ item }) => (
-            <ProductsList section={item} scrollEnabled={false} />
-          )}
-        />
-      </View>
+      <FlatList
+        data={packingProducts}
+        keyExtractor={(item, index) => `${index}`}
+        renderItem={({ item }) => <ProductsList section={item} />}
+        scrollEnabled
+      />
     </SafeAreaView>
   )
 }
