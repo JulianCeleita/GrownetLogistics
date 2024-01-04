@@ -20,7 +20,7 @@ function ProductsPacking() {
   console.log('selectedCustomer', selectedCustomer)
 
   useEffect(() => {
-    setFetchPackingProducts(token, 'RK100')
+    setFetchPackingProducts(token, selectedCustomer)
   }, [])
 
   const handleSearch = () => {
