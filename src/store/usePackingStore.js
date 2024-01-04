@@ -7,6 +7,7 @@ export const usePackingStore = create((set) => ({
     {
       title: 'Bulk',
       id_tittle: 1,
+      customerName: 'Bar reataurant',
       data: [
         {
           id: 1,
@@ -34,6 +35,7 @@ export const usePackingStore = create((set) => ({
     {
       title: 'Split',
       id_tittle: 2,
+      customerName: 'Bar reataurant',
       data: [
         {
           id: 4,
