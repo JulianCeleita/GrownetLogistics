@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import mainAxios from '../../axios.Config'
+import mainAxios from '../../axios.config'
 import { productsLoading } from '../config/urls.config'
 
 const useLoadingStore = create((set) => {

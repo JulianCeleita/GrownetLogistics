@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import mainAxios from '../../axios.Config.js';
+import mainAxios from '../../axios.config.js';
 import { insertPacking } from '../config/urls.config.js';
 import useTokenStore from '../store/useTokenStore.js';
 import { useCardEvents } from './useCardEvents.jsx';

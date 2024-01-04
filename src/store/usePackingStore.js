@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import mainAxios from '../../axios.Config'
+import mainAxios from '../../axios.config'
 import { productsPacking } from '../config/urls.config'
 
 export const usePackingStore = create((set) => ({

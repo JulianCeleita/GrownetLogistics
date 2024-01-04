@@ -178,11 +178,11 @@ export default function Navigation() {
       <Stack.Navigator initialRouteName="LoginPage">
         {/* TODO DEJAR ESTA LOGICA PARA EL MENU INFERIOR */}
         {/* {token ? <MyTabs /> : <StackLogin />} */}
-        {/* <Stack.Screen
+        <Stack.Screen
           name="Login"
           component={StackLogin}
           options={{ headerShown: false }}
-        /> */}
+        />
         <Stack.Screen
           name="CustomDate"
           component={CustomDate}
