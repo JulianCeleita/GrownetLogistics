@@ -5,10 +5,8 @@ import { ProductStyles } from '../styles/ProductStyles'
 
 export const ProductsList = ({ section }) => {
   return (
-    <View key={section.id_tittle}>
-      <Text style={ProductStyles.category}>
-        {section.id_tittle}. {section.title}
-      </Text>
+    <View key={section.reference}>
+      <Text style={ProductStyles.category}>Order: {section.reference}</Text>
       {section.data.map((item) => (
         <ProductsCard key={item.id} item={item} />
       ))}
