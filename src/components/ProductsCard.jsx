@@ -160,7 +160,10 @@ function Products({ item }) {
     <View style={{ alignItems: 'center' }} key={item.id}>
       <TouchableOpacity onPress={() => handlePress(item.id)}>
         <PanGestureHandler
+          enabled={!addQuantity}
           onGestureEvent={(e) => handleGestureEvent(e, item.id)}
+          minDeltaX={600}
+          minDeltaY={120}
         >
           <View>
             <View style={[ProductStyles.card, GlobalStyles.boxShadow]}>
@@ -262,7 +265,7 @@ function Products({ item }) {
           setShowModal={setShowModal}
           declareNotAvailable={declareNotAvailable}
           item={item}
-          title={'Item not available'}
+          title={item.name + ' not available'}
           text={' Are you sure you want to mark this item as unavailable?'}
         />
       ) : null}

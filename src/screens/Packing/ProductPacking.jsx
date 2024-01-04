@@ -10,11 +10,12 @@ import useTokenStore from '../../store/useTokenStore'
 import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
 import { colors } from '../../styles/GlobalStyles'
 import { ProductStyles } from '../../styles/ProductStyles'
+import { ScrollView } from 'react-native-gesture-handler'
 
 function ProductsPacking() {
   const { packingProducts, setPackingProducts } = usePackingStore()
   const [search, setSearch] = useState(false)
-
+  const [enableScroll, setEnableScroll] = useState(true)
   // const { accountNumber } = route.params
 
   const { token } = useTokenStore()
@@ -29,27 +30,38 @@ function ProductsPacking() {
 
   return (
     <SafeAreaView style={ProductStyles.products}>
-      {search ? (
-        <ProductSearcher setSearch={setSearch} />
-      ) : (
-        <View style={CustomerDayStyles.title2}>
-          <Text style={ProductStyles.customerTitle}>Restaurant 1</Text>
-          <TouchableOpacity onPress={handleSearch} style={ProductStyles.icon2}>
-            <Ionicons
-              name="md-search-circle-outline"
-              size={35}
-              color={colors.darkBlue}
-            />
-          </TouchableOpacity>
-        </View>
-      )}
+      <ScrollView>
+        {search ? (
+          <ProductSearcher setSearch={setSearch} />
+        ) : (
+          <View style={CustomerDayStyles.title2}>
+            <Text style={ProductStyles.customerTitle}>Restaurant 1</Text>
+            <TouchableOpacity
+              onPress={handleSearch}
+              style={ProductStyles.icon2}
+            >
+              <Ionicons
+                name="md-search-circle-outline"
+                size={35}
+                color={colors.darkBlue}
+              />
+            </TouchableOpacity>
+          </View>
+        )}
 
-      <FlatList
-        data={packingProducts}
-        keyExtractor={(item, index) => `${index}`}
-        renderItem={({ item }) => <ProductsList section={item} />}
-        scrollEnabled
-      />
+        <View
+          onTouchStart={() => setEnableScroll(false)}
+          onTouchEnd={() => setEnableScroll(true)}
+        >
+          <FlatList
+            data={packingProducts}
+            keyExtractor={(item, index) => `${index}`}
+            renderItem={({ item }) => (
+              <ProductsList section={item} scrollEnabled={false} />
+            )}
+          />
+        </View>
+      </ScrollView>
     </SafeAreaView>
   )
 }
