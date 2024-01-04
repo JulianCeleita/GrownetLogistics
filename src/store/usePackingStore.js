@@ -3,15 +3,16 @@ import mainAxios from '../../axios.Config'
 import { productsPacking } from '../config/urls.config'
 
 export const usePackingStore = create((set) => ({
-
   packingProducts: [],
   selectedCustomer: null,
+  error: null,
+
+  setError: (error) => set(() => ({ error: error })),
 
   setSelectedCustomer: (customer) =>
     set(() => ({ selectedCustomer: customer })),
 
   setPackingProducts: (products) => set(() => ({ packingProducts: products })),
-
 
   setFetchPackingProducts: async (token, accountNumber) => {
     try {

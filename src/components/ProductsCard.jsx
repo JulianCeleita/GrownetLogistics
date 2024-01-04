@@ -9,7 +9,9 @@ import { useProductSubmit } from '../hooks/useProductSubmit'
 import { GlobalStyles, colors } from '../styles/GlobalStyles'
 import { ProductStyles } from '../styles/ProductStyles'
 
+
 function Products({ item }) {
+
   const positiveOffset = 30
   const negativeOffset = -30
 
@@ -31,6 +33,7 @@ function Products({ item }) {
     declareNotAvailable,
     declareDifferentQty,
   } = useCardEvents(item.quantity)
+
 
   return (
     <View style={{ alignItems: 'center' }} key={item.id}>
