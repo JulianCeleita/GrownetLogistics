@@ -5,7 +5,7 @@ import { PanGestureHandler } from 'react-native-gesture-handler'
 
 import mainAxios from '../../axios.Config'
 import ModalProduct from '../components/ModalProduct'
-import { insertPacking } from '../config/urls.config'
+import { insertLoading, insertPacking } from '../config/urls.config'
 import { usePackingStore } from '../store/usePackingStore'
 import useTokenStore from '../store/useTokenStore'
 import { GlobalStyles, colors } from '../styles/GlobalStyles'
@@ -24,9 +24,9 @@ function Products({ item }) {
   const { packingProducts, setPackingProducts } = usePackingStore()
   const [note, setNote] = useState('')
 
-  useEffect(() => {
-    setQuantity(item.quantity)
-  }, [item.quantity])
+  // useEffect(() => {
+  //   setQuantity(item.quantity)
+  // }, [item.quantity])
 
   const handlePress = (itemId) => {
     setSelectedProduct(itemId)
@@ -132,28 +132,28 @@ function Products({ item }) {
     console.log('item', item.quantity)
 
     const data = {
-      note,
+      note: note,
       quantity: quantity,
       id: itemId,
     }
 
     console.log('data', data)
 
-    // try {
-    //   const response = await mainAxios.post(insertLoading, data, {
-    //     headers: {
-    //       Authorization: `Bearer ${token}`,
-    //     },
-    //   })
+    try {
+      const response = await mainAxios.post(insertPacking, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
 
-    //   if (response.status === 200) {
-    //     console.log('Datos enviados correctamente', response.data)
-    //   } else {
-    //     throw new Error('Error al enviar los datos')
-    //   }
-    // } catch (error) {
-    //   console.error('Hubo un error al enviar los datos: ', error)
-    // }
+      if (response.status === 200) {
+        console.log('Datos enviados correctamente', response.data)
+      } else {
+        throw new Error('Error al enviar los datos')
+      }
+    } catch (error) {
+      console.error('Hubo un error al enviar los datos: ', error)
+    }
   }
 
   return (
