@@ -10,6 +10,11 @@ const useTokenStore = create(
         set({ token: newToken })
         console.log('Token guardado:', newToken)
       },
+      employeeToken: null,
+      setEmployeeToken: (newToken) => {
+        set({ employeeToken: newToken })
+        console.log('Token de empleado guardado:', newToken)
+      },
       initializeToken: async () => {
         try {
           const storedToken = await AsyncStorage.getItem('token')

@@ -44,7 +44,7 @@ const LoginPage = () => {
         if (response.data.status === 200) {
           setToken(response.data.token)
           setLoading(false)
-          navigation.navigate('ConfirmationPage')
+          navigation.navigate('PinPage')
         } else {
           setShowModal(true)
           setLoading(false)
@@ -84,7 +84,7 @@ const LoginPage = () => {
             placeholder="Email address"
             keyboardType="email-address"
             autoCapitalize="none"
-            onSubmitEditing={() => {}}
+            onSubmitEditing={handleSignIn}
             onChangeText={(text) => setUsername(text)}
           />
           <TextInput
@@ -108,17 +108,17 @@ const LoginPage = () => {
             showModal={showModal}
             closeModal={closeModal}
             handleOutsidePress={handleOutsidePress}
-            Title={'We apologize'}
-            message={'Please check your email and password and try again.'}
-            message2={'Try again'}
+            Title="We're sorry"
+            message="Password or email are incorrect"
+            message2="Try again"
           />
           <ModalAlert
             showModal={showEmptyInputModal}
             closeModal={closeModal}
             handleOutsidePress={handleOutsidePress}
-            Title={'We apologize'}
-            message={'Password and email cannot be empty.'}
-            message2={'Try again'}
+            Title='We apologize'
+            message='Password and email cannot be empty.'
+            message2='Try again'
           />
         </View>
       </TouchableWithoutFeedback>
