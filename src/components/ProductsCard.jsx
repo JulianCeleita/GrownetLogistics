@@ -1,16 +1,15 @@
-import { AntDesign } from '@expo/vector-icons';
-import React, { useState } from 'react';
-import { Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { PanGestureHandler } from 'react-native-gesture-handler';
-import { useCardEvents } from '../hooks/useCardEvents';
+import { AntDesign } from '@expo/vector-icons'
+import React, { useState } from 'react'
+import { Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { PanGestureHandler } from 'react-native-gesture-handler'
+import { useCardEvents } from '../hooks/useCardEvents'
 
-import ModalProduct from '../components/ModalProduct';
-import { useProductSubmit } from '../hooks/useProductSubmit';
-import { GlobalStyles, colors } from '../styles/GlobalStyles';
-import { ProductStyles } from '../styles/ProductStyles';
+import ModalProduct from '../components/ModalProduct'
+import { useProductSubmit } from '../hooks/useProductSubmit'
+import { GlobalStyles, colors } from '../styles/GlobalStyles'
+import { ProductStyles } from '../styles/ProductStyles'
 
 function Products({ item, setEnableScroll }) {
-
   const positiveOffset = 30
   const negativeOffset = -30
 
@@ -30,16 +29,18 @@ function Products({ item, setEnableScroll }) {
     handlePress,
     handleGestureEvent,
     declareNotAvailable,
-    declareDifferentQty
+    declareDifferentQty,
   } = useCardEvents(item.quantity)
 
-
+  console.log('pressedStates', pressedStates)
   return (
     <View style={{ alignItems: 'center' }} key={item.id}>
-      <TouchableOpacity onPress={() => {
-        handlePress(item.id)
-        handleSubmit(item.id, quantity, note)
-      }}>
+      <TouchableOpacity
+        onPress={() => {
+          handlePress(item.id)
+          handleSubmit(item.id, quantity, note)
+        }}
+      >
         <PanGestureHandler
           enabled={!addQuantity}
           onGestureEvent={(e) => handleGestureEvent(e, item.id)}
