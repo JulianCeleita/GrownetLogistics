@@ -4,8 +4,10 @@ import { CustomerDayStyles } from '../styles/CustomerDayStyles'
 import { GlobalStyles, colors } from '../styles/GlobalStyles'
 import Svg, { Circle, Text as SvgText } from 'react-native-svg'
 import { useNavigation } from '@react-navigation/native'
+import { usePackingStore } from '../store/usePackingStore'
 
 const CustomerCard = ({ customer }) => {
+  const { setSelectedCustomer } = usePackingStore()
   const navigation = useNavigation()
   const radius = 33
   const strokeWidth = 10
@@ -15,6 +17,7 @@ const CustomerCard = ({ customer }) => {
 
   const handleNavigateToProducts = () => {
     navigation.navigate('ProductsPacking')
+    setSelectedCustomer(customer.accountNumber)
   }
   return (
     <View style={{ alignItems: 'center' }}>

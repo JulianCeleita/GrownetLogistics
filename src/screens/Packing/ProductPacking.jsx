@@ -6,22 +6,22 @@ import ProductSearcher from '../../components/ProductSearch'
 import { ProductsList } from '../../components/ProductsList'
 import { usePackingStore } from '../../store/usePackingStore'
 import useTokenStore from '../../store/useTokenStore'
-
 import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
 import { colors } from '../../styles/GlobalStyles'
 import { ProductStyles } from '../../styles/ProductStyles'
 import { ScrollView } from 'react-native-gesture-handler'
 
 function ProductsPacking() {
-  const { packingProducts, setPackingProducts } = usePackingStore()
+  const { packingProducts, setFetchPackingProducts, selectedCustomer } =
+    usePackingStore()
+  const { token } = useTokenStore()
   const [search, setSearch] = useState(false)
   const [enableScroll, setEnableScroll] = useState(true)
   // const { accountNumber } = route.params
-
-  const { token } = useTokenStore()
+  console.log('selectedCustomer', selectedCustomer)
 
   useEffect(() => {
-    // setPackingProducts(token, 'SF004')
+    setFetchPackingProducts(token, 'RK100')
   }, [])
 
   const handleSearch = () => {
