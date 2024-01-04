@@ -46,18 +46,18 @@ const LoginPage = () => {
         if (response.data.status === 200) {
           setToken(response.data.token)
           setLoading(false)
-          //navigation.navigate('ConfirmationPage')
-          console.log('Respuesta', response.data)
-          console.log('Estamos logueados men')
+          navigation.navigate('ConfirmationPage')
+        } else {
+          setShowModal(true)
+          setLoading(false)
         }
       })
       .catch((error) => {
         setShowModal(true)
         setLoading(false)
-        console.log('El error es', error)
+        console.error('Error:', error)
       })
   }
-
   const closeModal = () => {
     setShowModal(false)
     setShowEmptyInputModal(false)
@@ -65,7 +65,6 @@ const LoginPage = () => {
   const handleOutsidePress = () => {
     closeModal()
   }
-
   const dismissKeyboard = () => {
     Keyboard.dismiss()
   }
