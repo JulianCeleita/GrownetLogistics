@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react'
-import { useCardState } from './useCardState'
-import { insertPacking } from '../config/urls.config.js'
+import { useState } from 'react';
 import mainAxios from '../../axios.Config.js';
+import { insertPacking } from '../config/urls.config.js';
 import useTokenStore from '../store/useTokenStore.js';
+import { useCardEvents } from './useCardEvents.jsx';
 
 export const useProductSubmit = () => {
 
@@ -17,7 +17,7 @@ export const useProductSubmit = () => {
         setPressedStates,
         setRightStates,
         setLeftStates
-    } = useCardState()
+    } = useCardEvents()
 
     const handleSubmit = async (itemId, quantity = 0, note = '') => {
 
@@ -25,16 +25,14 @@ export const useProductSubmit = () => {
 
         const data = {
             note,
-            quantity: quantity,
+            quantity: parseInt(quantity),
             id: itemId,
         }
 
         console.log('data', data)
 
-
-
         try {
-            const response = await mainAxios.post(insertPacking + 'ascxasc', data, {
+            const response = await mainAxios.post(insertPacking, data, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
