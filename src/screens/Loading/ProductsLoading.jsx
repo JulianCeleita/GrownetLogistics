@@ -29,6 +29,8 @@ function ProductsLoading() {
   const [showModal, setShowModal] = useState(false)
   const [selectedProduct, setSelectedProduct] = useState(null)
   const [addQuantity, setAddQuantity] = useState(false)
+  const positiveOffset = 30
+  const negativeOffset = -30
 
   console.log(
     'PressedStates',
@@ -175,7 +177,9 @@ function ProductsLoading() {
               <View style={{ alignItems: 'center' }} key={item.id}>
                 <TouchableOpacity onPress={() => handlePress(item.id)}>
                   <PanGestureHandler
+                    enabled={!addQuantity}
                     onGestureEvent={(e) => handleGestureEvent(e, item.id)}
+                    activeOffsetX={[negativeOffset, positiveOffset]}
                   >
                     <View>
                       <View
@@ -297,7 +301,7 @@ function ProductsLoading() {
                     setShowModal={setShowModal}
                     declareNotAvailable={declareNotAvailable}
                     item={item}
-                    title={'Item not available'}
+                    title={item.name + ' not available'}
                     text={
                       ' Are you sure you want to mark this item as unavailable?'
                     }
