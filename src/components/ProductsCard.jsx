@@ -1,152 +1,45 @@
-import { AntDesign } from '@expo/vector-icons'
-import React, { useEffect, useState } from 'react'
-import { Text, TextInput, TouchableOpacity, View } from 'react-native'
-import { PanGestureHandler } from 'react-native-gesture-handler'
+import { AntDesign } from '@expo/vector-icons';
+import React, { useState } from 'react';
+import { Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { PanGestureHandler } from 'react-native-gesture-handler';
+import { useCardEvents } from '../hooks/useCardEvents';
 
-import mainAxios from '../../axios.Config'
-import ModalProduct from '../components/ModalProduct'
-import { insertLoading, insertPacking } from '../config/urls.config'
-import { usePackingStore } from '../store/usePackingStore'
-import useTokenStore from '../store/useTokenStore'
-import { GlobalStyles, colors } from '../styles/GlobalStyles'
-import { ProductStyles } from '../styles/ProductStyles'
-import { useCardState } from '../hooks/useCardState'
-import { useProductSubmit } from '../hooks/useProductSubmit'
+import ModalProduct from '../components/ModalProduct';
+import { useProductSubmit } from '../hooks/useProductSubmit';
+import { GlobalStyles, colors } from '../styles/GlobalStyles';
+import { ProductStyles } from '../styles/ProductStyles';
 
 function Products({ item, setEnableScroll }) {
-  const { token } = useTokenStore()
 
-  const [showModal, setShowModal] = useState(false)
-  const [selectedProduct, setSelectedProduct] = useState(null)
-  const [addQuantity, setAddQuantity] = useState(false)
-  // const [pressedStates, setPressedStates] = useState({})
-  // const [rightStates, setRightStates] = useState({})
-  // const [leftStates, setLeftStates] = useState({})
-  const [quantity, setQuantity] = useState(item.quantity)
-  const { packingProducts, setPackingProducts } = usePackingStore()
-  const [note, setNote] = useState('')
-  const { handleSubmit } = useProductSubmit()
   const positiveOffset = 30
   const negativeOffset = -30
 
+  const [note, setNote] = useState('')
+  const { handleSubmit } = useProductSubmit()
+
   const {
+    quantity,
+    setQuantity,
+    showModal,
+    setShowModal,
+    addQuantity,
+    selectedProduct,
     pressedStates,
     rightStates,
     leftStates,
-    setPressedStates,
-    setRightStates,
-    setLeftStates,
-  } = useCardState()
+    handlePress,
+    handleGestureEvent,
+    declareNotAvailable,
+    declareDifferentQty
+  } = useCardEvents(item.quantity)
 
-  // useEffect(() => {
-  //   setQuantity(item.quantity)
-  // }, [item.quantity])
-
-  const handlePress = (itemId) => {
-    setSelectedProduct(itemId)
-    handleSubmit(itemId, quantity, note)
-    const newPressedStates = Object.assign({}, pressedStates)
-    const newRightStates = { ...rightStates }
-    const newLeftStates = { ...leftStates }
-
-    newPressedStates[itemId] = !newPressedStates[itemId]
-    newRightStates[itemId] = false
-    newLeftStates[itemId] = false
-
-    const updatedProducts = packingProducts.map((section) => ({
-      ...section,
-      data: section.data.map((item) => {
-        if (item.id === itemId) {
-          return {
-            ...item,
-            packed: newPressedStates[itemId] ? item.quantity : '',
-          }
-        }
-        return item
-      }),
-    }))
-    setPressedStates(newPressedStates)
-    setRightStates(newRightStates)
-    setLeftStates(newLeftStates)
-    setPackingProducts(updatedProducts)
-    setAddQuantity(false)
-  }
-
-  const handleGestureEvent = (event, itemId) => {
-    const { translationX } = event.nativeEvent
-    console.log('Translation X:', translationX)
-    setSelectedProduct(itemId)
-
-    if (translationX > 0) {
-      const newPressedStates = { ...pressedStates }
-      const newLeftStates = { ...leftStates }
-
-      newPressedStates[itemId] = false
-      newLeftStates[itemId] = false
-
-      setPressedStates(newPressedStates)
-
-      setLeftStates(newLeftStates)
-      setAddQuantity(true)
-      setQuantity('')
-
-      console.log('Dezlizamos a la derecha', itemId)
-    } else if (translationX < 0) {
-      setShowModal(true)
-      console.log('Dezlizamos a la izquierda')
-    }
-  }
-
-  const declareNotAvailable = (itemId) => {
-    const newLeftStates = Object.assign({}, leftStates)
-    const newPressedStates = { ...pressedStates }
-    const newRightStates = { ...rightStates }
-
-    newLeftStates[itemId] = !newLeftStates[itemId]
-    newPressedStates[itemId] = false
-    newRightStates[itemId] = false
-
-    const updatedProducts = packingProducts.map((section) => ({
-      ...section,
-      data: section.data.map((item) => {
-        if (item.id === itemId) {
-          return { ...item, packed: newLeftStates[itemId] ? 0 : '' }
-        }
-        return item
-      }),
-    }))
-
-    setLeftStates(newLeftStates)
-    setPressedStates(newPressedStates)
-    setRightStates(newRightStates)
-    setPackingProducts(updatedProducts)
-    setAddQuantity(false)
-
-    console.log('Dezlizamos a la izquierda', itemId)
-  }
-
-  const declareDifferentQty = (itemId) => {
-    const newRightStates = Object.assign({}, rightStates)
-    newRightStates[itemId] = true
-
-    const updatedProducts = packingProducts.map((section) => ({
-      ...section,
-      data: section.data.map((item) => {
-        if (item.id === itemId) {
-          return { ...item, packed: newRightStates[itemId] ? quantity : '' }
-        }
-        return item
-      }),
-    }))
-    setRightStates(newRightStates)
-    setPackingProducts(updatedProducts)
-    setSelectedProduct(null)
-    setAddQuantity(false)
-  }
 
   return (
     <View style={{ alignItems: 'center' }} key={item.id}>
-      <TouchableOpacity onPress={() => handlePress(item.id)}>
+      <TouchableOpacity onPress={() => {
+        handlePress(item.id)
+        handleSubmit(item.id, quantity, note)
+      }}>
         <PanGestureHandler
           enabled={!addQuantity}
           onGestureEvent={(e) => handleGestureEvent(e, item.id)}
