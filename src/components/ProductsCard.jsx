@@ -123,7 +123,7 @@ function Products({ item }) {
                     />
                     <TextInput
                       style={[ProductStyles.input, { marginTop: 8 }]}
-                      value={note}
+                      value={note.toString()}
                       onChangeText={(note) => setNote(note)}
                     />
                   </View>
