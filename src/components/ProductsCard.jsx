@@ -3,14 +3,14 @@ import React, { useEffect, useState } from 'react'
 import { Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { PanGestureHandler } from 'react-native-gesture-handler'
 
-import mainAxios from '../../axios.Config'
+import mainAxios from '../../axios.config'
 import ModalProduct from '../components/ModalProduct'
 import { insertLoading, insertPacking } from '../config/urls.config'
 import { usePackingStore } from '../store/usePackingStore'
 import useTokenStore from '../store/useTokenStore'
 import { GlobalStyles, colors } from '../styles/GlobalStyles'
 import { ProductStyles } from '../styles/ProductStyles'
-import { useCardState } from '../hooks/useCardState'
+import { useCardEvents } from '../hooks/useCardEvents'
 import { useProductSubmit } from '../hooks/useProductSubmit'
 
 function Products({ item, setEnableScroll }) {
@@ -36,7 +36,7 @@ function Products({ item, setEnableScroll }) {
     setPressedStates,
     setRightStates,
     setLeftStates,
-  } = useCardState()
+  } = useCardEvents()
 
   // useEffect(() => {
   //   setQuantity(item.quantity)
