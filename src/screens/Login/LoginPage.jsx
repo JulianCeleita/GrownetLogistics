@@ -11,9 +11,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from 'react-native'
-
 import { LoginStyles } from '../../styles/LoginStyles'
-
 import logo from '../../img/Logo_Blanco.png'
 import { useNavigation } from '@react-navigation/native'
 
@@ -39,7 +37,7 @@ const LoginPage = () => {
           <StatusBar style="light" />
           <Image source={logo} style={LoginStyles.logo} />
           <Text style={LoginStyles.loginHeaderText}>
-            Log in to Grownet Logistics
+            Welcome to <Text style={LoginStyles.span}>Grownet Logistics</Text>
           </Text>
           <TextInput
             ref={emailInputRef}

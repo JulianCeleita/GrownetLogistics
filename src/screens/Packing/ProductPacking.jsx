@@ -2,26 +2,26 @@ import { Ionicons } from '@expo/vector-icons'
 import React, { useEffect, useState } from 'react'
 import { FlatList, Text, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-
 import ProductSearcher from '../../components/ProductSearch'
 import { ProductsList } from '../../components/ProductsList'
 import { usePackingStore } from '../../store/usePackingStore'
 import useTokenStore from '../../store/useTokenStore'
-
 import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
 import { colors } from '../../styles/GlobalStyles'
 import { ProductStyles } from '../../styles/ProductStyles'
+import { ScrollView } from 'react-native-gesture-handler'
 
 function ProductsPacking() {
-  const { packingProducts, setPackingProducts } = usePackingStore()
-  const [search, setSearch] = useState(false)
-
-  // const { accountNumber } = route.params
-
+  const { packingProducts, setFetchPackingProducts, selectedCustomer } =
+    usePackingStore()
   const { token } = useTokenStore()
+  const [search, setSearch] = useState(false)
+  const [enableScroll, setEnableScroll] = useState(true)
+  // const { accountNumber } = route.params
+  console.log('selectedCustomer', selectedCustomer)
 
   useEffect(() => {
-    // setPackingProducts(token, 'SF004')
+    setFetchPackingProducts(token, 'RK100')
   }, [])
 
   const handleSearch = () => {
@@ -45,12 +45,18 @@ function ProductsPacking() {
         </View>
       )}
 
-      <FlatList
-        data={packingProducts}
-        keyExtractor={(item, index) => `${index}`}
-        renderItem={({ item }) => <ProductsList section={item} />}
-        scrollEnabled
-      />
+      <View
+        onTouchStart={() => setEnableScroll(false)}
+        onTouchEnd={() => setEnableScroll(true)}
+      >
+        <FlatList
+          data={packingProducts}
+          keyExtractor={(item, index) => `${index}`}
+          renderItem={({ item }) => (
+            <ProductsList section={item} scrollEnabled={false} />
+          )}
+        />
+      </View>
     </SafeAreaView>
   )
 }

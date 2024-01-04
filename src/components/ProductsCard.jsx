@@ -5,7 +5,7 @@ import { PanGestureHandler } from 'react-native-gesture-handler'
 
 import mainAxios from '../../axios.Config'
 import ModalProduct from '../components/ModalProduct'
-import { insertPacking } from '../config/urls.config'
+import { insertLoading, insertPacking } from '../config/urls.config'
 import { usePackingStore } from '../store/usePackingStore'
 import useTokenStore from '../store/useTokenStore'
 import { GlobalStyles, colors } from '../styles/GlobalStyles'
@@ -37,9 +37,9 @@ function Products({ item }) {
   } = useCardState()
 
 
-  useEffect(() => {
-    setQuantity(item.quantity)
-  }, [item.quantity])
+  // useEffect(() => {
+  //   setQuantity(item.quantity)
+  // }, [item.quantity])
 
 
   const handlePress = (itemId) => {
@@ -142,11 +142,15 @@ function Products({ item }) {
     setAddQuantity(false)
   }
 
+
   return (
     <View style={{ alignItems: 'center' }} key={item.id}>
       <TouchableOpacity onPress={() => handlePress(item.id)}>
         <PanGestureHandler
+          enabled={!addQuantity}
           onGestureEvent={(e) => handleGestureEvent(e, item.id)}
+          minDeltaX={600}
+          minDeltaY={120}
         >
           <View>
             <View style={[ProductStyles.card, GlobalStyles.boxShadow]}>
@@ -248,7 +252,7 @@ function Products({ item }) {
           setShowModal={setShowModal}
           declareNotAvailable={declareNotAvailable}
           item={item}
-          title={'Item not available'}
+          title={item.name + ' not available'}
           text={' Are you sure you want to mark this item as unavailable?'}
         />
       ) : null}

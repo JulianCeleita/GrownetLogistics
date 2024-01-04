@@ -11,9 +11,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from 'react-native'
-
 import { LoginStyles } from '../../styles/LoginStyles'
-
 import logo from '../../img/Logo_Blanco.png'
 import { useNavigation } from '@react-navigation/native'
 
@@ -23,7 +21,7 @@ const ConfirmationLogin = () => {
 
   const handleSignIn = () => {
     // Lógica de confirmación de identificación
-    navigation.navigate('PackingScreen')
+    navigation.navigate('CustomDate')
   }
 
   const dismissKeyboard = () => {
@@ -42,9 +40,9 @@ const ConfirmationLogin = () => {
           <Text style={LoginStyles.loginHeaderText}>Identify yourself</Text>
           <TextInput
             ref={identifierInputRef}
-            style={LoginStyles.input}
-            placeholder="Identifier code"
-            keyboardType="default"
+            style={LoginStyles.input2}
+            placeholder="Identifier pin"
+            keyboardType="numeric"
             autoCapitalize="none"
             onSubmitEditing={handleSignIn}
           />

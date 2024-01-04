@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native'
+import { colors } from './GlobalStyles'
 
 export const LoginStyles = StyleSheet.create({
   container: {
@@ -15,31 +16,43 @@ export const LoginStyles = StyleSheet.create({
   },
   loginHeaderText: {
     color: '#ffffff',
-    fontSize: Platform.OS === 'ios' ? 18 : 15,
-    marginBottom: 30,
-    fontFamily: 'Poppins',
+    fontSize: Platform.OS === 'ios' ? 17 : 14,
+    marginBottom: 20,
+    fontFamily: 'PoppinsRegular',
   },
   input: {
-    height: 60,
     width: '80%',
-    borderColor: 'gray',
-    borderWidth: 1,
     backgroundColor: '#fff',
     marginBottom: 20,
-    paddingHorizontal: 10,
-    borderRadius: 35,
-    fontFamily: 'Poppins',
+    paddingHorizontal: 20,
+    paddingVertical: 15,
+    borderRadius: 50,
+    fontFamily: 'PoppinsRegular',
+    color: colors.darkBlue,
+  },
+  input2: {
+    width: '50%',
+    backgroundColor: '#fff',
+    marginBottom: 20,
+    paddingHorizontal: 20,
+    paddingVertical: 15,
+    borderRadius: 50,
+    fontFamily: 'PoppinsRegular',
+    textAlign: 'center',
   },
   signInButton: {
     backgroundColor: '#144D56',
     paddingVertical: 15,
-    paddingHorizontal: 20,
+    paddingHorizontal: 40,
     borderRadius: 35,
   },
   signInButtonText: {
     color: 'white',
-    fontWeight: 'bold',
     textAlign: 'center',
+    fontFamily: 'PoppinsSemi',
+  },
+  span: {
+    color: colors.lightGreen,
     fontFamily: 'PoppinsSemi',
   },
 })
