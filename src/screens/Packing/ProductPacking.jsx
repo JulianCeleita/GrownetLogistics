@@ -30,38 +30,33 @@ function ProductsPacking() {
 
   return (
     <SafeAreaView style={ProductStyles.products}>
-      <ScrollView>
-        {search ? (
-          <ProductSearcher setSearch={setSearch} />
-        ) : (
-          <View style={CustomerDayStyles.title2}>
-            <Text style={ProductStyles.customerTitle}>Restaurant 1</Text>
-            <TouchableOpacity
-              onPress={handleSearch}
-              style={ProductStyles.icon2}
-            >
-              <Ionicons
-                name="md-search-circle-outline"
-                size={35}
-                color={colors.darkBlue}
-              />
-            </TouchableOpacity>
-          </View>
-        )}
-
-        <View
-          onTouchStart={() => setEnableScroll(false)}
-          onTouchEnd={() => setEnableScroll(true)}
-        >
-          <FlatList
-            data={packingProducts}
-            keyExtractor={(item, index) => `${index}`}
-            renderItem={({ item }) => (
-              <ProductsList section={item} scrollEnabled={false} />
-            )}
-          />
+      {search ? (
+        <ProductSearcher setSearch={setSearch} />
+      ) : (
+        <View style={CustomerDayStyles.title2}>
+          <Text style={ProductStyles.customerTitle}>Restaurant 1</Text>
+          <TouchableOpacity onPress={handleSearch} style={ProductStyles.icon2}>
+            <Ionicons
+              name="md-search-circle-outline"
+              size={35}
+              color={colors.darkBlue}
+            />
+          </TouchableOpacity>
         </View>
-      </ScrollView>
+      )}
+
+      <View
+        onTouchStart={() => setEnableScroll(false)}
+        onTouchEnd={() => setEnableScroll(true)}
+      >
+        <FlatList
+          data={packingProducts}
+          keyExtractor={(item, index) => `${index}`}
+          renderItem={({ item }) => (
+            <ProductsList section={item} scrollEnabled={false} />
+          )}
+        />
+      </View>
     </SafeAreaView>
   )
 }
