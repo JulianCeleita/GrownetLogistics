@@ -10,7 +10,7 @@ export const useCardEvents = (quantityStore) => {
     const [selectedProduct, setSelectedProduct] = useState(null)
     const { packingProducts, setPackingProducts } = usePackingStore()
     const [showModal, setShowModal] = useState(false)
-    const [quantity, setQuantity] = useState(`${quantityStore}`)
+    const [quantity, setQuantity] = useState(quantityStore)
 
     const handlePress = (itemId) => {
         setSelectedProduct(itemId)
