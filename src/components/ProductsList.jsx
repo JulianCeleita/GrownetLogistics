@@ -4,7 +4,6 @@ import ProductsCard from '../components/ProductsCard'
 import { ProductStyles } from '../styles/ProductStyles'
 
 export const ProductsList = ({ section }) => {
-  console.log('section', section)
   return (
     <View key={section.id_tittle}>
       <Text style={ProductStyles.category}>
