@@ -40,9 +40,9 @@ const ConfirmationLogin = () => {
           <Text style={LoginStyles.loginHeaderText}>Identify yourself</Text>
           <TextInput
             ref={identifierInputRef}
-            style={LoginStyles.input}
-            placeholder="  Identifier code"
-            keyboardType="default"
+            style={LoginStyles.input2}
+            placeholder="Identifier pin"
+            keyboardType="numeric"
             autoCapitalize="none"
             onSubmitEditing={handleSignIn}
           />

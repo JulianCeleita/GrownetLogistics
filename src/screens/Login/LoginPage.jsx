@@ -37,19 +37,19 @@ const LoginPage = () => {
           <StatusBar style="light" />
           <Image source={logo} style={LoginStyles.logo} />
           <Text style={LoginStyles.loginHeaderText}>
-            Log in to Grownet Logistics
+            Welcome to <Text style={LoginStyles.span}>Grownet Logistics</Text>
           </Text>
           <TextInput
             ref={emailInputRef}
             style={LoginStyles.input}
-            placeholder="  Email address"
+            placeholder="Email address"
             keyboardType="email-address"
             autoCapitalize="none"
             onSubmitEditing={() => {}}
           />
           <TextInput
             style={LoginStyles.input}
-            placeholder="  Password"
+            placeholder="Password"
             secureTextEntry
             onSubmitEditing={handleSignIn}
           />
