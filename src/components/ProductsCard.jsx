@@ -1,5 +1,5 @@
 import { AntDesign } from '@expo/vector-icons'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { PanGestureHandler } from 'react-native-gesture-handler'
 
@@ -20,9 +20,13 @@ function Products({ item }) {
   const [pressedStates, setPressedStates] = useState({})
   const [rightStates, setRightStates] = useState({})
   const [leftStates, setLeftStates] = useState({})
-  const [quantity, setQuantity] = useState(0)
+  const [quantity, setQuantity] = useState(item.quantity)
   const { packingProducts, setPackingProducts } = usePackingStore()
   const [note, setNote] = useState('')
+
+  useEffect(() => {
+    setQuantity(item.quantity)
+  }, [item.quantity])
 
   const handlePress = (itemId) => {
     setSelectedProduct(itemId)
@@ -125,14 +129,11 @@ function Products({ item }) {
   }
 
   const handleSubmit = async (itemId) => {
-
-    if (quantity === 0) {
-      setQuantity(item.quantity)
-    }
+    console.log('item', item.quantity)
 
     const data = {
       note,
-      quantity: parseInt(quantity, 10),
+      quantity: quantity,
       id: itemId,
     }
 

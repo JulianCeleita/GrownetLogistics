@@ -8,7 +8,7 @@ export const CustomDateStyles = StyleSheet.create({
   contentContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: 60,
+    paddingTop: Platform.OS === 'ios' ? 22 : 15,
     paddingHorizontal: 30,
   },
   whiteBackground: {
@@ -43,14 +43,21 @@ export const CustomDateStyles = StyleSheet.create({
     elevation: 5,
     marginBottom: 10,
   },
+  buttonText: {
+    color: '#144D56',
+    textAlign: 'center',
+    fontFamily: 'PoppinsRegular',
+    fontSize: 18,
+  },
   showMoreButton: {
     backgroundColor: 'white',
     borderWidth: 1,
     borderColor: 'white',
-    paddingVertical: 15,
+    paddingVertical: Platform.OS === 'ios' ? 15 : 13,
     paddingHorizontal: Platform.OS === 'ios' ? 20 : 25,
     borderRadius: 20,
     marginTop: 15,
+    marginBottom:15,
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {
@@ -61,10 +68,10 @@ export const CustomDateStyles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
   },
-  buttonText: {
-    color: '#000',
+  showMoreButtonText: {
+    color: '#144D56',
     textAlign: 'center',
     fontFamily: 'PoppinsRegular',
-    fontSize: 18,
+    fontSize: Platform.OS === 'ios' ? 15 : 13,
   },
 })
