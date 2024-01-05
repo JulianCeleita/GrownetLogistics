@@ -1,6 +1,12 @@
 import { AntDesign } from '@expo/vector-icons'
-import React, { useState } from 'react'
-import { Text, TextInput, TouchableOpacity, View } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import {
+  ActivityIndicator,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 import { PanGestureHandler } from 'react-native-gesture-handler'
 import { useCardEvents } from '../hooks/useCardEvents'
 
@@ -12,10 +18,8 @@ import { ProductStyles } from '../styles/ProductStyles'
 function Products({ item }) {
   const positiveOffset = 30
   const negativeOffset = -30
-
   const [note, setNote] = useState('')
   const { handleSubmit } = useProductSubmit()
-
   const {
     quantity,
     setQuantity,
@@ -31,13 +35,16 @@ function Products({ item }) {
     declareNotAvailable,
     declareDifferentQty,
   } = useCardEvents(item.quantity)
+  const [isLoading, setIsLoading] = useState(false)
 
   return (
     <View style={{ alignItems: 'center' }} key={item.id}>
       <TouchableOpacity
-        onPress={() => {
+        onPress={async () => {
+          setIsLoading(true) // Comienza la carga
           handlePress(item.id)
-          handleSubmit(item.id, quantity, note)
+          await handleSubmit(item.id, quantity, note)
+          setIsLoading(false) // Termina la carga
         }}
       >
         <PanGestureHandler
@@ -67,35 +74,44 @@ function Products({ item }) {
                   ) : null}
                 </View>
               </View>
-              <View
-                style={[
-                  ProductStyles.checkBox,
-                  {
-                    backgroundColor: pressedStates[item.id]
-                      ? colors.orange
-                      : rightStates[item.id]
-                        ? colors.orange
-                        : leftStates[item.id]
-                          ? colors.danger
-                          : colors.gray,
-                  },
-                ]}
-              >
-                <AntDesign
-                  name={
-                    pressedStates[item.id]
-                      ? 'checkcircleo'
-                      : rightStates[item.id]
-                        ? 'arrowright'
-                        : leftStates[item.id]
-                          ? 'closecircleo'
-                          : 'questioncircleo'
-                  }
-                  size={30}
-                  color="white"
+              {isLoading ? (
+                <ActivityIndicator
+                  size="large"
+                  color={colors.bluePrimary}
+                  style={{ marginRight: 15 }}
                 />
-              </View>
+              ) : (
+                <View
+                  style={[
+                    ProductStyles.checkBox,
+                    {
+                      backgroundColor: pressedStates[item.id]
+                        ? colors.orange
+                        : rightStates[item.id]
+                          ? colors.orange
+                          : leftStates[item.id]
+                            ? colors.danger
+                            : colors.gray,
+                    },
+                  ]}
+                >
+                  <AntDesign
+                    name={
+                      pressedStates[item.id]
+                        ? 'checkcircleo'
+                        : rightStates[item.id]
+                          ? 'arrowright'
+                          : leftStates[item.id]
+                            ? 'closecircleo'
+                            : 'questioncircleo'
+                    }
+                    size={30}
+                    color="white"
+                  />
+                </View>
+              )}
             </View>
+
             {addQuantity && selectedProduct === item.id ? (
               <View
                 style={[
@@ -115,7 +131,7 @@ function Products({ item }) {
                     <TextInput
                       style={ProductStyles.input}
                       keyboardType="numeric"
-                      value={quantity}
+                      value={quantity.toString()}
                       onChangeText={(num) => setQuantity(num)}
                     />
                     <TextInput
@@ -142,6 +158,7 @@ function Products({ item }) {
           </View>
         </PanGestureHandler>
       </TouchableOpacity>
+
       {showModal && selectedProduct === item.id ? (
         <ModalProduct
           showModal={showModal}
