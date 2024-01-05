@@ -17,7 +17,13 @@ import { colors } from '../../styles/GlobalStyles'
 import { ProductStyles } from '../../styles/ProductStyles'
 
 function ProductsPacking() {
-  const { productsPacking, setFetchPackingProducts, selectedCustomer } =
+  const {
+    productsPacking,
+    setProductsPacking,
+    error,
+    setFetchPackingProducts,
+    selectedCustomer
+  } =
     usePackingStore()
   const { token } = useTokenStore()
   const [search, setSearch] = useState(false)
@@ -48,10 +54,10 @@ function ProductsPacking() {
           </TouchableOpacity>
         </View>
       )}
-
+      {/* TODO: En la respuesta de la api hay que eliminar el nivel de arreglo en orders para que solo envie un objeto */}
+      {/* 
       {productsPacking ? (
         <View>
-          {/* TODO: En la respuesta de la api hay que eliminar el nivel de arreglo en orders para que solo envie un objeto */}
           <Text style={ProductStyles.category}>
             Order: {productsPacking[0].reference}
           </Text>
@@ -64,6 +70,9 @@ function ProductsPacking() {
                 colorPress={colors.orange}
                 colorRight={colors.orange}
                 colorLeft={colors.danger}
+                products={productsPacking}
+                setProducts={setProductsPacking}
+                error={error}
               />
             )}
             keyExtractor={(item, index) => index.toString()}
@@ -75,7 +84,8 @@ function ProductsPacking() {
         >
           <ActivityIndicator size="large" color="#0000ff" />
         </View>
-      )}
+      )} */}
+
     </SafeAreaView>
   )
 }
