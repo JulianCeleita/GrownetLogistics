@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import {
+  FlatList,
   ScrollView,
   Text,
   TextInput,
@@ -17,9 +18,11 @@ import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
 import ModalProduct from '../../components/ModalProduct'
 import useLoadingStore from '../../store/useLoadingStore'
 import useTokenStore from '../../store/useTokenStore'
+import { ProductsList } from '../../components/ProductsList'
 
 function ProductsLoading() {
-  const { loadingProducts, setLoadingProducts } = useLoadingStore()
+  const { productsLoading, setFetchProductsLoading, selectedCustomerL } =
+    useLoadingStore()
   const [pressedStates, setPressedStates] = useState({})
   const [rightStates, setRightStates] = useState({})
   const [leftStates, setLeftStates] = useState({})
@@ -29,6 +32,7 @@ function ProductsLoading() {
   const [showModal, setShowModal] = useState(false)
   const [selectedProduct, setSelectedProduct] = useState(null)
   const [addQuantity, setAddQuantity] = useState(false)
+
   const positiveOffset = 30
   const negativeOffset = -30
 
@@ -44,9 +48,11 @@ function ProductsLoading() {
   // const { accountNumber } = route.params
 
   const { token } = useTokenStore()
+  console.log('selectedCustomer', selectedCustomerL)
+  console.log('section', productsLoading)
 
   useEffect(() => {
-    // setLoadingProducts(token, 'SF004')
+    setFetchProductsLoading(token, selectedCustomerL)
   }, [])
 
   const handlePress = (itemId) => {
@@ -59,7 +65,7 @@ function ProductsLoading() {
     newRightStates[itemId] = false
     newLeftStates[itemId] = false
 
-    const updatedProducts = loadingProducts.map((section) => ({
+    const updatedProducts = productsLoading.map((section) => ({
       ...section,
       data: section.data.map((item) => {
         if (item.id === itemId) {
@@ -109,7 +115,7 @@ function ProductsLoading() {
     newPressedStates[itemId] = false
     newRightStates[itemId] = false
 
-    const updatedProducts = loadingProducts.map((section) => ({
+    const updatedProducts = productsLoading.map((section) => ({
       ...section,
       data: section.data.map((item) => {
         if (item.id === itemId) {
@@ -132,7 +138,7 @@ function ProductsLoading() {
     const newRightStates = Object.assign({}, rightStates)
     newRightStates[itemId] = true
 
-    const updatedProducts = loadingProducts.map((section) => ({
+    const updatedProducts = productsLoading.map((section) => ({
       ...section,
       data: section.data.map((item) => {
         if (item.id === itemId) {
@@ -153,172 +159,33 @@ function ProductsLoading() {
   }
   return (
     <SafeAreaView style={ProductStyles.products}>
-      <ScrollView>
-        {search ? (
-          <ProductSearcher setSearch={setSearch} />
-        ) : (
-          <View style={CustomerDayStyles.title2}>
-            <Text style={ProductStyles.customerTitle}>Restaurant 1</Text>
-            <TouchableOpacity onPress={handleSearch} style={ProductStyles.icon}>
-              <Ionicons
-                name="md-search-circle-outline"
-                size={35}
-                color={colors.darkBlue}
-              />
-            </TouchableOpacity>
-          </View>
-        )}
-        {loadingProducts.map((section) => (
-          <View key={section.id_tittle}>
-            <Text style={ProductStyles.category}>
-              {section.id_tittle}. {section.title}
-            </Text>
-            {section.data.map((item) => (
-              <View style={{ alignItems: 'center' }} key={item.id}>
-                <TouchableOpacity onPress={() => handlePress(item.id)}>
-                  <PanGestureHandler
-                    enabled={!addQuantity}
-                    onGestureEvent={(e) => handleGestureEvent(e, item.id)}
-                    activeOffsetX={[negativeOffset, positiveOffset]}
-                  >
-                    <View>
-                      <View
-                        style={[ProductStyles.card, GlobalStyles.boxShadow]}
-                      >
-                        <View style={ProductStyles.productTittle}>
-                          <Text style={ProductStyles.tittleCard}>
-                            {item.name} {item.packsize}
-                          </Text>
-                          <View style={ProductStyles.qty}>
-                            <Text style={ProductStyles.textCard}>
-                              Qty: {item.quantity} {item.uom}{' '}
-                              {/*  Loaded:{' '}
-                              {item.loaded || 0} */}
-                            </Text>
-                            {rightStates[item.id] ? (
-                              <Text
-                                style={[
-                                  ProductStyles.textCard,
-                                  {
-                                    color:
-                                      item.quantity - item.loaded > 0
-                                        ? colors.danger
-                                        : colors.green,
-                                    marginRight: 50,
-                                  },
-                                ]}
-                              >
-                                {item.quantity - item.loaded > 0
-                                  ? 'Missing -'
-                                  : 'Overweight +'}{' '}
-                                {Math.abs(item.quantity - item.loaded || 0)}
-                              </Text>
-                            ) : null}
-                          </View>
-                        </View>
-                        <View
-                          style={[
-                            ProductStyles.checkBox,
-                            {
-                              backgroundColor: pressedStates[item.id]
-                                ? colors.green
-                                : rightStates[item.id]
-                                  ? colors.green
-                                  : leftStates[item.id]
-                                    ? colors.danger
-                                    : colors.gray,
-                            },
-                          ]}
-                        >
-                          <AntDesign
-                            name={
-                              pressedStates[item.id]
-                                ? 'checkcircleo'
-                                : rightStates[item.id]
-                                  ? 'arrowright'
-                                  : leftStates[item.id]
-                                    ? 'closecircleo'
-                                    : 'questioncircleo'
-                            }
-                            size={30}
-                            color="white"
-                          />
-                        </View>
-                      </View>
-                      {addQuantity && selectedProduct === item.id ? (
-                        <View
-                          style={[
-                            ProductStyles.details,
-                            GlobalStyles.boxShadow,
-                            { borderColor: colors.orange },
-                          ]}
-                        >
-                          <View style={ProductStyles.information}>
-                            <View>
-                              <Text style={ProductStyles.textCard}>
-                                Loaded:
-                              </Text>
-                              <Text
-                                style={[
-                                  ProductStyles.textCard,
-                                  { marginTop: 12 },
-                                ]}
-                              >
-                                Note:
-                              </Text>
-                            </View>
-                            <View style={ProductStyles.inputsCard}>
-                              <TextInput
-                                style={ProductStyles.input}
-                                keyboardType="numeric"
-                                value={quantity}
-                                onChangeText={(num) => setQuantity(num)}
-                              />
-                              <TextInput
-                                style={[ProductStyles.input, { marginTop: 8 }]}
-                              />
-                            </View>
-                          </View>
-                          <TouchableOpacity
-                            style={[
-                              GlobalStyles.btnPrimary,
-                              { width: 150, marginTop: 10, paddingVertical: 8 },
-                            ]}
-                            onPress={() => declareDifferentQty(item.id)}
-                          >
-                            <Text style={GlobalStyles.textBtnSecundary}>
-                              Send
-                            </Text>
-                          </TouchableOpacity>
-                        </View>
-                      ) : null}
-                    </View>
-                  </PanGestureHandler>
-                </TouchableOpacity>
-                {showModal && selectedProduct === item.id ? (
-                  <ModalProduct
-                    showModal={showModal}
-                    setShowModal={setShowModal}
-                    declareNotAvailable={declareNotAvailable}
-                    item={item}
-                    title={item.name + ' not available'}
-                    text={
-                      ' Are you sure you want to mark this item as unavailable?'
-                    }
-                  />
-                ) : null}
-              </View>
-            ))}
-          </View>
-        ))}
-        {/* <SectionList
+      {search ? (
+        <ProductSearcher setSearch={setSearch} />
+      ) : (
+        <View style={CustomerDayStyles.title2}>
+          <Text style={ProductStyles.customerTitle}>Restaurant 1</Text>
+          <TouchableOpacity onPress={handleSearch} style={ProductStyles.icon}>
+            <Ionicons
+              name="md-search-circle-outline"
+              size={35}
+              color={colors.darkBlue}
+            />
+          </TouchableOpacity>
+        </View>
+      )}
+      <FlatList
+        data={productsLoading}
+        keyExtractor={(item, index) => `${index}`}
+        renderItem={({ item }) => <ProductsList section={item} />}
+        scrollEnabled
+      />
+      {/* <SectionList
           sections={loadingProducts}
           keyExtractor={(item, itemId) => `${itemId}`}
           renderItem={({ item }) => <ProductsCard item={item} />}
           renderSectionHeader={renderSeccionHeader}
           scrollEnabled
           />*/}
-      </ScrollView>
     </SafeAreaView>
   )
 }
