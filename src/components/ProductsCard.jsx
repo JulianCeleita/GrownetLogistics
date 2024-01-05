@@ -1,178 +1,55 @@
 import { AntDesign } from '@expo/vector-icons'
 import React, { useState } from 'react'
-import { Text, TextInput, TouchableOpacity, View } from 'react-native'
+import {
+  ActivityIndicator,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 import { PanGestureHandler } from 'react-native-gesture-handler'
-
-
-import mainAxios from '../../axios.Config'
 import ModalProduct from '../components/ModalProduct'
-import { insertLoading } from '../config/urls.config'
-import { usePackingStore } from '../store/usePackingStore'
-import useTokenStore from '../store/useTokenStore'
+import { useCardEvents } from '../hooks/useCardEvents'
+import { useProductSubmit } from '../hooks/useProductSubmit'
 import { GlobalStyles, colors } from '../styles/GlobalStyles'
 import { ProductStyles } from '../styles/ProductStyles'
 
-function Products({ item }) {
-  const { token } = useTokenStore()
-
-  const [showModal, setShowModal] = useState(false)
-  const [selectedProduct, setSelectedProduct] = useState(null)
-  const [addQuantity, setAddQuantity] = useState(false)
-  const [pressedStates, setPressedStates] = useState({})
-  const [rightStates, setRightStates] = useState({})
-  const [leftStates, setLeftStates] = useState({})
-  const [quantity, setQuantity] = useState('')
-  const { packingProducts, setPackingProducts } = usePackingStore()
-
-  console.log(
-    'PressedStates',
+export function ProductsCard({ item, colorPress, colorRight, colorLeft }) {
+  const positiveOffset = 30
+  const negativeOffset = -30
+  const [note, setNote] = useState('')
+  const { handleSubmit } = useProductSubmit()
+  const {
+    quantity,
+    setQuantity,
+    showModal,
+    setShowModal,
+    addQuantity,
+    selectedProduct,
     pressedStates,
-    'RightStates',
     rightStates,
-    'LeftStates',
     leftStates,
-  )
-
-  const handlePress = (itemId) => {
-    setSelectedProduct(itemId)
-    const newPressedStates = Object.assign({}, pressedStates)
-    const newRightStates = { ...rightStates }
-    const newLeftStates = { ...leftStates }
-
-    newPressedStates[itemId] = !newPressedStates[itemId]
-    newRightStates[itemId] = false
-    newLeftStates[itemId] = false
-
-    const updatedProducts = packingProducts.map((section) => ({
-      ...section,
-      data: section.data.map((item) => {
-        if (item.id === itemId) {
-          return {
-            ...item,
-            packed: newPressedStates[itemId] ? item.quantity : '',
-          }
-        }
-        return item
-      }),
-    }))
-    setPressedStates(newPressedStates)
-    setRightStates(newRightStates)
-    setLeftStates(newLeftStates)
-    setPackingProducts(updatedProducts)
-    setAddQuantity(false)
-  }
-
-  const handleGestureEvent = (event, itemId) => {
-    const { translationX } = event.nativeEvent
-    setSelectedProduct(itemId)
-
-    if (translationX > 0) {
-      const newPressedStates = { ...pressedStates }
-      const newLeftStates = { ...leftStates }
-
-      newPressedStates[itemId] = false
-      newLeftStates[itemId] = false
-
-      setPressedStates(newPressedStates)
-      setLeftStates(newLeftStates)
-      setAddQuantity(true)
-      setQuantity('')
-
-      console.log('Dezlizamos a la derecha', itemId)
-    } else if (translationX < 0) {
-      setShowModal(true)
-      console.log('Dezlizamos a la izquierda')
-    }
-  }
-
-  const declareNotAvailable = (itemId) => {
-    const newLeftStates = Object.assign({}, leftStates)
-    const newPressedStates = { ...pressedStates }
-    const newRightStates = { ...rightStates }
-
-    newLeftStates[itemId] = !newLeftStates[itemId]
-    newPressedStates[itemId] = false
-    newRightStates[itemId] = false
-
-    const updatedProducts = packingProducts.map((section) => ({
-      ...section,
-      data: section.data.map((item) => {
-        if (item.id === itemId) {
-          return { ...item, packed: newLeftStates[itemId] ? 0 : '' }
-        }
-        return item
-      }),
-    }))
-
-    setLeftStates(newLeftStates)
-    setPressedStates(newPressedStates)
-    setRightStates(newRightStates)
-    setPackingProducts(updatedProducts)
-    setAddQuantity(false)
-
-    console.log('Dezlizamos a la izquierda', itemId)
-  }
-
-  const declareDifferentQty = (itemId) => {
-    const newRightStates = Object.assign({}, rightStates)
-    newRightStates[itemId] = true
-
-    const updatedProducts = packingProducts.map((section) => ({
-      ...section,
-      data: section.data.map((item) => {
-        if (item.id === itemId) {
-          return { ...item, packed: newRightStates[itemId] ? quantity : '' }
-        }
-        return item
-      }),
-    }))
-    setRightStates(newRightStates)
-    setPackingProducts(updatedProducts)
-    setSelectedProduct(null)
-    setAddQuantity(false)
-  }
-
-  const handleSubmit = async () => {
-    let quantity
-    let notes
-
-    if (left) {
-      quantity = quantityLeft
-      notes = notesLeft
-    } else if (right) {
-      quantity = quantityRight
-      notes = notesRight
-    }
-
-    const data = {
-      quantity: parseInt(quantity, 10),
-      id: parseInt(notes, 10),
-    }
-
-    console.log('data', data)
-
-    try {
-      const response = await mainAxios.post(insertLoading, data, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-
-      if (response.status === 200) {
-        console.log('Datos enviados correctamente', response.data)
-      } else {
-        throw new Error('Error al enviar los datos')
-      }
-    } catch (error) {
-      console.error('Hubo un error al enviar los datos: ', error)
-    }
-  }
+    handlePress,
+    handleGestureEvent,
+    declareNotAvailable,
+    declareDifferentQty,
+  } = useCardEvents(item.quantity)
+  const [isLoading, setIsLoading] = useState(false)
 
   return (
     <View style={{ alignItems: 'center' }} key={item.id}>
-      <TouchableOpacity onPress={() => handlePress(item.id)}>
+      <TouchableOpacity
+        onPress={async () => {
+          setIsLoading(true)
+          handlePress(item.id)
+          await handleSubmit(item.id, quantity, note)
+          setIsLoading(false)
+        }}
+      >
         <PanGestureHandler
+          enabled={!addQuantity}
           onGestureEvent={(e) => handleGestureEvent(e, item.id)}
+          activeOffsetX={[negativeOffset, positiveOffset]}
         >
           <View>
             <View style={[ProductStyles.card, GlobalStyles.boxShadow]}>
@@ -196,35 +73,44 @@ function Products({ item }) {
                   ) : null}
                 </View>
               </View>
-              <View
-                style={[
-                  ProductStyles.checkBox,
-                  {
-                    backgroundColor: pressedStates[item.id]
-                      ? colors.orange
-                      : rightStates[item.id]
-                        ? colors.orange
-                        : leftStates[item.id]
-                          ? colors.danger
-                          : colors.gray,
-                  },
-                ]}
-              >
-                <AntDesign
-                  name={
-                    pressedStates[item.id]
-                      ? 'checkcircleo'
-                      : rightStates[item.id]
-                        ? 'arrowright'
-                        : leftStates[item.id]
-                          ? 'closecircleo'
-                          : 'questioncircleo'
-                  }
-                  size={30}
-                  color="white"
+              {isLoading ? (
+                <ActivityIndicator
+                  size="large"
+                  color={colors.bluePrimary}
+                  style={{ marginRight: 15 }}
                 />
-              </View>
+              ) : (
+                <View
+                  style={[
+                    ProductStyles.checkBox,
+                    {
+                      backgroundColor: pressedStates[item.id]
+                        ? colorPress
+                        : rightStates[item.id]
+                          ? colorRight
+                          : leftStates[item.id]
+                            ? colorLeft
+                            : colors.gray,
+                    },
+                  ]}
+                >
+                  <AntDesign
+                    name={
+                      pressedStates[item.id]
+                        ? 'checkcircleo'
+                        : rightStates[item.id]
+                          ? 'arrowright'
+                          : leftStates[item.id]
+                            ? 'closecircleo'
+                            : 'questioncircleo'
+                    }
+                    size={30}
+                    color="white"
+                  />
+                </View>
+              )}
             </View>
+
             {addQuantity && selectedProduct === item.id ? (
               <View
                 style={[
@@ -244,11 +130,13 @@ function Products({ item }) {
                     <TextInput
                       style={ProductStyles.input}
                       keyboardType="numeric"
-                      value={quantity}
+                      value={quantity.toString()}
                       onChangeText={(num) => setQuantity(num)}
                     />
                     <TextInput
                       style={[ProductStyles.input, { marginTop: 8 }]}
+                      value={note.toString()}
+                      onChangeText={(note) => setNote(note)}
                     />
                   </View>
                 </View>
@@ -257,7 +145,10 @@ function Products({ item }) {
                     GlobalStyles.btnPrimary,
                     { width: 150, marginTop: 10, paddingVertical: 8 },
                   ]}
-                  onPress={() => declareDifferentQty(item.id)}
+                  onPress={() => {
+                    declareDifferentQty(item.id)
+                    handleSubmit(item.id, quantity, note)
+                  }}
                 >
                   <Text style={GlobalStyles.textBtnSecundary}>Send</Text>
                 </TouchableOpacity>
@@ -266,18 +157,27 @@ function Products({ item }) {
           </View>
         </PanGestureHandler>
       </TouchableOpacity>
+
       {showModal && selectedProduct === item.id ? (
         <ModalProduct
           showModal={showModal}
           setShowModal={setShowModal}
           declareNotAvailable={declareNotAvailable}
           item={item}
-          title={'Item not available'}
+          title={item.name + ' not available'}
           text={' Are you sure you want to mark this item as unavailable?'}
         />
       ) : null}
+      {/*showModal2 && selectedProduct === item.id ? (
+        <ModalProduct
+          showModal={showModal2}
+          setShowModal={setShowModal2}
+          declareNotAvailable={declareNotAvailable}
+          item={item}
+          title={item.name + ' not available'}
+          text={' seguro que quiere marcarlo como revisado completo'}
+        />
+      ) : null*/}
     </View>
   )
 }
-
-export default Products

@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import mainAxios from '../../axios.Config'
+import mainAxios from '../../axios.config'
 import { ordersByDate } from '../config/urls.config'
 
 const useOrdersByDate = create((set) => {

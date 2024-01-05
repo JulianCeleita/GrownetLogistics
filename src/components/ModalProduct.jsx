@@ -1,28 +1,31 @@
-import React, { useState } from 'react'
+import { MaterialIcons } from '@expo/vector-icons'
+import React from 'react'
 import {
-  View,
+  Modal,
   Text,
   TouchableOpacity,
-  Modal,
   TouchableWithoutFeedback,
+  View,
 } from 'react-native'
-import { ModalStyle } from '../Styles/ModalStyles'
-import { MaterialIcons } from '@expo/vector-icons'
-import { GlobalStyles } from '../Styles/GlobalStyles'
+import { useProductSubmit } from '../hooks/useProductSubmit'
+import { GlobalStyles } from '../styles/GlobalStyles'
+import { ModalStyle } from '../styles/ModalStyles'
 
 const ModalProduct = ({
   showModal,
   setShowModal,
   declareNotAvailable,
   item,
-
   title,
   text,
-
 }) => {
+
+  const { handleSubmit } = useProductSubmit()
+
   const confirm = () => {
     declareNotAvailable(item.id)
     setShowModal(false)
+    handleSubmit(item.id)
   }
   const handleClose = () => {
     setShowModal(false)

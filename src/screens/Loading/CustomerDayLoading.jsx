@@ -1,38 +1,49 @@
-import { useNavigation } from '@react-navigation/native'
-import React, { useState } from 'react'
-import { Text, TouchableOpacity, View, ScrollView } from 'react-native'
-import Svg, { Circle, Text as SvgText } from 'react-native-svg'
-import { CustomerDayStyles } from '../../Styles/CustomerDayStyles'
-import { GlobalStyles, colors } from '../../Styles/GlobalStyles'
-import CustomerDaySearch from '../../components/CustomerDaySearch'
-import { LinearGradient } from 'expo-linear-gradient'
-import { DeliveryStyles } from '../../Styles/DeliveryStyles'
-import { SafeAreaView } from 'react-native-safe-area-context'
 import { Ionicons } from '@expo/vector-icons'
+import React, { useEffect, useState } from 'react'
+import { ScrollView, Text, TouchableOpacity, View } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import CustomerCard from '../../components/CustomerCard'
+import CustomerDaySearch from '../../components/CustomerDaySearch'
+import useOrdersByDate from '../../store/useOrdersByDateStore'
+import useTokenStore from '../../store/useTokenStore'
+import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
+import { colors } from '../../styles/GlobalStyles'
+import { percentageLoading } from '../../config/urls.config'
+import mainAxios from '../../../axios.config.js'
 
 function CustomerDayLoading() {
-  const navigation = useNavigation()
+  const { OrdersByDate, setOrdersByDate } = useOrdersByDate()
+  const { token } = useTokenStore()
   const [search, setSearch] = useState(false)
+  const [percentages, setPercentages] = useState([])
 
-  const titleStyle = {
-    ...DeliveryStyles.tittle,
-    ...GlobalStyles.boxShadow,
-    elevation: 5,
-    zIndex: 5,
-  }
-
-  const radius = 40
-  const strokeWidth = 10
-  const circumference = 2 * Math.PI * radius
-  const percentage = 60
-  const strokeDashoffset = circumference - (percentage / 100) * circumference
-
-  const handleNavigateToProducts = () => {
-    navigation.navigate('ProductsLoading')
-  }
+  useEffect(() => {
+    setOrdersByDate(token)
+  }, [])
   const handleSearch = () => {
     setSearch(true)
   }
+  //Llamado API porcentaje
+  useEffect(() => {
+    async function fetchData() {
+      const newToken = '2025|YlaiMYOtLuIEnt6zq0kmKPUvYHQMeoycqBrNTiAQ'
+      try {
+        const response = await mainAxios
+          .get(percentageLoading, {
+            headers: {
+              Authorization: `Bearer ${newToken}`,
+            },
+          })
+          .then((response) => {
+            setPercentages(response.data.orders)
+          })
+      } catch (error) {
+        console.error('Error al obtener porcentaje:', error)
+      }
+    }
+    fetchData()
+  }, [])
+  console.log(percentages, 'esta llegando')
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
       <ScrollView>
@@ -53,53 +64,17 @@ function CustomerDayLoading() {
             </TouchableOpacity>
           </View>
         )}
-        <View style={{ alignItems: 'center' }}>
-          <TouchableOpacity
-            style={[CustomerDayStyles.card, GlobalStyles.boxShadow]}
-            onPress={handleNavigateToProducts}
-          >
-            <View style={CustomerDayStyles.cardsLayout}>
-              <Svg height={radius * 2} width={radius * 2}>
-                <Circle
-                  cx={radius}
-                  cy={radius}
-                  r={radius - strokeWidth / 2}
-                  fill="transparent"
-                  stroke="#8FDE9B"
-                  strokeWidth={strokeWidth}
-                  strokeDasharray={`${circumference} ${circumference}`}
-                  strokeDashoffset={0}
-                />
-                <Circle
-                  cx={radius}
-                  cy={radius}
-                  r={radius - strokeWidth / 2}
-                  fill="transparent"
-                  stroke="#62C471"
-                  strokeWidth={strokeWidth}
-                  strokeDasharray={`${circumference} ${circumference}`}
-                  strokeDashoffset={strokeDashoffset}
-                />
-                <SvgText
-                  x={radius - 6}
-                  y={radius + 6}
-                  textAnchor="middle"
-                  stroke="#00478C"
-                  fontSize="16"
-                  fill={colors.darkBlue}
-                >
-                  {percentage}%
-                </SvgText>
-              </Svg>
+        {OrdersByDate?.map((order) => {
+          return (
+            <View key={`${order.id_stateOrders}-${order.created_date}`}>
+              <CustomerCard
+                customer={order}
+                loadingCard
+                percentages={percentages}
+              />
             </View>
-            <View style={CustomerDayStyles.cardText}>
-              <Text style={CustomerDayStyles.titleCustomer}>
-                (1) Customer 1:
-              </Text>
-              <Text style={CustomerDayStyles.textCustomer}>152659</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
+          )
+        })}
       </ScrollView>
     </SafeAreaView>
   )

@@ -1,29 +1,20 @@
 import { Ionicons } from '@expo/vector-icons'
-import { useNavigation } from '@react-navigation/native'
-import React, { useState } from 'react'
-import {
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-  Dimensions,
-} from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { ScrollView, Text, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-
+import mainAxios from '../../../axios.config'
+import CustomerCard from '../../components/CustomerCard'
+import CustomerDaySearch from '../../components/CustomerDaySearch'
+import { percentagePacking } from '../../config/urls.config'
+import useOrdersByDate from '../../store/useOrdersByDateStore'
+import useTokenStore from '../../store/useTokenStore'
 import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
 import { colors } from '../../styles/GlobalStyles'
 
-import CustomerDaySearch from '../../components/CustomerDaySearch'
-import CustomerCard from '../../components/CustomerCard'
-import useOrdersByDate from '../../store/useOrdersByDateStore'
-
 function CustomerDayPacking() {
-  const navigation = useNavigation()
-
-
-
-  const { OrdersByDate } = useOrdersByDate()
-
+  const { OrdersByDate, setOrdersByDate } = useOrdersByDate()
+  const { token } = useTokenStore()
+  const [percentages, setPercentages] = useState([])
 
   // const isIOS = Platform.OS === 'ios'
   // const { width, height } = Dimensions.get('window')
@@ -36,10 +27,36 @@ function CustomerDayPacking() {
   // }
   const [search, setSearch] = useState(false)
 
+  useEffect(() => {
+    setOrdersByDate(token)
+  }, [])
+
   const handleSearch = () => {
     setSearch(true)
   }
+  console.log(percentagePacking)
 
+  //Llamado API porcentaje
+  useEffect(() => {
+    async function fetchData() {
+      const newToken = '2025|YlaiMYOtLuIEnt6zq0kmKPUvYHQMeoycqBrNTiAQ'
+      try {
+        const response = await mainAxios
+          .get(percentagePacking, {
+            headers: {
+              Authorization: `Bearer ${newToken}`,
+            },
+          })
+          .then((response) => {
+            setPercentages(response.data.orders)
+          })
+      } catch (error) {
+        console.error('Error al obtener porcentaje:', error)
+      }
+    }
+    fetchData()
+  }, [])
+  console.log(percentages, 'esta llegando')
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
       <ScrollView>
@@ -61,7 +78,11 @@ function CustomerDayPacking() {
           </View>
         )}
         {OrdersByDate?.map((order) => {
-          return <CustomerCard customer={order} />
+          return (
+            <View key={`${order.id_stateOrders}-${order.created_date}`}>
+              <CustomerCard customer={order} percentages={percentages} />
+            </View>
+          )
         })}
       </ScrollView>
     </SafeAreaView>
