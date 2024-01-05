@@ -3,8 +3,8 @@ import mainAxios from '../../axios.Config'
 import { productsPacking } from '../config/urls.config'
 
 export const usePackingStore = create((set) => ({
-  packingProducts: [],
-  selectedCustomer: null,
+  packingProducts: {},
+  selectedCustomer: 'RK100',
   error: null,
 
   setError: (error) => set(() => ({ error: error })),
@@ -23,7 +23,7 @@ export const usePackingStore = create((set) => ({
       })
 
       const products = await resp.data
-      console.log('response Products', products)
+      console.log(products.orders);
       set({ packingProducts: products.orders })
     } catch (error) {
       console.error('Error during request packing:', error)

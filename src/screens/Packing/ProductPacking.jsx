@@ -1,9 +1,9 @@
 import { Ionicons } from '@expo/vector-icons'
 import React, { useEffect, useState } from 'react'
-import { FlatList, Text, TouchableOpacity, View } from 'react-native'
+import { Text, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import ProductSearcher from '../../components/ProductSearch'
-import { ProductsList } from '../../components/ProductsList'
+import { ProductsCard } from '../../components/ProductsCard'
 import { usePackingStore } from '../../store/usePackingStore'
 import useTokenStore from '../../store/useTokenStore'
 import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
@@ -17,7 +17,6 @@ function ProductsPacking() {
   const [search, setSearch] = useState(false)
 
   // const { accountNumber } = route.params
-  console.log('selectedCustomer', selectedCustomer)
 
   useEffect(() => {
     setFetchPackingProducts(token, selectedCustomer)
@@ -26,6 +25,8 @@ function ProductsPacking() {
   const handleSearch = () => {
     setSearch(true)
   }
+
+  console.log({ packingProducts });
 
   return (
     <SafeAreaView style={ProductStyles.products}>
@@ -44,12 +45,15 @@ function ProductsPacking() {
         </View>
       )}
 
-      <FlatList
-        data={packingProducts}
-        keyExtractor={(item, index) => `${index}`}
-        renderItem={({ item }) => <ProductsList section={item} />}
-        scrollEnabled
-      />
+      <View>
+        {/* TODO: En la respuesta de la api hay que eliminar el nivel de arreglo en orders para que solo envie un objeto */}
+        <Text style={ProductStyles.category}>Order: {packingProducts[0].reference}</Text>
+        {
+          packingProducts[0].data.map((item, index) => (
+            <ProductsCard key={index} item={item} />
+          ))
+        }
+      </View>
     </SafeAreaView>
   )
 }

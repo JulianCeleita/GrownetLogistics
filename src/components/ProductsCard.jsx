@@ -1,5 +1,5 @@
 import { AntDesign } from '@expo/vector-icons'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import {
   ActivityIndicator,
   Text,
@@ -15,7 +15,7 @@ import { useProductSubmit } from '../hooks/useProductSubmit'
 import { GlobalStyles, colors } from '../styles/GlobalStyles'
 import { ProductStyles } from '../styles/ProductStyles'
 
-function Products({ item }) {
+export function ProductsCard({ item }) {
   const positiveOffset = 30
   const negativeOffset = -30
   const [note, setNote] = useState('')
@@ -172,5 +172,3 @@ function Products({ item }) {
     </View>
   )
 }
-
-export default Products
