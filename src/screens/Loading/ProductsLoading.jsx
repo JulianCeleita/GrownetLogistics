@@ -18,7 +18,7 @@ import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
 import { colors } from '../../styles/GlobalStyles'
 
 function ProductsLoading() {
-  const { productsLoading, setFetchProductsLoading, selectedCustomerL } =
+  const { productsLoading, setLoadingProducts, error, setFetchProductsLoading, selectedCustomerL } =
     useLoadingStore()
 
   const [search, setSearch] = useState(false)
@@ -66,6 +66,9 @@ function ProductsLoading() {
                 colorPress={colors.orange}
                 colorRight={colors.orange}
                 colorLeft={colors.danger}
+                products={productsLoading}
+                setProducts={setLoadingProducts}
+                error={error}
               />
             )}
             keyExtractor={(item, index) => index.toString()}

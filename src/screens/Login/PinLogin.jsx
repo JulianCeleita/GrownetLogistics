@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   Image,
   Keyboard,
@@ -25,7 +25,30 @@ const PinLogin = () => {
   const [loading, setLoading] = useState(false)
   const [showEmptyInputModal, setShowEmptyInputModal] = useState(false)
   const { setEmployeeToken } = useEmployeeStore()
+  const [keyboardOpen, setKeyboardOpen] = useState(false);
   const navigation = useNavigation()
+
+  useEffect(() => {
+    if (Platform.OS === 'android') {
+      const keyboardDidShowListener = Keyboard.addListener(
+        'keyboardDidShow',
+        () => {
+          setKeyboardOpen(true)
+        }
+      )
+      const keyboardDidHideListener = Keyboard.addListener(
+        'keyboardDidHide',
+        () => {
+          setKeyboardOpen(false)
+        }
+      )
+
+      return () => {
+        keyboardDidShowListener.remove()
+        keyboardDidHideListener.remove()
+      }
+    }
+  }, [])
 
   const handleSignIn = () => {
     if (pin === '') {
