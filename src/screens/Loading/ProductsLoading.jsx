@@ -30,7 +30,7 @@ function ProductsLoading() {
 
   const { token } = useTokenStore()
   console.log('selectedCustomer', selectedCustomerL)
-  console.log('section', productsLoading)
+  console.log('productsLoading', productsLoading)
 
   useEffect(() => {
     setFetchProductsLoading(token, selectedCustomerL)

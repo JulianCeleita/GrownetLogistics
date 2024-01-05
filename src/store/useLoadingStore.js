@@ -13,7 +13,7 @@ const useLoadingStore = create((set) => {
     setSelectedCustomerL: (customer) =>
       set(() => ({ selectedCustomerL: customer })),
 
-    setLoadingProducts: (products) => set({ loadingProducts: products }),
+    setLoadingProducts: (products) => set({ productsLoading: products }),
 
     setFetchProductsLoading: async (token, accountNumber) => {
       try {
@@ -25,7 +25,7 @@ const useLoadingStore = create((set) => {
             },
           },
         )
-        const productsLoadingData = await response.data
+        const productsLoadingData = await response.data.orders
 
         console.log('response', productsLoadingData)
         set({ productsLoading: productsLoadingData })
