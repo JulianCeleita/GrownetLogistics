@@ -48,7 +48,7 @@ export const useCardEvents = (quantityStore) => {
     setPressedStates(newPressedStates)
     setRightStates(newRightStates)
     setLeftStates(newLeftStates)
-    setPackingProducts(updatedProducts)
+    setProductsPacking(updatedProducts)
     setAddQuantity(false)
   }
 
@@ -97,7 +97,7 @@ export const useCardEvents = (quantityStore) => {
     setLeftStates(newLeftStates)
     setPressedStates(newPressedStates)
     setRightStates(newRightStates)
-    setPackingProducts(updatedProducts)
+    setProductsPacking(updatedProducts)
     setAddQuantity(false)
 
     console.log('Dezlizamos a la izquierda', itemId)

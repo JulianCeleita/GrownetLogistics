@@ -18,7 +18,6 @@ import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
 import ModalProduct from '../../components/ModalProduct'
 import useLoadingStore from '../../store/useLoadingStore'
 import useTokenStore from '../../store/useTokenStore'
-import { ProductsList } from '../../components/ProductsList'
 
 function ProductsLoading() {
   const { productsLoading, setFetchProductsLoading, selectedCustomerL } =
@@ -55,19 +54,12 @@ function ProductsLoading() {
           </TouchableOpacity>
         </View>
       )}
-      <FlatList
+      {/* <FlatList
         data={productsLoading}
         keyExtractor={(item, index) => `${index}`}
         renderItem={({ item }) => <ProductsList section={item} />}
         scrollEnabled
-      />
-      {/* <SectionList
-          sections={loadingProducts}
-          keyExtractor={(item, itemId) => `${itemId}`}
-          renderItem={({ item }) => <ProductsCard item={item} />}
-          renderSectionHeader={renderSeccionHeader}
-          scrollEnabled
-          />*/}
+      /> */}
     </SafeAreaView>
   )
 }

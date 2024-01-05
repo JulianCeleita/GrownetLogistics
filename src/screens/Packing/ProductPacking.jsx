@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons'
 import React, { useEffect, useState } from 'react'
-import { Text, TouchableOpacity, View } from 'react-native'
+import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import ProductSearcher from '../../components/ProductSearch'
 import { ProductsCard } from '../../components/ProductsCard'
@@ -24,7 +24,7 @@ function ProductsPacking() {
     setSearch(true)
   }
 
-  console.log({ packingProducts });
+  console.log({ productsPacking });
 
   return (
     <SafeAreaView style={ProductStyles.products}>
@@ -43,15 +43,25 @@ function ProductsPacking() {
         </View>
       )}
 
-      <View>
-        {/* TODO: En la respuesta de la api hay que eliminar el nivel de arreglo en orders para que solo envie un objeto */}
-        <Text style={ProductStyles.category}>Order: {packingProducts[0].reference}</Text>
-        {
-          packingProducts[0].data.map((item, index) => (
-            <ProductsCard key={index} item={item} />
-          ))
-        }
-      </View>
+      {
+        productsPacking ? (
+          <View>
+            {/* TODO: En la respuesta de la api hay que eliminar el nivel de arreglo en orders para que solo envie un objeto */}
+            <Text style={ProductStyles.category}>Order: {productsPacking[0].reference}</Text>
+            {
+              productsPacking[0].data.map((item, index) => (
+                <ProductsCard key={index} item={item} />
+              ))
+            }
+          </View>
+        ) : (
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <ActivityIndicator size='large' color='#0000ff' />
+          </View>
+        )
+      }
+
+
     </SafeAreaView>
   )
 }

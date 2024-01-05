@@ -4,7 +4,7 @@ import { productsPackingConfig } from '../config/urls.config'
 
 export const usePackingStore = create((set) => ({
 
-  packingProducts: {},
+  productsPacking: null,
   selectedCustomer: null,
   error: null,
 
