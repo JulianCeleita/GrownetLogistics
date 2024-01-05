@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Text, TouchableOpacity, View, ScrollView } from 'react-native'
 import Svg, { Circle, Text as SvgText } from 'react-native-svg'
 import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
@@ -11,12 +11,16 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { Ionicons } from '@expo/vector-icons'
 import useOrdersByDate from '../../store/useOrdersByDateStore'
 import CustomerCard from '../../components/CustomerCard'
+import useTokenStore from '../../store/useTokenStore'
 
 function CustomerDayLoading() {
-  const { OrdersByDate } = useOrdersByDate()
+  const { OrdersByDate, setOrdersByDate } = useOrdersByDate()
+  const { token } = useTokenStore()
 
   const [search, setSearch] = useState(false)
-
+  useEffect(() => {
+    setOrdersByDate(token)
+  }, [])
   const handleSearch = () => {
     setSearch(true)
   }
