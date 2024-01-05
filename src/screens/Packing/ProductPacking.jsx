@@ -11,12 +11,10 @@ import { colors } from '../../styles/GlobalStyles'
 import { ProductStyles } from '../../styles/ProductStyles'
 
 function ProductsPacking() {
-  const { packingProducts, setFetchPackingProducts, selectedCustomer } =
+  const { productsPacking, setFetchPackingProducts, selectedCustomer } =
     usePackingStore()
   const { token } = useTokenStore()
   const [search, setSearch] = useState(false)
-
-  // const { accountNumber } = route.params
 
   useEffect(() => {
     setFetchPackingProducts(token, selectedCustomer)

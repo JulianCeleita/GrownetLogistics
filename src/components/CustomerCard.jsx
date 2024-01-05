@@ -5,9 +5,11 @@ import { GlobalStyles, colors } from '../styles/GlobalStyles'
 import Svg, { Circle, Text as SvgText } from 'react-native-svg'
 import { useNavigation } from '@react-navigation/native'
 import { usePackingStore } from '../store/usePackingStore'
+import useLoadingStore from '../store/useLoadingStore'
 
-const CustomerCard = ({ customer }) => {
+const CustomerCard = ({ customer, loadingCard }) => {
   const { setSelectedCustomer } = usePackingStore()
+  const { setSelectedCustomerL } = useLoadingStore()
   const navigation = useNavigation()
   const radius = 33
   const strokeWidth = 10
@@ -16,8 +18,13 @@ const CustomerCard = ({ customer }) => {
   const strokeDashoffset = circumference - (percentage / 100) * circumference
 
   const handleNavigateToProducts = () => {
-    navigation.navigate('ProductsPacking')
-    setSelectedCustomer(customer.accountNumber)
+    if (!loadingCard) {
+      navigation.navigate('ProductsPacking')
+      setSelectedCustomer(customer.accountNumber)
+    } else {
+      navigation.navigate('ProductsLoading')
+      setSelectedCustomerL(customer.accountNumber)
+    }
   }
   return (
     <View style={{ alignItems: 'center' }}>
