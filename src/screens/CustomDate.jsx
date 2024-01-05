@@ -13,6 +13,8 @@ import {
 import FechaIcon from '../img/Fecha.png'
 import { CustomDateStyles } from '../styles/CustomDateStyles'
 import { CustomerDayStyles } from '../styles/CustomerDayStyles'
+import useTokenStore from '../store/useTokenStore'
+import useEmployeeStore from '../store/useEmployeeStore'
 
 const CustomDate = () => {
   const [animation] = useState(new Animated.Value(1))
@@ -20,6 +22,8 @@ const CustomDate = () => {
   const [currentDay, setCurrentDay] = useState(moment().format('dddd'))
   const [showMore, setShowMore] = useState(false)
   const navigation = useNavigation()
+  const { token, setToken } = useTokenStore()
+  const { employeeToken, setEmployeeToken } = useEmployeeStore()
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -47,6 +51,12 @@ const CustomDate = () => {
 
   const handleShowMore = () => {
     setShowMore(!showMore)
+  }
+
+  console.log('TOKEN EN DATE', token, 'EMPLOYEE TOKEN EN DATE', employeeToken)
+  const deleteToken = () => {
+    setToken('')
+    setEmployeeToken('')
   }
 
   const renderButton = (date) => {
@@ -154,6 +164,12 @@ const CustomDate = () => {
               <Text style={CustomDateStyles.showMoreButtonText}>
                 {showMore ? 'Hide' : 'Show more'}
               </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={CustomDateStyles.whiteBackground}
+              onPress={deleteToken}
+            >
+              <Text style={CustomDateStyles.buttonText}>Delete token</Text>
             </TouchableOpacity>
           </ScrollView>
         </View>

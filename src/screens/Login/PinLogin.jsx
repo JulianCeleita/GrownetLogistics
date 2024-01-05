@@ -16,7 +16,7 @@ import mainAxios from '../../../axios.config'
 import ModalAlert from '../../components/ModalAlert'
 import { loginEmployee } from '../../config/urls.config'
 import logo from '../../img/Logo_Blanco.png'
-import useTokenStore from '../../store/useTokenStore'
+import useEmployeeStore from '../../store/useEmployeeStore'
 import { LoginStyles } from '../../styles/LoginStyles'
 
 const PinLogin = () => {
@@ -24,7 +24,7 @@ const PinLogin = () => {
   const [showModal, setShowModal] = useState(false)
   const [loading, setLoading] = useState(false)
   const [showEmptyInputModal, setShowEmptyInputModal] = useState(false)
-  const { setEmployeeToken } = useTokenStore()
+  const { setEmployeeToken } = useEmployeeStore()
   const navigation = useNavigation()
 
   const handleSignIn = () => {
@@ -33,9 +33,11 @@ const PinLogin = () => {
       return
     }
     setLoading(true)
-
+    const requestData = {
+      pin: pin,
+    }
     mainAxios
-      .post(loginEmployee, pin)
+      .post(loginEmployee, requestData)
       .then((response) => {
         console.log("LA HIZO PERO...", pin, response.data)
         if (response.data.status === 200) {

@@ -5,16 +5,11 @@ import { persist } from 'zustand/middleware'
 const useTokenStore = create(
   persist(
     (set) => ({
-      token: '1553|HbMwQIJNPcEcN0OgBsFJGJi64EiReI7chF9l9og8',
+      token: '',
       setToken: (newToken) => {
         set({ token: newToken })
         console.log('Token guardado:', newToken)
-      },
-      employeeToken: null,
-      setEmployeeToken: (newToken) => {
-        set({ employeeToken: newToken })
-        console.log('Token de empleado guardado:', newToken)
-      },
+      },      
       initializeToken: async () => {
         try {
           const storedToken = await AsyncStorage.getItem('token')

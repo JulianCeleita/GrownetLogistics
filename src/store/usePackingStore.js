@@ -12,7 +12,6 @@ export const usePackingStore = create((set) => ({
 
   setPackingProducts: (products) => set(() => ({ packingProducts: products })),
 
-
   setFetchPackingProducts: async (token, accountNumber) => {
     try {
       const resp = await mainAxios.get(`${productsPacking}${accountNumber}`, {
