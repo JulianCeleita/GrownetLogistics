@@ -23,27 +23,8 @@ import { ProductsList } from '../../components/ProductsList'
 function ProductsLoading() {
   const { productsLoading, setFetchProductsLoading, selectedCustomerL } =
     useLoadingStore()
-  const [pressedStates, setPressedStates] = useState({})
-  const [rightStates, setRightStates] = useState({})
-  const [leftStates, setLeftStates] = useState({})
-  const [showText, setShowText] = useState(false)
+
   const [search, setSearch] = useState(false)
-  const [quantity, setQuantity] = useState('')
-  const [showModal, setShowModal] = useState(false)
-  const [selectedProduct, setSelectedProduct] = useState(null)
-  const [addQuantity, setAddQuantity] = useState(false)
-
-  const positiveOffset = 30
-  const negativeOffset = -30
-
-  console.log(
-    'PressedStates',
-    pressedStates,
-    'RightStates',
-    rightStates,
-    'LeftStates',
-    leftStates,
-  )
 
   // const { accountNumber } = route.params
 
@@ -54,105 +35,6 @@ function ProductsLoading() {
   useEffect(() => {
     setFetchProductsLoading(token, selectedCustomerL)
   }, [])
-
-  const handlePress = (itemId) => {
-    setSelectedProduct(itemId)
-    const newPressedStates = Object.assign({}, pressedStates)
-    const newRightStates = { ...rightStates }
-    const newLeftStates = { ...leftStates }
-
-    newPressedStates[itemId] = !newPressedStates[itemId]
-    newRightStates[itemId] = false
-    newLeftStates[itemId] = false
-
-    const updatedProducts = productsLoading.map((section) => ({
-      ...section,
-      data: section.data.map((item) => {
-        if (item.id === itemId) {
-          return {
-            ...item,
-            loaded: newPressedStates[itemId] ? item.quantity : '',
-          }
-        }
-        return item
-      }),
-    }))
-    setPressedStates(newPressedStates)
-    setRightStates(newRightStates)
-    setLeftStates(newLeftStates)
-    setLoadingProducts(updatedProducts)
-    setAddQuantity(false)
-  }
-
-  const handleGestureEvent = (event, itemId) => {
-    const { translationX } = event.nativeEvent
-    setSelectedProduct(itemId)
-
-    if (translationX > 0) {
-      const newPressedStates = { ...pressedStates }
-      const newLeftStates = { ...leftStates }
-
-      newPressedStates[itemId] = false
-      newLeftStates[itemId] = false
-
-      setPressedStates(newPressedStates)
-      setLeftStates(newLeftStates)
-      setAddQuantity(true)
-      setQuantity('')
-
-      console.log('Dezlizamos a la derecha', itemId)
-    } else if (translationX < 0) {
-      setShowModal(true)
-    }
-  }
-
-  const declareNotAvailable = (itemId) => {
-    const newLeftStates = Object.assign({}, leftStates)
-    const newPressedStates = { ...pressedStates }
-    const newRightStates = { ...rightStates }
-
-    newLeftStates[itemId] = !newLeftStates[itemId]
-    newPressedStates[itemId] = false
-    newRightStates[itemId] = false
-
-    const updatedProducts = productsLoading.map((section) => ({
-      ...section,
-      data: section.data.map((item) => {
-        if (item.id === itemId) {
-          return { ...item, loaded: newLeftStates[itemId] ? 0 : '' }
-        }
-        return item
-      }),
-    }))
-
-    setLeftStates(newLeftStates)
-    setPressedStates(newPressedStates)
-    setRightStates(newRightStates)
-    setLoadingProducts(updatedProducts)
-    setAddQuantity(false)
-
-    console.log('Dezlizamos a la izquierda', itemId)
-  }
-
-  const declareDifferentQty = (itemId) => {
-    const newRightStates = Object.assign({}, rightStates)
-    newRightStates[itemId] = true
-
-    const updatedProducts = productsLoading.map((section) => ({
-      ...section,
-      data: section.data.map((item) => {
-        if (item.id === itemId) {
-          return { ...item, loaded: newRightStates[itemId] ? quantity : '' }
-        }
-        return item
-      }),
-    }))
-    setRightStates(newRightStates)
-    setShowText(true)
-    setLoadingProducts(updatedProducts)
-    setSelectedProduct(null)
-    setAddQuantity(false)
-  }
 
   const handleSearch = () => {
     setSearch(true)
