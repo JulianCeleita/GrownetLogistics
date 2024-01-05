@@ -14,7 +14,7 @@ import { useProductSubmit } from '../hooks/useProductSubmit'
 import { GlobalStyles, colors } from '../styles/GlobalStyles'
 import { ProductStyles } from '../styles/ProductStyles'
 
-export function ProductsCard({ item, colorPress, colorRight, colorLeft }) {
+export function ProductsCard({ item, colorPress, colorRight, colorLeft, products, setProducts, error }) {
   const positiveOffset = 30
   const negativeOffset = -30
   const [note, setNote] = useState('')
@@ -33,7 +33,7 @@ export function ProductsCard({ item, colorPress, colorRight, colorLeft }) {
     handleGestureEvent,
     declareNotAvailable,
     declareDifferentQty,
-  } = useCardEvents(item.quantity)
+  } = useCardEvents(item.quantity, products, setProducts, error)
   const [isLoading, setIsLoading] = useState(false)
 
   return (
@@ -61,7 +61,8 @@ export function ProductsCard({ item, colorPress, colorRight, colorLeft }) {
                   <Text style={ProductStyles.textCard}>
                     Qty: {item.quantity}
                   </Text>
-                  {rightStates[item.id] ? (
+
+                  {rightStates[item.id] && (item.quantity > item.packed) ? (
                     <Text
                       style={[
                         ProductStyles.textCard,
@@ -71,6 +72,18 @@ export function ProductsCard({ item, colorPress, colorRight, colorLeft }) {
                       {`Missing ${item.quantity - item.packed || 0}`}
                     </Text>
                   ) : null}
+
+                  {rightStates[item.id] && (item.quantity < item.packed) ? (
+                    <Text
+                      style={[
+                        ProductStyles.textCard,
+                        { color: colors.green, marginRight: 50 },
+                      ]}
+                    >
+                      {`Overweight ${item.packed - item.quantity}`}
+                    </Text>
+                  ) : null}
+
                 </View>
               </View>
               {isLoading ? (
