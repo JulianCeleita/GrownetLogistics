@@ -11,7 +11,7 @@ import { colors } from '../../styles/GlobalStyles'
 import { ProductStyles } from '../../styles/ProductStyles'
 
 function ProductsPacking() {
-  const { packingProducts, setFetchPackingProducts, selectedCustomer } =
+  const { productsPacking, setFetchPackingProducts, selectedCustomer } =
     usePackingStore()
   const { token } = useTokenStore()
   const [search, setSearch] = useState(false)
@@ -45,7 +45,7 @@ function ProductsPacking() {
       )}
 
       <FlatList
-        data={packingProducts}
+        data={productsPacking}
         keyExtractor={(item, index) => `${index}`}
         renderItem={({ item }) => <ProductsList section={item} />}
         scrollEnabled
