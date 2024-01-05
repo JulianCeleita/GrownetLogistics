@@ -17,6 +17,7 @@ function Products({ item, setEnableScroll }) {
   const { token } = useTokenStore()
 
   const [showModal, setShowModal] = useState(false)
+  const [showModal2, setShowModal2] = useState(false)
   const [selectedProduct, setSelectedProduct] = useState(null)
   const [addQuantity, setAddQuantity] = useState(false)
   // const [pressedStates, setPressedStates] = useState({})
@@ -74,7 +75,6 @@ function Products({ item, setEnableScroll }) {
 
   const handleGestureEvent = (event, itemId) => {
     const { translationX } = event.nativeEvent
-    console.log('Translation X:', translationX)
     setSelectedProduct(itemId)
 
     if (translationX > 0) {
@@ -105,6 +105,12 @@ function Products({ item, setEnableScroll }) {
     newLeftStates[itemId] = !newLeftStates[itemId]
     newPressedStates[itemId] = false
     newRightStates[itemId] = false
+
+    /* if (rightStates && rightStates[itemId] === false) {
+      console.log('No hay', itemId)
+
+      setShowModal2(true)
+    }*/
 
     const updatedProducts = packingProducts.map((section) => ({
       ...section,
@@ -143,7 +149,8 @@ function Products({ item, setEnableScroll }) {
     setSelectedProduct(null)
     setAddQuantity(false)
   }
-
+  console.log('prueba estado: ', rightStates)
+  console.log(pressedStates, 'presione')
   return (
     <View style={{ alignItems: 'center' }} key={item.id}>
       <TouchableOpacity onPress={() => handlePress(item.id)}>
@@ -254,6 +261,16 @@ function Products({ item, setEnableScroll }) {
           item={item}
           title={item.name + ' not available'}
           text={' Are you sure you want to mark this item as unavailable?'}
+        />
+      ) : null}
+      {showModal2 && selectedProduct === item.id ? (
+        <ModalProduct
+          showModal={showModal2}
+          setShowModal={setShowModal2}
+          declareNotAvailable={declareNotAvailable}
+          item={item}
+          title={item.name + ' not available'}
+          text={' seguro que quiere marcarlo como revisado completo'}
         />
       ) : null}
     </View>
