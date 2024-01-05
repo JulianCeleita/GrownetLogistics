@@ -7,7 +7,7 @@ export const useCardEvents = (quantityStore) => {
   const [leftStates, setLeftStates] = useState({})
   const [addQuantity, setAddQuantity] = useState(false)
   const [selectedProduct, setSelectedProduct] = useState(null)
-  const { packingProducts, setPackingProducts, error } = usePackingStore()
+  const { productsPacking, setProductsPacking, error } = usePackingStore()
   const [showModal, setShowModal] = useState(false)
   const [quantity, setQuantity] = useState(quantityStore)
 
@@ -33,7 +33,7 @@ export const useCardEvents = (quantityStore) => {
     newRightStates[itemId] = false
     newLeftStates[itemId] = false
 
-    const updatedProducts = packingProducts.map((section) => ({
+    const updatedProducts = productsPacking.map((section) => ({
       ...section,
       data: section.data.map((item) => {
         if (item.id === itemId) {
@@ -84,7 +84,7 @@ export const useCardEvents = (quantityStore) => {
     newPressedStates[itemId] = false
     newRightStates[itemId] = false
 
-    const updatedProducts = packingProducts.map((section) => ({
+    const updatedProducts = productsPacking.map((section) => ({
       ...section,
       data: section.data.map((item) => {
         if (item.id === itemId) {
@@ -107,7 +107,7 @@ export const useCardEvents = (quantityStore) => {
     const newRightStates = Object.assign({}, rightStates)
     newRightStates[itemId] = true
 
-    const updatedProducts = packingProducts.map((section) => ({
+    const updatedProducts = productsPacking.map((section) => ({
       ...section,
       data: section.data.map((item) => {
         if (item.id === itemId) {
@@ -117,7 +117,7 @@ export const useCardEvents = (quantityStore) => {
       }),
     }))
     setRightStates(newRightStates)
-    setPackingProducts(updatedProducts)
+    setProductsPacking(updatedProducts)
     setSelectedProduct(null)
     setAddQuantity(false)
   }

@@ -1,10 +1,11 @@
 import { create } from 'zustand'
 import mainAxios from '../../axios.Config'
-import { productsPacking } from '../config/urls.config'
+import { productsPackingConfig } from '../config/urls.config'
 
 export const usePackingStore = create((set) => ({
+
   packingProducts: {},
-  selectedCustomer: 'RK100',
+  selectedCustomer: null,
   error: null,
 
   setError: (error) => set(() => ({ error: error })),
@@ -12,19 +13,23 @@ export const usePackingStore = create((set) => ({
   setSelectedCustomer: (customer) =>
     set(() => ({ selectedCustomer: customer })),
 
-  setPackingProducts: (products) => set(() => ({ packingProducts: products })),
+  setProductsPacking: (products) => set(() => ({ productsPacking: products })),
 
   setFetchPackingProducts: async (token, accountNumber) => {
     try {
-      const resp = await mainAxios.get(`${productsPacking}${accountNumber}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
+      const resp = await mainAxios.get(
+        `${productsPackingConfig}${accountNumber}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         },
-      })
+      )
 
       const products = await resp.data
-      console.log(products.orders);
-      set({ packingProducts: products.orders })
+
+      console.log('response Products', products)
+      set({ productsPacking: products.orders })
     } catch (error) {
       console.error('Error during request packing:', error)
     }
