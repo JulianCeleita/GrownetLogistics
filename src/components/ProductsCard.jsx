@@ -15,7 +15,7 @@ import { useProductSubmit } from '../hooks/useProductSubmit'
 import { GlobalStyles, colors } from '../styles/GlobalStyles'
 import { ProductStyles } from '../styles/ProductStyles'
 
-export function ProductsCard({ item }) {
+export function ProductsCard({ item, colorPress, colorRight, colorLeft }) {
   const positiveOffset = 30
   const negativeOffset = -30
   const [note, setNote] = useState('')
@@ -86,11 +86,11 @@ export function ProductsCard({ item }) {
                     ProductStyles.checkBox,
                     {
                       backgroundColor: pressedStates[item.id]
-                        ? colors.orange
+                        ? colorPress
                         : rightStates[item.id]
-                          ? colors.orange
+                          ? colorRight
                           : leftStates[item.id]
-                            ? colors.danger
+                            ? colorLeft
                             : colors.gray,
                     },
                   ]}
