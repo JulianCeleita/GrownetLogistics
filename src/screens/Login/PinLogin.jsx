@@ -39,13 +39,11 @@ const PinLogin = () => {
     mainAxios
       .post(loginEmployee, requestData)
       .then((response) => {
-        console.log("LA HIZO PERO...", pin, response.data)
         if (response.data.status === 200) {
           setEmployeeToken(response.data.token)
           setLoading(false)
-          //navigation.navigate('CustomDate')
+          navigation.navigate('CustomDate')
         } else {
-          console.log('NO ES 200')
           setShowModal(true)
           setLoading(false)
         }

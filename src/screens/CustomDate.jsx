@@ -2,19 +2,19 @@ import { useNavigation } from '@react-navigation/native'
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import {
+  Animated,
   Image,
+  SafeAreaView,
   ScrollView,
   Text,
   TouchableOpacity,
   View,
-  Animated,
-  SafeAreaView,
 } from 'react-native'
 import FechaIcon from '../img/Fecha.png'
+import useEmployeeStore from '../store/useEmployeeStore'
+import useTokenStore from '../store/useTokenStore'
 import { CustomDateStyles } from '../styles/CustomDateStyles'
 import { CustomerDayStyles } from '../styles/CustomerDayStyles'
-import useTokenStore from '../store/useTokenStore'
-import useEmployeeStore from '../store/useEmployeeStore'
 
 const CustomDate = () => {
   const [animation] = useState(new Animated.Value(1))
@@ -46,14 +46,13 @@ const CustomDate = () => {
 
   const handleDatePress = () => {
     console.log('Button pressed: Date')
-    navigation.navigate('MyTabs')
+    navigation.navigate('Main')
   }
 
   const handleShowMore = () => {
     setShowMore(!showMore)
   }
 
-  console.log('TOKEN EN DATE', token, 'EMPLOYEE TOKEN EN DATE', employeeToken)
   const deleteToken = () => {
     setToken('')
     setEmployeeToken('')

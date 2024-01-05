@@ -25,8 +25,8 @@ import ShortsBulk from '../screens/ShortsBulk/ShortsBulk'
 import CustomerDayVan from '../screens/ShortsVan/CustomerDayVan'
 import ProductsVan from '../screens/ShortsVan/ProductVan'
 import ShortsVans from '../screens/ShortsVan/ShortsVans'
-import useTokenStore from '../store/useTokenStore'
 import useEmployeeStore from '../store/useEmployeeStore'
+import useTokenStore from '../store/useTokenStore'
 import { colors } from '../styles/GlobalStyles'
 
 const Tab = createBottomTabNavigator()
@@ -147,7 +147,6 @@ function MyTabs() {
 export default function Navigation() {
   const { token } = useTokenStore()
   const { employeeToken } = useEmployeeStore()
-  console.log('TOKEN:', token, 'EMPLOYEE TOKEN:', employeeToken)
 
   const [fontsLoaded] = useFonts({
     PoppinsBold: Poppins_700Bold,
@@ -172,16 +171,16 @@ export default function Navigation() {
           />
         ) : token && employeeToken ? (
           <>
-          <Stack.Screen
-            name="CustomDate"
-            component={CustomDate}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="Main"
-            component={MyTabs}
-            options={{ headerShown: false }}
-          />
+            <Stack.Screen
+              name="CustomDate"
+              component={CustomDate}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="Main"
+              component={MyTabs}
+              options={{ headerShown: false }}
+            />
           </>
         ) : (
           <Stack.Screen
