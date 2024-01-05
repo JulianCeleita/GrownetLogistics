@@ -1,5 +1,5 @@
 import { AntDesign } from '@expo/vector-icons'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import {
   ActivityIndicator,
   Text,
@@ -15,7 +15,7 @@ import { useProductSubmit } from '../hooks/useProductSubmit'
 import { GlobalStyles, colors } from '../styles/GlobalStyles'
 import { ProductStyles } from '../styles/ProductStyles'
 
-function Products({ item }) {
+export function ProductsCard({ item, colorPress, colorRight, colorLeft }) {
   const positiveOffset = 30
   const negativeOffset = -30
   const [note, setNote] = useState('')
@@ -86,11 +86,11 @@ function Products({ item }) {
                     ProductStyles.checkBox,
                     {
                       backgroundColor: pressedStates[item.id]
-                        ? colors.orange
+                        ? colorPress
                         : rightStates[item.id]
-                          ? colors.orange
+                          ? colorRight
                           : leftStates[item.id]
-                            ? colors.danger
+                            ? colorLeft
                             : colors.gray,
                     },
                   ]}
@@ -182,5 +182,3 @@ function Products({ item }) {
     </View>
   )
 }
-
-export default Products

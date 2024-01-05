@@ -1,9 +1,9 @@
 import { Ionicons } from '@expo/vector-icons'
 import React, { useEffect, useState } from 'react'
-import { FlatList, Text, TouchableOpacity, View } from 'react-native'
+import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import ProductSearcher from '../../components/ProductSearch'
-import { ProductsList } from '../../components/ProductsList'
+import { ProductsCard } from '../../components/ProductsCard'
 import { usePackingStore } from '../../store/usePackingStore'
 import useTokenStore from '../../store/useTokenStore'
 import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
@@ -16,9 +16,6 @@ function ProductsPacking() {
   const { token } = useTokenStore()
   const [search, setSearch] = useState(false)
 
-  // const { accountNumber } = route.params
-  console.log('selectedCustomer', selectedCustomer)
-
   useEffect(() => {
     setFetchPackingProducts(token, selectedCustomer)
   }, [])
@@ -26,6 +23,8 @@ function ProductsPacking() {
   const handleSearch = () => {
     setSearch(true)
   }
+
+  console.log({ productsPacking });
 
   return (
     <SafeAreaView style={ProductStyles.products}>
@@ -44,12 +43,24 @@ function ProductsPacking() {
         </View>
       )}
 
-      <FlatList
-        data={productsPacking}
-        keyExtractor={(item, index) => `${index}`}
-        renderItem={({ item }) => <ProductsList section={item} />}
-        scrollEnabled
-      />
+      {
+        productsPacking ? (
+          <View>
+            {/* TODO: En la respuesta de la api hay que eliminar el nivel de arreglo en orders para que solo envie un objeto */}
+            <Text style={ProductStyles.category}>Order: {productsPacking[0].reference}</Text>
+            {
+              productsPacking[0].data.map((item, index) => (
+                <ProductsCard key={index} item={item} colorPress={colors.orange} colorRight={colors.orange} colorLeft={colors.danger} />
+              ))
+            }
+          </View>
+        ) : (
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <ActivityIndicator size='large' color='#0000ff' />
+          </View>
+        )
+      }
+
     </SafeAreaView>
   )
 }
