@@ -5,14 +5,11 @@ import { persist } from 'zustand/middleware'
 const useTokenStore = create(
   persist(
     (set) => ({
-      token: '1553|HbMwQIJNPcEcN0OgBsFJGJi64EiReI7chF9l9og8',
-      countryCode: null,
-      phoneNumber: '',
-      setPhoneNumber: (newPhoneNumber) => set({ phoneNumber: newPhoneNumber }),
+      token: '',
       setToken: (newToken) => {
         set({ token: newToken })
         console.log('Token guardado:', newToken)
-      },
+      },      
       initializeToken: async () => {
         try {
           const storedToken = await AsyncStorage.getItem('token')
@@ -26,7 +23,6 @@ const useTokenStore = create(
           console.error('Error al obtener el token de AsyncStorage:', error)
         }
       },
-      setCountryCode: (newCountryCode) => set({ countryCode: newCountryCode }),
     }),
     {
       name: 'token-storage',

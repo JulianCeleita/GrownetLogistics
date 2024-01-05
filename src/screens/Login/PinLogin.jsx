@@ -12,39 +12,37 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native'
-import mainAxios from '../../../axios.config.js'
+import mainAxios from '../../../axios.config'
 import ModalAlert from '../../components/ModalAlert'
-import { login } from '../../config/urls.config'
+import { loginEmployee } from '../../config/urls.config'
 import logo from '../../img/Logo_Blanco.png'
-import useTokenStore from '../../store/useTokenStore'
+import useEmployeeStore from '../../store/useEmployeeStore'
 import { LoginStyles } from '../../styles/LoginStyles'
 
-const LoginPage = () => {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+const PinLogin = () => {
+  const [pin, setPin] = useState('')
   const [showModal, setShowModal] = useState(false)
   const [loading, setLoading] = useState(false)
   const [showEmptyInputModal, setShowEmptyInputModal] = useState(false)
-  const { setToken } = useTokenStore()
+  const { setEmployeeToken } = useEmployeeStore()
   const navigation = useNavigation()
 
-  const handleSignIn = async () => {
-    if (username === '' || password === '') {
+  const handleSignIn = () => {
+    if (pin === '') {
       setShowEmptyInputModal(true)
       return
     }
     setLoading(true)
-    const postData = {
-      email: username,
-      password: password,
+    const requestData = {
+      pin: pin,
     }
     mainAxios
-      .post(login, postData)
+      .post(loginEmployee, requestData)
       .then((response) => {
         if (response.data.status === 200) {
-          setToken(response.data.token)
+          setEmployeeToken(response.data.token)
           setLoading(false)
-          navigation.navigate('PinPage')
+          navigation.navigate('CustomDate')
         } else {
           setShowModal(true)
           setLoading(false)
@@ -63,6 +61,7 @@ const LoginPage = () => {
   const handleOutsidePress = () => {
     closeModal()
   }
+
   const dismissKeyboard = () => {
     Keyboard.dismiss()
   }
@@ -76,23 +75,15 @@ const LoginPage = () => {
         <View style={LoginStyles.container}>
           <StatusBar style="light" />
           <Image source={logo} style={LoginStyles.logo} />
-          <Text style={LoginStyles.loginHeaderText}>
-            Welcome to <Text style={LoginStyles.span}>Grownet Logistics</Text>
-          </Text>
+          <Text style={LoginStyles.loginHeaderText}>Identify yourself</Text>
           <TextInput
-            style={LoginStyles.input}
-            placeholder="Email address"
-            keyboardType="email-address"
+            style={LoginStyles.input2}
+            placeholder="Identifier pin"
+            keyboardType="numeric"
             autoCapitalize="none"
-            onSubmitEditing={handleSignIn}
-            onChangeText={(text) => setUsername(text)}
-          />
-          <TextInput
-            style={LoginStyles.input}
-            placeholder="Password"
             secureTextEntry
             onSubmitEditing={handleSignIn}
-            onChangeText={(text) => setPassword(text)}
+            onChangeText={(text) => setPin(text)}
           />
           <TouchableOpacity
             style={
@@ -102,23 +93,23 @@ const LoginPage = () => {
             }
             onPress={handleSignIn}
           >
-            <Text style={LoginStyles.signInButtonText}>Log in</Text>
+            <Text style={LoginStyles.signInButtonText}>Confirm</Text>
           </TouchableOpacity>
           <ModalAlert
             showModal={showModal}
             closeModal={closeModal}
             handleOutsidePress={handleOutsidePress}
             Title="We're sorry"
-            message="Password or email are incorrect"
+            message="Invalid credentials"
             message2="Try again"
           />
           <ModalAlert
             showModal={showEmptyInputModal}
             closeModal={closeModal}
             handleOutsidePress={handleOutsidePress}
-            Title='We apologize'
-            message='Password and email cannot be empty.'
-            message2='Try again'
+            Title="We're sorry"
+            message="Please enter your pin"
+            message2="Try again"
           />
         </View>
       </TouchableWithoutFeedback>
@@ -126,4 +117,4 @@ const LoginPage = () => {
   )
 }
 
-export default LoginPage
+export default PinLogin

@@ -8,9 +8,8 @@ import {
   View,
 } from 'react-native'
 import { PanGestureHandler } from 'react-native-gesture-handler'
-import { useCardEvents } from '../hooks/useCardEvents'
-
 import ModalProduct from '../components/ModalProduct'
+import { useCardEvents } from '../hooks/useCardEvents'
 import { useProductSubmit } from '../hooks/useProductSubmit'
 import { GlobalStyles, colors } from '../styles/GlobalStyles'
 import { ProductStyles } from '../styles/ProductStyles'
@@ -41,10 +40,10 @@ export function ProductsCard({ item, colorPress, colorRight, colorLeft }) {
     <View style={{ alignItems: 'center' }} key={item.id}>
       <TouchableOpacity
         onPress={async () => {
-          setIsLoading(true) // Comienza la carga
+          setIsLoading(true)
           handlePress(item.id)
           await handleSubmit(item.id, quantity, note)
-          setIsLoading(false) // Termina la carga
+          setIsLoading(false)
         }}
       >
         <PanGestureHandler
