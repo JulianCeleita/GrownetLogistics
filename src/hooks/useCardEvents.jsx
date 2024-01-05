@@ -11,8 +11,6 @@ export const useCardEvents = (quantityStore) => {
   const [showModal, setShowModal] = useState(false)
   const [quantity, setQuantity] = useState(quantityStore)
 
-  console.log('errorgggg', error)
-
   useEffect(() => {
     if (error) {
       setPressedStates({})
