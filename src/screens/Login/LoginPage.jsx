@@ -12,7 +12,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native'
-import mainAxios from '../../../axios.config.js'
+import mainAxios from '../../../axios.config'
 import ModalAlert from '../../components/ModalAlert'
 import { login } from '../../config/urls.config'
 import logo from '../../img/Logo_Blanco.png'

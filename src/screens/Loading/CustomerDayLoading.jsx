@@ -9,7 +9,7 @@ import useTokenStore from '../../store/useTokenStore'
 import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
 import { colors } from '../../styles/GlobalStyles'
 import { percentageLoading } from '../../config/urls.config'
-import mainAxios from '../../../axios.Config'
+import mainAxios from '../../../axios.config.js'
 
 function CustomerDayLoading() {
   const { OrdersByDate, setOrdersByDate } = useOrdersByDate()
