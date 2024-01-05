@@ -6,19 +6,28 @@ import Svg, { Circle, Text as SvgText } from 'react-native-svg'
 import { useNavigation } from '@react-navigation/native'
 import { usePackingStore } from '../store/usePackingStore'
 
-const CustomerCard = ({ customer }) => {
+const CustomerCard = ({ customer, percentages }) => {
   const { setSelectedCustomer } = usePackingStore()
   const navigation = useNavigation()
   const radius = 33
   const strokeWidth = 10
   const circumference = 2 * Math.PI * radius
-  const percentage = 60
-  const strokeDashoffset = circumference - (percentage / 100) * circumference
+  let roundedPercentage = 0
 
   const handleNavigateToProducts = () => {
     navigation.navigate('ProductsPacking')
     setSelectedCustomer(customer.accountNumber)
   }
+  //Porcentaje por cliente
+  percentages.forEach((order) => {
+    if (order.accountName === customer.accountName) {
+      roundedPercentage = Number(order.percentage).toFixed(0)
+    }
+  })
+
+  const strokeDashoffset =
+    circumference - (roundedPercentage / 100) * circumference
+
   return (
     <View style={{ alignItems: 'center' }}>
       <TouchableOpacity
@@ -55,7 +64,7 @@ const CustomerCard = ({ customer }) => {
               fontSize="16"
               fill={colors.darkBlue}
             >
-              {percentage}%
+              {roundedPercentage}%
             </SvgText>
           </Svg>
         </View>

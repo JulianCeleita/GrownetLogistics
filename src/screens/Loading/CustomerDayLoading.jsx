@@ -1,18 +1,20 @@
-import { useNavigation } from '@react-navigation/native'
-import React, { useState } from 'react'
-import { Text, TouchableOpacity, View, ScrollView } from 'react-native'
-import Svg, { Circle, Text as SvgText } from 'react-native-svg'
-import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
-import { GlobalStyles, colors } from '../../styles/GlobalStyles'
-import CustomerDaySearch from '../../components/CustomerDaySearch'
-import { LinearGradient } from 'expo-linear-gradient'
-import { DeliveryStyles } from '../../styles/DeliveryStyles'
-import { SafeAreaView } from 'react-native-safe-area-context'
 import { Ionicons } from '@expo/vector-icons'
+import { useNavigation } from '@react-navigation/native'
+import React, { useEffect, useState } from 'react'
+import { ScrollView, Text, TouchableOpacity, View } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import Svg, { Circle, Text as SvgText } from 'react-native-svg'
+import mainAxios from '../../../axios.Config'
+import CustomerDaySearch from '../../components/CustomerDaySearch'
+import { percentageLoading } from '../../config/urls.config'
+import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
+import { DeliveryStyles } from '../../styles/DeliveryStyles'
+import { GlobalStyles, colors } from '../../styles/GlobalStyles'
 
 function CustomerDayLoading() {
   const navigation = useNavigation()
   const [search, setSearch] = useState(false)
+  const [percentages, setPercentages] = useState([])
 
   const titleStyle = {
     ...DeliveryStyles.tittle,
@@ -33,6 +35,28 @@ function CustomerDayLoading() {
   const handleSearch = () => {
     setSearch(true)
   }
+  //Llamado API porcentaje
+  useEffect(() => {
+    async function fetchData() {
+      const newToken = '2025|YlaiMYOtLuIEnt6zq0kmKPUvYHQMeoycqBrNTiAQ'
+      try {
+        const response = await mainAxios
+          .get(percentageLoading, {
+            headers: {
+              Authorization: `Bearer ${newToken}`,
+            },
+          })
+          .then((response) => {
+            setPercentages(response.data.orders)
+          })
+      } catch (error) {
+        console.error('Error al obtener porcentaje:', error)
+      }
+    }
+    fetchData()
+  }, [])
+  console.log(percentages, 'esta llegando')
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
       <ScrollView>
