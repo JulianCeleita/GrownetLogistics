@@ -3,7 +3,7 @@ import mainAxios from '../../axios.Config'
 import { productsPacking } from '../config/urls.config'
 
 export const usePackingStore = create((set) => ({
-  packingProducts: null,
+  packingProducts: {},
   selectedCustomer: 'RK100',
   error: null,
 
