@@ -7,15 +7,14 @@ import { useNavigation } from '@react-navigation/native'
 import { usePackingStore } from '../store/usePackingStore'
 import useLoadingStore from '../store/useLoadingStore'
 
-const CustomerCard = ({ customer, loadingCard }) => {
+const CustomerCard = ({ customer, loadingCard, percentages }) => {
   const { setSelectedCustomer } = usePackingStore()
   const { setSelectedCustomerL } = useLoadingStore()
   const navigation = useNavigation()
   const radius = 33
   const strokeWidth = 10
   const circumference = 2 * Math.PI * radius
-  const percentage = 60
-  const strokeDashoffset = circumference - (percentage / 100) * circumference
+  let roundedPercentage = 0
 
   const handleNavigateToProducts = () => {
     if (!loadingCard) {
@@ -26,6 +25,16 @@ const CustomerCard = ({ customer, loadingCard }) => {
       setSelectedCustomerL(customer.accountNumber)
     }
   }
+  //Porcentaje por cliente
+  percentages.forEach((order) => {
+    if (order.accountName === customer.accountName) {
+      roundedPercentage = Number(order.percentage).toFixed(0)
+    }
+  })
+
+  const strokeDashoffset =
+    circumference - (roundedPercentage / 100) * circumference
+
   return (
     <View style={{ alignItems: 'center' }}>
       <TouchableOpacity
@@ -62,7 +71,7 @@ const CustomerCard = ({ customer, loadingCard }) => {
               fontSize="16"
               fill={colors.darkBlue}
             >
-              {percentage}%
+              {roundedPercentage}%
             </SvgText>
           </Svg>
         </View>

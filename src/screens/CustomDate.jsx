@@ -2,15 +2,17 @@ import { useNavigation } from '@react-navigation/native'
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import {
+  Animated,
   Image,
+  SafeAreaView,
   ScrollView,
   Text,
   TouchableOpacity,
   View,
-  Animated,
-  SafeAreaView,
 } from 'react-native'
 import FechaIcon from '../img/Fecha.png'
+import useEmployeeStore from '../store/useEmployeeStore'
+import useTokenStore from '../store/useTokenStore'
 import { CustomDateStyles } from '../styles/CustomDateStyles'
 import { CustomerDayStyles } from '../styles/CustomerDayStyles'
 
@@ -20,6 +22,8 @@ const CustomDate = () => {
   const [currentDay, setCurrentDay] = useState(moment().format('dddd'))
   const [showMore, setShowMore] = useState(false)
   const navigation = useNavigation()
+  const { token, setToken } = useTokenStore()
+  const { employeeToken, setEmployeeToken } = useEmployeeStore()
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -42,11 +46,16 @@ const CustomDate = () => {
 
   const handleDatePress = () => {
     console.log('Button pressed: Date')
-    navigation.navigate('MyTabs')
+    navigation.navigate('Main')
   }
 
   const handleShowMore = () => {
     setShowMore(!showMore)
+  }
+
+  const deleteToken = () => {
+    setToken('')
+    setEmployeeToken('')
   }
 
   const renderButton = (date) => {
@@ -154,6 +163,12 @@ const CustomDate = () => {
               <Text style={CustomDateStyles.showMoreButtonText}>
                 {showMore ? 'Hide' : 'Show more'}
               </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={CustomDateStyles.whiteBackground}
+              onPress={deleteToken}
+            >
+              <Text style={CustomDateStyles.buttonText}>Delete token</Text>
             </TouchableOpacity>
           </ScrollView>
         </View>
