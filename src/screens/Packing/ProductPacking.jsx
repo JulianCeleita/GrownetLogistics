@@ -24,7 +24,7 @@ function ProductsPacking() {
     setSearch(true)
   }
 
-  console.log({ packingProducts });
+  console.log({ productsPacking });
 
   return (
     <SafeAreaView style={ProductStyles.products}>
@@ -44,12 +44,12 @@ function ProductsPacking() {
       )}
 
       {
-        packingProducts ? (
+        productsPacking ? (
           <View>
             {/* TODO: En la respuesta de la api hay que eliminar el nivel de arreglo en orders para que solo envie un objeto */}
-            <Text style={ProductStyles.category}>Order: {packingProducts[0].reference}</Text>
+            <Text style={ProductStyles.category}>Order: {productsPacking[0].reference}</Text>
             {
-              packingProducts[0].data.map((item, index) => (
+              productsPacking[0].data.map((item, index) => (
                 <ProductsCard key={index} item={item} />
               ))
             }
