@@ -11,13 +11,12 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import React, { useEffect } from 'react'
-import { colors } from '../styles/GlobalStyles'
 import CustomDate from '../screens/CustomDate'
 import CustomerDayLoading from '../screens/Loading/CustomerDayLoading'
 import Loading from '../screens/Loading/Loading'
 import ProductsLoading from '../screens/Loading/ProductsLoading'
-import PinLogin from '../screens/Login/PinLogin'
 import LoginPage from '../screens/Login/LoginPage'
+import PinLogin from '../screens/Login/PinLogin'
 import CustomerDayPacking from '../screens/Packing/CustomerDayPacking'
 import Packing from '../screens/Packing/Packing'
 import ProductsPacking from '../screens/Packing/ProductPacking'
@@ -27,23 +26,11 @@ import CustomerDayVan from '../screens/ShortsVan/CustomerDayVan'
 import ProductsVan from '../screens/ShortsVan/ProductVan'
 import ShortsVans from '../screens/ShortsVan/ShortsVans'
 import useTokenStore from '../store/useTokenStore'
+import useEmployeeStore from '../store/useEmployeeStore'
+import { colors } from '../styles/GlobalStyles'
 
 const Tab = createBottomTabNavigator()
 const Stack = createNativeStackNavigator()
-
-function StackLogin() {
-  return (
-    <Stack.Navigator
-      initialRouteName="LoginPage"
-      headerMode="none"
-      screenOptions={{ headerShown: false }}
-    >
-      <Stack.Screen name="LoginPage" component={LoginPage} />
-      <Stack.Screen name="PinPage" component={PinLogin} />
-      <Stack.Screen name="PackingScreen" component={StackPacking} />
-    </Stack.Navigator>
-  )
-}
 
 function StackPacking() {
   return (
@@ -159,7 +146,8 @@ function MyTabs() {
 
 export default function Navigation() {
   const { token } = useTokenStore()
-  console.log(token)
+  const { employeeToken } = useEmployeeStore()
+  console.log('TOKEN:', token, 'EMPLOYEE TOKEN:', employeeToken)
 
   const [fontsLoaded] = useFonts({
     PoppinsBold: Poppins_700Bold,
@@ -175,24 +163,33 @@ export default function Navigation() {
   }
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="LoginPage">
-        {/* TODO DEJAR ESTA LOGICA PARA EL MENU INFERIOR */}
-        {/* {token ? <MyTabs /> : <StackLogin />} */}
-        <Stack.Screen
-          name="Login"
-          component={StackLogin}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="CustomDate"
-          component={CustomDate}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="MyTabs"
-          component={MyTabs}
-          options={{ headerShown: false }}
-        />
+      <Stack.Navigator>
+        {token && !employeeToken ? (
+          <Stack.Screen
+            name="PinPage"
+            component={PinLogin}
+            options={{ headerShown: false }}
+          />
+        ) : token && employeeToken ? (
+          <>
+          <Stack.Screen
+            name="CustomDate"
+            component={CustomDate}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Main"
+            component={MyTabs}
+            options={{ headerShown: false }}
+          />
+          </>
+        ) : (
+          <Stack.Screen
+            name="LoginPage"
+            component={LoginPage}
+            options={{ headerShown: false }}
+          />
+        )}
       </Stack.Navigator>
     </NavigationContainer>
   )
