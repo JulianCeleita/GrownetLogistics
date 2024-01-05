@@ -4,7 +4,7 @@ import { productsLoadingConfig } from '../config/urls.config'
 
 const useLoadingStore = create((set) => {
   return {
-    productsLoading: [],
+    productsLoading: null,
     selectedCustomerL: null,
     error: null,
 

@@ -50,7 +50,7 @@ function ProductsPacking() {
             <Text style={ProductStyles.category}>Order: {productsPacking[0].reference}</Text>
             {
               productsPacking[0].data.map((item, index) => (
-                <ProductsCard key={index} item={item} />
+                <ProductsCard key={index} item={item} colorPress={colors.orange} colorRight={colors.orange} colorLeft={colors.danger} />
               ))
             }
           </View>
@@ -60,7 +60,6 @@ function ProductsPacking() {
           </View>
         )
       }
-
 
     </SafeAreaView>
   )

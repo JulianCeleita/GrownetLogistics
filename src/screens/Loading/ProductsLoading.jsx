@@ -1,23 +1,20 @@
-import React, { useState, useEffect } from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import React, { useEffect, useState } from 'react'
 import {
-  FlatList,
-  ScrollView,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
+  ActivityIndicator
 } from 'react-native'
-import { ProductStyles } from '../../styles/ProductStyles'
+import { SafeAreaView } from 'react-native-safe-area-context'
 import ProductSearcher from '../../components/ProductSearch'
+import { ProductStyles } from '../../styles/ProductStyles'
+import { ProductsCard } from '../../components/ProductsCard'
 
-import { PanGestureHandler } from 'react-native-gesture-handler'
-import { GlobalStyles, colors } from '../../styles/GlobalStyles'
-import { AntDesign, Ionicons } from '@expo/vector-icons'
-import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
-import ModalProduct from '../../components/ModalProduct'
+import { Ionicons } from '@expo/vector-icons'
 import useLoadingStore from '../../store/useLoadingStore'
 import useTokenStore from '../../store/useTokenStore'
+import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
+import { colors } from '../../styles/GlobalStyles'
 
 function ProductsLoading() {
   const { productsLoading, setFetchProductsLoading, selectedCustomerL } =
@@ -54,12 +51,22 @@ function ProductsLoading() {
           </TouchableOpacity>
         </View>
       )}
-      {/* <FlatList
-        data={productsLoading}
-        keyExtractor={(item, index) => `${index}`}
-        renderItem={({ item }) => <ProductsList section={item} />}
-        scrollEnabled
-      /> */}
+      {
+        productsLoading ? (
+          <View>
+            <Text style={ProductStyles.category}>Order: {productsLoading[0].reference}</Text>
+            {
+              productsLoading[0].data.map((item, index) => (
+                <ProductsCard key={index} item={item} colorPress={colors.green} colorRight={colors.green} colorLeft={colors.danger} />
+              ))
+            }
+          </View>
+        ) : (
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <ActivityIndicator size='large' color='#0000ff' />
+          </View>
+        )
+      }
     </SafeAreaView>
   )
 }
