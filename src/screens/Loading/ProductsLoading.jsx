@@ -3,7 +3,8 @@ import {
   Text,
   TouchableOpacity,
   View,
-  ActivityIndicator
+  ActivityIndicator,
+  FlatList,
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import ProductSearcher from '../../components/ProductSearch'
@@ -51,22 +52,32 @@ function ProductsLoading() {
           </TouchableOpacity>
         </View>
       )}
-      {
-        productsLoading ? (
-          <View>
-            <Text style={ProductStyles.category}>Order: {productsLoading[0].reference}</Text>
-            {
-              productsLoading[0].data.map((item, index) => (
-                <ProductsCard key={index} item={item} colorPress={colors.green} colorRight={colors.green} colorLeft={colors.danger} />
-              ))
-            }
-          </View>
-        ) : (
-          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <ActivityIndicator size='large' color='#0000ff' />
-          </View>
-        )
-      }
+      {productsLoading ? (
+        <View>
+          <Text style={ProductStyles.category}>
+            Order: {productsLoading[0].reference}
+          </Text>
+          <FlatList
+            data={productsLoading[0].data}
+            renderItem={({ item, index }) => (
+              <ProductsCard
+                key={index}
+                item={item}
+                colorPress={colors.orange}
+                colorRight={colors.orange}
+                colorLeft={colors.danger}
+              />
+            )}
+            keyExtractor={(item, index) => index.toString()}
+          />
+        </View>
+      ) : (
+        <View
+          style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
+        >
+          <ActivityIndicator size="large" color="#0000ff" />
+        </View>
+      )}
     </SafeAreaView>
   )
 }
