@@ -43,9 +43,11 @@ function ProductsPacking() {
         <ProductSearcher setSearch={setSearch} />
       ) : (
         <View style={CustomerDayStyles.title2}>
-          <Text style={ProductStyles.customerTitle}>Restaurant 1</Text>
-          <TouchableOpacity onPress={handleSearch} style={ProductStyles.icon2}>
-            <Ionicons
+          <Text style={ProductStyles.customerTitle}>
+              Restaurant 1 - {productsPacking ? productsPacking.reference : 'Loading...'}
+            </Text>
+            <TouchableOpacity onPress={handleSearch} style={ProductStyles.icon2}>
+              <Ionicons
               name="md-search-circle-outline"
               size={35}
               color={colors.darkBlue}
@@ -55,9 +57,6 @@ function ProductsPacking() {
       )}
       {productsPacking ? (
         <View>
-          <Text style={ProductStyles.category}>
-            Order: {productsPacking.reference}
-          </Text>
           <FlatList
             data={productsPacking.data}
             renderItem={({ item, index }) => (
