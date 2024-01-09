@@ -58,9 +58,6 @@ export function ProductsCard({
     declareNotAvailable(item.id)
     setShowModal2(false)
   }
-  useEffect(() => {
-    console.log('tempIsPressed has changed:', tempIsPressed)
-  }, [tempIsPressed])
 
   return (
     <View style={{ alignItems: 'center' }} key={item.id}>
@@ -68,16 +65,16 @@ export function ProductsCard({
         onPress={() => {
           setTempIsPressed(true)
 
-          console.log('isPressed', tempIsPressed)
           if (!leftStates[item.id] || rightStates[item.id]) {
             setTimeout(() => {
               handlePress([item.id])
-            }, 5000)
+            }, 3000)
           } else {
             setShowModal2(true)
           }
-
-          handleSubmit(item.id, quantity, note)
+          setTimeout(() => {
+            handleSubmit(item.id, quantity, note)
+          }, 3000)
         }}
       >
         <PanGestureHandler
@@ -134,7 +131,6 @@ export function ProductsCard({
                             ? colorLeft
                             : colors.gray,
                   },
-                  () => console.log('Item in style:', tempIsPressed),
                 ]}
               >
                 <AntDesign
