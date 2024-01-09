@@ -19,12 +19,10 @@ const ModalProduct = ({
   title,
   text,
   confirm,
+  handleClose,
 }) => {
   const { handleSubmit } = useProductSubmit()
 
-  const handleClose = () => {
-    setShowModal(false)
-  }
   return (
     <Modal
       visible={showModal}

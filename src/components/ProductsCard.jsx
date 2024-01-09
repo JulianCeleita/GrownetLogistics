@@ -56,16 +56,24 @@ export function ProductsCard({
     handleSubmit(item.id)
   }
 
+  const handleClose = () => {
+    setShowModal(false)
+  }
+  const handleClose2 = () => {
+    declareNotAvailable(item.id)
+    setShowModal2(false)
+  }
+
   return (
     <View style={{ alignItems: 'center' }} key={item.id}>
       <TouchableOpacity
         onPress={async () => {
           setIsLoading(true)
-          if (leftStates[item.id] && !pressedStates[item.id]) {
+          if (!leftStates[item.id] || rightStates[item.id]) {
+            handlePress(item.id)
+          } else {
             setShowModal2(true)
           }
-
-          handlePress(item.id)
           await handleSubmit(item.id, quantity, note)
           setIsLoading(false)
         }}
@@ -203,6 +211,7 @@ export function ProductsCard({
           confirm={confirm}
           title={item.name + ' not available'}
           text={' Are you sure you want to mark this item as unavailable?'}
+          handleClose={handleClose}
         />
       ) : null}
       {showModal2 && selectedProduct === item.id ? (
@@ -214,6 +223,7 @@ export function ProductsCard({
           item={item}
           title={'Restore ' + item.name + ' status'}
           text={'Are you sure to restore the status?'}
+          handleClose={handleClose2}
         />
       ) : null}
     </View>
