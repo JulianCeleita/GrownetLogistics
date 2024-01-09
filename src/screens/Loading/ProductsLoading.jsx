@@ -55,15 +55,15 @@ function ProductsLoading() {
       {productsLoading ? (
         <View>
           <Text style={ProductStyles.category}>
-            Order: {productsLoading[0].reference}
+            Order: {productsLoading.reference}
           </Text>
           <FlatList
-            data={productsLoading[0].data}
+            data={productsLoading.data}
             renderItem={({ item, index }) => (
               <ProductsCard
                 key={index}
                 item={item}
-                colorPress={colors.orange}
+                colorPress={colors.green}
                 colorRight={colors.orange}
                 colorLeft={colors.danger}
                 products={productsLoading}

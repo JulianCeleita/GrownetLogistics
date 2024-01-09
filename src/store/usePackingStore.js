@@ -28,8 +28,8 @@ export const usePackingStore = create((set) => ({
 
       const products = await resp.data
 
-      console.log('response Products', products)
-      set({ productsPacking: products.orders })
+      console.log('response Products.orders', products.orders)
+      set({ productsPacking: products.orders[0] })
     } catch (error) {
       console.error('Error during request packing:', error)
     }
