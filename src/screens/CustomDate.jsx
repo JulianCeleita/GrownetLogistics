@@ -52,15 +52,13 @@ const CustomDate = () => {
         const { principal, next } = response.data.operation
         const allDates = [...principal, ...next]
         setAvailableDates(allDates)
-        console.log('Respuesta de las fechas', response.data.operation)
       })
       .catch((error) => {
-        console.log('Error al obtener las fechas', error)
+        console.error('Error al obtener las fechas', error)
       })
   }
 
   const handleDatePress = () => {
-    console.log('Button pressed: Date')
     navigation.navigate('Main')
   }
 
@@ -68,10 +66,11 @@ const CustomDate = () => {
     setShowMore(!showMore)
   }
 
-  const deleteToken = () => {
+  // TODO ELIMINAR EL TOKEN PARA DESLOGUEO
+  /* const deleteToken = () => {
     setToken('')
     setEmployeeToken('')
-  }
+  } */
 
   const renderButton = (date) => {
     return (
@@ -136,7 +135,6 @@ const CustomDate = () => {
             Date
           </Text>
         </View>
-
         <View style={CustomDateStyles.container}>
           <ScrollView contentContainerStyle={CustomDateStyles.contentContainer}>
             <TouchableOpacity
