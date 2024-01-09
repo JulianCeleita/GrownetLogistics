@@ -132,7 +132,8 @@ export function ProductsCard({
                 >
                   <AntDesign
                     name={
-                      pressedStates[item.id]
+                      pressedStates[item.id] ||
+                      (addQuantity && quantity === item.quantity)
                         ? 'checkcircleo'
                         : rightStates[item.id]
                           ? 'arrowright'
@@ -182,8 +183,14 @@ export function ProductsCard({
                     { width: 150, marginTop: 10, paddingVertical: 8 },
                   ]}
                   onPress={() => {
-                    declareDifferentQty(item.id)
-                    handleSubmit(item.id, quantity, note)
+                    if (addQuantity && selectedProduct === item.id) {
+                      if (parseInt(quantity) === item.quantity) {
+                        handlePress(item.id)
+                      } else {
+                        declareDifferentQty(item.id)
+                        handleSubmit(item.id, quantity, note)
+                      }
+                    }
                   }}
                 >
                   <Text style={GlobalStyles.textBtnSecundary}>Send</Text>
