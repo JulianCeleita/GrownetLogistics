@@ -1,12 +1,6 @@
 import { AntDesign } from '@expo/vector-icons'
 import React, { useState, useEffect } from 'react'
-import {
-  ActivityIndicator,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native'
+import { Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { PanGestureHandler } from 'react-native-gesture-handler'
 import ModalProduct from '../components/ModalProduct'
 import { useCardEvents } from '../hooks/useCardEvents'
@@ -42,8 +36,9 @@ export function ProductsCard({
     declareNotAvailable,
     declareDifferentQty,
   } = useCardEvents(item.quantity, products, setProducts, error)
-  const [isLoading, setIsLoading] = useState(false)
+
   const [showModal2, setShowModal2] = useState(false)
+  const [tempIsPressed, setTempIsPressed] = useState(false)
 
   const confirm = () => {
     declareNotAvailable(item.id)
@@ -63,19 +58,26 @@ export function ProductsCard({
     declareNotAvailable(item.id)
     setShowModal2(false)
   }
+  useEffect(() => {
+    console.log('tempIsPressed has changed:', tempIsPressed)
+  }, [tempIsPressed])
 
   return (
     <View style={{ alignItems: 'center' }} key={item.id}>
       <TouchableOpacity
-        onPress={async () => {
-          setIsLoading(true)
+        onPress={() => {
+          setTempIsPressed(true)
+
+          console.log('isPressed', tempIsPressed)
           if (!leftStates[item.id] || rightStates[item.id]) {
-            handlePress(item.id)
+            setTimeout(() => {
+              handlePress([item.id])
+            }, 5000)
           } else {
             setShowModal2(true)
           }
-          await handleSubmit(item.id, quantity, note)
-          setIsLoading(false)
+
+          handleSubmit(item.id, quantity, note)
         }}
       >
         <PanGestureHandler
@@ -117,42 +119,40 @@ export function ProductsCard({
                   ) : null}
                 </View>
               </View>
-              {isLoading ? (
-                <ActivityIndicator
-                  size="large"
-                  color={colors.bluePrimary}
-                  style={{ marginRight: 15 }}
-                />
-              ) : (
-                <View
-                  style={[
-                    ProductStyles.checkBox,
-                    {
-                      backgroundColor: pressedStates[item.id]
+
+              <View
+                style={[
+                  ProductStyles.checkBox,
+                  {
+                    backgroundColor: tempIsPressed
+                      ? colorPress
+                      : pressedStates[item.id]
                         ? colorPress
                         : rightStates[item.id]
                           ? colorRight
                           : leftStates[item.id]
                             ? colorLeft
                             : colors.gray,
-                    },
-                  ]}
-                >
-                  <AntDesign
-                    name={
-                      pressedStates[item.id]
+                  },
+                  () => console.log('Item in style:', tempIsPressed),
+                ]}
+              >
+                <AntDesign
+                  name={
+                    tempIsPressed
+                      ? 'checkcircleo'
+                      : pressedStates[item.id]
                         ? 'checkcircleo'
                         : rightStates[item.id]
                           ? 'arrowright'
                           : leftStates[item.id]
                             ? 'closecircleo'
                             : 'questioncircleo'
-                    }
-                    size={30}
-                    color="white"
-                  />
-                </View>
-              )}
+                  }
+                  size={30}
+                  color="white"
+                />
+              </View>
             </View>
 
             {addQuantity && selectedProduct === item.id ? (
