@@ -39,7 +39,6 @@ function CustomerDayPacking() {
   //Llamado API porcentaje
   useEffect(() => {
     async function fetchData() {
-      const newToken = '2025|YlaiMYOtLuIEnt6zq0kmKPUvYHQMeoycqBrNTiAQ'
       try {
         const response = await mainAxios
           .get(percentagePacking, {

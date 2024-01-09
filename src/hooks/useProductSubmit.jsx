@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react'
 import mainAxios from '../../axios.config.js'
 import { insertPacking } from '../config/urls.config.js'
 import { usePackingStore } from '../store/usePackingStore.js'
-import useTokenStore from '../store/useTokenStore.js'
+import useEmployeeStore from '../store/useEmployeeStore.js'
 let promiseQueue = []
 
 export const useProductSubmit = () => {
-  const { token } = useTokenStore()
+  const { employeeToken } = useEmployeeStore()
   const { setError } = usePackingStore()
 
   const [isLoading, setIsLoading] = useState(false)
@@ -25,7 +25,7 @@ export const useProductSubmit = () => {
     try {
       const response = await mainAxios.post(insertPacking, data, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${employeeToken}`,
         },
       })
 
