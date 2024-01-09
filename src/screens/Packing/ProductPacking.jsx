@@ -73,6 +73,7 @@ function ProductsPacking() {
               />
             )}
             keyExtractor={(item, index) => index.toString()}
+            ListFooterComponent={<View style={{ height: 60 }} />}
           />
         </View>
       ) : (
