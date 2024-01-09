@@ -11,7 +11,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import ProductSearcher from '../../components/ProductSearch'
 import { ProductsCard } from '../../components/ProductsCard'
 import { usePackingStore } from '../../store/usePackingStore'
-import useTokenStore from '../../store/useTokenStore'
+import useEmployeeStore from '../../store/useEmployeeStore'
 import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
 import { colors } from '../../styles/GlobalStyles'
 import { ProductStyles } from '../../styles/ProductStyles'
@@ -22,14 +22,13 @@ function ProductsPacking() {
     setProductsPacking,
     error,
     setFetchPackingProducts,
-    selectedCustomer
-  } =
-    usePackingStore()
-  const { token } = useTokenStore()
+    selectedCustomer,
+  } = usePackingStore()
+  const { employeeToken } = useEmployeeStore()
   const [search, setSearch] = useState(false)
 
   useEffect(() => {
-    setFetchPackingProducts(token, selectedCustomer)
+    setFetchPackingProducts(employeeToken, selectedCustomer)
   }, [])
 
   const handleSearch = () => {
@@ -83,7 +82,6 @@ function ProductsPacking() {
           <ActivityIndicator size="large" color="#0000ff" />
         </View>
       )}
-
     </SafeAreaView>
   )
 }
