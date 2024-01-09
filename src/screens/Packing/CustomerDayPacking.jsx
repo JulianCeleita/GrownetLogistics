@@ -7,13 +7,13 @@ import CustomerCard from '../../components/CustomerCard'
 import CustomerDaySearch from '../../components/CustomerDaySearch'
 import { percentagePacking } from '../../config/urls.config'
 import useOrdersByDate from '../../store/useOrdersByDateStore'
-import useTokenStore from '../../store/useTokenStore'
+import useEmployeeStore from '../../store/useEmployeeStore'
 import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
 import { colors } from '../../styles/GlobalStyles'
 
 function CustomerDayPacking() {
   const { OrdersByDate, setOrdersByDate } = useOrdersByDate()
-  const { token } = useTokenStore()
+  const { employeeToken } = useEmployeeStore()
   const [percentages, setPercentages] = useState([])
 
   // const isIOS = Platform.OS === 'ios'
@@ -28,7 +28,7 @@ function CustomerDayPacking() {
   const [search, setSearch] = useState(false)
 
   useEffect(() => {
-    setOrdersByDate(token)
+    setOrdersByDate(employeeToken)
   }, [])
 
   const handleSearch = () => {
@@ -44,7 +44,7 @@ function CustomerDayPacking() {
         const response = await mainAxios
           .get(percentagePacking, {
             headers: {
-              Authorization: `Bearer ${newToken}`,
+              Authorization: `Bearer ${employeeToken}`,
             },
           })
           .then((response) => {
