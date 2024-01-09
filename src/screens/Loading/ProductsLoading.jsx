@@ -32,7 +32,6 @@ function ProductsLoading() {
 
   const { employeeToken } = useEmployeeStore()
   console.log('selectedCustomer', selectedCustomerL)
-  console.log('productsLoading', productsLoading)
 
   useEffect(() => {
     setFetchProductsLoading(employeeToken, selectedCustomerL)
