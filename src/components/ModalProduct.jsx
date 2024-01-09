@@ -18,15 +18,10 @@ const ModalProduct = ({
   item,
   title,
   text,
+  confirm,
 }) => {
-
   const { handleSubmit } = useProductSubmit()
 
-  const confirm = () => {
-    declareNotAvailable(item.id)
-    setShowModal(false)
-    handleSubmit(item.id)
-  }
   const handleClose = () => {
     setShowModal(false)
   }

@@ -22,9 +22,8 @@ function ProductsPacking() {
     setProductsPacking,
     error,
     setFetchPackingProducts,
-    selectedCustomer
-  } =
-    usePackingStore()
+    selectedCustomer,
+  } = usePackingStore()
   const { token } = useTokenStore()
   const [search, setSearch] = useState(false)
 
@@ -36,7 +35,7 @@ function ProductsPacking() {
     setSearch(true)
   }
 
-  console.log({ productsPacking })
+  // console.log({ productsPacking })
 
   return (
     <SafeAreaView style={ProductStyles.products}>
@@ -83,7 +82,6 @@ function ProductsPacking() {
           <ActivityIndicator size="large" color="#0000ff" />
         </View>
       )}
-
     </SafeAreaView>
   )
 }
