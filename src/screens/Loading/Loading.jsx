@@ -7,8 +7,6 @@ import { TouchableOpacity } from 'react-native'
 import { GlobalStyles } from '../../styles/GlobalStyles'
 import CircleProgress from '../../components/CircleProgress'
 import { useNavigation } from '@react-navigation/native'
-import useLoadingStore from '../../store/useLoadingStore'
-import useTokenStore from '../../store/useTokenStore'
 
 const Loading = () => {
   const navigation = useNavigation()
