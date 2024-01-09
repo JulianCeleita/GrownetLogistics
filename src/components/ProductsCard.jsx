@@ -56,14 +56,6 @@ export function ProductsCard({
     handleSubmit(item.id)
   }
 
-  const handleClose = () => {
-    setShowModal(false)
-  }
-  const handleClose2 = () => {
-    declareNotAvailable(item.id)
-    setShowModal2(false)
-  }
-
   return (
     <View style={{ alignItems: 'center' }} key={item.id}>
       <TouchableOpacity
@@ -206,24 +198,20 @@ export function ProductsCard({
         <ModalProduct
           showModal={showModal}
           setShowModal={setShowModal}
-          declareNotAvailable={declareNotAvailable}
           item={item}
           confirm={confirm}
           title={item.name + ' not available'}
           text={' Are you sure you want to mark this item as unavailable?'}
-          handleClose={handleClose}
         />
       ) : null}
       {showModal2 && selectedProduct === item.id ? (
         <ModalProduct
           showModal={showModal2}
           setShowModal={setShowModal2}
-          declareNotAvailable={declareNotAvailable}
           confirm={confirm2}
           item={item}
-          title={'Restore ' + item.name + ' status'}
-          text={'Are you sure to restore the status?'}
-          handleClose={handleClose2}
+          title={'Confirm ' + item.name}
+          text={'Are you sure to confirm that all products have been packed?'}
         />
       ) : null}
     </View>
