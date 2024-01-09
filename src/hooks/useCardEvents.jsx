@@ -33,8 +33,8 @@ export const useCardEvents = (quantityStore, products, setProducts, error) => {
     newLeftStates[itemId] = false
 
     const updatedProducts = {
-      ...products[0],
-      data: products[0].data.map((item) => {
+      ...products,
+      data: products.data.map((item) => {
         if (item.id === itemId) {
           return {
             ...item,
@@ -47,7 +47,7 @@ export const useCardEvents = (quantityStore, products, setProducts, error) => {
     setPressedStates(newPressedStates)
     setRightStates(newRightStates)
     setLeftStates(newLeftStates)
-    setProducts([updatedProducts])
+    setProducts(updatedProducts)
     setAddQuantity(false)
   }
 
@@ -84,8 +84,8 @@ export const useCardEvents = (quantityStore, products, setProducts, error) => {
     newRightStates[itemId] = false
 
     const updatedProducts = {
-      ...products[0],
-      data: products[0].data.map((item) => {
+      ...products,
+      data: products.data.map((item) => {
         if (item.id === itemId) {
           return { ...item, packed: newLeftStates[itemId] ? 0 : '' }
         }
@@ -96,7 +96,7 @@ export const useCardEvents = (quantityStore, products, setProducts, error) => {
     setLeftStates(newLeftStates)
     setPressedStates(newPressedStates)
     setRightStates(newRightStates)
-    setProducts([updatedProducts])
+    setProducts(updatedProducts)
     setAddQuantity(false)
 
     console.log('Dezlizamos a la izquierda', itemId)
@@ -107,8 +107,8 @@ export const useCardEvents = (quantityStore, products, setProducts, error) => {
     newRightStates[itemId] = true
 
     const updatedProducts = {
-      ...products[0],
-      data: products[0].data.map((item) => {
+      ...products,
+      data: products.data.map((item) => {
         if (item.id === itemId) {
           return { ...item, packed: newRightStates[itemId] ? quantity : '' }
         }
@@ -116,7 +116,7 @@ export const useCardEvents = (quantityStore, products, setProducts, error) => {
       }),
     }
     setRightStates(newRightStates)
-    setProducts([updatedProducts])
+    setProducts(updatedProducts)
     setSelectedProduct(null)
     setAddQuantity(false)
   }

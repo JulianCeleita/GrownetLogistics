@@ -54,15 +54,13 @@ function ProductsPacking() {
           </TouchableOpacity>
         </View>
       )}
-      {/* TODO: En la respuesta de la api hay que eliminar el nivel de arreglo en orders para que solo envie un objeto */}
-      {/* 
       {productsPacking ? (
         <View>
           <Text style={ProductStyles.category}>
-            Order: {productsPacking[0].reference}
+            Order: {productsPacking.reference}
           </Text>
           <FlatList
-            data={productsPacking[0].data}
+            data={productsPacking.data}
             renderItem={({ item, index }) => (
               <ProductsCard
                 key={index}
@@ -84,7 +82,7 @@ function ProductsPacking() {
         >
           <ActivityIndicator size="large" color="#0000ff" />
         </View>
-      )} */}
+      )}
 
     </SafeAreaView>
   )
