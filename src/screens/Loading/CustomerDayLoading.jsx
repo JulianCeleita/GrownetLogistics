@@ -5,7 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import CustomerCard from '../../components/CustomerCard'
 import CustomerDaySearch from '../../components/CustomerDaySearch'
 import useOrdersByDate from '../../store/useOrdersByDateStore'
-import useTokenStore from '../../store/useTokenStore'
+import useEmployeeStore from '../../store/useEmployeeStore.js'
 import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
 import { colors } from '../../styles/GlobalStyles'
 import { percentageLoading } from '../../config/urls.config'
@@ -13,12 +13,12 @@ import mainAxios from '../../../axios.config.js'
 
 function CustomerDayLoading() {
   const { OrdersByDate, setOrdersByDate } = useOrdersByDate()
-  const { token } = useTokenStore()
+  const { employeeToken } = useEmployeeStore()
   const [search, setSearch] = useState(false)
   const [percentages, setPercentages] = useState([])
 
   useEffect(() => {
-    setOrdersByDate(token)
+    setOrdersByDate(employeeToken)
   }, [])
   const handleSearch = () => {
     setSearch(true)
