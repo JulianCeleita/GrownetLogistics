@@ -1,5 +1,5 @@
 import { AntDesign } from '@expo/vector-icons'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   ActivityIndicator,
   Text,
@@ -14,7 +14,15 @@ import { useProductSubmit } from '../hooks/useProductSubmit'
 import { GlobalStyles, colors } from '../styles/GlobalStyles'
 import { ProductStyles } from '../styles/ProductStyles'
 
-export function ProductsCard({ item, colorPress, colorRight, colorLeft, products, setProducts, error }) {
+export function ProductsCard({
+  item,
+  colorPress,
+  colorRight,
+  colorLeft,
+  products,
+  setProducts,
+  error,
+}) {
   const positiveOffset = 30
   const negativeOffset = -30
   const [note, setNote] = useState('')
@@ -35,13 +43,29 @@ export function ProductsCard({ item, colorPress, colorRight, colorLeft, products
     declareDifferentQty,
   } = useCardEvents(item.quantity, products, setProducts, error)
   const [isLoading, setIsLoading] = useState(false)
+  const [showModal2, setShowModal2] = useState(false)
+
+  const confirm = () => {
+    declareNotAvailable(item.id)
+    setShowModal(false)
+    handleSubmit(item.id)
+  }
+  const confirm2 = () => {
+    handlePress(item.id)
+    setShowModal2(false)
+    handleSubmit(item.id)
+  }
 
   return (
     <View style={{ alignItems: 'center' }} key={item.id}>
       <TouchableOpacity
         onPress={async () => {
           setIsLoading(true)
-          handlePress(item.id)
+          if (!leftStates[item.id] || rightStates[item.id]) {
+            handlePress(item.id)
+          } else {
+            setShowModal2(true)
+          }
           await handleSubmit(item.id, quantity, note)
           setIsLoading(false)
         }}
@@ -62,7 +86,7 @@ export function ProductsCard({ item, colorPress, colorRight, colorLeft, products
                     Qty: {item.quantity}
                   </Text>
 
-                  {rightStates[item.id] && (item.quantity > item.packed) ? (
+                  {rightStates[item.id] && item.quantity > item.packed ? (
                     <Text
                       style={[
                         ProductStyles.textCard,
@@ -73,7 +97,7 @@ export function ProductsCard({ item, colorPress, colorRight, colorLeft, products
                     </Text>
                   ) : null}
 
-                  {rightStates[item.id] && (item.quantity < item.packed) ? (
+                  {rightStates[item.id] && item.quantity < item.packed ? (
                     <Text
                       style={[
                         ProductStyles.textCard,
@@ -83,7 +107,6 @@ export function ProductsCard({ item, colorPress, colorRight, colorLeft, products
                       {`Overweight ${item.packed - item.quantity}`}
                     </Text>
                   ) : null}
-
                 </View>
               </View>
               {isLoading ? (
@@ -175,22 +198,22 @@ export function ProductsCard({ item, colorPress, colorRight, colorLeft, products
         <ModalProduct
           showModal={showModal}
           setShowModal={setShowModal}
-          declareNotAvailable={declareNotAvailable}
           item={item}
+          confirm={confirm}
           title={item.name + ' not available'}
           text={' Are you sure you want to mark this item as unavailable?'}
         />
       ) : null}
-      {/*showModal2 && selectedProduct === item.id ? (
+      {showModal2 && selectedProduct === item.id ? (
         <ModalProduct
           showModal={showModal2}
           setShowModal={setShowModal2}
-          declareNotAvailable={declareNotAvailable}
+          confirm={confirm2}
           item={item}
-          title={item.name + ' not available'}
-          text={' seguro que quiere marcarlo como revisado completo'}
+          title={'Confirm ' + item.name}
+          text={'Are you sure to confirm that all products have been packed?'}
         />
-      ) : null*/}
+      ) : null}
     </View>
   )
 }

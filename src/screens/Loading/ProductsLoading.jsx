@@ -13,24 +13,29 @@ import { ProductsCard } from '../../components/ProductsCard'
 
 import { Ionicons } from '@expo/vector-icons'
 import useLoadingStore from '../../store/useLoadingStore'
-import useTokenStore from '../../store/useTokenStore'
+import useEmployeeStore from '../../store/useEmployeeStore'
 import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
 import { colors } from '../../styles/GlobalStyles'
 
 function ProductsLoading() {
-  const { productsLoading, setLoadingProducts, error, setFetchProductsLoading, selectedCustomerL } =
-    useLoadingStore()
+  const {
+    productsLoading,
+    setLoadingProducts,
+    error,
+    setFetchProductsLoading,
+    selectedCustomerL,
+  } = useLoadingStore()
 
   const [search, setSearch] = useState(false)
 
   // const { accountNumber } = route.params
 
-  const { token } = useTokenStore()
+  const { employeeToken } = useEmployeeStore()
   console.log('selectedCustomer', selectedCustomerL)
   console.log('productsLoading', productsLoading)
 
   useEffect(() => {
-    setFetchProductsLoading(token, selectedCustomerL)
+    setFetchProductsLoading(employeeToken, selectedCustomerL)
   }, [])
 
   const handleSearch = () => {
@@ -55,15 +60,15 @@ function ProductsLoading() {
       {productsLoading ? (
         <View>
           <Text style={ProductStyles.category}>
-            Order: {productsLoading[0].reference}
+            Order: {productsLoading.reference}
           </Text>
           <FlatList
-            data={productsLoading[0].data}
+            data={productsLoading.data}
             renderItem={({ item, index }) => (
               <ProductsCard
                 key={index}
                 item={item}
-                colorPress={colors.orange}
+                colorPress={colors.green}
                 colorRight={colors.orange}
                 colorLeft={colors.danger}
                 products={productsLoading}
@@ -72,6 +77,7 @@ function ProductsLoading() {
               />
             )}
             keyExtractor={(item, index) => index.toString()}
+            ListFooterComponent={<View style={{ height: 60 }} />}
           />
         </View>
       ) : (

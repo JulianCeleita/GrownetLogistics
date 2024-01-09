@@ -101,7 +101,7 @@ export const ProductStyles = StyleSheet.create({
   },
   icon: {
     position: 'absolute',
-    right: 0,
+    right: 26,
   },
   icon2: {
     position: 'absolute',

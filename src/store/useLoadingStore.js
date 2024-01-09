@@ -25,7 +25,7 @@ const useLoadingStore = create((set) => {
             },
           },
         )
-        const productsLoadingData = await response.data.orders
+        const productsLoadingData = await response.data.orders[0]
 
         console.log('response', productsLoadingData)
         set({ productsLoading: productsLoadingData })

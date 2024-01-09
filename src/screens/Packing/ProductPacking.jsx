@@ -11,7 +11,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import ProductSearcher from '../../components/ProductSearch'
 import { ProductsCard } from '../../components/ProductsCard'
 import { usePackingStore } from '../../store/usePackingStore'
-import useTokenStore from '../../store/useTokenStore'
+import useEmployeeStore from '../../store/useEmployeeStore'
 import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
 import { colors } from '../../styles/GlobalStyles'
 import { ProductStyles } from '../../styles/ProductStyles'
@@ -22,21 +22,20 @@ function ProductsPacking() {
     setProductsPacking,
     error,
     setFetchPackingProducts,
-    selectedCustomer
-  } =
-    usePackingStore()
-  const { token } = useTokenStore()
+    selectedCustomer,
+  } = usePackingStore()
+  const { employeeToken } = useEmployeeStore()
   const [search, setSearch] = useState(false)
 
   useEffect(() => {
-    setFetchPackingProducts(token, selectedCustomer)
+    setFetchPackingProducts(employeeToken, selectedCustomer)
   }, [])
 
   const handleSearch = () => {
     setSearch(true)
   }
 
-  console.log({ productsPacking })
+  // console.log({ productsPacking })
 
   return (
     <SafeAreaView style={ProductStyles.products}>
@@ -54,15 +53,13 @@ function ProductsPacking() {
           </TouchableOpacity>
         </View>
       )}
-      {/* TODO: En la respuesta de la api hay que eliminar el nivel de arreglo en orders para que solo envie un objeto */}
-      {/* 
       {productsPacking ? (
         <View>
           <Text style={ProductStyles.category}>
-            Order: {productsPacking[0].reference}
+            Order: {productsPacking.reference}
           </Text>
           <FlatList
-            data={productsPacking[0].data}
+            data={productsPacking.data}
             renderItem={({ item, index }) => (
               <ProductsCard
                 key={index}
@@ -76,6 +73,7 @@ function ProductsPacking() {
               />
             )}
             keyExtractor={(item, index) => index.toString()}
+            ListFooterComponent={<View style={{ height: 60 }} />}
           />
         </View>
       ) : (
@@ -84,8 +82,7 @@ function ProductsPacking() {
         >
           <ActivityIndicator size="large" color="#0000ff" />
         </View>
-      )} */}
-
+      )}
     </SafeAreaView>
   )
 }
