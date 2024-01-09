@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react'
 import { usePackingStore } from '../store/usePackingStore.js'
 
-export const useCardEvents = (quantityStore) => {
+export const useCardEvents = (quantityStore, products, setProducts, error) => {
   const [pressedStates, setPressedStates] = useState({})
   const [rightStates, setRightStates] = useState({})
   const [leftStates, setLeftStates] = useState({})
   const [addQuantity, setAddQuantity] = useState(false)
   const [selectedProduct, setSelectedProduct] = useState(null)
-  const { productsPacking, setProductsPacking, error } = usePackingStore()
   const [showModal, setShowModal] = useState(false)
   const [quantity, setQuantity] = useState(quantityStore)
 
@@ -33,9 +32,9 @@ export const useCardEvents = (quantityStore) => {
     newRightStates[itemId] = false
     newLeftStates[itemId] = false
 
-    const updatedProducts = productsPacking.map((section) => ({
-      ...section,
-      data: section.data.map((item) => {
+    const updatedProducts = {
+      ...products[0],
+      data: products[0].data.map((item) => {
         if (item.id === itemId) {
           return {
             ...item,
@@ -44,11 +43,11 @@ export const useCardEvents = (quantityStore) => {
         }
         return item
       }),
-    }))
+    }
     setPressedStates(newPressedStates)
     setRightStates(newRightStates)
     setLeftStates(newLeftStates)
-    setProductsPacking(updatedProducts)
+    setProducts([updatedProducts])
     setAddQuantity(false)
   }
 
@@ -84,20 +83,20 @@ export const useCardEvents = (quantityStore) => {
     newPressedStates[itemId] = false
     newRightStates[itemId] = false
 
-    const updatedProducts = productsPacking.map((section) => ({
-      ...section,
-      data: section.data.map((item) => {
+    const updatedProducts = {
+      ...products[0],
+      data: products[0].data.map((item) => {
         if (item.id === itemId) {
           return { ...item, packed: newLeftStates[itemId] ? 0 : '' }
         }
         return item
       }),
-    }))
+    }
 
     setLeftStates(newLeftStates)
     setPressedStates(newPressedStates)
     setRightStates(newRightStates)
-    setProductsPacking(updatedProducts)
+    setProducts([updatedProducts])
     setAddQuantity(false)
 
     console.log('Dezlizamos a la izquierda', itemId)
@@ -107,17 +106,17 @@ export const useCardEvents = (quantityStore) => {
     const newRightStates = Object.assign({}, rightStates)
     newRightStates[itemId] = true
 
-    const updatedProducts = productsPacking.map((section) => ({
-      ...section,
-      data: section.data.map((item) => {
+    const updatedProducts = {
+      ...products[0],
+      data: products[0].data.map((item) => {
         if (item.id === itemId) {
           return { ...item, packed: newRightStates[itemId] ? quantity : '' }
         }
         return item
       }),
-    }))
+    }
     setRightStates(newRightStates)
-    setProductsPacking(updatedProducts)
+    setProducts([updatedProducts])
     setSelectedProduct(null)
     setAddQuantity(false)
   }
