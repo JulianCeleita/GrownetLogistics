@@ -108,7 +108,7 @@ export const ProductStyles = StyleSheet.create({
     right: 26,
   },
   customerTitle: {
-    fontSize: 22,
+    fontSize: 18,
     color: colors.bluePrimary,
     fontFamily: 'PoppinsBold',
     textAlign: 'center',

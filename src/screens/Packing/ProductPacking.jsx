@@ -43,7 +43,18 @@ function ProductsPacking() {
         <ProductSearcher setSearch={setSearch} />
       ) : (
         <View style={CustomerDayStyles.title2}>
-          <Text style={ProductStyles.customerTitle}>Restaurant 1</Text>
+          <View style={{ paddingHorizontal: 43, width: '100%' }}>
+            <View style={ProductStyles.customerTitleContainer}>
+              <Text style={ProductStyles.customerTitle}>
+                <Text>
+                  Restaurant 1 - {' '}
+                </Text>
+                <Text style={{ flexWrap: 'wrap' }}>
+                  {productsPacking ? productsPacking.reference : 'Loading...'}
+                </Text>
+              </Text>
+            </View>
+          </View>
           <TouchableOpacity onPress={handleSearch} style={ProductStyles.icon2}>
             <Ionicons
               name="md-search-circle-outline"
@@ -54,37 +65,30 @@ function ProductsPacking() {
         </View>
       )}
       {productsPacking ? (
-        <View>
-          <Text style={ProductStyles.category}>
-            Order: {productsPacking.reference}
-          </Text>
-          <FlatList
-            data={productsPacking.data}
-            renderItem={({ item, index }) => (
-              <ProductsCard
-                key={index}
-                item={item}
-                colorPress={colors.orange}
-                colorRight={colors.orange}
-                colorLeft={colors.danger}
-                products={productsPacking}
-                setProducts={setProductsPacking}
-                error={error}
-              />
-            )}
-            keyExtractor={(item, index) => index.toString()}
-            ListFooterComponent={<View style={{ height: 60 }} />}
-          />
-        </View>
+        <FlatList
+          data={productsPacking.data}
+          renderItem={({ item, index }) => (
+            <ProductsCard
+              key={index}
+              item={item}
+              colorPress={colors.orange}
+              colorRight={colors.orange}
+              colorLeft={colors.danger}
+              products={productsPacking}
+              setProducts={setProductsPacking}
+              error={error}
+            />
+          )}
+          keyExtractor={(item, index) => index.toString()}
+          ListFooterComponent={<View style={{ height: 60 }} />}
+        />
       ) : (
-        <View
-          style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
-        >
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
           <ActivityIndicator size="large" color="#0000ff" />
         </View>
       )}
     </SafeAreaView>
-  )
+  );
 }
 
 export default ProductsPacking

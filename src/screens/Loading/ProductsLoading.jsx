@@ -46,8 +46,19 @@ function ProductsLoading() {
         <ProductSearcher setSearch={setSearch} />
       ) : (
         <View style={CustomerDayStyles.title2}>
-          <Text style={ProductStyles.customerTitle}>Restaurant 1</Text>
-          <TouchableOpacity onPress={handleSearch} style={ProductStyles.icon}>
+          <View style={{ paddingHorizontal: 43, width: '100%' }}>
+            <View style={ProductStyles.customerTitleContainer}>
+              <Text style={ProductStyles.customerTitle}>
+                <Text>
+                  Restaurant 1 - {' '}
+                </Text>
+                <Text style={{ flexWrap: 'wrap' }}>
+                  {productsLoading ? productsLoading.reference : 'Loading...'}
+                </Text>
+              </Text>
+            </View>
+          </View>
+          <TouchableOpacity onPress={handleSearch} style={ProductStyles.icon2}>
             <Ionicons
               name="md-search-circle-outline"
               size={35}
@@ -58,9 +69,6 @@ function ProductsLoading() {
       )}
       {productsLoading ? (
         <View>
-          <Text style={ProductStyles.category}>
-            Order: {productsLoading.reference}
-          </Text>
           <FlatList
             data={productsLoading.data}
             renderItem={({ item, index }) => (

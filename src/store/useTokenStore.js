@@ -5,10 +5,15 @@ import { persist } from 'zustand/middleware'
 const useTokenStore = create(
   persist(
     (set) => ({
-      token: null,
+      token: '',
+      idSupplier: '',
       setToken: (newToken) => {
         set({ token: newToken })
         console.log('Token guardado:', newToken)
+      },
+      setIdSupplier: (newIdSupplier) => {
+        set({ idSupplier: newIdSupplier })
+        console.log('IdSupplier guardado:', newIdSupplier)
       },
       initializeToken: async () => {
         try {
