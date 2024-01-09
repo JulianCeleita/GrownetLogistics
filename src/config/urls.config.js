@@ -1,6 +1,8 @@
 //LOGIN
 export const login = process.env.EXPO_PUBLIC_LOGIN
 export const loginEmployee = process.env.EXPO_PUBLIC_LOGIN_EMPLOYEE
+//DATES
+export const datesAvailables = process.env.EXPO_PUBLIC_DATES_AVAILABLES
 //PACKING
 export const productsPackingConfig = process.env.EXPO_PUBLIC_PRODUCTS_PACKING
 export const insertPacking = process.env.EXPO_PUBLIC_INSERT_PACKING
