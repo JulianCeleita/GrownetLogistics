@@ -21,6 +21,7 @@ export const useCardEvents = (quantityStore, products, setProducts, error) => {
       setQuantity(0)
     }
   }, [error])
+
   const handlePress = (itemIds) => {
     itemIds.forEach((itemId) => {
       setSelectedProduct(itemId)
