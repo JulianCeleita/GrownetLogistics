@@ -26,12 +26,11 @@ function CustomerDayLoading() {
   //Llamado API porcentaje
   useEffect(() => {
     async function fetchData() {
-      const newToken = '2025|YlaiMYOtLuIEnt6zq0kmKPUvYHQMeoycqBrNTiAQ'
       try {
         const response = await mainAxios
           .get(percentageLoading, {
             headers: {
-              Authorization: `Bearer ${newToken}`,
+              Authorization: `Bearer ${employeeToken}`,
             },
           })
           .then((response) => {
