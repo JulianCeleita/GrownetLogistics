@@ -5,6 +5,7 @@ import { PanGestureHandler } from 'react-native-gesture-handler'
 import { GlobalStyles, colors } from '../styles/GlobalStyles'
 import { ProductStyles } from '../styles/ProductStyles'
 import { useProductSubmit } from '../hooks/useProductSubmit'
+import ModalProduct from '../components/ModalProduct'
 
 export const ProductsCardBulkVan = ({ item }) => {
 
@@ -19,10 +20,11 @@ export const ProductsCardBulkVan = ({ item }) => {
         setSelectedProduct(itemId)
         setIsPressed(!isPressed)
         setLeft(false)
+        setShowModal2(true)
     }
 
     const handleGestureEvent = (event, itemId) => {
-        selectedProduct(itemId)
+        setSelectedProduct(itemId)
         const { translationX } = event.nativeEvent
         if (translationX < 0) {
             console.log('Deslizamiento hacia la izquierda')
@@ -44,8 +46,8 @@ export const ProductsCardBulkVan = ({ item }) => {
 
     return (
         <View>
-            <TouchableOpacity onPress={(e) => handlePress(e, item.id)}>
-                <PanGestureHandler onGestureEvent={handleGestureEvent}>
+            <TouchableOpacity onPress={() => handlePress(item.id)}>
+                <PanGestureHandler onGestureEvent={(e) => handleGestureEvent(e, item.id)}>
                     <View style={[ProductStyles.card, GlobalStyles.boxShadow]}>
                         <View style={ProductStyles.productTittle}>
                             <Text
