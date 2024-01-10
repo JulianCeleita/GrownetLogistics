@@ -16,6 +16,8 @@ import useLoadingStore from '../../store/useLoadingStore'
 import useEmployeeStore from '../../store/useEmployeeStore'
 import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
 import { colors } from '../../styles/GlobalStyles'
+import { useProductSubmit } from '../../hooks/useProductSubmit'
+import { insertLoading } from '../../config/urls.config'
 
 function ProductsLoading() {
   const {
@@ -27,11 +29,8 @@ function ProductsLoading() {
   } = useLoadingStore()
 
   const [search, setSearch] = useState(false)
-
-  // const { accountNumber } = route.params
-
   const { employeeToken } = useEmployeeStore()
-  console.log('selectedCustomer', selectedCustomerL)
+  const { handleSubmit } = useProductSubmit(insertLoading)
 
   useEffect(() => {
     setFetchProductsLoading(employeeToken, selectedCustomerL)
@@ -80,6 +79,7 @@ function ProductsLoading() {
                 colorLeft={colors.danger}
                 products={productsLoading}
                 setProducts={setLoadingProducts}
+                handleSubmit={handleSubmit}
                 error={error}
               />
             )}
