@@ -22,33 +22,36 @@ export const useCardEvents = (quantityStore, products, setProducts, error) => {
     }
   }, [error])
 
-  const handlePress = (itemId) => {
-    setSelectedProduct(itemId)
-    const newPressedStates = Object.assign({}, pressedStates)
-    const newRightStates = { ...rightStates }
-    const newLeftStates = { ...leftStates }
+  const handlePress = (itemIds) => {
+    itemIds.forEach((itemId) => {
+      setSelectedProduct(itemId)
+      const newPressedStates = Object.assign({}, pressedStates)
+      const newRightStates = { ...rightStates }
+      const newLeftStates = { ...leftStates }
 
-    newPressedStates[itemId] = !newPressedStates[itemId]
-    newRightStates[itemId] = false
-    newLeftStates[itemId] = false
+      newPressedStates[itemId] = !newPressedStates[itemId]
+      newRightStates[itemId] = false
+      newLeftStates[itemId] = false
 
-    const updatedProducts = {
-      ...products,
-      data: products.data.map((item) => {
-        if (item.id === itemId) {
-          return {
-            ...item,
-            packed: newPressedStates[itemId] ? item.quantity : '',
+      const updatedProducts = {
+        ...products,
+        data: products.data.map((item) => {
+          if (item.id === itemId) {
+            return {
+              ...item,
+              packed: newPressedStates[itemId] ? item.quantity : '',
+            }
           }
-        }
-        return item
-      }),
-    }
-    setPressedStates(newPressedStates)
-    setRightStates(newRightStates)
-    setLeftStates(newLeftStates)
-    setProducts(updatedProducts)
-    setAddQuantity(false)
+          return item
+        }),
+      }
+
+      setPressedStates(newPressedStates)
+      setRightStates(newRightStates)
+      setLeftStates(newLeftStates)
+      setProducts(updatedProducts)
+      setAddQuantity(false)
+    })
   }
 
   const handleGestureEvent = (event, itemId) => {

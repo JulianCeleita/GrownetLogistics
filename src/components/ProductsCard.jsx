@@ -1,12 +1,6 @@
 import { AntDesign } from '@expo/vector-icons'
-import React, { useState } from 'react'
-import {
-  ActivityIndicator,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { PanGestureHandler } from 'react-native-gesture-handler'
 import ModalProduct from '../components/ModalProduct'
 import { useCardEvents } from '../hooks/useCardEvents'
@@ -14,7 +8,15 @@ import { useProductSubmit } from '../hooks/useProductSubmit'
 import { GlobalStyles, colors } from '../styles/GlobalStyles'
 import { ProductStyles } from '../styles/ProductStyles'
 
-export function ProductsCard({ item, colorPress, colorRight, colorLeft, products, setProducts, error }) {
+export function ProductsCard({
+  item,
+  colorPress,
+  colorRight,
+  colorLeft,
+  products,
+  setProducts,
+  error,
+}) {
   const positiveOffset = 30
   const negativeOffset = -30
   const [note, setNote] = useState('')
@@ -34,16 +36,45 @@ export function ProductsCard({ item, colorPress, colorRight, colorLeft, products
     declareNotAvailable,
     declareDifferentQty,
   } = useCardEvents(item.quantity, products, setProducts, error)
-  const [isLoading, setIsLoading] = useState(false)
+
+  const [showModal2, setShowModal2] = useState(false)
+  const [tempIsPressed, setTempIsPressed] = useState(false)
+  const [isPressed, setIsPressed] = useState(false)
+
+  const confirm = () => {
+    declareNotAvailable(item.id)
+    setShowModal(false)
+    handleSubmit(item.id)
+  }
+  const confirm2 = () => {
+    handlePress(item.id)
+    setShowModal2(false)
+    handleSubmit(item.id)
+  }
 
   return (
     <View style={{ alignItems: 'center' }} key={item.id}>
       <TouchableOpacity
-        onPress={async () => {
-          setIsLoading(true)
-          handlePress(item.id)
-          await handleSubmit(item.id, quantity, note)
-          setIsLoading(false)
+        onPress={() => {
+          setTempIsPressed(true)
+          if (pressedStates[item.id]) {
+            setIsPressed(true)
+          }
+
+          if (!leftStates[item.id] || rightStates[item.id]) {
+            setTimeout(() => {
+              handlePress([item.id])
+            }, 3000)
+          } else {
+            setShowModal2(true)
+          }
+          setTimeout(() => {
+            handleSubmit(item.id, quantity, note)
+            setTempIsPressed(false)
+            if (pressedStates[item.id]) {
+              setIsPressed(false)
+            }
+          }, 3000)
         }}
       >
         <PanGestureHandler
@@ -62,7 +93,7 @@ export function ProductsCard({ item, colorPress, colorRight, colorLeft, products
                     Qty: {item.quantity}
                   </Text>
 
-                  {rightStates[item.id] && (item.quantity > item.packed) ? (
+                  {rightStates[item.id] && item.quantity > item.packed ? (
                     <Text
                       style={[
                         ProductStyles.textCard,
@@ -73,7 +104,7 @@ export function ProductsCard({ item, colorPress, colorRight, colorLeft, products
                     </Text>
                   ) : null}
 
-                  {rightStates[item.id] && (item.quantity < item.packed) ? (
+                  {rightStates[item.id] && item.quantity < item.packed ? (
                     <Text
                       style={[
                         ProductStyles.textCard,
@@ -83,45 +114,47 @@ export function ProductsCard({ item, colorPress, colorRight, colorLeft, products
                       {`Overweight ${item.packed - item.quantity}`}
                     </Text>
                   ) : null}
-
                 </View>
               </View>
-              {isLoading ? (
-                <ActivityIndicator
-                  size="large"
-                  color={colors.bluePrimary}
-                  style={{ marginRight: 15 }}
-                />
-              ) : (
-                <View
-                  style={[
-                    ProductStyles.checkBox,
-                    {
-                      backgroundColor: pressedStates[item.id]
+
+              <View
+                style={[
+                  ProductStyles.checkBox,
+                  {
+                    backgroundColor: isPressed
+                      ? colors.gray
+                      : tempIsPressed
                         ? colorPress
-                        : rightStates[item.id]
-                          ? colorRight
-                          : leftStates[item.id]
-                            ? colorLeft
-                            : colors.gray,
-                    },
-                  ]}
-                >
-                  <AntDesign
-                    name={
-                      pressedStates[item.id]
+                        : pressedStates[item.id]
+                          ? colorPress
+                          : rightStates[item.id]
+                            ? colorRight
+                            : leftStates[item.id]
+                              ? colorLeft
+                              : colors.gray,
+                  },
+                ]}
+              >
+                <AntDesign
+                  name={
+                    isPressed || (addQuantity && quantity === item.quantity)
+                      ? 'questioncircleo'
+                      : tempIsPressed ||
+                          (addQuantity && quantity === item.quantity)
                         ? 'checkcircleo'
-                        : rightStates[item.id]
-                          ? 'arrowright'
-                          : leftStates[item.id]
-                            ? 'closecircleo'
-                            : 'questioncircleo'
-                    }
-                    size={30}
-                    color="white"
-                  />
-                </View>
-              )}
+                        : pressedStates[item.id] ||
+                            (addQuantity && quantity === item.quantity)
+                          ? 'checkcircleo'
+                          : rightStates[item.id]
+                            ? 'arrowright'
+                            : leftStates[item.id]
+                              ? 'closecircleo'
+                              : 'questioncircleo'
+                  }
+                  size={30}
+                  color="white"
+                />
+              </View>
             </View>
 
             {addQuantity && selectedProduct === item.id ? (
@@ -159,8 +192,14 @@ export function ProductsCard({ item, colorPress, colorRight, colorLeft, products
                     { width: 150, marginTop: 10, paddingVertical: 8 },
                   ]}
                   onPress={() => {
-                    declareDifferentQty(item.id)
-                    handleSubmit(item.id, quantity, note)
+                    if (addQuantity && selectedProduct === item.id) {
+                      if (parseInt(quantity) === item.quantity) {
+                        handlePress(item.id)
+                      } else {
+                        declareDifferentQty(item.id)
+                        handleSubmit(item.id, quantity, note)
+                      }
+                    }
                   }}
                 >
                   <Text style={GlobalStyles.textBtnSecundary}>Send</Text>
@@ -175,22 +214,22 @@ export function ProductsCard({ item, colorPress, colorRight, colorLeft, products
         <ModalProduct
           showModal={showModal}
           setShowModal={setShowModal}
-          declareNotAvailable={declareNotAvailable}
           item={item}
+          confirm={confirm}
           title={item.name + ' not available'}
           text={' Are you sure you want to mark this item as unavailable?'}
         />
       ) : null}
-      {/*showModal2 && selectedProduct === item.id ? (
+      {showModal2 && selectedProduct === item.id ? (
         <ModalProduct
           showModal={showModal2}
           setShowModal={setShowModal2}
-          declareNotAvailable={declareNotAvailable}
+          confirm={confirm2}
           item={item}
-          title={item.name + ' not available'}
-          text={' seguro que quiere marcarlo como revisado completo'}
+          title={'Confirm ' + item.name}
+          text={'Are you sure to confirm that all products have been packed?'}
         />
-      ) : null*/}
+      ) : null}
     </View>
   )
 }
