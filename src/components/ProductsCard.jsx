@@ -1,5 +1,5 @@
 import { AntDesign } from '@expo/vector-icons'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { PanGestureHandler } from 'react-native-gesture-handler'
 import ModalProduct from '../components/ModalProduct'
@@ -15,12 +15,12 @@ export function ProductsCard({
   colorLeft,
   products,
   setProducts,
-  handleSubmit,
   error,
 }) {
   const positiveOffset = 30
   const negativeOffset = -30
   const [note, setNote] = useState('')
+  const { handleSubmit } = useProductSubmit()
   const {
     quantity,
     setQuantity,
@@ -34,7 +34,7 @@ export function ProductsCard({
     handlePress,
     handleGestureEvent,
     declareNotAvailable,
-    declareDifferentQty
+    declareDifferentQty,
   } = useCardEvents(item.quantity, products, setProducts, error)
 
   const [showModal2, setShowModal2] = useState(false)
@@ -140,10 +140,10 @@ export function ProductsCard({
                     isPressed || (addQuantity && quantity === item.quantity)
                       ? 'questioncircleo'
                       : tempIsPressed ||
-                        (addQuantity && quantity === item.quantity)
+                          (addQuantity && quantity === item.quantity)
                         ? 'checkcircleo'
                         : pressedStates[item.id] ||
-                          (addQuantity && quantity === item.quantity)
+                            (addQuantity && quantity === item.quantity)
                           ? 'checkcircleo'
                           : rightStates[item.id]
                             ? 'arrowright'
@@ -214,6 +214,7 @@ export function ProductsCard({
         <ModalProduct
           showModal={showModal}
           setShowModal={setShowModal}
+          item={item}
           confirm={confirm}
           title={item.name + ' not available'}
           text={' Are you sure you want to mark this item as unavailable?'}
@@ -224,6 +225,7 @@ export function ProductsCard({
           showModal={showModal2}
           setShowModal={setShowModal2}
           confirm={confirm2}
+          item={item}
           title={'Confirm ' + item.name}
           text={'Are you sure to confirm that all products have been packed?'}
         />
