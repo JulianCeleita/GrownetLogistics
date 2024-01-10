@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react'
 import mainAxios from '../../axios.config.js'
+import { insertPacking } from '../config/urls.config.js'
 import { usePackingStore } from '../store/usePackingStore.js'
 import useEmployeeStore from '../store/useEmployeeStore.js'
 let promiseQueue = []
 
-export const useProductSubmit = (insert) => {
+export const useProductSubmit = () => {
   const { employeeToken } = useEmployeeStore()
   const { setError } = usePackingStore()
 
@@ -22,7 +23,7 @@ export const useProductSubmit = (insert) => {
     console.log('data', data)
 
     try {
-      const response = await mainAxios.post(insert, data, {
+      const response = await mainAxios.post(insertPacking, data, {
         headers: {
           Authorization: `Bearer ${employeeToken}`,
         },

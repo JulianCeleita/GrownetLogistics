@@ -2,44 +2,29 @@ import { AntDesign } from '@expo/vector-icons'
 import React, { useState } from 'react'
 import { Text, TouchableOpacity, View } from 'react-native'
 import { PanGestureHandler } from 'react-native-gesture-handler'
-import ModalProduct from '../components/ModalProduct'
-import { useProductSubmit } from '../hooks/useProductSubmit'
 import { GlobalStyles, colors } from '../styles/GlobalStyles'
 import { ProductStyles } from '../styles/ProductStyles'
+import { useProductSubmit } from '../hooks/useProductSubmit'
 
 export const ProductsCardBulkVan = ({ item }) => {
 
     const [isPressed, setIsPressed] = useState(false)
     const [left, setLeft] = useState(false)
     const { handleSubmit } = useProductSubmit()
-    const [showModal, setShowModal] = useState(false)
-    const [selectedItem, setSelectedItem] = useState(null)
-
 
     const handlePress = (itemId) => {
         setIsPressed(!isPressed)
         setLeft(false)
-        handleSubmit(itemId, item.quantity - item.quantity_packed)
+        handleSubmit(itemId)
     }
 
     const handleGestureEvent = (event, itemId) => {
-        setSelectedItem(itemId)
         const { translationX } = event.nativeEvent
         if (translationX < 0) {
             setLeft(true)
             setIsPressed(false)
-            setShowModal(true)
+            handleSubmit(itemId)
         }
-    }
-
-    const confirm = () => {
-        setShowModal(false)
-        handleSubmit(item.id)
-    }
-
-    const setStateCardDefault = () => {
-        setIsPressed(false)
-        setLeft(false)
     }
 
     return (
@@ -98,16 +83,26 @@ export const ProductsCardBulkVan = ({ item }) => {
                     </View>
                 </PanGestureHandler>
             </TouchableOpacity>
-            {showModal && selectedItem === item.id ? (
+            {/* {showModal && selectedProduct === item.id ? (
                 <ModalProduct
                     showModal={showModal}
                     setShowModal={setShowModal}
+                    item={item}
                     confirm={confirm}
-                    setStateCardDefault={setStateCardDefault}
                     title={item.name + ' not available'}
                     text={' Are you sure you want to mark this item as unavailable?'}
                 />
             ) : null}
+            {showModal2 && selectedProduct === item.id ? (
+                <ModalProduct
+                    showModal={showModal2}
+                    setShowModal={setShowModal2}
+                    confirm={confirm2}
+                    item={item}
+                    title={'Confirm ' + item.name}
+                    text={'Are you sure to confirm that all products have been packed?'}
+                />
+            ) : null} */}
         </View>
     )
 }
