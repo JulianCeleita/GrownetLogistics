@@ -1,56 +1,23 @@
 import { create } from 'zustand'
+import { shortBulk } from '../config/urls.config'
+import mainAxios from '../../axios.config'
 
 export const useShortBulkStore = create(set => ({
-    productsBulk: [
-        {
-            "quantity": 4,
-            "name": "Red Pepper",
-            "presentationName": "x 5Kg",
-            "id": 1440,
-            "uom": "Box",
-            "state_packing": "SHORT",
-            "state_loading": "SHORT",
-            "quantity_packed" : 2
-        },
-        {
-            "quantity": 2,
-            "name": "Apples Granny Smith",
-            "presentationName": "12.5 Kg",
-            "id": 1441,
-            "uom": "Box",
-            "state_packing": "SHORT",
-            "state_loading": "SHORT",
-            "quantity_packed" : 1
-        },
-        {
-            "quantity": 3,
-            "name": "Baby Corn",
-            "presentationName": "125 Pkt",
-            "id": 1442,
-            "uom": "Pkt",
-            "state_packing": "SHORT",
-            "state_loading": "SHORT",
-            "quantity_packed" : 1
-        },
-    ],
+    productsBulk: null,
     error: null,
     setProductsBulk: (products) => set(() => ({ productsBulk: products })),
     setError: (error) => set(() => ({ error: error })),
-    setFetchProductsBulk: async (token, accountNumber) => {
+    setFetchProductsBulk: async (token) => {
         try {
-            const response = await mainAxios.get(
-                //TODO: Cambiar el endpoint correspondiente
-                `${productsLoadingConfig}${accountNumber}`,
+            const response = await mainAxios.get(shortBulk,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
                 },
             )
-            const productsLoadingData = await response.data.orders[0]
-
-            console.log('response', productsLoadingData)
-            set({ productsLoading: productsLoadingData })
+            const productsBulk = await response.data.products
+            set({ productsBulk: productsBulk })
         } catch (error) {
             console.error('Error during request:', error)
         }
