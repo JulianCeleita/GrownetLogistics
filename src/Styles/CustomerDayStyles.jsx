@@ -37,12 +37,10 @@ export const CustomerDayStyles = StyleSheet.create({
     right: 18,
   },
   cardsCustomers: {
-    backgroundColor:
-      Dimensions.get('window').width > 500 ? colors.bluePrimary : colors.danger,
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    flexDirection: Dimensions.get('window').width > 500 ? 'column' : 'row',
+    flexDirection: 'row',
     flexWrap: 'wrap',
   },
   //Tittle
@@ -71,6 +69,7 @@ export const CustomerDayStyles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: 'white',
     borderRadius: 20,
+    margin: 8,
     marginBottom: 2,
     marginTop: 10,
     width: 320,
