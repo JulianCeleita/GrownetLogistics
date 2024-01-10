@@ -16,6 +16,8 @@ import useEmployeeStore from '../../store/useEmployeeStore'
 import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
 import { colors } from '../../styles/GlobalStyles'
 import { ProductStyles } from '../../styles/ProductStyles'
+import { useProductSubmit } from '../../hooks/useProductSubmit'
+import { insertPacking } from '../../config/urls.config'
 
 function ProductsPacking() {
   const {
@@ -27,6 +29,7 @@ function ProductsPacking() {
   } = usePackingStore()
   const { employeeToken } = useEmployeeStore()
   const [search, setSearch] = useState(false)
+  const { handleSubmit } = useProductSubmit(insertPacking)
 
   useEffect(() => {
     setFetchPackingProducts(employeeToken, selectedCustomer)
@@ -76,6 +79,7 @@ function ProductsPacking() {
               colorLeft={colors.danger}
               products={productsPacking}
               setProducts={setProductsPacking}
+              handleSubmit={handleSubmit}
               error={error}
             />
           )}

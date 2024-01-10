@@ -10,7 +10,6 @@ import {
 import { PanGestureHandler } from 'react-native-gesture-handler'
 import ModalProduct from '../components/ModalProduct'
 import { useCardEvents } from '../hooks/useCardEvents'
-import { useProductSubmit } from '../hooks/useProductSubmit'
 import { GlobalStyles, colors } from '../styles/GlobalStyles'
 import { ProductStyles } from '../styles/ProductStyles'
 
@@ -21,12 +20,12 @@ export function ProductsCard({
   colorLeft,
   products,
   setProducts,
+  handleSubmit,
   error,
 }) {
   const positiveOffset = 30
   const negativeOffset = -30
   const [note, setNote] = useState('')
-  const { handleSubmit } = useProductSubmit()
   const {
     quantity,
     setQuantity,
