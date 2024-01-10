@@ -85,7 +85,8 @@ function ProductsPacking() {
           contentContainerStyle={{
             flexDirection:
               Dimensions.get('window').width > 500 ? 'row' : 'column',
-            flexWrap: 'wrap',
+
+            flexWrap: Dimensions.get('window').width > 500 ? 'wrap' : 'nowrap',
           }}
         />
       ) : (
