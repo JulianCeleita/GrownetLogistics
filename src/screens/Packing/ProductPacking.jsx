@@ -63,6 +63,7 @@ function ProductsPacking() {
           </TouchableOpacity>
         </View>
       )}
+
       {productsPacking ? (
         <FlatList
           data={productsPacking.data}
@@ -95,7 +96,6 @@ function ProductsPacking() {
             flex: 1,
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor: 'red',
           }}
         >
           <ActivityIndicator size="large" color="#0000ff" />
