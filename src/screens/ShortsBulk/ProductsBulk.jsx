@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ActivityIndicator, FlatList, Text, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import ProductSearcher from '../../components/ProductSearch'
@@ -6,14 +6,21 @@ import { ProductsCardBulkVan } from '../../components/ProductsCardBulkVan'
 import { useShortBulkStore } from '../../store/useShortBulkStore'
 import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
 import { ProductStyles } from '../../styles/ProductStyles'
+import useEmployeeStore from '../../store/useEmployeeStore'
 
 function ProductsBulk() {
   const [search, setSearch] = useState(false)
-  const { productsBulk } = useShortBulkStore()
+  const { employeeToken } = useEmployeeStore()
+  const { productsBulk, setFetchProductsBulk, setProductsBulk } = useShortBulkStore()
 
   const handleSearch = () => {
     setSearch(true)
   }
+
+  useEffect(() => {
+    setFetchProductsBulk(employeeToken)
+  }, [])
+
   return (
     <SafeAreaView style={ProductStyles.products}>
       {search ? (
