@@ -39,6 +39,7 @@ export function ProductsCard({
 
   const [showModal2, setShowModal2] = useState(false)
   const [tempIsPressed, setTempIsPressed] = useState(false)
+  const [isPressed, setIsPressed] = useState(false)
 
   const confirm = () => {
     declareNotAvailable(item.id)
@@ -56,6 +57,9 @@ export function ProductsCard({
       <TouchableOpacity
         onPress={() => {
           setTempIsPressed(true)
+          if (pressedStates[item.id]) {
+            setIsPressed(true)
+          }
 
           if (!leftStates[item.id] || rightStates[item.id]) {
             setTimeout(() => {
@@ -66,6 +70,10 @@ export function ProductsCard({
           }
           setTimeout(() => {
             handleSubmit(item.id, quantity, note)
+            setTempIsPressed(false)
+            if (pressedStates[item.id]) {
+              setIsPressed(false)
+            }
           }, 3000)
         }}
       >
@@ -113,33 +121,35 @@ export function ProductsCard({
                 style={[
                   ProductStyles.checkBox,
                   {
-                    backgroundColor: tempIsPressed
-                      ? colorPress
-                      : pressedStates[item.id]
+                    backgroundColor: isPressed
+                      ? colors.gray
+                      : tempIsPressed
                         ? colorPress
-                        : rightStates[item.id]
-                          ? colorRight
-                          : leftStates[item.id]
-                            ? colorLeft
-                            : colors.gray,
-
+                        : pressedStates[item.id]
+                          ? colorPress
+                          : rightStates[item.id]
+                            ? colorRight
+                            : leftStates[item.id]
+                              ? colorLeft
+                              : colors.gray,
                   },
                 ]}
               >
                 <AntDesign
                   name={
-                    tempIsPressed||
-                      (addQuantity && quantity === item.quantity)
-                      ? 'checkcircleo'
-                      : pressedStates[item.id]||
-                      (addQuantity && quantity === item.quantity)
-
+                    isPressed || (addQuantity && quantity === item.quantity)
+                      ? 'questioncircleo'
+                      : tempIsPressed ||
+                          (addQuantity && quantity === item.quantity)
                         ? 'checkcircleo'
-                        : rightStates[item.id]
-                          ? 'arrowright'
-                          : leftStates[item.id]
-                            ? 'closecircleo'
-                            : 'questioncircleo'
+                        : pressedStates[item.id] ||
+                            (addQuantity && quantity === item.quantity)
+                          ? 'checkcircleo'
+                          : rightStates[item.id]
+                            ? 'arrowright'
+                            : leftStates[item.id]
+                              ? 'closecircleo'
+                              : 'questioncircleo'
                   }
                   size={30}
                   color="white"
