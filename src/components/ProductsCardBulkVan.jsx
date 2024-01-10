@@ -5,43 +5,26 @@ import { PanGestureHandler } from 'react-native-gesture-handler'
 import { GlobalStyles, colors } from '../styles/GlobalStyles'
 import { ProductStyles } from '../styles/ProductStyles'
 import { useProductSubmit } from '../hooks/useProductSubmit'
-import ModalProduct from '../components/ModalProduct'
 
 export const ProductsCardBulkVan = ({ item }) => {
 
     const [isPressed, setIsPressed] = useState(false)
     const [left, setLeft] = useState(false)
-    const [selectedProduct, setSelectedProduct] = useState(null)
-    const [showModal, setShowModal] = useState(false)
-    const [showModal2, setShowModal2] = useState(false)
     const { handleSubmit } = useProductSubmit()
 
     const handlePress = (itemId) => {
-        setSelectedProduct(itemId)
         setIsPressed(!isPressed)
         setLeft(false)
-        setShowModal2(true)
+        handleSubmit(itemId)
     }
 
     const handleGestureEvent = (event, itemId) => {
-        setSelectedProduct(itemId)
         const { translationX } = event.nativeEvent
         if (translationX < 0) {
-            console.log('Deslizamiento hacia la izquierda')
             setLeft(true)
             setIsPressed(false)
-            setShowModal(true)
+            handleSubmit(itemId)
         }
-    }
-
-    const confirm = () => {
-        setShowModal(false)
-        handleSubmit(item.id)
-    }
-    const confirm2 = () => {
-        handlePress(item.id)
-        setShowModal2(false)
-        handleSubmit(item.id)
     }
 
     return (
@@ -100,7 +83,7 @@ export const ProductsCardBulkVan = ({ item }) => {
                     </View>
                 </PanGestureHandler>
             </TouchableOpacity>
-            {showModal && selectedProduct === item.id ? (
+            {/* {showModal && selectedProduct === item.id ? (
                 <ModalProduct
                     showModal={showModal}
                     setShowModal={setShowModal}
@@ -119,7 +102,7 @@ export const ProductsCardBulkVan = ({ item }) => {
                     title={'Confirm ' + item.name}
                     text={'Are you sure to confirm that all products have been packed?'}
                 />
-            ) : null}
+            ) : null} */}
         </View>
     )
 }
