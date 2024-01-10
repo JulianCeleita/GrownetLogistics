@@ -225,7 +225,6 @@ export function ProductsCard({
         <ModalProduct
           showModal={showModal}
           setShowModal={setShowModal}
-          item={item}
           confirm={confirm}
           title={item.name + ' not available'}
           text={' Are you sure you want to mark this item as unavailable?'}
@@ -236,7 +235,6 @@ export function ProductsCard({
           showModal={showModal2}
           setShowModal={setShowModal2}
           confirm={confirm2}
-          item={item}
           title={'Confirm ' + item.name}
           text={'Are you sure to confirm that all products have been packed?'}
         />

@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { usePackingStore } from '../store/usePackingStore.js'
 
 export const useCardEvents = (quantityStore, products, setProducts, error) => {
   const [pressedStates, setPressedStates] = useState({})
