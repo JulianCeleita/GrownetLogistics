@@ -1,6 +1,12 @@
 import { AntDesign } from '@expo/vector-icons'
 import React, { useState, useEffect } from 'react'
-import { Text, TextInput, TouchableOpacity, View } from 'react-native'
+import {
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+  Dimensions,
+} from 'react-native'
 import { PanGestureHandler } from 'react-native-gesture-handler'
 import ModalProduct from '../components/ModalProduct'
 import { useCardEvents } from '../hooks/useCardEvents'
@@ -53,7 +59,12 @@ export function ProductsCard({
   }
 
   return (
-    <View style={{ alignItems: 'center' }} key={item.id}>
+    <View
+      style={{
+        alignItems: 'center',
+      }}
+      key={item.id}
+    >
       <TouchableOpacity
         onPress={() => {
           setTempIsPressed(true)

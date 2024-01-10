@@ -8,9 +8,9 @@ export const ProductStyles = StyleSheet.create({
     alignItems: 'center',
   },
   card: {
-    width: 330,
+    width: 320,
     backgroundColor: 'white',
-    margin: 1,
+    margin: 5,
     borderRadius: 15,
     marginTop: 8,
     flexDirection: 'row',
@@ -128,7 +128,7 @@ export const SearchStyles = StyleSheet.create({
     borderRadius: 40,
     marginTop: 20,
     backgroundColor: '#f2f2f2',
-    width: 320,
+    width: '80%',
   },
 
   BgInput: {
