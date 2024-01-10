@@ -1,7 +1,12 @@
 import { StyleSheet } from 'react-native'
 import { colors } from './GlobalStyles'
+import { Dimensions } from 'react-native'
 
 export const CustomerDayStyles = StyleSheet.create({
+  customerPricipal: {
+    backgroundColor: 'white',
+    flex: 1,
+  },
   tittle: {
     backgroundColor: colors.bluePrimary,
     paddingHorizontal: 20,
@@ -30,6 +35,15 @@ export const CustomerDayStyles = StyleSheet.create({
   icon: {
     position: 'absolute',
     right: 18,
+  },
+  cardsCustomers: {
+    backgroundColor:
+      Dimensions.get('window').width > 500 ? colors.bluePrimary : colors.danger,
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: Dimensions.get('window').width > 500 ? 'column' : 'row',
+    flexWrap: 'wrap',
   },
   //Tittle
   tittleText: {

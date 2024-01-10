@@ -57,7 +57,7 @@ function CustomerDayPacking() {
   }, [])
   console.log(percentages, 'esta llegando')
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+    <SafeAreaView style={CustomerDayStyles.customerPricipal}>
       <ScrollView>
         {search ? (
           <CustomerDaySearch setSearch={setSearch} />

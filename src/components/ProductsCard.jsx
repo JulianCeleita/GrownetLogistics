@@ -63,7 +63,7 @@ export function ProductsCard({
 
           if (!leftStates[item.id] || rightStates[item.id]) {
             setTimeout(() => {
-              handlePress([item.id])
+              handlePress(item.id)
             }, 3000)
           } else {
             setShowModal2(true)

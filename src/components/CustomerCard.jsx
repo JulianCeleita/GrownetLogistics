@@ -36,7 +36,7 @@ const CustomerCard = ({ customer, loadingCard, percentages }) => {
     circumference - (roundedPercentage / 100) * circumference
 
   return (
-    <View style={{ alignItems: 'center' }}>
+    <View style={CustomerDayStyles.cardsCustomers}>
       <TouchableOpacity
         style={[CustomerDayStyles.card, GlobalStyles.boxShadow]}
         onPress={handleNavigateToProducts}
