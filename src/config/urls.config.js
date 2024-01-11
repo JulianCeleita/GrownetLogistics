@@ -15,3 +15,5 @@ export const ordersByDate = process.env.EXPO_PUBLIC_ORDERS_BY_DATE
 //PERCENTAGE
 export const percentagePacking = process.env.EXPO_PUBLIC_PERCENTAGE_PACKING
 export const percentageLoading = process.env.EXPO_PUBLIC_PERCENTAGE_LOADING
+//SHORT VAN
+export const shortVanConfig = process.env.EXPO_PUBLIC_SHORT_VAN

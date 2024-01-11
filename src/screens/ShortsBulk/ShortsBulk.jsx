@@ -30,7 +30,7 @@ function ShortsBulk() {
 
       <View style={DeliveryStyles.delivery}>
         <TouchableOpacity
-          style={DeliveryStyles.card}
+          style={[DeliveryStyles.card, { marginTop: Platform.OS === 'ios' ? 20 : 30 }]}
           onPress={() => navigation.navigate('ProductsBulk')}
         >
           <CircleProgress />
