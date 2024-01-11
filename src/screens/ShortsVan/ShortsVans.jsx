@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, Image } from 'react-native'
+import { View, Text, Image, Platform } from 'react-native'
 import { DeliveryStyles } from '../../styles/DeliveryStyles'
 import { LinearGradient } from 'expo-linear-gradient'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -31,7 +31,7 @@ function ShortsVans() {
 
       <View style={DeliveryStyles.delivery}>
         <TouchableOpacity
-          style={DeliveryStyles.card}
+          style={[DeliveryStyles.card, { marginTop: Platform.OS === 'ios' ? 20 : 30 }]}
           onPress={() => navigation.navigate('ProductsVan')}
         >
           <CircleProgress />
