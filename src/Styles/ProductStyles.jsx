@@ -16,7 +16,7 @@ export const ProductStyles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    height: 80,
+    height: 95,
   },
   category: {
     fontFamily: 'PoppinsSemi',
@@ -33,13 +33,14 @@ export const ProductStyles = StyleSheet.create({
   productTittle: {
     paddingVertical: 10,
     paddingLeft: 20,
-    width: '75%',
+    width: '72%',
   },
   tittleCard: {
     fontSize: 16,
     color: colors.darkBlue,
     fontFamily: 'PoppinsSemi',
     marginTop: 15,
+    textDecorationLine: 'none',
   },
   textCard: {
     fontSize: 15,

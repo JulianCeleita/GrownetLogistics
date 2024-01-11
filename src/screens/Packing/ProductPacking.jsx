@@ -85,14 +85,14 @@ function ProductsPacking() {
           )}
           keyExtractor={(item, index) => index.toString()}
           ListFooterComponent={<View style={{ height: 60 }} />}
-          horizontal={false}
+          /* horizontal={false}
           numColumns={Dimensions.get('window').width > 500 ? 2 : 1}
           contentContainerStyle={{
             flexDirection:
               Dimensions.get('window').width > 500 ? 'row' : 'column',
 
             flexWrap: Dimensions.get('window').width > 500 ? 'wrap' : 'nowrap',
-          }}
+          }}*/
         />
       ) : (
         <View

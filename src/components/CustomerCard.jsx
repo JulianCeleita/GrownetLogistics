@@ -48,7 +48,17 @@ const CustomerCard = ({ customer, loadingCard, percentages }) => {
               cy={radius}
               r={radius - strokeWidth / 2}
               fill="transparent"
-              stroke="#8FDE9B"
+              stroke={
+                roundedPercentage <= 29
+                  ? '#FFB7B7'
+                  : roundedPercentage <= 49
+                    ? '#FFCA8C'
+                    : roundedPercentage <= 79
+                      ? '#3296F5'
+                      : roundedPercentage <= 100
+                        ? '#8FDE9B'
+                        : '#FFB7B7'
+              }
               strokeWidth={strokeWidth}
               strokeDasharray={`${circumference} ${circumference}`}
               strokeDashoffset={0}
@@ -58,20 +68,30 @@ const CustomerCard = ({ customer, loadingCard, percentages }) => {
               cy={radius}
               r={radius - strokeWidth / 2}
               fill="transparent"
-              stroke="#62C471"
+              stroke={
+                roundedPercentage <= 29
+                  ? colors.danger
+                  : roundedPercentage <= 49
+                    ? colors.orange
+                    : roundedPercentage <= 79
+                      ? colors.bluePrimary
+                      : roundedPercentage <= 100
+                        ? colors.green
+                        : colors.danger
+              }
               strokeWidth={strokeWidth}
               strokeDasharray={`${circumference} ${circumference}`}
               strokeDashoffset={strokeDashoffset}
             />
             <SvgText
-              x={radius - 6}
+              x={radius - 0}
               y={radius + 6}
               textAnchor="middle"
               stroke="#00478C"
               fontSize="16"
               fill={colors.darkBlue}
             >
-              {roundedPercentage}%
+              {roundedPercentage + '%'}
             </SvgText>
           </Svg>
         </View>
