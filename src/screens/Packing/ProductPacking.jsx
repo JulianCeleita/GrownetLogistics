@@ -32,6 +32,7 @@ function ProductsPacking() {
 
   useEffect(() => {
     setFetchPackingProducts(employeeToken, selectedCustomer)
+    console.log('Actualiza packing')
   }, [])
 
   const handleSearch = () => {
@@ -80,6 +81,7 @@ function ProductsPacking() {
               products={productsPacking}
               setProducts={setProductsPacking}
               handleSubmit={handleSubmit}
+              viewPacking
               error={error}
             />
           )}
