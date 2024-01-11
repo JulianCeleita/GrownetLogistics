@@ -1,6 +1,12 @@
 import { AntDesign } from '@expo/vector-icons'
-import React, { useState } from 'react'
-import { Text, TextInput, TouchableOpacity, View } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import {
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+  Dimensions,
+} from 'react-native'
 import { PanGestureHandler } from 'react-native-gesture-handler'
 import ModalProduct from '../components/ModalProduct'
 import { useCardEvents } from '../hooks/useCardEvents'
@@ -55,7 +61,12 @@ export function ProductsCard({
   }
 
   return (
-    <View style={{ alignItems: 'center' }} key={item.id}>
+    <View
+      style={{
+        alignItems: 'center',
+      }}
+      key={item.id}
+    >
       <TouchableOpacity
         onPress={() => {
           setTempIsPressed(true)
@@ -65,7 +76,7 @@ export function ProductsCard({
 
           if (!leftStates[item.id] || rightStates[item.id]) {
             setTimeout(() => {
-              handlePress([item.id])
+              handlePress(item.id)
             }, 3000)
           } else {
             setShowModal2(true)
@@ -88,7 +99,7 @@ export function ProductsCard({
             <View style={[ProductStyles.card, GlobalStyles.boxShadow]}>
               <View style={ProductStyles.productTittle}>
                 <Text style={ProductStyles.tittleCard}>
-                  {item.name} {item.packsize}
+                  {item.name} {item.presentationName}
                 </Text>
                 <View style={ProductStyles.qty}>
                   <Text style={ProductStyles.textCard}>
@@ -172,7 +183,7 @@ export function ProductsCard({
                     isPressed || (addQuantity && quantity === item.quantity)
                       ? 'questioncircleo'
                       : tempIsPressed ||
-                        (addQuantity && quantity === item.quantity)
+                          (addQuantity && quantity === item.quantity)
                         ? 'checkcircleo'
                         : pressedStates[item.id] ||
                           (addQuantity && quantity === item.quantity) ||
@@ -234,7 +245,8 @@ export function ProductsCard({
                   onPress={() => {
                     if (addQuantity && selectedProduct === item.id) {
                       if (parseInt(quantity) === item.quantity) {
-                        handlePress(item.id)
+                        handlePress([item.id])
+                        handleSubmit(item.id, quantity, note)
                       } else {
                         declareDifferentQty(item.id)
                         handleSubmit(item.id, quantity, note)

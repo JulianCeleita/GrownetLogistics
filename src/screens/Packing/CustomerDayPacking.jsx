@@ -1,6 +1,12 @@
 import { Ionicons } from '@expo/vector-icons'
 import React, { useEffect, useState } from 'react'
-import { ScrollView, Text, TouchableOpacity, View } from 'react-native'
+import {
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+  useWindowDimensions,
+} from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import mainAxios from '../../../axios.config'
 import CustomerCard from '../../components/CustomerCard'
@@ -12,6 +18,7 @@ import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
 import { colors } from '../../styles/GlobalStyles'
 
 function CustomerDayPacking() {
+  const windowWidth = useWindowDimensions().width
   const { OrdersByDate, setOrdersByDate } = useOrdersByDate()
   const { employeeToken } = useEmployeeStore()
   const [percentages, setPercentages] = useState([])
@@ -57,7 +64,7 @@ function CustomerDayPacking() {
   }, [])
   console.log(percentages, 'esta llegando')
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+    <SafeAreaView style={CustomerDayStyles.customerPricipal}>
       <ScrollView>
         {search ? (
           <CustomerDaySearch setSearch={setSearch} />
@@ -76,13 +83,15 @@ function CustomerDayPacking() {
             </TouchableOpacity>
           </View>
         )}
-        {OrdersByDate?.map((order) => {
-          return (
-            <View key={`${order.id_stateOrders}-${order.created_date}`}>
-              <CustomerCard customer={order} percentages={percentages} />
-            </View>
-          )
-        })}
+        <View style={CustomerDayStyles.cardsCustomers}>
+          {OrdersByDate?.map((order) => {
+            return (
+              <View key={`${order.id_stateOrders}-${order.created_date}`}>
+                <CustomerCard customer={order} percentages={percentages} />
+              </View>
+            )
+          })}
+        </View>
       </ScrollView>
     </SafeAreaView>
   )

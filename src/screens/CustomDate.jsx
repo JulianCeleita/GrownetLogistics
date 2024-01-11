@@ -57,7 +57,6 @@ const CustomDate = () => {
         console.error('Error al obtener las fechas', error)
       })
   }
-
   const handleDatePress = () => {
     navigation.navigate('Main')
   }

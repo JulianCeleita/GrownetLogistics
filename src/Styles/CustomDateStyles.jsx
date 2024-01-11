@@ -57,7 +57,7 @@ export const CustomDateStyles = StyleSheet.create({
     paddingHorizontal: Platform.OS === 'ios' ? 20 : 25,
     borderRadius: 20,
     marginTop: 15,
-    marginBottom:15,
+    marginBottom: 15,
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {
