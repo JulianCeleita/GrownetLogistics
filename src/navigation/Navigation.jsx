@@ -99,6 +99,7 @@ function MyTabs() {
           tabBarIcon: ({ color, size }) => (
             <Feather name="package" size={size} color={color} />
           ),
+          unmountOnBlur: true,
         }}
       />
       <Tab.Screen
@@ -112,6 +113,7 @@ function MyTabs() {
               color={color}
             />
           ),
+          unmountOnBlur: true,
         }}
       />
       <Tab.Screen
@@ -125,6 +127,7 @@ function MyTabs() {
               color={color}
             />
           ),
+          unmountOnBlur: true,
         }}
       />
       <Tab.Screen
@@ -138,6 +141,7 @@ function MyTabs() {
               color={color}
             />
           ),
+          unmountOnBlur: true,
         }}
       />
     </Tab.Navigator>
@@ -155,7 +159,7 @@ export default function Navigation() {
     PoppinsSemi: Poppins_600SemiBold,
     PoppinsItalic: Poppins_300Light_Italic,
   })
-  useEffect(() => {}, [fontsLoaded])
+  useEffect(() => { }, [fontsLoaded])
 
   if (!fontsLoaded) {
     return null

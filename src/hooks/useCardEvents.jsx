@@ -22,6 +22,9 @@ export const useCardEvents = (quantityStore, products, setProducts, error) => {
   }, [error])
 
   const handlePress = (itemIds) => {
+    if (!Array.isArray(itemIds)) {
+      itemIds = [itemIds]
+    }
     itemIds.forEach((itemId) => {
       setSelectedProduct(itemId)
       const newPressedStates = Object.assign({}, pressedStates)

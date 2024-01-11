@@ -8,15 +8,15 @@ export const ProductStyles = StyleSheet.create({
     alignItems: 'center',
   },
   card: {
-    width: 330,
+    width: 320,
     backgroundColor: 'white',
-    margin: 1,
+    margin: 5,
     borderRadius: 15,
     marginTop: 8,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    height: 80,
+    height: 95,
   },
   category: {
     fontFamily: 'PoppinsSemi',
@@ -33,13 +33,14 @@ export const ProductStyles = StyleSheet.create({
   productTittle: {
     paddingVertical: 10,
     paddingLeft: 20,
-    width: '75%',
+    width: '72%',
   },
   tittleCard: {
     fontSize: 16,
     color: colors.darkBlue,
     fontFamily: 'PoppinsSemi',
     marginTop: 15,
+    textDecorationLine: 'none',
   },
   textCard: {
     fontSize: 15,
@@ -129,7 +130,7 @@ export const SearchStyles = StyleSheet.create({
     borderRadius: 40,
     marginTop: 20,
     backgroundColor: '#f2f2f2',
-    width: 320,
+    width: '80%',
   },
 
   BgInput: {

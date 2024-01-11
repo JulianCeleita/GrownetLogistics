@@ -6,6 +6,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Dimensions,
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import ProductSearcher from '../../components/ProductSearch'
@@ -32,6 +33,7 @@ function ProductsPacking() {
 
   useEffect(() => {
     setFetchPackingProducts(employeeToken, selectedCustomer)
+    console.log('Actualiza packing')
   }, [])
 
   const handleSearch = () => {
@@ -49,9 +51,7 @@ function ProductsPacking() {
           <View style={{ paddingHorizontal: 43, width: '100%' }}>
             <View style={ProductStyles.customerTitleContainer}>
               <Text style={ProductStyles.customerTitle}>
-                <Text>
-                  Restaurant 1 - {' '}
-                </Text>
+                <Text>Restaurant 1 - </Text>
                 <Text style={{ flexWrap: 'wrap' }}>
                   {productsPacking ? productsPacking.reference : 'Loading...'}
                 </Text>
@@ -67,6 +67,7 @@ function ProductsPacking() {
           </TouchableOpacity>
         </View>
       )}
+
       {productsPacking ? (
         <FlatList
           data={productsPacking.data}
@@ -80,19 +81,34 @@ function ProductsPacking() {
               products={productsPacking}
               setProducts={setProductsPacking}
               handleSubmit={handleSubmit}
+              viewPacking
               error={error}
             />
           )}
           keyExtractor={(item, index) => index.toString()}
           ListFooterComponent={<View style={{ height: 60 }} />}
+          /* horizontal={false}
+          numColumns={Dimensions.get('window').width > 500 ? 2 : 1}
+          contentContainerStyle={{
+            flexDirection:
+              Dimensions.get('window').width > 500 ? 'row' : 'column',
+
+            flexWrap: Dimensions.get('window').width > 500 ? 'wrap' : 'nowrap',
+          }}*/
         />
       ) : (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
           <ActivityIndicator size="large" color="#0000ff" />
         </View>
       )}
     </SafeAreaView>
-  );
+  )
 }
 
 export default ProductsPacking

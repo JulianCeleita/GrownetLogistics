@@ -63,17 +63,19 @@ function CustomerDayLoading() {
             </TouchableOpacity>
           </View>
         )}
-        {OrdersByDate?.map((order) => {
-          return (
-            <View key={`${order.id_stateOrders}-${order.created_date}`}>
-              <CustomerCard
-                customer={order}
-                loadingCard
-                percentages={percentages}
-              />
-            </View>
-          )
-        })}
+        <View style={CustomerDayStyles.cardsCustomers}>
+          {OrdersByDate?.map((order) => {
+            return (
+              <View key={`${order.id_stateOrders}-${order.created_date}`}>
+                <CustomerCard
+                  customer={order}
+                  loadingCard
+                  percentages={percentages}
+                />
+              </View>
+            )
+          })}
+        </View>
       </ScrollView>
     </SafeAreaView>
   )
