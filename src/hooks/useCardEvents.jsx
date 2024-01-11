@@ -70,7 +70,7 @@ export const useCardEvents = (quantityStore, products, setProducts, error) => {
       setPressedStates(newPressedStates)
       setLeftStates(newLeftStates)
       setAddQuantity(true)
-      setQuantity(0)
+      setQuantity(quantityStore)
 
       console.log('Dezlizamos a la derecha', itemId)
     } else if (translationX < 0) {

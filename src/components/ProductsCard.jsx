@@ -204,7 +204,8 @@ export function ProductsCard({
                   onPress={() => {
                     if (addQuantity && selectedProduct === item.id) {
                       if (parseInt(quantity) === item.quantity) {
-                        handlePress(item.id)
+                        handlePress([item.id])
+                        handleSubmit(item.id, quantity, note)
                       } else {
                         declareDifferentQty(item.id)
                         handleSubmit(item.id, quantity, note)
