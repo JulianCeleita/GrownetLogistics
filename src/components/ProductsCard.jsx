@@ -139,10 +139,10 @@ export function ProductsCard({
                     isPressed || (addQuantity && quantity === item.quantity)
                       ? 'questioncircleo'
                       : tempIsPressed ||
-                        (addQuantity && quantity === item.quantity)
+                          (addQuantity && quantity === item.quantity)
                         ? 'checkcircleo'
                         : pressedStates[item.id] ||
-                          (addQuantity && quantity === item.quantity)
+                            (addQuantity && quantity === item.quantity)
                           ? 'checkcircleo'
                           : rightStates[item.id]
                             ? 'arrowright'
@@ -193,7 +193,8 @@ export function ProductsCard({
                   onPress={() => {
                     if (addQuantity && selectedProduct === item.id) {
                       if (parseInt(quantity) === item.quantity) {
-                        handlePress(item.id)
+                        handlePress([item.id])
+                        handleSubmit(item.id, quantity, note)
                       } else {
                         declareDifferentQty(item.id)
                         handleSubmit(item.id, quantity, note)
