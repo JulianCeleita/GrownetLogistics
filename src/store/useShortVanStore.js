@@ -18,13 +18,9 @@ export const useShortVanStore = create((set) => ({
               },
             );
           
-            const products = await response.data.orders[0].products;
-            const groupedProducts = groupShortVanProductsByRestaurant(products);
+            const products = await response.data;
             set((state) => ({
-              restaurantProducts: {
-                ...state.restaurantProducts,
-                ...groupedProducts,
-              },
+              restaurantProducts: products.van[0]
             }));
           
             console.log('Restaurant Products:', state.restaurantProducts);
