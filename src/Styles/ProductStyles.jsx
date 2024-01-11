@@ -107,6 +107,7 @@ export const ProductStyles = StyleSheet.create({
   icon2: {
     position: 'absolute',
     right: 26,
+    marginTop:Platform.OS === 'ios' ? 55 : 10,
   },
   customerTitle: {
     fontSize: 18,

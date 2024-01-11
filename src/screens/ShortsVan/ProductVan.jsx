@@ -1,75 +1,84 @@
-import { Ionicons } from '@expo/vector-icons'
-import React, { useState } from 'react'
-import { ActivityIndicator, FlatList, Text, TouchableOpacity, View } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { ActivityIndicator, FlatList, Text, TouchableOpacity, View, Platform } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { Ionicons } from '@expo/vector-icons'
 import ProductSearcher from '../../components/ProductSearch'
-import { ProductsCardBulkVan } from '../../components/ProductsCardBulkVan'
 import { useShortVanStore } from '../../store/useShortVanStore'
+import useEmployeeStore from '../../store/useEmployeeStore'
+import { ProductsCardBulkVan } from '../../components/ProductsCardBulkVan'
 import { colors } from '../../styles/GlobalStyles'
 import { ProductStyles } from '../../styles/ProductStyles'
 
 function ProductsVan() {
-  const [search, setSearch] = useState(false)
-  const { productsVan } = useShortVanStore()
+  const { restaurantProducts, setFetchShortVanProducts } = useShortVanStore();
+  const [search, setSearch] = useState(false);
+  const [vansList, setVansList] = useState([]);
+  const { employeeToken } = useEmployeeStore()
+
+  useEffect(() => {
+    setFetchShortVanProducts(employeeToken);
+  }, []);
+
+  useEffect(() => {
+    if (restaurantProducts && Object.keys(restaurantProducts).length > 0) {
+      const vans = Object.entries(restaurantProducts).map(([vanName, vanProducts]) => ({
+        vanName,
+        vanProducts,
+      }));
+      setVansList(vans);
+    }
+  }, [restaurantProducts]);
 
   const handleSearch = () => {
-    setSearch(true)
-  }
+    setSearch(true);
+  };
+
   return (
     <SafeAreaView style={ProductStyles.products}>
       {search ? (
         <ProductSearcher setSearch={setSearch} />
       ) : (
-        <View style={ProductStyles.iconContainer}>
-          <TouchableOpacity
-            onPress={handleSearch}
-            style={ProductStyles.iconSearch}
-          >
-            <Ionicons
-              name="md-search-circle-outline"
-              size={35}
-              color={colors.darkBlue}
-            />
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity onPress={handleSearch} style={ProductStyles.icon2}>
+          <Ionicons name="md-search-circle-outline" size={35} color={colors.darkBlue} />
+        </TouchableOpacity>
       )}
-      <View>
-        <Text
-          style={[
-            ProductStyles.category,
-            {
-              color: colors.bluePrimary,
-              marginTop: 10,
-            },
-          ]}
-        >
-          Restaurant 1
-        </Text>
 
-
-        {productsVan ? (
-          <FlatList
-            data={productsVan}
-            renderItem={({ item, index }) => (
-              <ProductsCardBulkVan
-                key={index}
-                item={item}
-              />
-            )}
-            keyExtractor={(item, index) => index.toString()}
-            ListFooterComponent={<View style={{ height: 60 }} />}
-          />
-        ) : (
+      <FlatList
+        data={vansList}
+        renderItem={({ item }) => (
+          <View key={item.vanName}>
+            <Text
+              style={[
+                ProductStyles.customerTitle,
+                {
+                  color: colors.bluePrimary,
+                  marginTop: Platform.OS === 'ios' ? 9 : 16,
+                  marginBottom: Platform.OS === 'ios' ? 10 : null,
+                },
+              ]}
+            >
+              Van: {item.vanName}
+            </Text>
+            <FlatList
+              data={item.vanProducts}
+              renderItem={({ item: product, index }) => (
+                <ProductsCardBulkVan key={index} item={product} />
+              )}
+              keyExtractor={(product) => product.id.toString()}
+              ListFooterComponent={<View style={{ height: 60 }} />}
+            />
+          </View>
+        )}
+        keyExtractor={(item) => item.vanName}
+        ListFooterComponent={<View style={{ height: 60 }} />}
+        ListEmptyComponent={
           <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <ActivityIndicator size="large" color="#0000ff" />
           </View>
-        )}
-
-
-
-      </View>
+        }
+      />
     </SafeAreaView>
-  )
+  );
 }
 
 export default ProductsVan

@@ -31,11 +31,11 @@ const Loading = () => {
 
       <View style={DeliveryStyles.delivery}>
         <TouchableOpacity
-          style={DeliveryStyles.card}
+          style={[DeliveryStyles.card, { marginTop: Platform.OS === 'ios' ? 20 : 30 }]}
           onPress={() => navigation.navigate('CustomerDayLoading')}
         >
           <CircleProgress />
-          <Text style={DeliveryStyles.tittleRoute}>Ruta 1</Text>
+          <Text style={DeliveryStyles.tittleRoute}>Route 1</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
