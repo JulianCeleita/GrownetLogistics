@@ -49,15 +49,13 @@ const CustomerCard = ({ customer, loadingCard, percentages }) => {
               r={radius - strokeWidth / 2}
               fill="transparent"
               stroke={
-                roundedPercentage <= 29
+                roundedPercentage <= 49
                   ? '#FFB7B7'
-                  : roundedPercentage <= 49
+                  : roundedPercentage <= 99
                     ? '#FFCA8C'
-                    : roundedPercentage <= 79
-                      ? '#3296F5'
-                      : roundedPercentage <= 100
-                        ? '#8FDE9B'
-                        : '#FFB7B7'
+                    : roundedPercentage == 100
+                      ? colors.green
+                      : '#FFB7B7'
               }
               strokeWidth={strokeWidth}
               strokeDasharray={`${circumference} ${circumference}`}
@@ -69,15 +67,13 @@ const CustomerCard = ({ customer, loadingCard, percentages }) => {
               r={radius - strokeWidth / 2}
               fill="transparent"
               stroke={
-                roundedPercentage <= 29
+                roundedPercentage <= 49
                   ? colors.danger
-                  : roundedPercentage <= 49
+                  : roundedPercentage <= 99
                     ? colors.orange
-                    : roundedPercentage <= 79
-                      ? colors.bluePrimary
-                      : roundedPercentage <= 100
-                        ? colors.green
-                        : colors.danger
+                    : roundedPercentage == 100
+                      ? colors.green
+                      : colors.danger
               }
               strokeWidth={strokeWidth}
               strokeDasharray={`${circumference} ${circumference}`}
