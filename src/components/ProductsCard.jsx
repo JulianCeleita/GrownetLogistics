@@ -21,6 +21,7 @@ export function ProductsCard({
   products,
   setProducts,
   handleSubmit,
+  viewPacking,
   error,
 }) {
   const positiveOffset = 30
@@ -45,6 +46,8 @@ export function ProductsCard({
   const [showModal2, setShowModal2] = useState(false)
   const [tempIsPressed, setTempIsPressed] = useState(false)
   const [isPressed, setIsPressed] = useState(false)
+
+  const validateView = viewPacking ? item.state_packing : item.state_loading;
 
   const confirm = () => {
     declareNotAvailable(item.id)
@@ -103,6 +106,30 @@ export function ProductsCard({
                     Qty: {item.quantity}
                   </Text>
 
+                  {!viewPacking && item.quantity_packing < item.quantity ? (
+
+                    <Text
+                      style={[
+                        ProductStyles.textCard,
+                        { color: colors.danger, marginRight: 50 },
+                      ]}
+                    >
+                      {`Missing ${item.quantity - item.quantity_packing || 0}`}
+                    </Text>
+                  ) : null}
+
+                  {!viewPacking && item.quantity_packing > item.quantity ? (
+
+                    <Text
+                      style={[
+                        ProductStyles.textCard,
+                        { color: colors.danger, marginRight: 50 },
+                      ]}
+                    >
+                      {`Overweight ${item.quantity_packing - item.quantity}`}
+                    </Text>
+                  ) : null}
+
                   {rightStates[item.id] && item.quantity > item.packed ? (
                     <Text
                       style={[
@@ -135,11 +162,17 @@ export function ProductsCard({
                       ? colors.gray
                       : tempIsPressed
                         ? colorPress
-                        : pressedStates[item.id]
+                        : pressedStates[item.id] ||
+                          validateView === "FULL" ||
+                          validateView === "FULL"
                           ? colorPress
-                          : rightStates[item.id]
+                          : rightStates[item.id] ||
+                            validateView === "ND" ||
+                            validateView === "ND"
                             ? colorRight
-                            : leftStates[item.id]
+                            : leftStates[item.id] ||
+                              validateView === "SHORT" ||
+                              validateView === "SHORT"
                               ? colorLeft
                               : colors.gray,
                   },
@@ -153,11 +186,17 @@ export function ProductsCard({
                           (addQuantity && quantity === item.quantity)
                         ? 'checkcircleo'
                         : pressedStates[item.id] ||
-                            (addQuantity && quantity === item.quantity)
+                          (addQuantity && quantity === item.quantity) ||
+                          validateView === "FULL" ||
+                          validateView === "FULL"
                           ? 'checkcircleo'
-                          : rightStates[item.id]
+                          : rightStates[item.id] ||
+                            validateView === "ND" ||
+                            validateView === "ND"
                             ? 'arrowright'
-                            : leftStates[item.id]
+                            : leftStates[item.id] ||
+                              validateView === "SHORT" ||
+                              validateView === "SHORT"
                               ? 'closecircleo'
                               : 'questioncircleo'
                   }
@@ -165,6 +204,8 @@ export function ProductsCard({
                   color="white"
                 />
               </View>
+
+
             </View>
 
             {addQuantity && selectedProduct === item.id ? (
