@@ -21,10 +21,11 @@ import { CustomerDayStyles } from '../styles/CustomerDayStyles'
 const CustomDate = () => {
   const [animation] = useState(new Animated.Value(1))
   const [showMore, setShowMore] = useState(false)
-  const [availableDates, setAvailableDates] = useState([])
+  const [availableDates, setAvailableDates] = useState([] || '')
   const navigation = useNavigation()
   const { setToken, idSupplier } = useTokenStore()
   const { employeeToken, setEmployeeToken } = useEmployeeStore()
+  const [numberOfDates, setNumberOfDates] = useState(1)
 
   useEffect(() => {
     handleDatesAvailables()
@@ -40,6 +41,7 @@ const CustomDate = () => {
 
   const handleDatesAvailables = () => {
     const postData = {
+      days: 2,
       supplier: idSupplier,
     }
     mainAxios
@@ -52,6 +54,7 @@ const CustomDate = () => {
         const { principal, next } = response.data.operation
         const allDates = [...principal, ...next]
         setAvailableDates(allDates)
+        console.log('allDates', allDates)
       })
       .catch((error) => {
         console.error('Error al obtener las fechas', error)
@@ -63,7 +66,15 @@ const CustomDate = () => {
   }
 
   const handleShowMore = () => {
-    setShowMore(!showMore)
+    setShowMore(true)
+    if (showMore) {
+      const newNumberOfDates = Math.min(numberOfDates + 1)
+      setNumberOfDates(newNumberOfDates)
+    }
+    if (numberOfDates === availableDates.length - 1) {
+      setNumberOfDates(1)
+      setShowMore(!showMore)
+    }
   }
 
   // TODO ELIMINAR EL TOKEN PARA DESLOGUEO
@@ -91,7 +102,7 @@ const CustomDate = () => {
   }
 
   const renderAdditionalButtons = () => {
-    if (showMore) {
+    if (showMore && availableDates.length > 0) {
       return (
         <Animated.View
           style={{
@@ -107,11 +118,11 @@ const CustomDate = () => {
             ],
           }}
         >
-          <View style={{ marginBottom: 10, marginTop: 10 }}>
-            {renderButton(
-              moment(availableDates[1]?.fecha).format('dddd, MMM DD'),
-            )}
-          </View>
+            {availableDates.slice(1, numberOfDates + 1).map((date, index) => (
+              <View key={index} style={{ marginBottom: 10, marginTop: 10 }}>
+                {renderButton(moment(date.fecha).format('dddd, MMM DD'))}
+              </View>
+            ))}
         </Animated.View>
       )
     } else {
@@ -137,37 +148,50 @@ const CustomDate = () => {
         </View>
         <View style={CustomDateStyles.container}>
           <ScrollView contentContainerStyle={CustomDateStyles.contentContainer}>
-            <TouchableOpacity
-              style={CustomDateStyles.whiteBackground}
-              onPress={handleDatePress}
-            >
-              <View style={CustomDateStyles.dateButtonContainer}>
-                <View style={CustomDateStyles.dateButton}>
-                  <Image source={FechaIcon} style={{ width: 50, height: 50 }} />
-                </View>
-              </View>
-              <Text style={CustomDateStyles.buttonText}>
-                {moment(availableDates[0]?.fecha).format('dddd, MMM DD')}
+            {!availableDates.length ? (
+              <Text style={CustomDateStyles.noDatesText}>
+                No workable dates available
               </Text>
-            </TouchableOpacity>
+            ) : (
+              <>
+                <TouchableOpacity
+                  style={CustomDateStyles.whiteBackground}
+                  onPress={handleDatePress}
+                >
+                  <View style={CustomDateStyles.dateButtonContainer}>
+                    <View style={CustomDateStyles.dateButton}>
+                      <Image
+                        source={FechaIcon}
+                        style={{ width: 50, height: 50 }}
+                      />
+                    </View>
+                  </View>
+                  <Text style={CustomDateStyles.buttonText}>
+                    {moment(availableDates[0]?.fecha).format('dddd, MMM DD')}
+                  </Text>
+                </TouchableOpacity>
 
-            {renderAdditionalButtons()}
+                {renderAdditionalButtons()}
 
-            <TouchableOpacity
-              onPress={handleShowMore}
-              style={CustomDateStyles.showMoreButton}
-            >
-              <Text style={CustomDateStyles.showMoreButtonText}>
-                {showMore ? 'Hide' : 'Show more'}
-              </Text>
-            </TouchableOpacity>
-            {/* TODO ELIMINAR TOKEN PARA DESLOGUEO */}
-            {/* <TouchableOpacity
+                <TouchableOpacity
+                  onPress={handleShowMore}
+                  style={CustomDateStyles.showMoreButton}
+                >
+                  <Text style={CustomDateStyles.showMoreButtonText}>
+                    {showMore && numberOfDates === availableDates.length - 1
+                      ? 'Hide'
+                      : 'Show more'}
+                  </Text>
+                </TouchableOpacity>
+                {/* TODO ELIMINAR TOKEN PARA DESLOGUEO */}
+                {/* <TouchableOpacity
               style={CustomDateStyles.whiteBackground}
               onPress={deleteToken}
             >
               <Text style={CustomDateStyles.buttonText}>Delete token</Text>
             </TouchableOpacity> */}
+              </>
+            )}
           </ScrollView>
         </View>
       </ScrollView>
