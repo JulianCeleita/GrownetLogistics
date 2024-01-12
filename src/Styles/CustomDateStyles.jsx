@@ -22,7 +22,6 @@ export const CustomDateStyles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingTop: Platform.OS === 'ios' ? 22 : 15,
-    paddingHorizontal: 30,
   },
   whiteBackground: {
     backgroundColor: 'white',
@@ -37,17 +36,13 @@ export const CustomDateStyles = StyleSheet.create({
     elevation: 5,
     alignItems: 'center',
     textAlign: 'center',
-    marginBottom: 5,
-  },
-  dateButtonContainer: {
-    backgroundColor: 'white',
-    borderRadius: 25,
+    marginBottom: 4,
   },
   dateButton: {
     flexDirection: 'row',
     backgroundColor: colors.bluePrimary,
     paddingVertical: 25,
-    paddingHorizontal: 110,
+    paddingHorizontal: 130,
     shadowColor: '#000',
     borderRadius: 20,
     alignItems: 'center',
@@ -58,7 +53,7 @@ export const CustomDateStyles = StyleSheet.create({
     textAlign: 'center',
     fontFamily: 'PoppinsRegular',
     fontSize: 18,
-    paddingVertical: 10,
+    paddingVertical: 12,
   },
   showMoreButton: {
     backgroundColor: colors.darkBlue,
@@ -70,11 +65,16 @@ export const CustomDateStyles = StyleSheet.create({
     marginTop: 15,
     marginBottom: 15,
     alignItems: 'center',
+    flexDirection: 'row',
   },
   showMoreButtonText: {
     color: 'white',
     textAlign: 'center',
     fontFamily: 'PoppinsSemi',
     fontSize: Platform.OS === 'ios' ? 16 : 15,
+  },
+  noDatesText: {
+    fontFamily: 'PoppinsSemi',
+    fontSize: 18,
   },
 })
