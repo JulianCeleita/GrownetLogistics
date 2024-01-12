@@ -35,8 +35,6 @@ const CustomerCard = ({ customer, loadingCard }) => {
   const strokeDashoffset =
     circumference - (roundedPercentage / 100) * circumference
 
-  console.log('percentages', percentages)
-
   return (
     <View>
       <TouchableOpacity
