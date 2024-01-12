@@ -18,6 +18,7 @@ import useOrdersByDate from '../store/useOrdersByDateStore'
 import useTokenStore from '../store/useTokenStore'
 import { CustomDateStyles } from '../styles/CustomDateStyles'
 import { CustomerDayStyles } from '../styles/CustomerDayStyles'
+import { Feather, MaterialIcons } from '@expo/vector-icons'
 
 const CustomDate = () => {
   const [animation] = useState(new Animated.Value(1))
@@ -33,7 +34,7 @@ const CustomDate = () => {
     handleDatesAvailables()
   }, [])
 
-  console.log({ idSupplier });
+  console.log({ idSupplier })
 
   useEffect(() => {
     Animated.timing(animation, {
@@ -55,8 +56,8 @@ const CustomDate = () => {
         },
       })
       .then((response) => {
-        console.log(response.data);
-        console.log(datesAvailables, postData);
+        console.log(response.data)
+        console.log(datesAvailables, postData)
         const { principal, next } = response.data.operation
         const allDates = [...principal, ...next] || []
         setAvailableDates(allDates)
@@ -73,14 +74,16 @@ const CustomDate = () => {
   }
 
   const handleShowMore = () => {
-    setShowMore(true)
-    if (showMore) {
-      const newNumberOfDates = Math.min(numberOfDates + 1)
+    setShowMore(!showMore)
+
+    if (!showMore) {
+      const newNumberOfDates = Math.min(
+        numberOfDates + 1,
+        availableDates.length - 1,
+      )
       setNumberOfDates(newNumberOfDates)
-    }
-    if (numberOfDates === availableDates.length - 1) {
+    } else {
       setNumberOfDates(1)
-      setShowMore(!showMore)
     }
   }
 
@@ -99,7 +102,7 @@ const CustomDate = () => {
             style={CustomDateStyles.dateButton}
             onPress={() => handleDatePress(formattedDate)}
           >
-            <Image source={FechaIcon} style={{ width: 50, height: 50 }} />
+            <Feather name="calendar" size={45} color="white" />
           </TouchableOpacity>
         </View>
         <View style={CustomDateStyles.dateTextContainer}>
@@ -144,16 +147,17 @@ const CustomDate = () => {
         <View style={CustomerDayStyles.title2}>
           <Text
             style={[
-              CustomerDayStyles.customerTitle,
+              CustomDateStyles.title,
               {
                 marginTop: Platform.OS === 'ios' ? null : 25,
                 fontSize: Platform.OS === 'ios' ? 27 : 25,
               },
             ]}
           >
-            Date
+            Welcome to <Text style={CustomDateStyles.span}>Grownet</Text>
           </Text>
         </View>
+        <Text style={CustomDateStyles.text}>Select the date</Text>
         <View style={CustomDateStyles.container}>
           <ScrollView contentContainerStyle={CustomDateStyles.contentContainer}>
             {!availableDates.length ? (
@@ -168,10 +172,7 @@ const CustomDate = () => {
                 >
                   <View style={CustomDateStyles.dateButtonContainer}>
                     <View style={CustomDateStyles.dateButton}>
-                      <Image
-                        source={FechaIcon}
-                        style={{ width: 50, height: 50 }}
-                      />
+                      <Feather name="calendar" size={45} color="white" />
                     </View>
                   </View>
                   <Text style={CustomDateStyles.buttonText}>
@@ -185,6 +186,13 @@ const CustomDate = () => {
                   onPress={handleShowMore}
                   style={CustomDateStyles.showMoreButton}
                 >
+                  <MaterialIcons
+                    name={
+                      showMore ? 'keyboard-arrow-up' : 'keyboard-arrow-down'
+                    }
+                    size={35}
+                    color="white"
+                  />
                   <Text style={CustomDateStyles.showMoreButtonText}>
                     {showMore && numberOfDates === availableDates.length - 1
                       ? 'Hide'
@@ -194,13 +202,13 @@ const CustomDate = () => {
               </>
             )}
           </ScrollView>
-          {/* TODO ELIMINAR TOKEN PARA DESLOGUEO */}
-          <TouchableOpacity
+          {/* TODO ELIMINAR TOKEN PARA DESLOGUEO 
             style={CustomDateStyles.whiteBackground}
             onPress={deleteToken}
           >
             <Text style={CustomDateStyles.buttonText}>Delete token</Text>
           </TouchableOpacity>
+          <TouchableOpacity*/}
         </View>
       </ScrollView>
     </SafeAreaView>
