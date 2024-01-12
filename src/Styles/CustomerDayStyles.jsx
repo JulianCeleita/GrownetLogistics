@@ -98,9 +98,9 @@ export const CustomerDayStyles = StyleSheet.create({
     color: colors.darkBlue,
   },
   //Texto de Restaurantes en shortVan
-  restaurantName: {
+  restaurantTypeTitle: {
     fontSize: 18,
-    color: "#026CD2",  // Cambia el color según tus preferencias
+    color: "#026CD2",
     fontFamily: 'PoppinsSemi',
     textAlign: 'left',
   },

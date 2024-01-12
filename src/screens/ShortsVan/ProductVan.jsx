@@ -52,7 +52,7 @@ function ProductsVan() {
             <View key={restaurant.vanName} style={{ marginBottom: -45 }}>
               <Text
                 style={[
-                  CustomerDayStyles.restaurantName,
+                  CustomerDayStyles.restaurantTypeTitle,
                   {
                     marginBottom: Platform.OS === 'ios' ? 5 : null,
                   },
