@@ -153,7 +153,7 @@ const CustomDate = () => {
             Welcome to <Text style={CustomDateStyles.span}>Grownet</Text>
           </Text>
         </View>
-        <Text style={CustomDateStyles.text}>Selecciona la fecha</Text>
+        <Text style={CustomDateStyles.text}>Select the date</Text>
         <View style={CustomDateStyles.container}>
           <ScrollView contentContainerStyle={CustomDateStyles.contentContainer}>
             {!availableDates.length ? (
