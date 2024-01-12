@@ -17,7 +17,7 @@ export const ProductsCardBulkVan = ({ item, handleSubmit }) => {
     const handlePress = (itemId) => {
         setIsPressed(!isPressed)
         setLeft(false)
-        handleSubmit(itemId, item.quantity - item.quantity_packed)
+        handleSubmit(itemId, null, '', "FULL")
     }
 
     const handleGestureEvent = (event, itemId) => {
@@ -32,7 +32,7 @@ export const ProductsCardBulkVan = ({ item, handleSubmit }) => {
 
     const confirm = () => {
         setShowModal(false)
-        handleSubmit(item.id)
+        handleSubmit(item.id, null, '', "SHORT")
     }
 
     const setStateCardDefault = () => {
@@ -50,7 +50,7 @@ export const ProductsCardBulkVan = ({ item, handleSubmit }) => {
                                 style={[
                                     ProductStyles.tittleCard,
                                     {
-                                        textDecorationLine: left ? 'line-through' : 'none',
+                                        textDecorationLine: left || item.state_definitive === "SHORT" ? 'line-through' : 'none',
                                         color: left ? colors.bluePrimary : colors.darkBlue,
                                     },
                                 ]}
@@ -61,21 +61,23 @@ export const ProductsCardBulkVan = ({ item, handleSubmit }) => {
                                 style={[
                                     ProductStyles.textCard,
                                     {
-                                        textDecorationLine: left ? 'line-through' : 'none',
+                                        textDecorationLine: left || item.state_definitive === "SHORT" ? 'line-through' : 'none',
                                         color: left,
                                     },
                                 ]}
                             >
-                                {`Missing ${item.quantity - item.quantity_packed} ${item.uom}`}
+                                {`Missing ${item.quantity - item.cant_insert}`}
                             </Text>
                         </View>
                         <View
                             style={[
                                 ProductStyles.checkBox,
                                 {
-                                    backgroundColor: isPressed
+                                    backgroundColor: isPressed ||
+                                        item.state_definitive === "FULL"
                                         ? colors.bluePrimary
-                                        : left
+                                        : left ||
+                                            item.state_definitive === "SHORT"
                                             ? colors.bluePrimary
                                             : colors.gray,
                                 },
@@ -83,9 +85,9 @@ export const ProductsCardBulkVan = ({ item, handleSubmit }) => {
                         >
                             <AntDesign
                                 name={
-                                    isPressed
+                                    isPressed || item.state_definitive === "FULL"
                                         ? 'checkcircleo'
-                                        : left
+                                        : left || item.state_definitive === "SHORT"
                                             ? 'minuscircleo'
                                             : 'questioncircleo'
                                 }

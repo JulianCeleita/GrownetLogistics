@@ -10,16 +10,21 @@ export const useProductSubmit = (insert) => {
 
   const [isLoading, setIsLoading] = useState(false)
 
-  const handleSubmit = async (itemId, quantity = 0, note = '') => {
+  const handleSubmit = async (itemId, quantity = 0, note = '', state = null) => {
     setIsLoading(true)
 
     const data = {
       note,
-      quantity: parseInt(quantity),
       id: itemId,
     }
 
-    console.log('data', data)
+    if (state) {
+      data.state = state
+    } else {
+      data.quantity = parseInt(quantity)
+    }
+
+    console.log(data);
 
     try {
       const response = await mainAxios.post(insert, data, {
