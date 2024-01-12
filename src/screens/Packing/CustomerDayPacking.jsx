@@ -18,12 +18,13 @@ import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
 import { colors } from '../../styles/GlobalStyles'
 import { usePackingStore } from '../../store/usePackingStore'
 import { useFocusEffect } from '@react-navigation/native'
+import usePercentageStore from '../../store/usePercentageStore'
 
 function CustomerDayPacking() {
   const windowWidth = useWindowDimensions().width
   const { ordersByDate, setOrdersByDate } = useOrdersByDate()
   const { employeeToken } = useEmployeeStore()
-  const { setPercentages } = usePackingStore()
+  const { setPercentages } = usePercentageStore()
 
   // const isIOS = Platform.OS === 'ios'
   // const { width, height } = Dimensions.get('window')
