@@ -34,7 +34,7 @@ function ProductsLoading() {
 
   useEffect(() => {
     setFetchProductsLoading(employeeToken, selectedCustomerL)
-    console.log({ employeeToken })
+
   }, [])
 
   const handleSearch = () => {
@@ -49,9 +49,7 @@ function ProductsLoading() {
           <View style={{ paddingHorizontal: 43, width: '100%' }}>
             <View style={ProductStyles.customerTitleContainer}>
               <Text style={ProductStyles.customerTitle}>
-                <Text>
-                  Restaurant 1 - {' '}
-                </Text>
+                <Text>Restaurant 1 - </Text>
                 <Text style={{ flexWrap: 'wrap' }}>
                   {productsLoading ? productsLoading.reference : 'Loading...'}
                 </Text>
