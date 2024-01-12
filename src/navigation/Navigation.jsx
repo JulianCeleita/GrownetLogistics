@@ -22,7 +22,6 @@ import Packing from '../screens/Packing/Packing'
 import ProductsPacking from '../screens/Packing/ProductPacking'
 import ProductsBulk from '../screens/ShortsBulk/ProductsBulk'
 import ShortsBulk from '../screens/ShortsBulk/ShortsBulk'
-import CustomerDayVan from '../screens/ShortsVan/CustomerDayVan'
 import ProductsVan from '../screens/ShortsVan/ProductVan'
 import ShortsVans from '../screens/ShortsVan/ShortsVans'
 import useEmployeeStore from '../store/useEmployeeStore'
@@ -77,7 +76,6 @@ function StackVan() {
       screenOptions={{ headerShown: false }}
     >
       <Stack.Screen name="ShortsVans" component={ShortsVans} />
-      <Stack.Screen name="CustomerDayVan" component={CustomerDayVan} />
       <Stack.Screen name="ProductsVan" component={ProductsVan} />
     </Stack.Navigator>
   )
