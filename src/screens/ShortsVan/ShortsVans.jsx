@@ -1,15 +1,25 @@
-import React from 'react'
-import { View, Text, Image, Platform } from 'react-native'
-import { DeliveryStyles } from '../../styles/DeliveryStyles'
-import { LinearGradient } from 'expo-linear-gradient'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import { TouchableOpacity } from 'react-native'
-import { GlobalStyles } from '../../styles/GlobalStyles'
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
+import { LinearGradient } from 'expo-linear-gradient'
+import React from 'react'
+import { Platform, Text, TouchableOpacity, View } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 import CircleProgress from '../../components/CircleProgress'
-import { Feather, MaterialCommunityIcons } from '@expo/vector-icons'
+import useOrdersByDate from '../../store/useOrdersByDateStore'
+import { DeliveryStyles } from '../../styles/DeliveryStyles'
+import { GlobalStyles } from '../../styles/GlobalStyles'
+
 function ShortsVans() {
   const navigation = useNavigation()
+  const { routesByDate, setOrdersByDate, setSelectedRoute } = useOrdersByDate()
+
+  const handleRoutePress = (nameRoute) => {
+    setSelectedRoute(nameRoute)
+    setOrdersByDate(nameRoute, routesByDate)
+    console.log('Esta es la ruta seleccionada:', nameRoute)
+    navigation.navigate('ProductsVan')
+  }
+
   return (
     <SafeAreaView>
       <LinearGradient
@@ -30,13 +40,19 @@ function ShortsVans() {
       </LinearGradient>
 
       <View style={DeliveryStyles.delivery}>
-        <TouchableOpacity
-          style={[DeliveryStyles.card, { marginTop: Platform.OS === 'ios' ? 20 : 30 }]}
-          onPress={() => navigation.navigate('ProductsVan')}
-        >
-          <CircleProgress />
-          <Text style={DeliveryStyles.tittleRoute}>Ruta 1</Text>
-        </TouchableOpacity>
+        {routesByDate.map((order) => (
+          <TouchableOpacity
+            style={[
+              DeliveryStyles.card,
+              { marginTop: Platform.OS === 'ios' ? 20 : 30 },
+            ]}
+            onPress={() => handleRoutePress(order.nameRoute)}
+            key={order.nameRoute}
+          >
+            <CircleProgress />
+            <Text style={DeliveryStyles.tittleRoute}>{order.nameRoute}</Text>
+          </TouchableOpacity>
+        ))}
       </View>
     </SafeAreaView>
   )

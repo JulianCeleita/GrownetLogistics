@@ -1,32 +1,28 @@
 import { Ionicons } from '@expo/vector-icons'
-import React, { useCallback, useEffect, useState } from 'react'
+import { useFocusEffect } from '@react-navigation/native'
+import React, { useCallback, useState } from 'react'
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import mainAxios from '../../../axios.config.js'
 import CustomerCard from '../../components/CustomerCard'
 import CustomerDaySearch from '../../components/CustomerDaySearch'
-import useOrdersByDate from '../../store/useOrdersByDateStore'
+import { percentageLoading } from '../../config/urls.config'
 import useEmployeeStore from '../../store/useEmployeeStore.js'
+import useOrdersByDate from '../../store/useOrdersByDateStore'
+import usePercentageStore from '../../store/usePercentageStore.js'
 import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
 import { colors } from '../../styles/GlobalStyles'
-import { percentageLoading } from '../../config/urls.config'
-import mainAxios from '../../../axios.config.js'
-import useLoadingStore from '../../store/useLoadingStore.js'
-import { useFocusEffect } from '@react-navigation/native'
-import usePercentageStore from '../../store/usePercentageStore.js'
 
 function CustomerDayLoading() {
-  const { ordersByDate, setOrdersByDate } = useOrdersByDate()
+  const { ordersByDate } = useOrdersByDate()
   const { employeeToken } = useEmployeeStore()
   const [search, setSearch] = useState(false)
   const { setPercentages } = usePercentageStore()
 
-  useEffect(() => {
-    setOrdersByDate(employeeToken)
-  }, [])
-  const handleSearch = () => {
+  /* TODO CREAR FUNCIÓN DE BUSQUEDA */
+  /* const handleSearch = () => {
     setSearch(true)
-  }
-  //Llamado API porcentaje
+  }*/
 
   useFocusEffect(
     useCallback(() => {
@@ -38,6 +34,7 @@ function CustomerDayLoading() {
             },
           })
           setPercentages(response.data.orders)
+          console.log('Porcentajes:', response.data.orders)
         } catch (error) {
           console.error('Error al obtener porcentaje:', error)
         }
@@ -55,7 +52,7 @@ function CustomerDayLoading() {
           <View style={CustomerDayStyles.title2}>
             <Text style={CustomerDayStyles.customerTitle}>Route 1</Text>
             <TouchableOpacity
-              onPress={handleSearch}
+              /* onPress={handleSearch} */
               style={CustomerDayStyles.icon}
             >
               <Ionicons
@@ -69,7 +66,7 @@ function CustomerDayLoading() {
         <View style={CustomerDayStyles.cardsCustomers}>
           {ordersByDate?.map((order) => {
             return (
-              <View key={`${order.id_stateOrders}-${order.created_date}`}>
+              <View key={order.accountName}>
                 <CustomerCard customer={order} loadingCard />
               </View>
             )

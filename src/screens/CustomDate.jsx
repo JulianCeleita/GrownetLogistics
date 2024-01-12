@@ -1,40 +1,36 @@
+import { Feather, MaterialIcons } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import {
   Animated,
-  Image,
   SafeAreaView,
   ScrollView,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native'
 import mainAxios from '../../axios.config'
 import { datesAvailables } from '../config/urls.config'
-import FechaIcon from '../img/Fecha.png'
 import useEmployeeStore from '../store/useEmployeeStore'
 import useOrdersByDate from '../store/useOrdersByDateStore'
 import useTokenStore from '../store/useTokenStore'
 import { CustomDateStyles } from '../styles/CustomDateStyles'
 import { CustomerDayStyles } from '../styles/CustomerDayStyles'
-import { Feather, MaterialIcons } from '@expo/vector-icons'
 
 const CustomDate = () => {
   const [animation] = useState(new Animated.Value(1))
   const [showMore, setShowMore] = useState(false)
   const [availableDates, setAvailableDates] = useState([] || '')
   const navigation = useNavigation()
-  const { idSupplier, setToken } = useTokenStore()
-  const { employeeToken, setEmployeeToken } = useEmployeeStore()
+  const { idSupplier } = useTokenStore()
+  const { employeeToken } = useEmployeeStore()
   const { setRoutesByDate } = useOrdersByDate()
   const [numberOfDates, setNumberOfDates] = useState(1)
 
   useEffect(() => {
     handleDatesAvailables()
   }, [])
-
-  console.log({ idSupplier })
 
   useEffect(() => {
     Animated.timing(animation, {
@@ -66,6 +62,7 @@ const CustomDate = () => {
         console.error('Error al obtener las fechas', error)
       })
   }
+  
   const handleDatePress = (date) => {
     if (date) {
       setRoutesByDate(employeeToken, date)
@@ -88,10 +85,10 @@ const CustomDate = () => {
   }
 
   // TODO ELIMINAR EL TOKEN PARA DESLOGUEO
-  const deleteToken = () => {
+  /* const deleteToken = () => {
     setToken('')
     setEmployeeToken('')
-  }
+  } */
 
   const renderButton = (date) => {
     const formattedDate = moment(date, 'dddd, MMM DD').format('YYYY-MM-DD')
@@ -203,12 +200,12 @@ const CustomDate = () => {
             )}
           </ScrollView>
           {/* TODO ELIMINAR TOKEN PARA DESLOGUEO */}
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={CustomDateStyles.whiteBackground}
             onPress={deleteToken}
           >
             <Text style={CustomDateStyles.buttonText}>Delete token</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       </ScrollView>
     </SafeAreaView>
