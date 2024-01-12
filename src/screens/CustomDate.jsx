@@ -88,10 +88,10 @@ const CustomDate = () => {
   }
 
   // TODO ELIMINAR EL TOKEN PARA DESLOGUEO
-  /* const deleteToken = () => {
+  const deleteToken = () => {
     setToken('')
     setEmployeeToken('')
-  } */
+  }
 
   const renderButton = (date) => {
     const formattedDate = moment(date, 'dddd, MMM DD').format('YYYY-MM-DD')
@@ -203,12 +203,12 @@ const CustomDate = () => {
             )}
           </ScrollView>
           {/* TODO ELIMINAR TOKEN PARA DESLOGUEO */}
-          {/* <TouchableOpacity
+          <TouchableOpacity
             style={CustomDateStyles.whiteBackground}
             onPress={deleteToken}
           >
             <Text style={CustomDateStyles.buttonText}>Delete token</Text>
-          </TouchableOpacity> */}
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </SafeAreaView>

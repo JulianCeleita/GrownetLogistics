@@ -46,6 +46,7 @@ export function ProductsCard({
   const [showModal2, setShowModal2] = useState(false)
   const [tempIsPressed, setTempIsPressed] = useState(false)
   const [isPressed, setIsPressed] = useState(false)
+  const [quantityCompared, setQuantityCompared] = useState(item.quantity_packing)
 
   const validateView = viewPacking ? item.state_packing : item.state_loading;
 
@@ -53,10 +54,12 @@ export function ProductsCard({
     declareNotAvailable(item.id)
     setShowModal(false)
     handleSubmit(item.id)
+    setQuantityCompared(0)
   }
   const confirm2 = () => {
     handlePress(item.id)
     setShowModal2(false)
+    setQuantityCompared(item.quantity)
     handleSubmit(item.id)
   }
 
@@ -92,7 +95,7 @@ export function ProductsCard({
       >
         <PanGestureHandler
           enabled={!addQuantity}
-          onGestureEvent={(e) => handleGestureEvent(e, item.id)}
+          onGestureEvent={(e) => handleGestureEvent(e, item.id, setQuantityCompared)}
           activeOffsetX={[negativeOffset, positiveOffset]}
         >
           <View>
@@ -106,8 +109,12 @@ export function ProductsCard({
                     Qty: {item.quantity}
                   </Text>
 
-                  {!viewPacking && item.quantity_packing < item.quantity ? (
-
+                  {!viewPacking &&
+                    quantityCompared < item.quantity &&
+                    (!isPressed &&
+                      !rightStates[item.id] &&
+                      !leftStates[item.id]) &&
+                    !item.quantity_loading ? (
                     <Text
                       style={[
                         ProductStyles.textCard,
@@ -118,7 +125,12 @@ export function ProductsCard({
                     </Text>
                   ) : null}
 
-                  {!viewPacking && item.quantity_packing > item.quantity ? (
+                  {!viewPacking &&
+                    quantityCompared > item.quantity &&
+                    (!isPressed &&
+                      !rightStates[item.id] &&
+                      !leftStates[item.id]) &&
+                    !item.quantity_loading ? (
 
                     <Text
                       style={[
@@ -183,7 +195,7 @@ export function ProductsCard({
                     isPressed || (addQuantity && quantity === item.quantity)
                       ? 'questioncircleo'
                       : tempIsPressed ||
-                          (addQuantity && quantity === item.quantity)
+                        (addQuantity && quantity === item.quantity)
                         ? 'checkcircleo'
                         : pressedStates[item.id] ||
                           (addQuantity && quantity === item.quantity) ||

@@ -34,6 +34,7 @@ function ProductsLoading() {
 
   useEffect(() => {
     setFetchProductsLoading(employeeToken, selectedCustomerL)
+
   }, [])
 
   const handleSearch = () => {
