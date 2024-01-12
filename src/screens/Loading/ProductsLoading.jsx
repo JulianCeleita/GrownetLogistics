@@ -34,7 +34,7 @@ function ProductsLoading() {
 
   useEffect(() => {
     setFetchProductsLoading(employeeToken, selectedCustomerL)
-    console.log('Actualiza loading')
+
   }, [])
 
   const handleSearch = () => {

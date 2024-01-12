@@ -41,6 +41,13 @@ function ProductsVan() {
       ) : (
         <View style={CustomerDayStyles.title2}>
           <Text style={CustomerDayStyles.customerTitle}>Route 1</Text>
+          <TouchableOpacity onPress={handleSearch} style={ProductStyles.icon2}>
+            <Ionicons
+              name="md-search-circle-outline"
+              size={35}
+              color={colors.darkBlue}
+            />
+          </TouchableOpacity>
         </View>
       )}
 
@@ -56,32 +63,32 @@ function ProductsVan() {
         <FlatList
           data={restaurantData}
           renderItem={({ item: restaurant }) => (
-            <View key={restaurant.vanName} style={{ marginBottom: -45 }}>
-              <Text
-                style={[
-                  CustomerDayStyles.restaurantName,
-                  {
-                    marginBottom: Platform.OS === 'ios' ? 5 : null,
-                  },
-                ]}
-              >
-                {restaurant.vanName}
-              </Text>
-              <FlatList
-                data={restaurant.vanProducts}
-                renderItem={({ item: product, index }) => (
+            <>
+              <View key={restaurant.vanName} style={{ marginBottom: -45 }}>
+                <Text
+                  style={[
+                    CustomerDayStyles.restaurantTypeTitle,
+                    {
+                      marginBottom: Platform.OS === 'ios' ? 5 : null,
+                    },
+                  ]}
+                >
+                  {restaurant.vanName}
+                </Text>
+              </View>
+              <View style={{ marginTop: 50 }}>
+                {restaurant.vanProducts.map((product, index) => (
                   <ProductsCardBulkVan
-                    key={index}
+                    key={product.id}
                     item={product}
                     handleSubmit={handleSubmit}
                   />
-                )}
-                keyExtractor={(product) => product.id.toString()}
-                ListFooterComponent={<View style={{ height: 60 }} />}
-              />
-            </View>
+                ))}
+              </View>
+            </>
           )}
           keyExtractor={(restaurant) => restaurant.vanName}
+          style={{ marginTop: 40 }}
         />
       )}
     </SafeAreaView>

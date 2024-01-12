@@ -56,7 +56,7 @@ export const useCardEvents = (quantityStore, products, setProducts, error) => {
     })
   }
 
-  const handleGestureEvent = (event, itemId) => {
+  const handleGestureEvent = (event, itemId, setQuantityCompared) => {
     const { translationX } = event.nativeEvent
     setSelectedProduct(itemId)
 
@@ -71,6 +71,7 @@ export const useCardEvents = (quantityStore, products, setProducts, error) => {
       setLeftStates(newLeftStates)
       setAddQuantity(true)
       setQuantity(quantityStore)
+      setQuantityCompared(quantity)
 
       console.log('Dezlizamos a la derecha', itemId)
     } else if (translationX < 0) {

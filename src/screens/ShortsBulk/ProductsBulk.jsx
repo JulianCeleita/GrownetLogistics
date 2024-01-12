@@ -1,34 +1,38 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   ActivityIndicator,
   FlatList,
   Text,
   TouchableOpacity,
   View,
+  Platform,
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import ProductSearcher from '../../components/ProductSearch'
-import { ProductsCardBulkVan } from '../../components/ProductsCardBulkVan'
-import { useShortBulkStore } from '../../store/useShortBulkStore'
+import { Ionicons } from '@expo/vector-icons'
 import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
-import { ProductStyles } from '../../styles/ProductStyles'
+import ProductSearcher from '../../components/ProductSearch'
+import { useShortBulkStore } from '../../store/useShortBulkStore'
 import useEmployeeStore from '../../store/useEmployeeStore'
+import { ProductsCardBulkVan } from '../../components/ProductsCardBulkVan'
+import { colors } from '../../styles/GlobalStyles'
+import { ProductStyles } from '../../styles/ProductStyles'
 import { useProductSubmit } from '../../hooks/useProductSubmit'
 import { insertShort } from '../../config/urls.config'
 
 function ProductsBulk() {
+  const { typeData, loading, error, setFetchShortBulkProducts } =
+    useShortBulkStore()
   const [search, setSearch] = useState(false)
   const { employeeToken } = useEmployeeStore()
-  const { productsBulk, setFetchProductsBulk } = useShortBulkStore()
   const { handleSubmit } = useProductSubmit(insertShort)
+
+  useEffect(() => {
+    setFetchShortBulkProducts(employeeToken)
+  }, [])
 
   const handleSearch = () => {
     setSearch(true)
   }
-
-  useEffect(() => {
-    setFetchProductsBulk(employeeToken)
-  }, [])
 
   return (
     <SafeAreaView style={ProductStyles.products}>
@@ -37,28 +41,55 @@ function ProductsBulk() {
       ) : (
         <View style={CustomerDayStyles.title2}>
           <Text style={CustomerDayStyles.customerTitle}>Route 1</Text>
+          <TouchableOpacity onPress={handleSearch} style={ProductStyles.icon2}>
+            <Ionicons
+              name="md-search-circle-outline"
+              size={35}
+              color={colors.darkBlue}
+            />
+          </TouchableOpacity>
         </View>
       )}
 
-      {productsBulk ? (
-        <FlatList
-          data={productsBulk}
-          renderItem={({ item, index }) => (
-            <ProductsCardBulkVan
-              key={index}
-              item={item}
-              handleSubmit={handleSubmit}
-            />
-          )}
-          keyExtractor={(item, index) => index.toString()}
-          ListFooterComponent={<View style={{ height: 60 }} />}
-        />
-      ) : (
+      {loading ? (
+        <ActivityIndicator size="large" color="#0000ff" />
+      ) : error ? (
         <View
           style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
         >
-          <ActivityIndicator size="large" color="#0000ff" />
+          <Text>Error: {error}</Text>
         </View>
+      ) : (
+        <FlatList
+          data={typeData}
+          renderItem={({ item: type }) => (
+            <>
+              <View key={type.bulkType} style={{ marginBottom: -50 }}>
+                <Text
+                  style={[
+                    CustomerDayStyles.restaurantTypeTitle,
+                    {
+                      marginBottom: Platform.OS === 'ios' ? 5 : null,
+                    },
+                  ]}
+                >
+                  {type.bulkType}
+                </Text>
+              </View>
+              <View style={{ marginTop: 50 }}>
+                {type.bulkProducts.map((product, index) => (
+                  <ProductsCardBulkVan
+                    key={product.id}
+                    item={product}
+                    handleSubmit={handleSubmit}
+                  />
+                ))}
+              </View>
+            </>
+          )}
+          keyExtractor={(type) => type.bulkType}
+          style={{ marginTop: 20 }}
+        />
       )}
     </SafeAreaView>
   )

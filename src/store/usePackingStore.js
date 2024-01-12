@@ -3,10 +3,12 @@ import mainAxios from '../../axios.config'
 import { productsPackingConfig } from '../config/urls.config'
 
 export const usePackingStore = create((set) => ({
-
   productsPacking: null,
   selectedCustomer: null,
   error: null,
+  percentages: [],
+
+  setPercentages: (percentaje) => set(() => ({ percentages: percentaje })),
 
   setError: (error) => set(() => ({ error: error })),
 

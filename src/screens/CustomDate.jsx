@@ -25,8 +25,8 @@ const CustomDate = () => {
   const [showMore, setShowMore] = useState(false)
   const [availableDates, setAvailableDates] = useState([] || '')
   const navigation = useNavigation()
-  const { idSupplier } = useTokenStore()
-  const { employeeToken } = useEmployeeStore()
+  const { idSupplier, setToken } = useTokenStore()
+  const { employeeToken, setEmployeeToken } = useEmployeeStore()
   const { setRoutesByDate } = useOrdersByDate()
   const [numberOfDates, setNumberOfDates] = useState(1)
 
@@ -202,13 +202,13 @@ const CustomDate = () => {
               </>
             )}
           </ScrollView>
-          {/* TODO ELIMINAR TOKEN PARA DESLOGUEO 
+          {/* TODO ELIMINAR TOKEN PARA DESLOGUEO */}
+          <TouchableOpacity
             style={CustomDateStyles.whiteBackground}
             onPress={deleteToken}
           >
             <Text style={CustomDateStyles.buttonText}>Delete token</Text>
           </TouchableOpacity>
-          <TouchableOpacity*/}
         </View>
       </ScrollView>
     </SafeAreaView>
