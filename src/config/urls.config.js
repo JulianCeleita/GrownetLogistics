@@ -4,7 +4,7 @@ export const loginEmployee = process.env.EXPO_PUBLIC_LOGIN_EMPLOYEE
 //DATES
 export const datesAvailables = process.env.EXPO_PUBLIC_DATES_AVAILABLES
 // ROUTES
-export const routes = process.env.EXPO_PUBLIC_DELIVERY_ROUTES
+export const deliveryRoutes = process.env.EXPO_PUBLIC_DELIVERY_ROUTES
 //PACKING
 export const productsPackingConfig = process.env.EXPO_PUBLIC_PRODUCTS_PACKING
 export const insertPacking = process.env.EXPO_PUBLIC_INSERT_PACKING

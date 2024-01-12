@@ -14,10 +14,10 @@ const useOrdersByDate = create((set) => {
     setSelectedRoute: (route) => {
       set({ selectedRoute: route })
     },
-    setRoutesByDate: async (token) => {
+    setRoutesByDate: async (token, date) => {
       try {
         const dateData = {
-          date: selectedDate,
+          date: date,
         }
         const response = await mainAxios.get(deliveryRoutes, dateData, {
           headers: {  
@@ -30,6 +30,7 @@ const useOrdersByDate = create((set) => {
         set({ routesByDate: RoutesByDate })
       } catch (error) {
         console.error('Error during request:', error)
+        console.log(deliveryRoutes, date)
       }
     },
     setOrdersByDate: async (token) => {
