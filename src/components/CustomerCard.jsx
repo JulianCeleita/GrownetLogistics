@@ -7,8 +7,8 @@ import { usePackingStore } from '../store/usePackingStore'
 import { CustomerDayStyles } from '../styles/CustomerDayStyles'
 import { GlobalStyles, colors } from '../styles/GlobalStyles'
 
-const CustomerCard = ({ customer, loadingCard, percentages }) => {
-  const { setSelectedCustomer } = usePackingStore()
+const CustomerCard = ({ customer, loadingCard }) => {
+  const { setSelectedCustomer, percentages } = usePackingStore()
   const { setSelectedCustomerL } = useLoadingStore()
   const navigation = useNavigation()
   const radius = 33

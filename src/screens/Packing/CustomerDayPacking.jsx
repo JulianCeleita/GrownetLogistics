@@ -1,11 +1,7 @@
 import { Ionicons } from '@expo/vector-icons'
-import React, { useEffect, useState } from 'react'
-import {
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View
-} from 'react-native'
+import { useFocusEffect } from '@react-navigation/native'
+import React, { useCallback, useState } from 'react'
+import { ScrollView, Text, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import mainAxios from '../../../axios.config'
 import CustomerCard from '../../components/CustomerCard'
@@ -13,13 +9,14 @@ import CustomerDaySearch from '../../components/CustomerDaySearch'
 import { percentagePacking } from '../../config/urls.config'
 import useEmployeeStore from '../../store/useEmployeeStore'
 import useOrdersByDate from '../../store/useOrdersByDateStore'
+import { usePackingStore } from '../../store/usePackingStore'
 import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
 import { colors } from '../../styles/GlobalStyles'
 
 function CustomerDayPacking() {
   const { ordersByDate } = useOrdersByDate()
   const { employeeToken } = useEmployeeStore()
-  const [percentages, setPercentages] = useState([])
+  const { percentages, setPercentages } = usePackingStore()
 
   // const isIOS = Platform.OS === 'ios'
   // const { width, height } = Dimensions.get('window')
@@ -35,26 +32,25 @@ function CustomerDayPacking() {
   const handleSearch = () => {
     setSearch(true)
   }
-  console.log(percentagePacking)
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await mainAxios
-          .get(percentagePacking, {
+  //Llamado API porcentaje
+  useFocusEffect(
+    useCallback(() => {
+      async function fetchData() {
+        try {
+          const response = await mainAxios.get(percentagePacking, {
             headers: {
               Authorization: `Bearer ${employeeToken}`,
             },
           })
-          .then((response) => {
-            setPercentages(response.data.orders)
-          })
-      } catch (error) {
-        console.error('Error al obtener porcentaje:', error)
+          setPercentages(response.data.orders)
+        } catch (error) {
+          console.error('Error al obtener porcentaje:', error)
+        }
       }
-    }
-    fetchData()
-  }, [])
+      fetchData()
+    }, [employeeToken]),
+  )
 
   return (
     <SafeAreaView style={CustomerDayStyles.customerPricipal}>
