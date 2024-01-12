@@ -12,12 +12,13 @@ import { percentageLoading } from '../../config/urls.config'
 import mainAxios from '../../../axios.config.js'
 import useLoadingStore from '../../store/useLoadingStore.js'
 import { useFocusEffect } from '@react-navigation/native'
+import usePercentageStore from '../../store/usePercentageStore.js'
 
 function CustomerDayLoading() {
   const { ordersByDate, setOrdersByDate } = useOrdersByDate()
   const { employeeToken } = useEmployeeStore()
   const [search, setSearch] = useState(false)
-  const { setPercentages } = useLoadingStore()
+  const { setPercentages } = usePercentageStore()
 
   useEffect(() => {
     setOrdersByDate(employeeToken)
