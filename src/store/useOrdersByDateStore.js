@@ -4,13 +4,9 @@ import { allOrdersByDate, deliveryRoutes } from '../config/urls.config'
 
 const useOrdersByDate = create((set) => {
   return {
-    selectedDate: '',
     selectedRoute: '',
     routesByDate: [],
     ordersByDate: [],
-    setSelectedDate: (date) => {
-      set({ selectedDate: date })
-    },
     setSelectedRoute: (route) => {
       set({ selectedRoute: route })
     },
@@ -19,7 +15,7 @@ const useOrdersByDate = create((set) => {
         const dateData = {
           date: date,
         }
-        const response = await mainAxios.get(deliveryRoutes, dateData, {
+        const response = await mainAxios.post(deliveryRoutes, dateData, {
           headers: {  
             Authorization: `Bearer ${token}`,
           },
@@ -30,7 +26,6 @@ const useOrdersByDate = create((set) => {
         set({ routesByDate: RoutesByDate })
       } catch (error) {
         console.error('Error during request:', error)
-        console.log(deliveryRoutes, date)
       }
     },
     setOrdersByDate: async (token) => {

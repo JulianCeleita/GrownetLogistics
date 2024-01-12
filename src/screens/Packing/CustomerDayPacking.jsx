@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import {
   ScrollView,
   Text,
@@ -16,12 +16,14 @@ import useOrdersByDate from '../../store/useOrdersByDateStore'
 import useEmployeeStore from '../../store/useEmployeeStore'
 import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
 import { colors } from '../../styles/GlobalStyles'
+import { usePackingStore } from '../../store/usePackingStore'
+import { useFocusEffect } from '@react-navigation/native'
 
 function CustomerDayPacking() {
   const windowWidth = useWindowDimensions().width
   const { ordersByDate, setOrdersByDate } = useOrdersByDate()
   const { employeeToken } = useEmployeeStore()
-  const [percentages, setPercentages] = useState([])
+  const { setPercentages } = usePackingStore()
 
   // const isIOS = Platform.OS === 'ios'
   // const { width, height } = Dimensions.get('window')
@@ -41,28 +43,26 @@ function CustomerDayPacking() {
   const handleSearch = () => {
     setSearch(true)
   }
-  console.log(percentagePacking)
 
   //Llamado API porcentaje
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await mainAxios
-          .get(percentagePacking, {
+  useFocusEffect(
+    useCallback(() => {
+      async function fetchData() {
+        try {
+          const response = await mainAxios.get(percentagePacking, {
             headers: {
               Authorization: `Bearer ${employeeToken}`,
             },
           })
-          .then((response) => {
-            setPercentages(response.data.orders)
-          })
-      } catch (error) {
-        console.error('Error al obtener porcentaje:', error)
+          setPercentages(response.data.orders)
+        } catch (error) {
+          console.error('Error al obtener porcentaje:', error)
+        }
       }
-    }
-    fetchData()
-  }, [])
-  console.log(percentages, 'esta llegando')
+      fetchData()
+    }, [employeeToken]),
+  )
+
   return (
     <SafeAreaView style={CustomerDayStyles.customerPricipal}>
       <ScrollView>
@@ -87,7 +87,7 @@ function CustomerDayPacking() {
           {ordersByDate?.map((order) => {
             return (
               <View key={`${order.id_stateOrders}-${order.created_date}`}>
-                <CustomerCard customer={order} percentages={percentages} />
+                <CustomerCard customer={order} />
               </View>
             )
           })}

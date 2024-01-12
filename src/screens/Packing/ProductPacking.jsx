@@ -33,7 +33,6 @@ function ProductsPacking() {
 
   useEffect(() => {
     setFetchPackingProducts(employeeToken, selectedCustomer)
-    console.log('Actualiza packing')
   }, [])
 
   const handleSearch = () => {

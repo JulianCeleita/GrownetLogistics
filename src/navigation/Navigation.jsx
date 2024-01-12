@@ -159,7 +159,7 @@ export default function Navigation() {
     PoppinsSemi: Poppins_600SemiBold,
     PoppinsItalic: Poppins_300Light_Italic,
   })
-  useEffect(() => { }, [fontsLoaded])
+  useEffect(() => {}, [fontsLoaded])
 
   if (!fontsLoaded) {
     return null

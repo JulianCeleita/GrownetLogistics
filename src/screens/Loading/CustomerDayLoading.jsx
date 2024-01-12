@@ -1,5 +1,5 @@
 import { Ionicons } from '@expo/vector-icons'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import CustomerCard from '../../components/CustomerCard'
@@ -10,12 +10,14 @@ import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
 import { colors } from '../../styles/GlobalStyles'
 import { percentageLoading } from '../../config/urls.config'
 import mainAxios from '../../../axios.config.js'
+import useLoadingStore from '../../store/useLoadingStore.js'
+import { useFocusEffect } from '@react-navigation/native'
 
 function CustomerDayLoading() {
   const { ordersByDate, setOrdersByDate } = useOrdersByDate()
   const { employeeToken } = useEmployeeStore()
   const [search, setSearch] = useState(false)
-  const [percentages, setPercentages] = useState([])
+  const { setPercentages } = useLoadingStore()
 
   useEffect(() => {
     setOrdersByDate(employeeToken)
@@ -24,25 +26,25 @@ function CustomerDayLoading() {
     setSearch(true)
   }
   //Llamado API porcentaje
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await mainAxios
-          .get(percentageLoading, {
+
+  useFocusEffect(
+    useCallback(() => {
+      async function fetchData() {
+        try {
+          const response = await mainAxios.get(percentageLoading, {
             headers: {
               Authorization: `Bearer ${employeeToken}`,
             },
           })
-          .then((response) => {
-            setPercentages(response.data.orders)
-          })
-      } catch (error) {
-        console.error('Error al obtener porcentaje:', error)
+          setPercentages(response.data.orders)
+        } catch (error) {
+          console.error('Error al obtener porcentaje:', error)
+        }
       }
-    }
-    fetchData()
-  }, [])
-  console.log(percentages, 'esta llegando')
+      fetchData()
+    }, [employeeToken]),
+  )
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
       <ScrollView>
@@ -67,11 +69,7 @@ function CustomerDayLoading() {
           {ordersByDate?.map((order) => {
             return (
               <View key={`${order.id_stateOrders}-${order.created_date}`}>
-                <CustomerCard
-                  customer={order}
-                  loadingCard
-                  percentages={percentages}
-                />
+                <CustomerCard customer={order} loadingCard />
               </View>
             )
           })}
