@@ -135,7 +135,7 @@ export function ProductsCard({
                     <Text
                       style={[
                         ProductStyles.textCard,
-                        { color: colors.danger, marginRight: 50 },
+                        { color: colors.green, marginRight: 50 },
                       ]}
                     >
                       {`Overweight ${item.quantity_packing - item.quantity}`}
