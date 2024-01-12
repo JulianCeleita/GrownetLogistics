@@ -7,18 +7,11 @@ import { TouchableOpacity } from 'react-native'
 import { GlobalStyles } from '../../styles/GlobalStyles'
 import { useNavigation } from '@react-navigation/native'
 import CircleProgress from '../../components/CircleProgress'
-import useOrdersByDate from '../../store/useOrdersByDateStore'
 import useEmployeeStore from '../../store/useEmployeeStore'
 
 const Packing = () => {
-  const { setRoutesByDate, selectedDate } = useOrdersByDate()
   const { employeeToken } = useEmployeeStore()
   const navigation = useNavigation()
-
-  useEffect(() => {
-    setRoutesByDate(employeeToken, selectedDate)
-    console.log('Fecha seleccionada en packing', selectedDate)
-  }, [])
 
   return (
     <SafeAreaView style={{ backgroundColor: 'white', height: '100%' }}>

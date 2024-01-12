@@ -14,8 +14,8 @@ import mainAxios from '../../axios.config'
 import { datesAvailables } from '../config/urls.config'
 import FechaIcon from '../img/Fecha.png'
 import useEmployeeStore from '../store/useEmployeeStore'
-import useTokenStore from '../store/useTokenStore'
 import useOrdersByDate from '../store/useOrdersByDateStore'
+import useTokenStore from '../store/useTokenStore'
 import { CustomDateStyles } from '../styles/CustomDateStyles'
 import { CustomerDayStyles } from '../styles/CustomerDayStyles'
 
@@ -24,9 +24,9 @@ const CustomDate = () => {
   const [showMore, setShowMore] = useState(false)
   const [availableDates, setAvailableDates] = useState([] || '')
   const navigation = useNavigation()
-  const { setToken, idSupplier } = useTokenStore()
-  const { employeeToken, setEmployeeToken } = useEmployeeStore()
-  const { setSelectedDate } = useOrdersByDate()
+  const { idSupplier } = useTokenStore()
+  const { employeeToken } = useEmployeeStore()
+  const { setRoutesByDate } = useOrdersByDate()
   const [numberOfDates, setNumberOfDates] = useState(1)
 
   useEffect(() => {
@@ -54,9 +54,8 @@ const CustomDate = () => {
       })
       .then((response) => {
         const { principal, next } = response.data.operation
-        const allDates = [...principal, ...next]
+        const allDates = [...principal, ...next] || []
         setAvailableDates(allDates)
-        console.log('allDates', allDates)
       })
       .catch((error) => {
         console.error('Error al obtener las fechas', error)
@@ -64,9 +63,8 @@ const CustomDate = () => {
   }
   const handleDatePress = (date) => {
     if (date) {
-    setSelectedDate(date)
-    console.log('date selected:', date)
-    navigation.navigate('Main')
+      setRoutesByDate(employeeToken, date)
+      navigation.navigate('Main')
     }
   }
 
@@ -124,11 +122,11 @@ const CustomDate = () => {
             ],
           }}
         >
-            {availableDates.slice(1, numberOfDates + 1).map((date, index) => (
-              <View key={index} style={{ marginBottom: 10, marginTop: 10 }}>
-                {renderButton(moment(date.fecha).format('dddd, MMM DD'))}
-              </View>
-            ))}
+          {availableDates.slice(1, numberOfDates + 1).map((date, index) => (
+            <View key={index} style={{ marginBottom: 10, marginTop: 10 }}>
+              {renderButton(moment(date.fecha).format('dddd, MMM DD'))}
+            </View>
+          ))}
         </Animated.View>
       )
     } else {
