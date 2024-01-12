@@ -15,6 +15,7 @@ import { datesAvailables } from '../config/urls.config'
 import FechaIcon from '../img/Fecha.png'
 import useEmployeeStore from '../store/useEmployeeStore'
 import useTokenStore from '../store/useTokenStore'
+import useOrdersByDate from '../store/useOrdersByDateStore'
 import { CustomDateStyles } from '../styles/CustomDateStyles'
 import { CustomerDayStyles } from '../styles/CustomerDayStyles'
 
@@ -25,6 +26,7 @@ const CustomDate = () => {
   const navigation = useNavigation()
   const { setToken, idSupplier } = useTokenStore()
   const { employeeToken, setEmployeeToken } = useEmployeeStore()
+  const { setSelectedDate } = useOrdersByDate()
   const [numberOfDates, setNumberOfDates] = useState(1)
 
   useEffect(() => {
@@ -60,8 +62,12 @@ const CustomDate = () => {
         console.error('Error al obtener las fechas', error)
       })
   }
-  const handleDatePress = () => {
+  const handleDatePress = (date) => {
+    if (date) {
+    setSelectedDate(date)
+    console.log('date selected:', date)
     navigation.navigate('Main')
+    }
   }
 
   const handleShowMore = () => {
@@ -83,12 +89,13 @@ const CustomDate = () => {
   } */
 
   const renderButton = (date) => {
+    const formattedDate = moment(date, 'dddd, MMM DD').format('YYYY-MM-DD')
     return (
       <View style={CustomDateStyles.whiteBackground}>
         <View style={CustomDateStyles.dateButtonContainer}>
           <TouchableOpacity
             style={CustomDateStyles.dateButton}
-            onPress={handleDatePress}
+            onPress={() => handleDatePress(formattedDate)}
           >
             <Image source={FechaIcon} style={{ width: 50, height: 50 }} />
           </TouchableOpacity>
@@ -155,7 +162,7 @@ const CustomDate = () => {
               <>
                 <TouchableOpacity
                   style={CustomDateStyles.whiteBackground}
-                  onPress={handleDatePress}
+                  onPress={() => handleDatePress(availableDates[0]?.fecha)}
                 >
                   <View style={CustomDateStyles.dateButtonContainer}>
                     <View style={CustomDateStyles.dateButton}>
