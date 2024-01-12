@@ -12,7 +12,7 @@ import { percentageLoading } from '../../config/urls.config'
 import mainAxios from '../../../axios.config.js'
 
 function CustomerDayLoading() {
-  const { OrdersByDate, setOrdersByDate } = useOrdersByDate()
+  const { ordersByDate, setOrdersByDate } = useOrdersByDate()
   const { employeeToken } = useEmployeeStore()
   const [search, setSearch] = useState(false)
   const [percentages, setPercentages] = useState([])
@@ -64,7 +64,7 @@ function CustomerDayLoading() {
           </View>
         )}
         <View style={CustomerDayStyles.cardsCustomers}>
-          {OrdersByDate?.map((order) => {
+          {ordersByDate?.map((order) => {
             return (
               <View key={`${order.id_stateOrders}-${order.created_date}`}>
                 <CustomerCard

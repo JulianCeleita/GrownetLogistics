@@ -19,7 +19,7 @@ import { colors } from '../../styles/GlobalStyles'
 
 function CustomerDayPacking() {
   const windowWidth = useWindowDimensions().width
-  const { OrdersByDate, setOrdersByDate } = useOrdersByDate()
+  const { ordersByDate, setOrdersByDate } = useOrdersByDate()
   const { employeeToken } = useEmployeeStore()
   const [percentages, setPercentages] = useState([])
 
@@ -84,7 +84,7 @@ function CustomerDayPacking() {
           </View>
         )}
         <View style={CustomerDayStyles.cardsCustomers}>
-          {OrdersByDate?.map((order) => {
+          {ordersByDate?.map((order) => {
             return (
               <View key={`${order.id_stateOrders}-${order.created_date}`}>
                 <CustomerCard customer={order} percentages={percentages} />
