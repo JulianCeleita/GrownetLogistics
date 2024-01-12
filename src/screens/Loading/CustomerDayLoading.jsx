@@ -51,7 +51,7 @@ function CustomerDayLoading() {
         ) : (
           <View style={CustomerDayStyles.title2}>
             <Text style={CustomerDayStyles.customerTitle}>Route 1</Text>
-            <TouchableOpacity
+            {/*<TouchableOpacity
               onPress={handleSearch}
               style={CustomerDayStyles.icon}
             >
@@ -60,7 +60,7 @@ function CustomerDayLoading() {
                 size={35}
                 color={colors.darkBlue}
               />
-            </TouchableOpacity>
+        </TouchableOpacity>*/}
           </View>
         )}
         <View style={CustomerDayStyles.cardsCustomers}>

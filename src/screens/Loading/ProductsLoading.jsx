@@ -49,22 +49,20 @@ function ProductsLoading() {
           <View style={{ paddingHorizontal: 43, width: '100%' }}>
             <View style={ProductStyles.customerTitleContainer}>
               <Text style={ProductStyles.customerTitle}>
-                <Text>
-                  Restaurant 1 - {' '}
-                </Text>
+                <Text>Restaurant 1 - </Text>
                 <Text style={{ flexWrap: 'wrap' }}>
                   {productsLoading ? productsLoading.reference : 'Loading...'}
                 </Text>
               </Text>
             </View>
           </View>
-          <TouchableOpacity onPress={handleSearch} style={ProductStyles.icon2}>
+          {/*<TouchableOpacity onPress={handleSearch} style={ProductStyles.icon2}>
             <Ionicons
               name="md-search-circle-outline"
               size={35}
               color={colors.darkBlue}
             />
-          </TouchableOpacity>
+      </TouchableOpacity>*/}
         </View>
       )}
       {productsLoading ? (
