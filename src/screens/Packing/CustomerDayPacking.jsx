@@ -12,11 +12,12 @@ import useOrdersByDate from '../../store/useOrdersByDateStore'
 import { usePackingStore } from '../../store/usePackingStore'
 import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
 import { colors } from '../../styles/GlobalStyles'
+import usePercentageStore from '../../store/usePercentageStore'
 
 function CustomerDayPacking() {
   const { ordersByDate } = useOrdersByDate()
   const { employeeToken } = useEmployeeStore()
-  const { percentages, setPercentages } = usePackingStore()
+  const { setPercentages } = usePercentageStore()
 
   // const isIOS = Platform.OS === 'ios'
   // const { width, height } = Dimensions.get('window')
@@ -76,7 +77,7 @@ function CustomerDayPacking() {
           {ordersByDate?.map((order) => {
             return (
               <View key={order.accountName}>
-                <CustomerCard customer={order} percentages={percentages} />
+                <CustomerCard customer={order} />
               </View>
             )
           })}

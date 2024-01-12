@@ -4,12 +4,15 @@ import { Text, TouchableOpacity, View } from 'react-native'
 import Svg, { Circle, Text as SvgText } from 'react-native-svg'
 import useLoadingStore from '../store/useLoadingStore'
 import { usePackingStore } from '../store/usePackingStore'
+import usePercentageStore from '../store/usePercentageStore'
 import { CustomerDayStyles } from '../styles/CustomerDayStyles'
 import { GlobalStyles, colors } from '../styles/GlobalStyles'
 
 const CustomerCard = ({ customer, loadingCard }) => {
-  const { setSelectedCustomer, percentages } = usePackingStore()
+  const { setSelectedCustomer } = usePackingStore()
   const { setSelectedCustomerL } = useLoadingStore()
+  const { percentages } = usePercentageStore()
+
   const navigation = useNavigation()
   const radius = 33
   const strokeWidth = 10
@@ -25,7 +28,7 @@ const CustomerCard = ({ customer, loadingCard }) => {
       setSelectedCustomerL(customer.accountNumber)
     }
   }
-  
+
   percentages.forEach((order) => {
     if (order.accountName === customer.accountName) {
       roundedPercentage = Number(order.percentage).toFixed(0)

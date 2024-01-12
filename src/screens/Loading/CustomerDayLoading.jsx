@@ -8,8 +8,8 @@ import CustomerCard from '../../components/CustomerCard'
 import CustomerDaySearch from '../../components/CustomerDaySearch'
 import { percentageLoading } from '../../config/urls.config'
 import useEmployeeStore from '../../store/useEmployeeStore.js'
-import useLoadingStore from '../../store/useLoadingStore.js'
 import useOrdersByDate from '../../store/useOrdersByDateStore'
+import usePercentageStore from '../../store/usePercentageStore.js'
 import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
 import { colors } from '../../styles/GlobalStyles'
 
@@ -17,7 +17,7 @@ function CustomerDayLoading() {
   const { ordersByDate } = useOrdersByDate()
   const { employeeToken } = useEmployeeStore()
   const [search, setSearch] = useState(false)
-  const { percentages, setPercentages } = useLoadingStore()
+  const { setPercentages } = usePercentageStore()
 
   /* TODO CREAR FUNCIÓN DE BUSQUEDA */
   /* const handleSearch = () => {
@@ -43,8 +43,6 @@ function CustomerDayLoading() {
     }, [employeeToken]),
   )
 
-  console.log('Porcentajes:', percentages)
-
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
       <ScrollView>
@@ -69,11 +67,7 @@ function CustomerDayLoading() {
           {ordersByDate?.map((order) => {
             return (
               <View key={order.accountName}>
-                <CustomerCard
-                  customer={order}
-                  loadingCard
-                  percentages={percentages}
-                />
+                <CustomerCard customer={order} loadingCard />
               </View>
             )
           })}
