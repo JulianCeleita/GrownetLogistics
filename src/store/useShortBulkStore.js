@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { shortBulk } from '../config/urls.config'
+import { shortBulkConfig } from '../config/urls.config'
 import mainAxios from '../../axios.config'
 
 export const useShortBulkStore = create(set => ({
@@ -9,7 +9,7 @@ export const useShortBulkStore = create(set => ({
     setError: (error) => set(() => ({ error: error })),
     setFetchProductsBulk: async (token) => {
         try {
-            const response = await mainAxios.get(shortBulk,
+            const response = await mainAxios.get(shortBulkConfig,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
