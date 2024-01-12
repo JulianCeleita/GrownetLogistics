@@ -7,8 +7,8 @@ import { useNavigation } from '@react-navigation/native'
 import { usePackingStore } from '../store/usePackingStore'
 import useLoadingStore from '../store/useLoadingStore'
 
-const CustomerCard = ({ customer, loadingCard, percentages }) => {
-  const { setSelectedCustomer } = usePackingStore()
+const CustomerCard = ({ customer, loadingCard }) => {
+  const { setSelectedCustomer, percentages } = usePackingStore()
   const { setSelectedCustomerL } = useLoadingStore()
   const navigation = useNavigation()
   const radius = 33
@@ -34,6 +34,8 @@ const CustomerCard = ({ customer, loadingCard, percentages }) => {
 
   const strokeDashoffset =
     circumference - (roundedPercentage / 100) * circumference
+
+  console.log('percentages', percentages)
 
   return (
     <View>
