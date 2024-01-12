@@ -34,6 +34,8 @@ const CustomDate = () => {
     handleDatesAvailables()
   }, [])
 
+  console.log({ idSupplier });
+
   useEffect(() => {
     Animated.timing(animation, {
       toValue: showMore ? 1 : 0,
@@ -54,8 +56,10 @@ const CustomDate = () => {
         },
       })
       .then((response) => {
+        console.log(response.data);
+        console.log(datesAvailables, postData);
         const { principal, next } = response.data.operation
-        const allDates = [...principal, ...next]
+        const allDates = [...principal, ...next] || []
         setAvailableDates(allDates)
         console.log('allDates', allDates)
       })
@@ -84,10 +88,10 @@ const CustomDate = () => {
   }
 
   // TODO ELIMINAR EL TOKEN PARA DESLOGUEO
-  /* const deleteToken = () => {
+  const deleteToken = () => {
     setToken('')
     setEmployeeToken('')
-  } */
+  }
 
   const renderButton = (date) => {
     const formattedDate = moment(date, 'dddd, MMM DD').format('YYYY-MM-DD')
@@ -191,16 +195,16 @@ const CustomDate = () => {
                       : 'Show more'}
                   </Text>
                 </TouchableOpacity>
-                {/* TODO ELIMINAR TOKEN PARA DESLOGUEO */}
-                {/* <TouchableOpacity
-              style={CustomDateStyles.whiteBackground}
-              onPress={deleteToken}
-            >
-              <Text style={CustomDateStyles.buttonText}>Delete token</Text>
-            </TouchableOpacity> */}
               </>
             )}
           </ScrollView>
+          {/* TODO ELIMINAR TOKEN PARA DESLOGUEO */}
+          <TouchableOpacity
+            style={CustomDateStyles.whiteBackground}
+            onPress={deleteToken}
+          >
+            <Text style={CustomDateStyles.buttonText}>Delete token</Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </SafeAreaView>
