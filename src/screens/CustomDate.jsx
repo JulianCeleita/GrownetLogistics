@@ -17,6 +17,7 @@ import useEmployeeStore from '../store/useEmployeeStore'
 import useTokenStore from '../store/useTokenStore'
 import { CustomDateStyles } from '../styles/CustomDateStyles'
 import { CustomerDayStyles } from '../styles/CustomerDayStyles'
+import { Feather } from '@expo/vector-icons'
 
 const CustomDate = () => {
   const [animation] = useState(new Animated.Value(1))
@@ -79,7 +80,7 @@ const CustomDate = () => {
             style={CustomDateStyles.dateButton}
             onPress={handleDatePress}
           >
-            <Image source={FechaIcon} style={{ width: 50, height: 50 }} />
+            <Feather name="calendar" size={45} color="white" />
           </TouchableOpacity>
         </View>
         <View style={CustomDateStyles.dateTextContainer}>
@@ -124,16 +125,17 @@ const CustomDate = () => {
         <View style={CustomerDayStyles.title2}>
           <Text
             style={[
-              CustomerDayStyles.customerTitle,
+              CustomDateStyles.title,
               {
                 marginTop: Platform.OS === 'ios' ? null : 25,
                 fontSize: Platform.OS === 'ios' ? 27 : 25,
               },
             ]}
           >
-            Date
+            Welcome to <Text style={CustomDateStyles.span}>Grownet</Text>
           </Text>
         </View>
+        <Text style={CustomDateStyles.text}>Selecciona la fecha</Text>
         <View style={CustomDateStyles.container}>
           <ScrollView contentContainerStyle={CustomDateStyles.contentContainer}>
             <TouchableOpacity
@@ -142,7 +144,7 @@ const CustomDate = () => {
             >
               <View style={CustomDateStyles.dateButtonContainer}>
                 <View style={CustomDateStyles.dateButton}>
-                  <Image source={FechaIcon} style={{ width: 50, height: 50 }} />
+                  <Feather name="calendar" size={45} color="white" />
                 </View>
               </View>
               <Text style={CustomDateStyles.buttonText}>

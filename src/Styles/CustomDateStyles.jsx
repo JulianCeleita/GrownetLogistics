@@ -1,9 +1,22 @@
 import { StyleSheet } from 'react-native'
+import { colors } from './GlobalStyles'
 
 export const CustomDateStyles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
+  },
+  title: {
+    color: colors.darkBlue,
+    fontFamily: 'PoppinsBold',
+  },
+  span: {
+    color: colors.bluePrimary,
+  },
+  text: {
+    fontFamily: 'PoppinsRegular',
+    fontSize: 17,
+    textAlign: 'center',
   },
   contentContainer: {
     justifyContent: 'center',
@@ -22,56 +35,46 @@ export const CustomDateStyles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
-    padding: 20,
     alignItems: 'center',
+    textAlign: 'center',
+    marginBottom: 5,
   },
   dateButtonContainer: {
     backgroundColor: 'white',
     borderRadius: 25,
-    marginBottom: 20,
   },
   dateButton: {
     flexDirection: 'row',
-    backgroundColor: '#026CD2',
-    borderWidth: 1,
-    borderColor: '#026CD2',
+    backgroundColor: colors.bluePrimary,
     paddingVertical: 25,
     paddingHorizontal: 110,
     shadowColor: '#000',
     borderRadius: 20,
     alignItems: 'center',
     elevation: 5,
-    marginBottom: 10,
   },
   buttonText: {
     color: '#144D56',
     textAlign: 'center',
     fontFamily: 'PoppinsRegular',
     fontSize: 18,
+    paddingVertical: 10,
   },
   showMoreButton: {
-    backgroundColor: 'white',
+    backgroundColor: colors.darkBlue,
     borderWidth: 1,
     borderColor: 'white',
     paddingVertical: Platform.OS === 'ios' ? 15 : 13,
     paddingHorizontal: Platform.OS === 'ios' ? 20 : 25,
-    borderRadius: 20,
+    borderRadius: 50,
     marginTop: 15,
     marginBottom: 15,
     alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
   },
   showMoreButtonText: {
-    color: '#144D56',
+    color: 'white',
     textAlign: 'center',
-    fontFamily: 'PoppinsRegular',
-    fontSize: Platform.OS === 'ios' ? 15 : 13,
+    fontFamily: 'PoppinsSemi',
+    fontSize: Platform.OS === 'ios' ? 16 : 15,
   },
 })
