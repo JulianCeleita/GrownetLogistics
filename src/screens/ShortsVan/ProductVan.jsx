@@ -9,11 +9,14 @@ import useEmployeeStore from '../../store/useEmployeeStore'
 import { ProductsCardBulkVan } from '../../components/ProductsCardBulkVan'
 import { colors } from '../../styles/GlobalStyles'
 import { ProductStyles } from '../../styles/ProductStyles'
+import { useProductSubmit } from '../../hooks/useProductSubmit'
+import { insertShort } from '../../config/urls.config'
 
 function ProductsVan() {
   const { restaurantData, loading, error, setFetchShortVanProducts } = useShortVanStore();
   const [search, setSearch] = useState(false);
   const { employeeToken } = useEmployeeStore();
+  const { handleSubmit } = useProductSubmit(insertShort)
 
   useEffect(() => {
     setFetchShortVanProducts(employeeToken);
@@ -60,7 +63,7 @@ function ProductsVan() {
               <FlatList
                 data={restaurant.vanProducts}
                 renderItem={({ item: product, index }) => (
-                  <ProductsCardBulkVan key={index} item={product} />
+                  <ProductsCardBulkVan key={index} item={product} handleSubmit={handleSubmit} />
                 )}
                 keyExtractor={(product) => product.id.toString()}
                 ListFooterComponent={<View style={{ height: 60 }} />}

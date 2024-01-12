@@ -3,15 +3,13 @@ import React, { useState } from 'react'
 import { Text, TouchableOpacity, View } from 'react-native'
 import { PanGestureHandler } from 'react-native-gesture-handler'
 import ModalProduct from '../components/ModalProduct'
-import { useProductSubmit } from '../hooks/useProductSubmit'
 import { GlobalStyles, colors } from '../styles/GlobalStyles'
 import { ProductStyles } from '../styles/ProductStyles'
 
-export const ProductsCardBulkVan = ({ item }) => {
+export const ProductsCardBulkVan = ({ item, handleSubmit }) => {
 
     const [isPressed, setIsPressed] = useState(false)
     const [left, setLeft] = useState(false)
-    const { handleSubmit } = useProductSubmit()
     const [showModal, setShowModal] = useState(false)
     const [selectedItem, setSelectedItem] = useState(null)
 

@@ -7,11 +7,14 @@ import { useShortBulkStore } from '../../store/useShortBulkStore'
 import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
 import { ProductStyles } from '../../styles/ProductStyles'
 import useEmployeeStore from '../../store/useEmployeeStore'
+import { useProductSubmit } from '../../hooks/useProductSubmit'
+import { insertShort } from '../../config/urls.config'
 
 function ProductsBulk() {
   const [search, setSearch] = useState(false)
   const { employeeToken } = useEmployeeStore()
-  const { productsBulk, setFetchProductsBulk, setProductsBulk } = useShortBulkStore()
+  const { productsBulk, setFetchProductsBulk } = useShortBulkStore()
+  const { handleSubmit } = useProductSubmit(insertShort)
 
   const handleSearch = () => {
     setSearch(true)
@@ -48,6 +51,7 @@ function ProductsBulk() {
             <ProductsCardBulkVan
               key={index}
               item={item}
+              handleSubmit={handleSubmit}
             />
           )}
           keyExtractor={(item, index) => index.toString()}
