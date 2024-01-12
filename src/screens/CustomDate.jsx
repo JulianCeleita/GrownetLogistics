@@ -130,7 +130,7 @@ const CustomDate = () => {
           }}
         >
           {availableDates.slice(1, numberOfDates + 1).map((date, index) => (
-            <View key={index} style={{ marginBottom: 10, marginTop: 10 }}>
+            <View key={index} style={{ marginBottom: 0, marginTop: 10 }}>
               {renderButton(moment(date.fecha).format('dddd, MMM DD'))}
             </View>
           ))}

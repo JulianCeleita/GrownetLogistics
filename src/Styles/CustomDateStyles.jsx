@@ -36,7 +36,7 @@ export const CustomDateStyles = StyleSheet.create({
     elevation: 5,
     alignItems: 'center',
     textAlign: 'center',
-    marginBottom: 4,
+    marginBottom: 8,
   },
   dateButton: {
     flexDirection: 'row',
@@ -63,7 +63,7 @@ export const CustomDateStyles = StyleSheet.create({
     paddingHorizontal: Platform.OS === 'ios' ? 20 : 25,
     borderRadius: 50,
     marginTop: 15,
-    marginBottom: 15,
+    marginBottom: 10,
     alignItems: 'center',
     flexDirection: 'row',
   },
