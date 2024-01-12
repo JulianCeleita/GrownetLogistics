@@ -7,9 +7,6 @@ const useLoadingStore = create((set) => {
     productsLoading: null,
     selectedCustomerL: null,
     error: null,
-    percentages: [],
-
-    setPercentages: (percentaje) => set(() => ({ percentages: percentaje })),
 
     setError: (error) => set(() => ({ error: error })),
 

@@ -6,10 +6,13 @@ import Svg, { Circle, Text as SvgText } from 'react-native-svg'
 import { useNavigation } from '@react-navigation/native'
 import { usePackingStore } from '../store/usePackingStore'
 import useLoadingStore from '../store/useLoadingStore'
+import usePercentageStore from '../store/usePercentageStore'
 
 const CustomerCard = ({ customer, loadingCard }) => {
-  const { setSelectedCustomer, percentages } = usePackingStore()
+  const { setSelectedCustomer } = usePackingStore()
   const { setSelectedCustomerL } = useLoadingStore()
+  const { percentages } = usePercentageStore()
+
   const navigation = useNavigation()
   const radius = 33
   const strokeWidth = 10
@@ -25,6 +28,7 @@ const CustomerCard = ({ customer, loadingCard }) => {
       setSelectedCustomerL(customer.accountNumber)
     }
   }
+
   //Porcentaje por cliente
   percentages.forEach((order) => {
     if (order.accountName === customer.accountName) {
