@@ -1,13 +1,13 @@
 {
   "expo": {
     "name": "GrownetLogistics",
-    "slug": "GrownetLogistics",
+    "slug": "grownet-logistics",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/IconBlanco.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/IconBlanco.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -15,16 +15,33 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.creativejungle.grownetlogistic",
+      "icon": "./assets/IconBlanco.png",
+      "buildNumber": "1.0.0"
     },
     "android": {
+      "versionCode": 1,
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/IconBlanco.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": [
+        "INTERNET",
+        "CAMERA",
+        "ACCESS_FINE_LOCATION",
+        "STORAGE"
+      ],
+      "package": "com.creativejungle.grownetlogistic"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "owner": "grownetapp",
+    "extra": {
+      "eas": {
+        "projectId": "d2150064-7a07-4f20-880c-2935de899b97"
+      }
     }
   }
 }

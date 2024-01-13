@@ -1,7 +1,12 @@
 import { StyleSheet } from 'react-native'
 import { colors } from './GlobalStyles'
+import { Dimensions } from 'react-native'
 
 export const CustomerDayStyles = StyleSheet.create({
+  customerPricipal: {
+    backgroundColor: 'white',
+    flex: 1,
+  },
   tittle: {
     backgroundColor: colors.bluePrimary,
     paddingHorizontal: 20,
@@ -31,6 +36,13 @@ export const CustomerDayStyles = StyleSheet.create({
     position: 'absolute',
     right: 18,
   },
+  cardsCustomers: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
   //Tittle
   tittleText: {
     fontSize: 24,
@@ -57,6 +69,7 @@ export const CustomerDayStyles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: 'white',
     borderRadius: 20,
+    margin: 8,
     marginBottom: 2,
     marginTop: 10,
     width: 320,
@@ -83,5 +96,12 @@ export const CustomerDayStyles = StyleSheet.create({
     fontSize: 15,
     fontFamily: 'PoppinsRegular',
     color: colors.darkBlue,
+  },
+  //Texto de Restaurantes en shortVan
+  restaurantTypeTitle: {
+    fontSize: 18,
+    color: "#026CD2",
+    fontFamily: 'PoppinsSemi',
+    textAlign: 'left',
   },
 })

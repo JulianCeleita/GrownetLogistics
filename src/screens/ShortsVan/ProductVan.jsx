@@ -1,122 +1,75 @@
-import { AntDesign, Ionicons } from '@expo/vector-icons'
-import React, { useState } from 'react'
-import { Text, View, TouchableOpacity, ScrollView } from 'react-native'
+import React, { useEffect } from 'react'
+import {
+  ActivityIndicator,
+  FlatList,
+  Platform,
+  Text,
+  View
+} from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { GlobalStyles, colors } from '../../styles/GlobalStyles'
+import { ProductsCardBulkVan } from '../../components/ProductsCardBulkVan'
+import { insertShort } from '../../config/urls.config'
+import { useProductSubmit } from '../../hooks/useProductSubmit'
+import useEmployeeStore from '../../store/useEmployeeStore'
+import { useShortVanStore } from '../../store/useShortVanStore'
+import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
 import { ProductStyles } from '../../styles/ProductStyles'
-import ProductSearcher from '../../components/ProductSearch'
-import { PanGestureHandler } from 'react-native-gesture-handler'
 
 function ProductsVan() {
-  const [isPressed, setIsPressed] = useState(false)
-  const [left, setLeft] = useState(false)
-  const [search, setSearch] = useState(false)
+  const { restaurantData, loading, error, setFetchShortVanProducts } =
+    useShortVanStore()
+  const { employeeToken } = useEmployeeStore()
+  const { handleSubmit } = useProductSubmit(insertShort)
 
-  const handlePress = () => {
-    setIsPressed(!isPressed)
-    setLeft(false)
-  }
-  const handleGestureEvent = (event) => {
-    const { translationX } = event.nativeEvent
-    if (translationX < 0) {
-      console.log('Deslizamiento hacia la izquierda')
-      setLeft(true)
-      setIsPressed(false)
-    }
-  }
-  const handleSearch = () => {
-    setSearch(true)
-  }
+  useEffect(() => {
+    setFetchShortVanProducts(employeeToken)
+  }, [])
+
   return (
     <SafeAreaView style={ProductStyles.products}>
-      <ScrollView>
-        {search ? (
-          <ProductSearcher setSearch={setSearch} />
-        ) : (
-          <View style={ProductStyles.iconContainer}>
-            <TouchableOpacity
-              onPress={handleSearch}
-              style={ProductStyles.iconSearch}
-            >
-              <Ionicons
-                name="md-search-circle-outline"
-                size={35}
-                color={colors.darkBlue}
-              />
-            </TouchableOpacity>
-          </View>
-        )}
-        <View>
-          <Text
-            style={[
-              ProductStyles.category,
-              {
-                color: colors.bluePrimary,
-                marginTop: 10,
-              },
-            ]}
-          >
-            Restaurant 1
-          </Text>
-          <TouchableOpacity
-            onPress={handlePress}
-            style={{ alignItems: 'center' }}
-          >
-            <PanGestureHandler onGestureEvent={handleGestureEvent}>
-              <View style={[ProductStyles.card, GlobalStyles.boxShadow]}>
-                <View style={ProductStyles.productTittle}>
-                  <Text
-                    style={[
-                      ProductStyles.tittleCard,
-                      {
-                        textDecorationLine: left ? 'line-through' : 'none',
-                        color: left ? colors.bluePrimary : colors.darkBlue,
-                      },
-                    ]}
-                  >
-                    Orange Juice
-                  </Text>
-                  <Text
-                    style={[
-                      ProductStyles.textCard,
-                      {
-                        textDecorationLine: left ? 'line-through' : 'none',
-                        color: left,
-                      },
-                    ]}
-                  >
-                    Missing 15kg
-                  </Text>
-                </View>
-                <View
+      <View style={CustomerDayStyles.title2}>
+        <Text style={CustomerDayStyles.customerTitle}>Route 1</Text>
+      </View>
+      {loading ? (
+        <ActivityIndicator size="large" color="#0000ff" />
+      ) : error ? (
+        <View
+          style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
+        >
+          <Text>Error: {error}</Text>
+        </View>
+      ) : (
+        <FlatList
+          data={restaurantData}
+          renderItem={({ item: restaurant }) => (
+            <>
+              <View key={restaurant.vanName} style={{ marginBottom: -45 }}>
+                <Text
                   style={[
-                    ProductStyles.checkBox,
+                    CustomerDayStyles.restaurantTypeTitle,
                     {
-                      backgroundColor: isPressed
-                        ? colors.bluePrimary
-                        : left
-                          ? colors.bluePrimary
-                          : colors.gray,
+                      marginBottom: Platform.OS === 'ios' ? 5 : null,
                     },
                   ]}
                 >
-                  <AntDesign
-                    name={
-                      isPressed
-                        ? 'checkcircleo'
-                        : left
-                          ? 'minuscircleo'
-                          : 'questioncircleo'
-                    }
-                    size={30}
-                    color="white"
-                  />
-                </View>
+                  {restaurant.vanName}
+                </Text>
               </View>
-            </PanGestureHandler>
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
+              <View style={{ marginTop: 50 }}>
+                {restaurant.vanProducts.map((product, index) => (
+                  <ProductsCardBulkVan
+                    key={product.id}
+                    item={product}
+                    handleSubmit={handleSubmit}
+                  />
+                ))}
+              </View>
+            </>
+          )}
+          keyExtractor={(restaurant) => restaurant.vanName}
+          style={{ marginTop: 40 }}
+        />
+      )}
     </SafeAreaView>
   )
 }

@@ -1,74 +1,68 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import {
-  Text,
-  TouchableOpacity,
-  View,
   ActivityIndicator,
   FlatList,
+  Text,
+  View
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import ProductSearcher from '../../components/ProductSearch'
-import { ProductStyles } from '../../styles/ProductStyles'
 import { ProductsCard } from '../../components/ProductsCard'
-
-import { Ionicons } from '@expo/vector-icons'
+import { insertLoading } from '../../config/urls.config'
+import { useProductSubmit } from '../../hooks/useProductSubmit'
+import useEmployeeStore from '../../store/useEmployeeStore'
 import useLoadingStore from '../../store/useLoadingStore'
-import useTokenStore from '../../store/useTokenStore'
 import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
 import { colors } from '../../styles/GlobalStyles'
+import { ProductStyles } from '../../styles/ProductStyles'
 
 function ProductsLoading() {
-  const { productsLoading, setFetchProductsLoading, selectedCustomerL } =
-    useLoadingStore()
-
-  const [search, setSearch] = useState(false)
-
-  // const { accountNumber } = route.params
-
-  const { token } = useTokenStore()
-  console.log('selectedCustomer', selectedCustomerL)
-  console.log('productsLoading', productsLoading)
+  const {
+    productsLoading,
+    setLoadingProducts,
+    error,
+    setFetchProductsLoading,
+    selectedCustomerL,
+  } = useLoadingStore()
+  const { employeeToken } = useEmployeeStore()
+  const { handleSubmit } = useProductSubmit(insertLoading)
 
   useEffect(() => {
-    setFetchProductsLoading(token, selectedCustomerL)
+    setFetchProductsLoading(employeeToken, selectedCustomerL)
   }, [])
 
-  const handleSearch = () => {
-    setSearch(true)
-  }
   return (
     <SafeAreaView style={ProductStyles.products}>
-      {search ? (
-        <ProductSearcher setSearch={setSearch} />
-      ) : (
-        <View style={CustomerDayStyles.title2}>
-          <Text style={ProductStyles.customerTitle}>Restaurant 1</Text>
-          <TouchableOpacity onPress={handleSearch} style={ProductStyles.icon}>
-            <Ionicons
-              name="md-search-circle-outline"
-              size={35}
-              color={colors.darkBlue}
-            />
-          </TouchableOpacity>
+      <View style={CustomerDayStyles.title2}>
+        <View style={{ paddingHorizontal: 43, width: '100%' }}>
+          <View style={ProductStyles.customerTitleContainer}>
+            <Text style={ProductStyles.customerTitle}>
+              <Text>Restaurant 1 - </Text>
+              <Text style={{ flexWrap: 'wrap' }}>
+                {productsLoading ? productsLoading.reference : 'Loading...'}
+              </Text>
+            </Text>
+          </View>
         </View>
-      )}
+      </View>
       {productsLoading ? (
         <View>
-          <Text style={ProductStyles.category}>
-            Order: {productsLoading[0].reference}
-          </Text>
           <FlatList
-            data={productsLoading[0].data}
+            data={productsLoading.data}
             renderItem={({ item, index }) => (
               <ProductsCard
                 key={index}
                 item={item}
-                colorPress={colors.orange}
+                colorPress={colors.green}
                 colorRight={colors.orange}
                 colorLeft={colors.danger}
+                products={productsLoading}
+                setProducts={setLoadingProducts}
+                handleSubmit={handleSubmit}
+                error={error}
               />
             )}
             keyExtractor={(item, index) => index.toString()}
+            ListFooterComponent={<View style={{ height: 60 }} />}
           />
         </View>
       ) : (

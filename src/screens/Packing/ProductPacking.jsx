@@ -1,77 +1,85 @@
-import { Ionicons } from '@expo/vector-icons'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import {
   ActivityIndicator,
   FlatList,
   Text,
-  TouchableOpacity,
-  View,
+  View
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import ProductSearcher from '../../components/ProductSearch'
 import { ProductsCard } from '../../components/ProductsCard'
+import { insertPacking } from '../../config/urls.config'
+import { useProductSubmit } from '../../hooks/useProductSubmit'
+import useEmployeeStore from '../../store/useEmployeeStore'
 import { usePackingStore } from '../../store/usePackingStore'
-import useTokenStore from '../../store/useTokenStore'
 import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
 import { colors } from '../../styles/GlobalStyles'
 import { ProductStyles } from '../../styles/ProductStyles'
 
 function ProductsPacking() {
-  const { productsPacking, setFetchPackingProducts, selectedCustomer } =
-    usePackingStore()
-  const { token } = useTokenStore()
-  const [search, setSearch] = useState(false)
+  const {
+    productsPacking,
+    setProductsPacking,
+    error,
+    setFetchPackingProducts,
+    selectedCustomer,
+  } = usePackingStore()
+  const { employeeToken } = useEmployeeStore()
+  const { handleSubmit } = useProductSubmit(insertPacking)
 
   useEffect(() => {
-    setFetchPackingProducts(token, selectedCustomer)
+    setFetchPackingProducts(employeeToken, selectedCustomer)
   }, [])
-
-  const handleSearch = () => {
-    setSearch(true)
-  }
-
-  console.log({ productsPacking })
 
   return (
     <SafeAreaView style={ProductStyles.products}>
-      {search ? (
-        <ProductSearcher setSearch={setSearch} />
-      ) : (
-        <View style={CustomerDayStyles.title2}>
-          <Text style={ProductStyles.customerTitle}>Restaurant 1</Text>
-          <TouchableOpacity onPress={handleSearch} style={ProductStyles.icon2}>
-            <Ionicons
-              name="md-search-circle-outline"
-              size={35}
-              color={colors.darkBlue}
-            />
-          </TouchableOpacity>
+      <View style={CustomerDayStyles.title2}>
+        <View style={{ paddingHorizontal: 43, width: '100%' }}>
+          <View style={ProductStyles.customerTitleContainer}>
+            <Text style={ProductStyles.customerTitle}>
+              <Text>Restaurant 1 - </Text>
+              <Text style={{ flexWrap: 'wrap' }}>
+                {productsPacking ? productsPacking.reference : 'Loading...'}
+              </Text>
+            </Text>
+          </View>
         </View>
-      )}
+      </View>
 
       {productsPacking ? (
-        <View>
-          {/* TODO: En la respuesta de la api hay que eliminar el nivel de arreglo en orders para que solo envie un objeto */}
-          <Text style={ProductStyles.category}>
-            Order: {productsPacking[0].reference}
-          </Text>
-          <FlatList
-            data={productsPacking[0].data}
-            renderItem={({ item, index }) => (
-              <ProductsCard
-                key={index}
-                item={item}
-                colorPress={colors.orange}
-                colorRight={colors.orange}
-                colorLeft={colors.danger}
-              />
-            )}
-            keyExtractor={(item, index) => index.toString()}
-          />
-        </View>
+        <FlatList
+          data={productsPacking.data}
+          renderItem={({ item, index }) => (
+            <ProductsCard
+              key={index}
+              item={item}
+              colorPress={colors.orange}
+              colorRight={colors.orange}
+              colorLeft={colors.danger}
+              products={productsPacking}
+              setProducts={setProductsPacking}
+              handleSubmit={handleSubmit}
+              viewPacking
+              error={error}
+            />
+          )}
+          keyExtractor={(item, index) => index.toString()}
+          ListFooterComponent={<View style={{ height: 60 }} />}
+          /* horizontal={false}
+          numColumns={Dimensions.get('window').width > 500 ? 2 : 1}
+          contentContainerStyle={{
+            flexDirection:
+              Dimensions.get('window').width > 500 ? 'row' : 'column',
+
+            flexWrap: Dimensions.get('window').width > 500 ? 'wrap' : 'nowrap',
+          }}*/
+        />
       ) : (
         <View
-          style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
         >
           <ActivityIndicator size="large" color="#0000ff" />
         </View>

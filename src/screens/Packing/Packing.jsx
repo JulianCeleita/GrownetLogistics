@@ -1,15 +1,22 @@
-import React from 'react'
-import { View, Text, Image, ScrollView } from 'react-native'
-import { DeliveryStyles } from '../../styles/DeliveryStyles'
-import { LinearGradient } from 'expo-linear-gradient'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import { TouchableOpacity } from 'react-native'
-import { GlobalStyles } from '../../styles/GlobalStyles'
 import { useNavigation } from '@react-navigation/native'
+import { LinearGradient } from 'expo-linear-gradient'
+import React from 'react'
+import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 import CircleProgress from '../../components/CircleProgress'
+import useOrdersByDate from '../../store/useOrdersByDateStore'
+import { DeliveryStyles } from '../../styles/DeliveryStyles'
+import { GlobalStyles } from '../../styles/GlobalStyles'
 
 const Packing = () => {
   const navigation = useNavigation()
+  const { routesByDate, setOrdersByDate, setSelectedRoute } = useOrdersByDate()
+
+  const handleRoutePress = (nameRoute) => {
+    setSelectedRoute(nameRoute)
+    setOrdersByDate(nameRoute, routesByDate)
+    navigation.navigate('CustomerDayPacking')
+  }
 
   return (
     <SafeAreaView style={{ backgroundColor: 'white', height: '100%' }}>
@@ -29,15 +36,20 @@ const Packing = () => {
             <Text style={DeliveryStyles.textTittle}>Packing</Text>
           </View>
         </LinearGradient>
-
         <View style={DeliveryStyles.delivery}>
-          <TouchableOpacity
-            style={DeliveryStyles.card}
-            onPress={() => navigation.navigate('CustomerDayPacking')}
-          >
-            <CircleProgress />
-            <Text style={DeliveryStyles.tittleRoute}>Route 1</Text>
-          </TouchableOpacity>
+          {routesByDate.map((order) => (
+            <TouchableOpacity
+              style={[
+                DeliveryStyles.card,
+                { marginTop: Platform.OS === 'ios' ? 20 : 30 },
+              ]}
+              onPress={() => handleRoutePress(order.nameRoute)}
+              key={order.nameRoute}
+            >
+              <CircleProgress />
+              <Text style={DeliveryStyles.tittleRoute}>{order.nameRoute}</Text>
+            </TouchableOpacity>
+          ))}
         </View>
       </ScrollView>
     </SafeAreaView>

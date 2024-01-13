@@ -1,20 +1,19 @@
-import { Ionicons } from '@expo/vector-icons'
-import React, { useEffect, useState } from 'react'
-import { ScrollView, Text, TouchableOpacity, View } from 'react-native'
+import { useFocusEffect } from '@react-navigation/native'
+import React, { useCallback } from 'react'
+import { ScrollView, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import mainAxios from '../../../axios.config'
 import CustomerCard from '../../components/CustomerCard'
-import CustomerDaySearch from '../../components/CustomerDaySearch'
 import { percentagePacking } from '../../config/urls.config'
+import useEmployeeStore from '../../store/useEmployeeStore'
 import useOrdersByDate from '../../store/useOrdersByDateStore'
-import useTokenStore from '../../store/useTokenStore'
+import usePercentageStore from '../../store/usePercentageStore'
 import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
-import { colors } from '../../styles/GlobalStyles'
 
 function CustomerDayPacking() {
-  const { OrdersByDate, setOrdersByDate } = useOrdersByDate()
-  const { token } = useTokenStore()
-  const [percentages, setPercentages] = useState([])
+  const { ordersByDate } = useOrdersByDate()
+  const { employeeToken } = useEmployeeStore()
+  const { setPercentages } = usePercentageStore()
 
   // const isIOS = Platform.OS === 'ios'
   // const { width, height } = Dimensions.get('window')
@@ -25,65 +24,41 @@ function CustomerDayPacking() {
   //   elevation: 5,
   //   zIndex: 5,
   // }
-  const [search, setSearch] = useState(false)
-
-  useEffect(() => {
-    setOrdersByDate(token)
-  }, [])
-
-  const handleSearch = () => {
-    setSearch(true)
-  }
-  console.log(percentagePacking)
 
   //Llamado API porcentaje
-  useEffect(() => {
-    async function fetchData() {
-      const newToken = '2025|YlaiMYOtLuIEnt6zq0kmKPUvYHQMeoycqBrNTiAQ'
-      try {
-        const response = await mainAxios
-          .get(percentagePacking, {
+  useFocusEffect(
+    useCallback(() => {
+      async function fetchData() {
+        try {
+          const response = await mainAxios.get(percentagePacking, {
             headers: {
-              Authorization: `Bearer ${newToken}`,
+              Authorization: `Bearer ${employeeToken}`,
             },
           })
-          .then((response) => {
-            setPercentages(response.data.orders)
-          })
-      } catch (error) {
-        console.error('Error al obtener porcentaje:', error)
+          setPercentages(response.data.orders)
+        } catch (error) {
+          console.error('Error al obtener porcentaje:', error)
+        }
       }
-    }
-    fetchData()
-  }, [])
-  console.log(percentages, 'esta llegando')
+      fetchData()
+    }, [employeeToken]),
+  )
+
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+    <SafeAreaView style={CustomerDayStyles.customerPricipal}>
       <ScrollView>
-        {search ? (
-          <CustomerDaySearch setSearch={setSearch} />
-        ) : (
-          <View style={CustomerDayStyles.title2}>
-            <Text style={CustomerDayStyles.customerTitle}>Route 1</Text>
-            <TouchableOpacity
-              onPress={handleSearch}
-              style={CustomerDayStyles.icon}
-            >
-              <Ionicons
-                name="md-search-circle-outline"
-                size={35}
-                color={colors.darkBlue}
-              />
-            </TouchableOpacity>
-          </View>
-        )}
-        {OrdersByDate?.map((order) => {
-          return (
-            <View key={`${order.id_stateOrders}-${order.created_date}`}>
-              <CustomerCard customer={order} percentages={percentages} />
-            </View>
-          )
-        })}
+        <View style={CustomerDayStyles.title2}>
+          <Text style={CustomerDayStyles.customerTitle}>Route 1</Text>
+        </View>
+        <View style={CustomerDayStyles.cardsCustomers}>
+          {ordersByDate?.map((order) => {
+            return (
+              <View key={order.accountName}>
+                <CustomerCard customer={order} />
+              </View>
+            )
+          })}
+        </View>
       </ScrollView>
     </SafeAreaView>
   )

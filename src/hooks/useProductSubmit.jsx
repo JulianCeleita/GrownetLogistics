@@ -1,36 +1,37 @@
 import { useEffect, useState } from 'react'
 import mainAxios from '../../axios.config.js'
-import { insertPacking } from '../config/urls.config.js'
 import { usePackingStore } from '../store/usePackingStore.js'
-import useTokenStore from '../store/useTokenStore.js'
+import useEmployeeStore from '../store/useEmployeeStore.js'
 let promiseQueue = []
 
-export const useProductSubmit = () => {
-  const { token } = useTokenStore()
+export const useProductSubmit = (insert) => {
+  const { employeeToken } = useEmployeeStore()
   const { setError } = usePackingStore()
 
   const [isLoading, setIsLoading] = useState(false)
 
-  const handleSubmit = async (itemId, quantity = 0, note = '') => {
+  const handleSubmit = async (itemId, quantity = 0, note = '', state = null) => {
     setIsLoading(true)
 
     const data = {
       note,
-      quantity: parseInt(quantity),
       id: itemId,
     }
 
-    console.log('data', data)
+    if (state) {
+      data.state = state
+    } else {
+      data.quantity = parseInt(quantity)
+    }
 
     try {
-      const response = await mainAxios.post(insertPacking, data, {
+      const response = await mainAxios.post(insert, data, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${employeeToken}`,
         },
       })
 
       if (response.status === 200) {
-        console.log('Datos enviados correctamente', response.data)
         setError(null)
       } else {
         throw new Error('Error al enviar los datos')

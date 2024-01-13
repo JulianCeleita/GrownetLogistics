@@ -25,7 +25,7 @@ const LoginPage = () => {
   const [showModal, setShowModal] = useState(false)
   const [loading, setLoading] = useState(false)
   const [showEmptyInputModal, setShowEmptyInputModal] = useState(false)
-  const { setToken } = useTokenStore()
+  const { setToken, setIdSupplier } = useTokenStore()
   const navigation = useNavigation()
 
   const handleSignIn = async () => {
@@ -43,6 +43,7 @@ const LoginPage = () => {
       .then((response) => {
         if (response.data.status === 200) {
           setToken(response.data.token)
+          setIdSupplier(response.data.user.id_supplier)
           setLoading(false)
           navigation.navigate('PinPage')
         } else {

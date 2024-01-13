@@ -4,11 +4,21 @@ import { LinearGradient } from 'expo-linear-gradient'
 import React from 'react'
 import { Text, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import CircleProgress from '../../components/CircleProgress'
+import useOrdersByDate from '../../store/useOrdersByDateStore'
 import { DeliveryStyles } from '../../styles/DeliveryStyles'
 import { GlobalStyles } from '../../styles/GlobalStyles'
-import CircleProgress from '../../components/CircleProgress'
+
 function ShortsBulk() {
   const navigation = useNavigation()
+  const { routesByDate, setOrdersByDate, setSelectedRoute } = useOrdersByDate()
+
+  const handleRoutePress = (nameRoute) => {
+    setSelectedRoute(nameRoute)
+    setOrdersByDate(nameRoute, routesByDate)
+    navigation.navigate('ProductsBulk')
+  }
+
   return (
     <SafeAreaView>
       <LinearGradient
@@ -29,13 +39,19 @@ function ShortsBulk() {
       </LinearGradient>
 
       <View style={DeliveryStyles.delivery}>
+        {routesByDate.map((order) => (
         <TouchableOpacity
-          style={DeliveryStyles.card}
-          onPress={() => navigation.navigate('ProductsBulk')}
+          style={[
+            DeliveryStyles.card,
+            { marginTop: Platform.OS === 'ios' ? 20 : 30 },
+          ]}
+          onPress={() => handleRoutePress(order.nameRoute)}
+          key={order.nameRoute}
         >
           <CircleProgress />
-          <Text style={DeliveryStyles.tittleRoute}>Ruta 1</Text>
-        </TouchableOpacity>
+          <Text style={DeliveryStyles.tittleRoute}>{order.nameRoute}</Text>
+        </TouchableOpacity>          
+          ))}
       </View>
     </SafeAreaView>
   )

@@ -1,39 +1,35 @@
+import { Feather, MaterialIcons } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import {
   Animated,
-  Image,
   SafeAreaView,
   ScrollView,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native'
-import FechaIcon from '../img/Fecha.png'
+import mainAxios from '../../axios.config'
+import { datesAvailables } from '../config/urls.config'
 import useEmployeeStore from '../store/useEmployeeStore'
+import useOrdersByDate from '../store/useOrdersByDateStore'
 import useTokenStore from '../store/useTokenStore'
 import { CustomDateStyles } from '../styles/CustomDateStyles'
 import { CustomerDayStyles } from '../styles/CustomerDayStyles'
 
 const CustomDate = () => {
   const [animation] = useState(new Animated.Value(1))
-  const [currentDate, setCurrentDate] = useState(moment().format('MMM DD'))
-  const [currentDay, setCurrentDay] = useState(moment().format('dddd'))
   const [showMore, setShowMore] = useState(false)
+  const [availableDates, setAvailableDates] = useState([] || '')
   const navigation = useNavigation()
-  const { token, setToken } = useTokenStore()
-  const { employeeToken, setEmployeeToken } = useEmployeeStore()
+  const { idSupplier } = useTokenStore()
+  const { employeeToken } = useEmployeeStore()
+  const { setRoutesByDate } = useOrdersByDate()
+  const [numberOfDates, setNumberOfDates] = useState(1)
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentDate(moment().format('MMM DD'))
-      setCurrentDay(moment().format('dddd'))
-    }, 1000)
-
-    return () => {
-      clearInterval(interval)
-    }
+    handleDatesAvailables()
   }, [])
 
   useEffect(() => {
@@ -44,29 +40,64 @@ const CustomDate = () => {
     }).start()
   }, [showMore])
 
-  const handleDatePress = () => {
-    console.log('Button pressed: Date')
-    navigation.navigate('Main')
+  const handleDatesAvailables = () => {
+    const postData = {
+      days: 2,
+      supplier: idSupplier,
+    }
+    mainAxios
+      .post(datesAvailables, postData, {
+        headers: {
+          Authorization: `Bearer ${employeeToken}`,
+        },
+      })
+      .then((response) => {
+        const { principal, next } = response.data.operation
+        const allDates = [...principal, ...next] || []
+        setAvailableDates(allDates)
+      })
+      .catch((error) => {
+        console.error('Error al obtener las fechas', error)
+      })
+  }
+  
+  const handleDatePress = (date) => {
+    if (date) {
+      setRoutesByDate(employeeToken, date)
+      navigation.navigate('Main')
+    }
   }
 
   const handleShowMore = () => {
     setShowMore(!showMore)
+
+    if (!showMore) {
+      const newNumberOfDates = Math.min(
+        numberOfDates + 1,
+        availableDates.length - 1,
+      )
+      setNumberOfDates(newNumberOfDates)
+    } else {
+      setNumberOfDates(1)
+    }
   }
 
-  const deleteToken = () => {
+  // TODO ELIMINAR EL TOKEN PARA DESLOGUEO
+  /* const deleteToken = () => {
     setToken('')
     setEmployeeToken('')
-  }
+  } */
 
   const renderButton = (date) => {
+    const formattedDate = moment(date, 'dddd, MMM DD').format('YYYY-MM-DD')
     return (
       <View style={CustomDateStyles.whiteBackground}>
         <View style={CustomDateStyles.dateButtonContainer}>
           <TouchableOpacity
             style={CustomDateStyles.dateButton}
-            onPress={handleDatePress}
+            onPress={() => handleDatePress(formattedDate)}
           >
-            <Image source={FechaIcon} style={{ width: 50, height: 50 }} />
+            <Feather name="calendar" size={45} color="white" />
           </TouchableOpacity>
         </View>
         <View style={CustomDateStyles.dateTextContainer}>
@@ -77,18 +108,7 @@ const CustomDate = () => {
   }
 
   const renderAdditionalButtons = () => {
-    if (showMore) {
-      const initialDate = moment().add(1, 'days')
-      const dates = []
-
-      for (let i = 0; i < 2; i++) {
-        const nextDate = initialDate
-          .clone()
-          .add(i, 'days')
-          .format('ddd, MMM DD')
-        dates.push(nextDate)
-      }
-
+    if (showMore && availableDates.length > 0) {
       return (
         <Animated.View
           style={{
@@ -104,12 +124,9 @@ const CustomDate = () => {
             ],
           }}
         >
-          {dates.map((date, index) => (
-            <View
-              key={index}
-              style={{ marginBottom: 10, marginTop: index === 0 ? 10 : 0 }}
-            >
-              {renderButton(date)}
+          {availableDates.slice(1, numberOfDates + 1).map((date, index) => (
+            <View key={index} style={{ marginBottom: 0, marginTop: 10 }}>
+              {renderButton(moment(date.fecha).format('dddd, MMM DD'))}
             </View>
           ))}
         </Animated.View>
@@ -125,52 +142,68 @@ const CustomDate = () => {
         <View style={CustomerDayStyles.title2}>
           <Text
             style={[
-              CustomerDayStyles.customerTitle,
+              CustomDateStyles.title,
               {
                 marginTop: Platform.OS === 'ios' ? null : 25,
                 fontSize: Platform.OS === 'ios' ? 27 : 25,
               },
             ]}
           >
-            Date
+            Welcome to <Text style={CustomDateStyles.span}>Grownet</Text>
           </Text>
         </View>
-
+        <Text style={CustomDateStyles.text}>Select the date</Text>
         <View style={CustomDateStyles.container}>
           <ScrollView contentContainerStyle={CustomDateStyles.contentContainer}>
-            <TouchableOpacity
-              style={CustomDateStyles.whiteBackground}
-              onPress={handleDatePress}
-            >
-              <View style={CustomDateStyles.dateButtonContainer}>
-                <View style={CustomDateStyles.dateButton}>
-                  <Image source={FechaIcon} style={{ width: 50, height: 50 }} />
-                </View>
-              </View>
-              <View style={CustomDateStyles.dateTextContainer}>
-                <Text style={CustomDateStyles.buttonText}>
-                  {currentDay}, {currentDate}
-                </Text>
-              </View>
-            </TouchableOpacity>
-
-            {renderAdditionalButtons()}
-
-            <TouchableOpacity
-              onPress={handleShowMore}
-              style={CustomDateStyles.showMoreButton}
-            >
-              <Text style={CustomDateStyles.showMoreButtonText}>
-                {showMore ? 'Hide' : 'Show more'}
+            {!availableDates.length ? (
+              <Text style={CustomDateStyles.noDatesText}>
+                No workable dates available
               </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={CustomDateStyles.whiteBackground}
-              onPress={deleteToken}
-            >
-              <Text style={CustomDateStyles.buttonText}>Delete token</Text>
-            </TouchableOpacity>
+            ) : (
+              <>
+                <TouchableOpacity
+                  style={CustomDateStyles.whiteBackground}
+                  onPress={() => handleDatePress(availableDates[0]?.fecha)}
+                >
+                  <View style={CustomDateStyles.dateButtonContainer}>
+                    <View style={CustomDateStyles.dateButton}>
+                      <Feather name="calendar" size={45} color="white" />
+                    </View>
+                  </View>
+                  <Text style={CustomDateStyles.buttonText}>
+                    {moment(availableDates[0]?.fecha).format('dddd, MMM DD')}
+                  </Text>
+                </TouchableOpacity>
+
+                {renderAdditionalButtons()}
+
+                <TouchableOpacity
+                  onPress={handleShowMore}
+                  style={CustomDateStyles.showMoreButton}
+                >
+                  <MaterialIcons
+                    name={
+                      showMore ? 'keyboard-arrow-up' : 'keyboard-arrow-down'
+                    }
+                    size={35}
+                    color="white"
+                  />
+                  <Text style={CustomDateStyles.showMoreButtonText}>
+                    {showMore && numberOfDates === availableDates.length - 1
+                      ? 'Hide'
+                      : 'Show more'}
+                  </Text>
+                </TouchableOpacity>
+              </>
+            )}
           </ScrollView>
+          {/* TODO ELIMINAR TOKEN PARA DESLOGUEO */}
+          {/* <TouchableOpacity
+            style={CustomDateStyles.whiteBackground}
+            onPress={deleteToken}
+          >
+            <Text style={CustomDateStyles.buttonText}>Delete token</Text>
+          </TouchableOpacity> */}
         </View>
       </ScrollView>
     </SafeAreaView>

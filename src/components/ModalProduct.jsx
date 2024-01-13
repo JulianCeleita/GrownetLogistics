@@ -7,27 +7,21 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native'
-import { useProductSubmit } from '../hooks/useProductSubmit'
 import { GlobalStyles } from '../styles/GlobalStyles'
 import { ModalStyle } from '../styles/ModalStyles'
 
 const ModalProduct = ({
   showModal,
   setShowModal,
-  declareNotAvailable,
-  item,
+  setStateCardDefault = null,
   title,
   text,
+  confirm,
 }) => {
-
-  const { handleSubmit } = useProductSubmit()
-
-  const confirm = () => {
-    declareNotAvailable(item.id)
-    setShowModal(false)
-    handleSubmit(item.id)
-  }
   const handleClose = () => {
+    if (setStateCardDefault) {
+      setStateCardDefault()
+    }
     setShowModal(false)
   }
   return (

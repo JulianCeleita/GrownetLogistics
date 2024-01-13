@@ -1,24 +1,32 @@
 import { AntDesign } from '@expo/vector-icons'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
-  ActivityIndicator,
   Text,
   TextInput,
   TouchableOpacity,
   View,
+  Dimensions,
 } from 'react-native'
 import { PanGestureHandler } from 'react-native-gesture-handler'
 import ModalProduct from '../components/ModalProduct'
 import { useCardEvents } from '../hooks/useCardEvents'
-import { useProductSubmit } from '../hooks/useProductSubmit'
 import { GlobalStyles, colors } from '../styles/GlobalStyles'
 import { ProductStyles } from '../styles/ProductStyles'
 
-export function ProductsCard({ item, colorPress, colorRight, colorLeft }) {
+export function ProductsCard({
+  item,
+  colorPress,
+  colorRight,
+  colorLeft,
+  products,
+  setProducts,
+  handleSubmit,
+  viewPacking,
+  error,
+}) {
   const positiveOffset = 30
   const negativeOffset = -30
   const [note, setNote] = useState('')
-  const { handleSubmit } = useProductSubmit()
   const {
     quantity,
     setQuantity,
@@ -33,35 +41,108 @@ export function ProductsCard({ item, colorPress, colorRight, colorLeft }) {
     handleGestureEvent,
     declareNotAvailable,
     declareDifferentQty,
-  } = useCardEvents(item.quantity)
-  const [isLoading, setIsLoading] = useState(false)
+  } = useCardEvents(item.quantity, products, setProducts, error)
+
+  const [showModal2, setShowModal2] = useState(false)
+  const [tempIsPressed, setTempIsPressed] = useState(false)
+  const [isPressed, setIsPressed] = useState(false)
+  const [quantityCompared, setQuantityCompared] = useState(item.quantity_packing)
+
+  const validateView = viewPacking ? item.state_packing : item.state_loading;
+
+  const confirm = () => {
+    declareNotAvailable(item.id)
+    setShowModal(false)
+    handleSubmit(item.id)
+    setQuantityCompared(0)
+  }
+  const confirm2 = () => {
+    handlePress(item.id)
+    setShowModal2(false)
+    setQuantityCompared(item.quantity)
+    handleSubmit(item.id)
+  }
 
   return (
-    <View style={{ alignItems: 'center' }} key={item.id}>
+    <View
+      style={{
+        alignItems: 'center',
+      }}
+      key={item.id}
+    >
       <TouchableOpacity
-        onPress={async () => {
-          setIsLoading(true)
-          handlePress(item.id)
-          await handleSubmit(item.id, quantity, note)
-          setIsLoading(false)
+        onPress={() => {
+          setTempIsPressed(true)
+          if (pressedStates[item.id]) {
+            setIsPressed(true)
+          }
+
+          if (!leftStates[item.id] || rightStates[item.id]) {
+            setTimeout(() => {
+              handlePress(item.id)
+            }, 3000)
+          } else {
+            setShowModal2(true)
+          }
+          setTimeout(() => {
+            handleSubmit(item.id, quantity, note)
+            setTempIsPressed(false)
+            if (pressedStates[item.id]) {
+              setIsPressed(false)
+            }
+          }, 3000)
         }}
       >
         <PanGestureHandler
           enabled={!addQuantity}
-          onGestureEvent={(e) => handleGestureEvent(e, item.id)}
+          onGestureEvent={(e) => handleGestureEvent(e, item.id, setQuantityCompared)}
           activeOffsetX={[negativeOffset, positiveOffset]}
         >
           <View>
             <View style={[ProductStyles.card, GlobalStyles.boxShadow]}>
               <View style={ProductStyles.productTittle}>
                 <Text style={ProductStyles.tittleCard}>
-                  {item.name} {item.packsize}
+                  {item.name} {item.presentationName}
                 </Text>
                 <View style={ProductStyles.qty}>
                   <Text style={ProductStyles.textCard}>
                     Qty: {item.quantity}
                   </Text>
-                  {rightStates[item.id] ? (
+
+                  {!viewPacking &&
+                    quantityCompared < item.quantity &&
+                    (!isPressed &&
+                      !rightStates[item.id] &&
+                      !leftStates[item.id]) &&
+                    !item.quantity_loading ? (
+                    <Text
+                      style={[
+                        ProductStyles.textCard,
+                        { color: colors.danger, marginRight: 50 },
+                      ]}
+                    >
+                      {`Missing ${item.quantity - item.quantity_packing || 0}`}
+                    </Text>
+                  ) : null}
+
+                  {!viewPacking &&
+                    quantityCompared > item.quantity &&
+                    (!isPressed &&
+                      !rightStates[item.id] &&
+                      !leftStates[item.id]) &&
+                    !item.quantity_loading ? (
+
+                    <Text
+                      style={[
+                        ProductStyles.textCard,
+                        { color: colors.green, marginRight: 50 },
+                      ]}
+                    >
+                      {`Overweight ${item.quantity_packing - item.quantity}`}
+                    </Text>
+                  ) : null}
+
+                  {rightStates[item.id] && item.quantity > item.packed ? (
                     <Text
                       style={[
                         ProductStyles.textCard,
@@ -71,44 +152,72 @@ export function ProductsCard({ item, colorPress, colorRight, colorLeft }) {
                       {`Missing ${item.quantity - item.packed || 0}`}
                     </Text>
                   ) : null}
+
+                  {rightStates[item.id] && item.quantity < item.packed ? (
+                    <Text
+                      style={[
+                        ProductStyles.textCard,
+                        { color: colors.green, marginRight: 50 },
+                      ]}
+                    >
+                      {`Overweight ${item.packed - item.quantity}`}
+                    </Text>
+                  ) : null}
                 </View>
               </View>
-              {isLoading ? (
-                <ActivityIndicator
-                  size="large"
-                  color={colors.bluePrimary}
-                  style={{ marginRight: 15 }}
-                />
-              ) : (
-                <View
-                  style={[
-                    ProductStyles.checkBox,
-                    {
-                      backgroundColor: pressedStates[item.id]
+
+              <View
+                style={[
+                  ProductStyles.checkBox,
+                  {
+                    backgroundColor: isPressed
+                      ? colors.gray
+                      : tempIsPressed
                         ? colorPress
-                        : rightStates[item.id]
-                          ? colorRight
-                          : leftStates[item.id]
-                            ? colorLeft
-                            : colors.gray,
-                    },
-                  ]}
-                >
-                  <AntDesign
-                    name={
-                      pressedStates[item.id]
+                        : pressedStates[item.id] ||
+                          validateView === "FULL" ||
+                          validateView === "FULL"
+                          ? colorPress
+                          : rightStates[item.id] ||
+                            validateView === "ND" ||
+                            validateView === "ND"
+                            ? colorRight
+                            : leftStates[item.id] ||
+                              validateView === "SHORT" ||
+                              validateView === "SHORT"
+                              ? colorLeft
+                              : colors.gray,
+                  },
+                ]}
+              >
+                <AntDesign
+                  name={
+                    isPressed || (addQuantity && quantity === item.quantity)
+                      ? 'questioncircleo'
+                      : tempIsPressed ||
+                        (addQuantity && quantity === item.quantity)
                         ? 'checkcircleo'
-                        : rightStates[item.id]
-                          ? 'arrowright'
-                          : leftStates[item.id]
-                            ? 'closecircleo'
-                            : 'questioncircleo'
-                    }
-                    size={30}
-                    color="white"
-                  />
-                </View>
-              )}
+                        : pressedStates[item.id] ||
+                          (addQuantity && quantity === item.quantity) ||
+                          validateView === "FULL" ||
+                          validateView === "FULL"
+                          ? 'checkcircleo'
+                          : rightStates[item.id] ||
+                            validateView === "ND" ||
+                            validateView === "ND"
+                            ? 'arrowright'
+                            : leftStates[item.id] ||
+                              validateView === "SHORT" ||
+                              validateView === "SHORT"
+                              ? 'closecircleo'
+                              : 'questioncircleo'
+                  }
+                  size={30}
+                  color="white"
+                />
+              </View>
+
+
             </View>
 
             {addQuantity && selectedProduct === item.id ? (
@@ -146,8 +255,15 @@ export function ProductsCard({ item, colorPress, colorRight, colorLeft }) {
                     { width: 150, marginTop: 10, paddingVertical: 8 },
                   ]}
                   onPress={() => {
-                    declareDifferentQty(item.id)
-                    handleSubmit(item.id, quantity, note)
+                    if (addQuantity && selectedProduct === item.id) {
+                      if (parseInt(quantity) === item.quantity) {
+                        handlePress([item.id])
+                        handleSubmit(item.id, quantity, note)
+                      } else {
+                        declareDifferentQty(item.id)
+                        handleSubmit(item.id, quantity, note)
+                      }
+                    }
                   }}
                 >
                   <Text style={GlobalStyles.textBtnSecundary}>Send</Text>
@@ -162,22 +278,20 @@ export function ProductsCard({ item, colorPress, colorRight, colorLeft }) {
         <ModalProduct
           showModal={showModal}
           setShowModal={setShowModal}
-          declareNotAvailable={declareNotAvailable}
-          item={item}
+          confirm={confirm}
           title={item.name + ' not available'}
           text={' Are you sure you want to mark this item as unavailable?'}
         />
       ) : null}
-      {/*showModal2 && selectedProduct === item.id ? (
+      {showModal2 && selectedProduct === item.id ? (
         <ModalProduct
           showModal={showModal2}
           setShowModal={setShowModal2}
-          declareNotAvailable={declareNotAvailable}
-          item={item}
-          title={item.name + ' not available'}
-          text={' seguro que quiere marcarlo como revisado completo'}
+          confirm={confirm2}
+          title={'Confirm ' + item.name}
+          text={'Are you sure to confirm that all products have been packed?'}
         />
-      ) : null*/}
+      ) : null}
     </View>
   )
 }

@@ -25,9 +25,7 @@ const useLoadingStore = create((set) => {
             },
           },
         )
-        const productsLoadingData = await response.data.orders
-
-        console.log('response', productsLoadingData)
+        const productsLoadingData = await response.data.orders[0]
         set({ productsLoading: productsLoadingData })
       } catch (error) {
         console.error('Error during request:', error)
