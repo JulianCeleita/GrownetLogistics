@@ -24,8 +24,6 @@ export const useProductSubmit = (insert) => {
       data.quantity = parseInt(quantity)
     }
 
-    console.log(data);
-
     try {
       const response = await mainAxios.post(insert, data, {
         headers: {
@@ -34,7 +32,6 @@ export const useProductSubmit = (insert) => {
       })
 
       if (response.status === 200) {
-        console.log('Datos enviados correctamente', response.data)
         setError(null)
       } else {
         throw new Error('Error al enviar los datos')

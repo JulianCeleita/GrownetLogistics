@@ -52,8 +52,6 @@ const CustomDate = () => {
         },
       })
       .then((response) => {
-        console.log(response.data)
-        console.log(datesAvailables, postData)
         const { principal, next } = response.data.operation
         const allDates = [...principal, ...next] || []
         setAvailableDates(allDates)
