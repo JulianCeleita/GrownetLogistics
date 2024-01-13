@@ -1,23 +1,19 @@
-import { Ionicons } from '@expo/vector-icons'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import {
   ActivityIndicator,
   FlatList,
   Text,
-  TouchableOpacity,
-  View,
-  Dimensions,
+  View
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import ProductSearcher from '../../components/ProductSearch'
 import { ProductsCard } from '../../components/ProductsCard'
-import { usePackingStore } from '../../store/usePackingStore'
+import { insertPacking } from '../../config/urls.config'
+import { useProductSubmit } from '../../hooks/useProductSubmit'
 import useEmployeeStore from '../../store/useEmployeeStore'
+import { usePackingStore } from '../../store/usePackingStore'
 import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
 import { colors } from '../../styles/GlobalStyles'
 import { ProductStyles } from '../../styles/ProductStyles'
-import { useProductSubmit } from '../../hooks/useProductSubmit'
-import { insertPacking } from '../../config/urls.config'
 
 function ProductsPacking() {
   const {
@@ -28,44 +24,26 @@ function ProductsPacking() {
     selectedCustomer,
   } = usePackingStore()
   const { employeeToken } = useEmployeeStore()
-  const [search, setSearch] = useState(false)
   const { handleSubmit } = useProductSubmit(insertPacking)
 
   useEffect(() => {
     setFetchPackingProducts(employeeToken, selectedCustomer)
   }, [])
 
-  const handleSearch = () => {
-    setSearch(true)
-  }
-
-  // console.log({ productsPacking })
-
   return (
     <SafeAreaView style={ProductStyles.products}>
-      {search ? (
-        <ProductSearcher setSearch={setSearch} />
-      ) : (
-        <View style={CustomerDayStyles.title2}>
-          <View style={{ paddingHorizontal: 43, width: '100%' }}>
-            <View style={ProductStyles.customerTitleContainer}>
-              <Text style={ProductStyles.customerTitle}>
-                <Text>Restaurant 1 - </Text>
-                <Text style={{ flexWrap: 'wrap' }}>
-                  {productsPacking ? productsPacking.reference : 'Loading...'}
-                </Text>
+      <View style={CustomerDayStyles.title2}>
+        <View style={{ paddingHorizontal: 43, width: '100%' }}>
+          <View style={ProductStyles.customerTitleContainer}>
+            <Text style={ProductStyles.customerTitle}>
+              <Text>Restaurant 1 - </Text>
+              <Text style={{ flexWrap: 'wrap' }}>
+                {productsPacking ? productsPacking.reference : 'Loading...'}
               </Text>
-            </View>
+            </Text>
           </View>
-          <TouchableOpacity onPress={handleSearch} style={ProductStyles.icon2}>
-            <Ionicons
-              name="md-search-circle-outline"
-              size={35}
-              color={colors.darkBlue}
-            />
-          </TouchableOpacity>
         </View>
-      )}
+      </View>
 
       {productsPacking ? (
         <FlatList

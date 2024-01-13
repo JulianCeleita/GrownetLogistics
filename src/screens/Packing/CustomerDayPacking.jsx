@@ -1,18 +1,14 @@
-import { Ionicons } from '@expo/vector-icons'
 import { useFocusEffect } from '@react-navigation/native'
-import React, { useCallback, useState } from 'react'
-import { ScrollView, Text, TouchableOpacity, View } from 'react-native'
+import React, { useCallback } from 'react'
+import { ScrollView, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import mainAxios from '../../../axios.config'
 import CustomerCard from '../../components/CustomerCard'
-import CustomerDaySearch from '../../components/CustomerDaySearch'
 import { percentagePacking } from '../../config/urls.config'
 import useEmployeeStore from '../../store/useEmployeeStore'
 import useOrdersByDate from '../../store/useOrdersByDateStore'
-import { usePackingStore } from '../../store/usePackingStore'
-import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
-import { colors } from '../../styles/GlobalStyles'
 import usePercentageStore from '../../store/usePercentageStore'
+import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
 
 function CustomerDayPacking() {
   const { ordersByDate } = useOrdersByDate()
@@ -28,11 +24,6 @@ function CustomerDayPacking() {
   //   elevation: 5,
   //   zIndex: 5,
   // }
-  const [search, setSearch] = useState(false)
-
-  const handleSearch = () => {
-    setSearch(true)
-  }
 
   //Llamado API porcentaje
   useFocusEffect(
@@ -56,23 +47,9 @@ function CustomerDayPacking() {
   return (
     <SafeAreaView style={CustomerDayStyles.customerPricipal}>
       <ScrollView>
-        {search ? (
-          <CustomerDaySearch setSearch={setSearch} />
-        ) : (
-          <View style={CustomerDayStyles.title2}>
-            <Text style={CustomerDayStyles.customerTitle}>Route 1</Text>
-            <TouchableOpacity
-              onPress={handleSearch}
-              style={CustomerDayStyles.icon}
-            >
-              <Ionicons
-                name="md-search-circle-outline"
-                size={35}
-                color={colors.darkBlue}
-              />
-            </TouchableOpacity>
-          </View>
-        )}
+        <View style={CustomerDayStyles.title2}>
+          <Text style={CustomerDayStyles.customerTitle}>Route 1</Text>
+        </View>
         <View style={CustomerDayStyles.cardsCustomers}>
           {ordersByDate?.map((order) => {
             return (
