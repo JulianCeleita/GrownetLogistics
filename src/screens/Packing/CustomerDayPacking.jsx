@@ -15,17 +15,6 @@ function CustomerDayPacking() {
   const { employeeToken } = useEmployeeStore()
   const { setPercentages } = usePercentageStore()
 
-  // const isIOS = Platform.OS === 'ios'
-  // const { width, height } = Dimensions.get('window')
-
-  // const titleStyle = {
-  //   ...DeliveryStyles.tittle,
-  //   ...GlobalStyles.boxShadow,
-  //   elevation: 5,
-  //   zIndex: 5,
-  // }
-
-  //Llamado API porcentaje
   useFocusEffect(
     useCallback(() => {
       async function fetchData() {

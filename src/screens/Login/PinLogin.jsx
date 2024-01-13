@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import {
   Image,
   Keyboard,
-  KeyboardAvoidingView,
+  SafeAreaView,
   Platform,
   StatusBar,
   Text,
@@ -90,7 +90,7 @@ const PinLogin = () => {
   }
 
   return (
-    <KeyboardAvoidingView
+    <SafeAreaView
       style={{ flex: 1 }}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
@@ -136,7 +136,7 @@ const PinLogin = () => {
           />
         </View>
       </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
+    </SafeAreaView>
   )
 }
 
