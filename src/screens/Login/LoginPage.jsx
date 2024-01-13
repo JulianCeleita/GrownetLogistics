@@ -44,7 +44,6 @@ const LoginPage = () => {
         if (response.data.status === 200) {
           setToken(response.data.token)
           setIdSupplier(response.data.user.id_supplier)
-          console.log('ID SUPPLIER AL STORE', response.data.user.id_supplier)
           setLoading(false)
           navigation.navigate('PinPage')
         } else {

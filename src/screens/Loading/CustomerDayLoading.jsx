@@ -30,7 +30,6 @@ function CustomerDayLoading() {
             },
           })
           setPercentages(response.data.orders)
-          console.log('Porcentajes:', response.data.orders)
         } catch (error) {
           console.error('Error al obtener porcentaje:', error)
         }

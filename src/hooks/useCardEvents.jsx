@@ -72,11 +72,8 @@ export const useCardEvents = (quantityStore, products, setProducts, error) => {
       setAddQuantity(true)
       setQuantity(quantityStore)
       setQuantityCompared(quantity)
-
-      console.log('Dezlizamos a la derecha', itemId)
     } else if (translationX < 0) {
       setShowModal(true)
-      console.log('Dezlizamos a la izquierda')
     }
   }
 
@@ -104,8 +101,6 @@ export const useCardEvents = (quantityStore, products, setProducts, error) => {
     setRightStates(newRightStates)
     setProducts(updatedProducts)
     setAddQuantity(false)
-
-    console.log('Dezlizamos a la izquierda', itemId)
   }
 
   const declareDifferentQty = (itemId) => {

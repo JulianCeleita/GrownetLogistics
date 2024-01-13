@@ -15,7 +15,6 @@ const Loading = () => {
   const handleRoutePress = (nameRoute) => {
     setSelectedRoute(nameRoute)
     setOrdersByDate(nameRoute, routesByDate)
-    console.log('Esta es la ruta seleccionada:', nameRoute)
     navigation.navigate('CustomerDayLoading')
   }
 

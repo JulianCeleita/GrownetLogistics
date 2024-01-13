@@ -37,8 +37,6 @@ const useOrdersByDate = create((set) => {
       if (selectedRoute) {
         const orderByDate = selectedRoute.accounts || []
         set({ ordersByDate: orderByDate })
-        console.log('Esta es la ruta seleccionada:', nameRoute)
-        console.log('Orders by date:', orderByDate)
       } else {
         console.error(
           'No se encontró la ruta con el nombre especificado:',
