@@ -8,7 +8,7 @@ import {
   ScrollView,
   Text,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native'
 import mainAxios from '../../axios.config'
 import { datesAvailables } from '../config/urls.config'
@@ -42,7 +42,7 @@ const CustomDate = () => {
 
   const handleDatesAvailables = () => {
     const postData = {
-      days: 2,
+      days: 7,
       supplier: idSupplier,
     }
     mainAxios
@@ -60,7 +60,7 @@ const CustomDate = () => {
         console.error('Error al obtener las fechas', error)
       })
   }
-  
+
   const handleDatePress = (date) => {
     if (date) {
       setRoutesByDate(employeeToken, date)
@@ -102,7 +102,7 @@ const CustomDate = () => {
   }
 
   const renderAdditionalButtons = () => {
-    if (showMore && availableDates.length > 0) {
+    if (showMore && availableDates.length > 1) {
       return (
         <Animated.View
           style={{
@@ -118,7 +118,7 @@ const CustomDate = () => {
             ],
           }}
         >
-          {availableDates.slice(1, numberOfDates + 1).map((date, index) => (
+          {availableDates.map((date, index) => (
             <View key={index} style={{ marginBottom: 0, marginTop: 10 }}>
               {renderButton(moment(date.fecha).format('dddd, MMM DD'))}
             </View>
