@@ -8,7 +8,7 @@ export const ProductStyles = StyleSheet.create({
     alignItems: 'center',
   },
   card: {
-    width: 320,
+    width: 120,
     backgroundColor: 'white',
     margin: 5,
     borderRadius: 15,
@@ -16,7 +16,7 @@ export const ProductStyles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    height: 95,
+    height: 110,
   },
   category: {
     fontFamily: 'PoppinsSemi',
@@ -107,7 +107,7 @@ export const ProductStyles = StyleSheet.create({
   icon2: {
     position: 'absolute',
     right: 26,
-    marginTop:Platform.OS === 'ios' ? 55 : 10,
+    marginTop: Platform.OS === 'ios' ? 55 : 10,
   },
   customerTitle: {
     fontSize: 18,
