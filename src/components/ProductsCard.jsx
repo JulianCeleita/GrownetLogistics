@@ -46,9 +46,11 @@ export function ProductsCard({
   const [showModal2, setShowModal2] = useState(false)
   const [tempIsPressed, setTempIsPressed] = useState(false)
   const [isPressed, setIsPressed] = useState(false)
-  const [quantityCompared, setQuantityCompared] = useState(item.quantity_packing)
+  const [quantityCompared, setQuantityCompared] = useState(
+    item.quantity_packing,
+  )
 
-  const validateView = viewPacking ? item.state_packing : item.state_loading;
+  const validateView = viewPacking ? item.state_packing : item.state_loading
 
   const confirm = () => {
     declareNotAvailable(item.id)
@@ -95,7 +97,9 @@ export function ProductsCard({
       >
         <PanGestureHandler
           enabled={!addQuantity}
-          onGestureEvent={(e) => handleGestureEvent(e, item.id, setQuantityCompared)}
+          onGestureEvent={(e) =>
+            handleGestureEvent(e, item.id, setQuantityCompared)
+          }
           activeOffsetX={[negativeOffset, positiveOffset]}
         >
           <View>
@@ -110,11 +114,11 @@ export function ProductsCard({
                   </Text>
 
                   {!viewPacking &&
-                    quantityCompared < item.quantity &&
-                    (!isPressed &&
-                      !rightStates[item.id] &&
-                      !leftStates[item.id]) &&
-                    !item.quantity_loading ? (
+                  quantityCompared < item.quantity &&
+                  !isPressed &&
+                  !rightStates[item.id] &&
+                  !leftStates[item.id] &&
+                  !item.quantity_loading ? (
                     <Text
                       style={[
                         ProductStyles.textCard,
@@ -126,12 +130,11 @@ export function ProductsCard({
                   ) : null}
 
                   {!viewPacking &&
-                    quantityCompared > item.quantity &&
-                    (!isPressed &&
-                      !rightStates[item.id] &&
-                      !leftStates[item.id]) &&
-                    !item.quantity_loading ? (
-
+                  quantityCompared > item.quantity &&
+                  !isPressed &&
+                  !rightStates[item.id] &&
+                  !leftStates[item.id] &&
+                  !item.quantity_loading ? (
                     <Text
                       style={[
                         ProductStyles.textCard,
@@ -175,16 +178,16 @@ export function ProductsCard({
                       : tempIsPressed
                         ? colorPress
                         : pressedStates[item.id] ||
-                          validateView === "FULL" ||
-                          validateView === "FULL"
+                            validateView === 'FULL' ||
+                            validateView === 'FULL'
                           ? colorPress
                           : rightStates[item.id] ||
-                            validateView === "ND" ||
-                            validateView === "ND"
+                              validateView === 'ND' ||
+                              validateView === 'ND'
                             ? colorRight
                             : leftStates[item.id] ||
-                              validateView === "SHORT" ||
-                              validateView === "SHORT"
+                                validateView === 'SHORT' ||
+                                validateView === 'SHORT'
                               ? colorLeft
                               : colors.gray,
                   },
@@ -195,20 +198,20 @@ export function ProductsCard({
                     isPressed || (addQuantity && quantity === item.quantity)
                       ? 'questioncircleo'
                       : tempIsPressed ||
-                        (addQuantity && quantity === item.quantity)
+                          (addQuantity && quantity === item.quantity)
                         ? 'checkcircleo'
                         : pressedStates[item.id] ||
-                          (addQuantity && quantity === item.quantity) ||
-                          validateView === "FULL" ||
-                          validateView === "FULL"
+                            (addQuantity && quantity === item.quantity) ||
+                            validateView === 'FULL' ||
+                            validateView === 'FULL'
                           ? 'checkcircleo'
                           : rightStates[item.id] ||
-                            validateView === "ND" ||
-                            validateView === "ND"
+                              validateView === 'ND' ||
+                              validateView === 'ND'
                             ? 'arrowright'
                             : leftStates[item.id] ||
-                              validateView === "SHORT" ||
-                              validateView === "SHORT"
+                                validateView === 'SHORT' ||
+                                validateView === 'SHORT'
                               ? 'closecircleo'
                               : 'questioncircleo'
                   }
@@ -216,8 +219,100 @@ export function ProductsCard({
                   color="white"
                 />
               </View>
+            </View>
 
+            <View style={[ProductStyles.card, GlobalStyles.boxShadow]}>
+              <View style={ProductStyles.productTittle}>
+                <Text style={ProductStyles.tittleCard}>
+                  {item.name} {item.presentationName}
+                </Text>
+                <View style={ProductStyles.qty}>
+                  <Text style={ProductStyles.textCard}>
+                    Qty: {item.quantity}
+                  </Text>
 
+                  {!viewPacking &&
+                  quantityCompared < item.quantity &&
+                  !isPressed &&
+                  !rightStates[item.id] &&
+                  !leftStates[item.id] &&
+                  !item.quantity_loading ? (
+                    <Text
+                      style={[
+                        ProductStyles.textCard,
+                        { color: colors.danger, marginRight: 50 },
+                      ]}
+                    >
+                      {`Missing ${item.quantity - item.quantity_packing || 0}`}
+                    </Text>
+                  ) : null}
+
+                  {!viewPacking &&
+                  quantityCompared > item.quantity &&
+                  !isPressed &&
+                  !rightStates[item.id] &&
+                  !leftStates[item.id] &&
+                  !item.quantity_loading ? (
+                    <Text
+                      style={[
+                        ProductStyles.textCard,
+                        { color: colors.green, marginRight: 50 },
+                      ]}
+                    >
+                      {`Overweight ${item.quantity_packing - item.quantity}`}
+                    </Text>
+                  ) : null}
+
+                  {rightStates[item.id] && item.quantity > item.packed ? (
+                    <Text
+                      style={[
+                        ProductStyles.textCard,
+                        { color: colors.danger, marginRight: 50 },
+                      ]}
+                    >
+                      {`Missing ${item.quantity - item.packed || 0}`}
+                    </Text>
+                  ) : null}
+
+                  {rightStates[item.id] && item.quantity < item.packed ? (
+                    <Text
+                      style={[
+                        ProductStyles.textCard,
+                        { color: colors.green, marginRight: 50 },
+                      ]}
+                    >
+                      {`Overweight ${item.packed - item.quantity}`}
+                    </Text>
+                  ) : null}
+                </View>
+              </View>
+
+              <View
+                style={[
+                  ProductStyles.checkBox,
+                  {
+                    backgroundColor: isPressed
+                      ? colors.gray
+                      : tempIsPressed
+                        ? colorPress
+                        : pressedStates[item.id] ||
+                            validateView === 'FULL' ||
+                            validateView === 'FULL'
+                          ? colorPress
+                          : rightStates[item.id] ||
+                              validateView === 'ND' ||
+                              validateView === 'ND'
+                            ? colorRight
+                            : leftStates[item.id] ||
+                                validateView === 'SHORT' ||
+                                validateView === 'SHORT'
+                              ? colorLeft
+                              : colors.gray,
+                  },
+                ]}
+              >
+                <AntDesign name={'checkcircleo'} size={30} color="white" />
+              </View>
             </View>
 
             {addQuantity && selectedProduct === item.id ? (

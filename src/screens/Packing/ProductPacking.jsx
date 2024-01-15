@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react'
 import {
   ActivityIndicator,
+  Dimensions,
   FlatList,
   Text,
-  View
+  View,
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { ProductsCard } from '../../components/ProductsCard'
@@ -64,6 +65,14 @@ function ProductsPacking() {
           )}
           keyExtractor={(item, index) => index.toString()}
           ListFooterComponent={<View style={{ height: 60 }} />}
+          horizontal={false}
+          numColumns={Dimensions.get('window').width > 500 ? 2 : 1}
+          contentContainerStyle={{
+            flexDirection:
+              Dimensions.get('window').width > 500 ? 'row' : 'column',
+
+            flexWrap: Dimensions.get('window').width > 500 ? 'wrap' : 'nowrap',
+          }}
         />
       ) : (
         <View

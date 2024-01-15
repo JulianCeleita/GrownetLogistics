@@ -8,7 +8,7 @@ export const ProductStyles = StyleSheet.create({
     alignItems: 'center',
   },
   card: {
-    width: 120,
+    width: 320,
     backgroundColor: 'white',
     margin: 5,
     borderRadius: 15,
