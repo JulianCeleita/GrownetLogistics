@@ -1,15 +1,18 @@
-import { Text, TouchableOpacity, View } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 import React from 'react'
+import { Text, TouchableOpacity, View } from 'react-native'
+import Svg, { Circle, Text as SvgText } from 'react-native-svg'
+import useLoadingStore from '../store/useLoadingStore'
+import { usePackingStore } from '../store/usePackingStore'
+import usePercentageStore from '../store/usePercentageStore'
 import { CustomerDayStyles } from '../styles/CustomerDayStyles'
 import { GlobalStyles, colors } from '../styles/GlobalStyles'
-import Svg, { Circle, Text as SvgText } from 'react-native-svg'
-import { useNavigation } from '@react-navigation/native'
-import { usePackingStore } from '../store/usePackingStore'
-import useLoadingStore from '../store/useLoadingStore'
 
 const CustomerCard = ({ customer, loadingCard }) => {
-  const { setSelectedCustomer, percentages } = usePackingStore()
+  const { setSelectedCustomer } = usePackingStore()
   const { setSelectedCustomerL } = useLoadingStore()
+  const { percentages } = usePercentageStore()
+
   const navigation = useNavigation()
   const radius = 33
   const strokeWidth = 10
@@ -25,7 +28,7 @@ const CustomerCard = ({ customer, loadingCard }) => {
       setSelectedCustomerL(customer.accountNumber)
     }
   }
-  //Porcentaje por cliente
+
   percentages.forEach((order) => {
     if (order.accountName === customer.accountName) {
       roundedPercentage = Number(order.percentage).toFixed(0)
@@ -96,7 +99,7 @@ const CustomerCard = ({ customer, loadingCard }) => {
             {customer.accountName}:
           </Text>
           <Text style={CustomerDayStyles.textCustomer}>
-            {customer.reference}
+            {customer.orders_reference}
           </Text>
         </View>
       </TouchableOpacity>

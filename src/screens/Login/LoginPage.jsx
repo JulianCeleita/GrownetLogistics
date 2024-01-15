@@ -3,7 +3,6 @@ import React, { useState } from 'react'
 import {
   Image,
   Keyboard,
-  KeyboardAvoidingView,
   Platform,
   StatusBar,
   Text,
@@ -18,6 +17,7 @@ import { login } from '../../config/urls.config'
 import logo from '../../img/Logo_Blanco.png'
 import useTokenStore from '../../store/useTokenStore'
 import { LoginStyles } from '../../styles/LoginStyles'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 const LoginPage = () => {
   const [username, setUsername] = useState('')
@@ -44,7 +44,6 @@ const LoginPage = () => {
         if (response.data.status === 200) {
           setToken(response.data.token)
           setIdSupplier(response.data.user.id_supplier)
-          console.log('ID SUPPLIER AL STORE', response.data.user.id_supplier)
           setLoading(false)
           navigation.navigate('PinPage')
         } else {
@@ -70,7 +69,7 @@ const LoginPage = () => {
   }
 
   return (
-    <KeyboardAvoidingView
+    <SafeAreaView
       style={{ flex: 1 }}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
@@ -124,7 +123,7 @@ const LoginPage = () => {
           />
         </View>
       </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
+    </SafeAreaView>
   )
 }
 

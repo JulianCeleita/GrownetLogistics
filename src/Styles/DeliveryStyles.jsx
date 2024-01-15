@@ -54,7 +54,6 @@ export const DeliveryStyles = StyleSheet.create({
   delivery: {
     flexDirection: 'row',
     alignItems: 'center',
-    //marginTop: 20,
     flexWrap: 'wrap',
     justifyContent: 'center',
     backgroundColor: 'white',

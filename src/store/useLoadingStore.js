@@ -7,9 +7,6 @@ const useLoadingStore = create((set) => {
     productsLoading: null,
     selectedCustomerL: null,
     error: null,
-    percentages: [],
-
-    setPercentages: (percentaje) => set(() => ({ percentages: percentaje })),
 
     setError: (error) => set(() => ({ error: error })),
 
@@ -29,8 +26,6 @@ const useLoadingStore = create((set) => {
           },
         )
         const productsLoadingData = await response.data.orders[0]
-
-        console.log('response', productsLoadingData)
         set({ productsLoading: productsLoadingData })
       } catch (error) {
         console.error('Error during request:', error)

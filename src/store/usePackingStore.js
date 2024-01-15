@@ -6,9 +6,6 @@ export const usePackingStore = create((set) => ({
   productsPacking: null,
   selectedCustomer: null,
   error: null,
-  percentages: [],
-
-  setPercentages: (percentaje) => set(() => ({ percentages: percentaje })),
 
   setError: (error) => set(() => ({ error: error })),
 
@@ -27,10 +24,7 @@ export const usePackingStore = create((set) => ({
           },
         },
       )
-
       const products = await resp.data
-
-      console.log('response Products.orders', products.orders)
       set({ productsPacking: products.orders[0] })
     } catch (error) {
       console.error('Error during request packing:', error)
