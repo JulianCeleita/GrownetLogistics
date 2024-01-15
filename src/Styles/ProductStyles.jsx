@@ -16,7 +16,15 @@ export const ProductStyles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    height: 110,
+    height: 100,
+  },
+  cardsProducts: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginBottom: 15,
   },
   category: {
     fontFamily: 'PoppinsSemi',
