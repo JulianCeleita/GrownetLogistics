@@ -43,7 +43,6 @@ export const CustomerDayStyles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
   },
-  //Tittle
   tittleText: {
     fontSize: 24,
     fontFamily: 'PoppinsSemi',
@@ -62,7 +61,6 @@ export const CustomerDayStyles = StyleSheet.create({
     color: 'white',
     fontFamily: 'PoppinsBold',
   },
-  //Cards
   card: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -97,7 +95,6 @@ export const CustomerDayStyles = StyleSheet.create({
     fontFamily: 'PoppinsRegular',
     color: colors.darkBlue,
   },
-  //Texto de Restaurantes en shortVan
   restaurantTypeTitle: {
     fontSize: 18,
     color: "#026CD2",

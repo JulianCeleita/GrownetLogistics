@@ -15,11 +15,6 @@ function CustomerDayLoading() {
   const { employeeToken } = useEmployeeStore()
   const { setPercentages } = usePercentageStore()
 
-  /* TODO CREAR FUNCIÓN DE BUSQUEDA */
-  /* const handleSearch = () => {
-    setSearch(true)
-  }*/
-
   useFocusEffect(
     useCallback(() => {
       async function fetchData() {

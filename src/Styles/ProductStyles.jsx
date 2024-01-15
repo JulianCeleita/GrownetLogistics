@@ -69,7 +69,6 @@ export const ProductStyles = StyleSheet.create({
     paddingTop: 25,
     paddingLeft: 20,
   },
-  //Detalles
   details: {
     backgroundColor: 'white',
     borderRadius: 15,
@@ -118,7 +117,6 @@ export const ProductStyles = StyleSheet.create({
 })
 
 export const SearchStyles = StyleSheet.create({
-  // SEARCH BAR
   view: {
     flexDirection: 'row',
     alignItems: 'center',
