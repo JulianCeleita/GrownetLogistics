@@ -40,9 +40,9 @@ function CustomerDayLoading() {
           <Text style={CustomerDayStyles.customerTitle}>Route 1</Text>
         </View>
         <View style={CustomerDayStyles.cardsCustomers}>
-          {ordersByDate?.map((order) => {
+          {ordersByDate?.map((order, index) => {
             return (
-              <View key={order.accountName}>
+              <View key={index}>
                 <CustomerCard customer={order} loadingCard />
               </View>
             )
