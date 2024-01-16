@@ -51,9 +51,9 @@ function CustomerDayPacking() {
           onChangeText={setSearchPhrase}
         />
         <View style={CustomerDayStyles.cardsCustomers}>
-          {filteredData?.map((order) => {
+          {filteredData?.map((order, index) => {
             return (
-              <View key={order.accountName}>
+              <View key={index}>
                 <CustomerCard customer={order} />
               </View>
             )
