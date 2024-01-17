@@ -20,7 +20,7 @@ export const ProductStyles = StyleSheet.create({
   },
   cardsProducts: {
     flex: 1,
-    alignItems: 'center',
+    alignItems: 'flex-start',
     justifyContent: 'center',
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -41,7 +41,7 @@ export const ProductStyles = StyleSheet.create({
   productTittle: {
     paddingVertical: 10,
     paddingLeft: 20,
-    width: '72%',
+    width: '75%',
   },
   tittleCard: {
     fontSize: 16,
@@ -118,7 +118,7 @@ export const ProductStyles = StyleSheet.create({
     marginTop: Platform.OS === 'ios' ? 55 : 10,
   },
   customerTitle: {
-    fontSize: 18,
+    fontSize: 17,
     color: colors.bluePrimary,
     fontFamily: 'PoppinsBold',
     textAlign: 'center',
@@ -131,6 +131,7 @@ export const SearchStyles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    marginBottom: 10,
   },
   containerSearch: {
     flexDirection: 'row',
