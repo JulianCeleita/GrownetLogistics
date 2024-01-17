@@ -1,4 +1,3 @@
-import { AntDesign } from '@expo/vector-icons'
 import React, { useState } from 'react'
 import { Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { PanGestureHandler } from 'react-native-gesture-handler'
@@ -40,10 +39,6 @@ export function ProductsCard({
   } = useCardEvents(item.quantity, products, setProducts, error)
 
   const [showModal2, setShowModal2] = useState(false)
-  const [tempIsPressed, setTempIsPressed] = useState(false)
-  const [isPressed, setIsPressed] = useState(false)
-
-  const validateState = viewPacking ? item.state_packing : item.state_loading
 
   const confirm = () => {
     declareNotAvailable(item.id)
@@ -56,16 +51,6 @@ export function ProductsCard({
     handleSubmit(item.id)
   }
 
-  console.log('___________________________________')
-  console.log('name: ', item.name)
-  console.log('item.quantity: ', item.quantity)
-  console.log('item.packed: ', item.packed)
-  console.log('item.quantity_packing: ', item.quantity_packing)
-  console.log('item.quantity_loading: ', item.quantity_loading)
-  console.log('item.state_packing: ', item.state_packing)
-  console.log('item.state_loading: ', item.state_loading)
-  console.log('___________________________________')
-
   return (
     <View
       style={{
@@ -75,11 +60,6 @@ export function ProductsCard({
     >
       <TouchableOpacity
         onPress={() => {
-          setTempIsPressed(true)
-          if (pressedStates[item.id]) {
-            setIsPressed(true)
-          }
-
           if (!leftStates[item.id] || rightStates[item.id]) {
             setTimeout(() => {
               handlePress(item.id)
@@ -89,10 +69,6 @@ export function ProductsCard({
           }
           setTimeout(() => {
             handleSubmit(item.id, quantity, note)
-            setTempIsPressed(false)
-            if (pressedStates[item.id]) {
-              setIsPressed(false)
-            }
           }, 3000)
         }}
       >
@@ -125,7 +101,7 @@ export function ProductsCard({
 
               <CheckStatusCard
                 itemId={item.id}
-                validateState={validateState}
+                statePacking={item.state_packing}
                 pressedStates={pressedStates}
                 rightStates={rightStates}
                 leftStates={leftStates}
