@@ -58,7 +58,7 @@ function ProductsBulk() {
               <View style={{ marginTop: 50 }}>
                 {type.bulkProducts.map((product, index) => (
                   <ProductsCardBulkVan
-                    key={index}
+                    key={product.id + index}
                     item={product}
                     handleSubmit={handleSubmit}
                   />
@@ -66,7 +66,7 @@ function ProductsBulk() {
               </View>
             </>
           )}
-          keyExtractor={(type) => type.bulkType}
+          keyExtractor={(type) => `${type.bulkType}`}
           style={{ marginTop: 20 }}
         />
       )}
