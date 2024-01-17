@@ -31,6 +31,8 @@ export const useProductSubmit = (insert) => {
         },
       })
 
+      console.log(response.data);
+
       if (response.status === 200) {
         setError(null)
       } else {
