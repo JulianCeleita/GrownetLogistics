@@ -45,6 +45,7 @@ function ProductsBulk({ route }) {
         <ScrollView>
           {typeData.map((type, index) => (
             <View key={index}>
+
               <View style={{ marginBottom: -50 }}>
                 <Text
                   style={[

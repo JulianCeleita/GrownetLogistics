@@ -1,5 +1,11 @@
 import React, { useEffect } from 'react'
-import { ActivityIndicator, FlatList, Text, View } from 'react-native'
+import {
+  ActivityIndicator,
+  FlatList,
+  ScrollView,
+  Text,
+  View,
+} from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { ProductsCard } from '../../components/ProductsCard'
 import { insertLoading } from '../../config/urls.config'
@@ -27,41 +33,43 @@ function ProductsLoading({ route }) {
 
   return (
     <SafeAreaView style={ProductStyles.products}>
-      <View style={CustomerDayStyles.title2}>
-        <View style={{ paddingHorizontal: 43, width: '100%' }}>
-          <View style={ProductStyles.customerTitleContainer}>
-            <Text style={ProductStyles.customerTitle}>
-              <Text>{route.params.accountName} - </Text>
-              <Text style={{ flexWrap: 'wrap' }}>
-                {productsLoading ? route.params.orderNumber : 'Loading...'}
+      <ScrollView>
+        <View style={CustomerDayStyles.title2}>
+          <View style={{ paddingHorizontal: 43, width: '100%' }}>
+            <View style={ProductStyles.customerTitleContainer}>
+              <Text style={ProductStyles.customerTitle}>
+                <Text>{route.params.accountName} - </Text>
+                <Text style={{ flexWrap: 'wrap' }}>
+                  {productsLoading ? route.params.orderNumber : 'Loading...'}
+                </Text>
               </Text>
-            </Text>
+            </View>
           </View>
         </View>
-      </View>
-      {productsLoading ? (
-        <View style={ProductStyles.cardsProducts}>
-          {productsLoading.data.map((item, index) => (
-            <ProductsCard
-              key={index}
-              item={item}
-              colorPress={colors.green}
-              colorRight={colors.orange}
-              colorLeft={colors.danger}
-              products={productsLoading}
-              setProducts={setLoadingProducts}
-              handleSubmit={handleSubmit}
-              error={error}
-            />
-          ))}
-        </View>
-      ) : (
-        <View
-          style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
-        >
-          <ActivityIndicator size="large" color="#0000ff" />
-        </View>
-      )}
+        {productsLoading ? (
+          <View style={ProductStyles.cardsProducts}>
+            {productsLoading.data.map((item, index) => (
+              <ProductsCard
+                key={index}
+                item={item}
+                colorPress={colors.green}
+                colorRight={colors.orange}
+                colorLeft={colors.danger}
+                products={productsLoading}
+                setProducts={setLoadingProducts}
+                handleSubmit={handleSubmit}
+                error={error}
+              />
+            ))}
+          </View>
+        ) : (
+          <View
+            style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
+          >
+            <ActivityIndicator size="large" color="#0000ff" />
+          </View>
+        )}
+      </ScrollView>
     </SafeAreaView>
   )
 }
