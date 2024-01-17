@@ -10,7 +10,12 @@ export const useProductSubmit = (insert) => {
 
   const [isLoading, setIsLoading] = useState(false)
 
-  const handleSubmit = async (itemId, quantity = 0, note = '', state = null) => {
+  const handleSubmit = async (
+    itemId,
+    quantity = 0,
+    note = '',
+    state = null,
+  ) => {
     setIsLoading(true)
 
     const data = {
@@ -25,16 +30,18 @@ export const useProductSubmit = (insert) => {
     }
 
     try {
+      console.log('data', data)
       const response = await mainAxios.post(insert, data, {
         headers: {
           Authorization: `Bearer ${employeeToken}`,
         },
       })
 
-      console.log(response.data);
+      console.log('response.data', response.data)
 
       if (response.status === 200) {
         setError(null)
+        return response.data
       } else {
         throw new Error('Error al enviar los datos')
       }
@@ -47,17 +54,17 @@ export const useProductSubmit = (insert) => {
     }
   }
 
-  const executeNextPromise = () => {
-    if (promiseQueue.length > 0) {
-      promiseQueue.shift().then(() => {
-        executeNextPromise()
-      })
-    }
-  }
+  // const executeNextPromise = () => {
+  //   if (promiseQueue.length > 0) {
+  //     promiseQueue.shift().then(() => {
+  //       executeNextPromise()
+  //     })
+  //   }
+  // }
 
-  useEffect(() => {
-    executeNextPromise()
-  }, [])
+  // useEffect(() => {
+  //   executeNextPromise()
+  // }, [])
 
   return {
     isLoading,
