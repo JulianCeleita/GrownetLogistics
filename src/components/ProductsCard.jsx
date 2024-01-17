@@ -12,6 +12,7 @@ import { useCardEvents } from '../hooks/useCardEvents'
 import { GlobalStyles, colors } from '../styles/GlobalStyles'
 import { ProductStyles } from '../styles/ProductStyles'
 import { CheckQuantity } from './CheckQuantity'
+import { CheckStatusCard } from './CheckStatusCard'
 
 export function ProductsCard({
   item,
@@ -59,6 +60,17 @@ export function ProductsCard({
     setShowModal2(false)
     handleSubmit(item.id)
   }
+
+  console.log('___________________________________');
+  console.log('name: ', item.name);
+  console.log('item.quantity: ', item.quantity);
+  console.log('item.packed: ', item.packed);
+  console.log('item.quantity_packing: ', item.quantity_packing);
+  console.log('item.quantity_loading: ', item.quantity_loading);
+  console.log('item.state_packing: ', item.state_packing);
+  console.log('item.state_loading: ', item.state_loading);
+  console.log('___________________________________');
+
 
   return (
     <View
@@ -118,50 +130,16 @@ export function ProductsCard({
                 </View>
               </View>
 
-              <View
-                style={[
-                  ProductStyles.checkBox,
-                  {
-                    backgroundColor: isPressed
-                      ? colors.gray
-                      : tempIsPressed
-                        ? colorPress
-                        : pressedStates[item.id] ||
-                          validateState === "FULL"
-                          ? colorPress
-                          : rightStates[item.id] ||
-                            validateState === "ND"
-                            ? colorRight
-                            : leftStates[item.id] ||
-                              validateState === "SHORT"
-                              ? colorLeft
-                              : colors.gray,
-                  },
-                ]}
-              >
-                <AntDesign
-                  name={
-                    isPressed || (addQuantity && quantity === item.quantity)
-                      ? 'questioncircleo'
-                      : tempIsPressed ||
-                        (addQuantity && quantity === item.quantity)
-                        ? 'checkcircleo'
-                        : pressedStates[item.id] ||
-                          (addQuantity && quantity === item.quantity) ||
-                          validateState === "FULL"
-                          ? 'checkcircleo'
-                          : rightStates[item.id] ||
-                            validateState === "ND"
-                            ? 'arrowright'
-                            : leftStates[item.id] ||
-                              validateState === "SHORT"
-                              ? 'closecircleo'
-                              : 'questioncircleo'
-                  }
-                  size={30}
-                  color="white"
-                />
-              </View>
+              <CheckStatusCard
+                itemId={item.id}
+                validateState={validateState}
+                pressedStates={pressedStates}
+                rightStates={rightStates}
+                leftStates={leftStates}
+                colorPress={colorPress}
+                colorRight={colorRight}
+                colorLeft={colorLeft}
+              />
 
 
             </View>
