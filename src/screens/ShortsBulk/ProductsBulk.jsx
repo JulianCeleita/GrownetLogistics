@@ -43,8 +43,9 @@ function ProductsBulk({ route }) {
         </View>
       ) : (
         <ScrollView>
-          {typeData.map((type) => (
-            <React.Fragment key={type.bulkType}>
+          {typeData.map((type, index) => (
+            <View key={index}>
+
               <View style={{ marginBottom: -50 }}>
                 <Text
                   style={[
@@ -58,15 +59,15 @@ function ProductsBulk({ route }) {
                 </Text>
               </View>
               <View style={{ marginTop: 15 }}>
-                {type.bulkProducts.map((product, index) => (
+                {type.bulkProducts.map((product) => (
                   <ProductsCardBulkVan
-                    key={product.id + index}
+                    key={product.id}
                     item={product}
                     handleSubmit={handleSubmit}
                   />
                 ))}
               </View>
-            </React.Fragment>
+            </View>
           ))}
         </ScrollView>
       )}
