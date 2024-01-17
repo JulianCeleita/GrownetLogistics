@@ -83,6 +83,7 @@ export const ProductStyles = StyleSheet.create({
     padding: 10,
     alignItems: 'center',
     borderRightWidth: 8,
+    width: 320,
   },
   information: {
     flexDirection: 'row',
@@ -121,6 +122,7 @@ export const ProductStyles = StyleSheet.create({
     color: colors.bluePrimary,
     fontFamily: 'PoppinsBold',
     textAlign: 'center',
+    marginBottom: 10,
   },
 })
 
