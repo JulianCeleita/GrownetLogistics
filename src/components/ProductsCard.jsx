@@ -1,10 +1,5 @@
 import React, { useState } from 'react'
-import {
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native'
+import { Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { PanGestureHandler } from 'react-native-gesture-handler'
 import ModalProduct from '../components/ModalProduct'
 import { useCardEvents } from '../hooks/useCardEvents'
@@ -101,7 +96,6 @@ export function ProductsCard({
                     quantity_loading={item.quantity_loading}
                     packed={item.packed}
                   />
-
                 </View>
               </View>
 
@@ -115,8 +109,6 @@ export function ProductsCard({
                 colorRight={colorRight}
                 colorLeft={colorLeft}
               />
-
-
             </View>
 
             {addQuantity && selectedProduct === item.id ? (

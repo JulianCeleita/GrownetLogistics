@@ -3,8 +3,9 @@ import {
   ActivityIndicator,
   FlatList,
   Platform,
+  ScrollView,
   Text,
-  View
+  View,
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { ProductsCardBulkVan } from '../../components/ProductsCardBulkVan'
@@ -39,23 +40,20 @@ function ProductsVan() {
           <Text>Error: {error}</Text>
         </View>
       ) : (
-        <FlatList
-          data={restaurantData}
-          renderItem={({ item: restaurant }) => (
-            <>
-              <View key={restaurant.vanName} style={{ marginBottom: -45 }}>
-                <Text
-                  style={[
-                    CustomerDayStyles.restaurantTypeTitle,
-                    {
-                      marginBottom: Platform.OS === 'ios' ? 5 : null,
-                    },
-                  ]}
-                >
-                  {restaurant.vanName}
-                </Text>
-              </View>
-              <View style={{ marginTop: 50 }}>
+        <ScrollView>
+          {restaurantData.map((restaurant) => (
+            <View key={restaurant.vanName}>
+              <Text
+                style={[
+                  CustomerDayStyles.restaurantTypeTitle,
+                  {
+                    marginBottom: Platform.OS === 'ios' ? 5 : null,
+                  },
+                ]}
+              >
+                {restaurant.vanName}
+              </Text>
+              <View>
                 {restaurant.vanProducts.map((product, index) => (
                   <ProductsCardBulkVan
                     key={index}
@@ -64,11 +62,9 @@ function ProductsVan() {
                   />
                 ))}
               </View>
-            </>
-          )}
-          keyExtractor={(restaurant) => restaurant.vanName}
-          style={{ marginTop: 40 }}
-        />
+            </View>
+          ))}
+        </ScrollView>
       )}
     </SafeAreaView>
   )

@@ -42,7 +42,7 @@ const CustomDate = () => {
 
   const handleDatesAvailables = () => {
     const postData = {
-      days: 7,
+      days: 2,
       supplier: idSupplier,
     }
     mainAxios
@@ -102,7 +102,7 @@ const CustomDate = () => {
   }
 
   const renderAdditionalButtons = () => {
-    if (showMore && availableDates.length > 1) {
+    if (showMore && availableDates.length > 0) {
       return (
         <Animated.View
           style={{
@@ -118,7 +118,7 @@ const CustomDate = () => {
             ],
           }}
         >
-          {availableDates.map((date, index) => (
+          {availableDates.slice(1, numberOfDates + 1).map((date, index) => (
             <View key={index} style={{ marginBottom: 0, marginTop: 10 }}>
               {renderButton(moment(date.fecha).format('dddd, MMM DD'))}
             </View>

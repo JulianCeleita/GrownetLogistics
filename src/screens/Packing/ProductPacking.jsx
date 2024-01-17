@@ -1,9 +1,11 @@
 import React, { useEffect } from 'react'
 import {
   ActivityIndicator,
+  Dimensions,
   FlatList,
+  ScrollView,
   Text,
-  View
+  View,
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { ProductsCard } from '../../components/ProductsCard'
@@ -32,50 +34,49 @@ function ProductsPacking() {
 
   return (
     <SafeAreaView style={ProductStyles.products}>
-      <View style={CustomerDayStyles.title2}>
-        <View style={{ paddingHorizontal: 43, width: '100%' }}>
-          <View style={ProductStyles.customerTitleContainer}>
-            <Text style={ProductStyles.customerTitle}>
-              <Text>Restaurant 1 - </Text>
-              <Text style={{ flexWrap: 'wrap' }}>
-                {productsPacking ? productsPacking.reference : 'Loading...'}
+      <ScrollView>
+        <View style={CustomerDayStyles.title2}>
+          <View style={{ paddingHorizontal: 43, width: '100%' }}>
+            <View style={ProductStyles.customerTitleContainer}>
+              <Text style={ProductStyles.customerTitle}>
+                <Text>Restaurant 1 - </Text>
+                <Text style={{ flexWrap: 'wrap' }}>
+                  {productsPacking ? productsPacking.reference : 'Loading...'}
+                </Text>
               </Text>
-            </Text>
+            </View>
           </View>
         </View>
-      </View>
 
-      {productsPacking ? (
-        <FlatList
-          data={productsPacking.data}
-          renderItem={({ item, index }) => (
-            <ProductsCard
-              key={index}
-              item={item}
-              colorPress={colors.orange}
-              colorRight={colors.orange}
-              colorLeft={colors.danger}
-              products={productsPacking}
-              setProducts={setProductsPacking}
-              handleSubmit={handleSubmit}
-              viewPacking
-              error={error}
-            />
-          )}
-          keyExtractor={(item, index) => index.toString()}
-          ListFooterComponent={<View style={{ height: 60 }} />}
-        />
-      ) : (
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <ActivityIndicator size="large" color="#0000ff" />
-        </View>
-      )}
+        {productsPacking ? (
+          <View style={ProductStyles.cardsProducts}>
+            {productsPacking.data.map((item, index) => (
+              <ProductsCard
+                key={index}
+                item={item}
+                colorPress={colors.orange}
+                colorRight={colors.orange}
+                colorLeft={colors.danger}
+                products={productsPacking}
+                setProducts={setProductsPacking}
+                handleSubmit={handleSubmit}
+                viewPacking
+                error={error}
+              />
+            ))}
+          </View>
+        ) : (
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <ActivityIndicator size="large" color="#0000ff" />
+          </View>
+        )}
+      </ScrollView>
     </SafeAreaView>
   )
 }

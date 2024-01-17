@@ -45,6 +45,7 @@ export const DeliveryStyles = StyleSheet.create({
     width: 90,
     fontFamily: 'PoppinsSemi',
     marginTop: 10,
+    overflow: 'hidden',
   },
   textRoute: {
     marginTop: 5,

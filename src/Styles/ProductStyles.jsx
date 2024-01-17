@@ -16,7 +16,15 @@ export const ProductStyles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    height: 95,
+    height: 100,
+  },
+  cardsProducts: {
+    flex: 1,
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginBottom: 15,
   },
   category: {
     fontFamily: 'PoppinsSemi',
@@ -33,7 +41,7 @@ export const ProductStyles = StyleSheet.create({
   productTittle: {
     paddingVertical: 10,
     paddingLeft: 20,
-    width: '72%',
+    width: '75%',
   },
   tittleCard: {
     fontSize: 16,
@@ -75,6 +83,7 @@ export const ProductStyles = StyleSheet.create({
     padding: 10,
     alignItems: 'center',
     borderRightWidth: 8,
+    width: 320,
   },
   information: {
     flexDirection: 'row',
@@ -106,13 +115,14 @@ export const ProductStyles = StyleSheet.create({
   icon2: {
     position: 'absolute',
     right: 26,
-    marginTop:Platform.OS === 'ios' ? 55 : 10,
+    marginTop: Platform.OS === 'ios' ? 55 : 10,
   },
   customerTitle: {
-    fontSize: 18,
+    fontSize: 17,
     color: colors.bluePrimary,
     fontFamily: 'PoppinsBold',
     textAlign: 'center',
+    marginBottom: 10,
   },
 })
 
@@ -121,6 +131,7 @@ export const SearchStyles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    marginBottom: 10,
   },
   containerSearch: {
     flexDirection: 'row',
