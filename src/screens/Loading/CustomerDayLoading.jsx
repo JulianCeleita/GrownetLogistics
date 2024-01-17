@@ -13,7 +13,7 @@ import ProductSearcher from '../../components/ProductSearch.jsx'
 import { Ionicons } from '@expo/vector-icons'
 import { colors } from '../../styles/GlobalStyles'
 
-function CustomerDayLoading() {
+function CustomerDayLoading({ route }) {
   const { ordersByDate } = useOrdersByDate()
   const { employeeToken } = useEmployeeStore()
   const { setPercentages } = usePercentageStore()
@@ -56,7 +56,9 @@ function CustomerDayLoading() {
           />
         ) : (
           <View style={CustomerDayStyles.title2}>
-            <Text style={CustomerDayStyles.customerTitle}>Route 1</Text>
+            <Text style={CustomerDayStyles.customerTitle}>
+              {route.params.nameRoute}
+            </Text>
             <TouchableOpacity
               onPress={handleSearch}
               style={CustomerDayStyles.icon}
