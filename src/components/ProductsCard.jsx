@@ -48,8 +48,6 @@ export function ProductsCard({
   const [tempIsPressed, setTempIsPressed] = useState(false)
   const [isPressed, setIsPressed] = useState(false)
 
-  const validateState = viewPacking ? item.state_packing : item.state_loading;
-
   const confirm = () => {
     declareNotAvailable(item.id)
     setShowModal(false)
@@ -132,7 +130,7 @@ export function ProductsCard({
 
               <CheckStatusCard
                 itemId={item.id}
-                validateState={validateState}
+                statePacking={item.state_packing}
                 pressedStates={pressedStates}
                 rightStates={rightStates}
                 leftStates={leftStates}
