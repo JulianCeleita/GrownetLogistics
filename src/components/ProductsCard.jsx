@@ -53,9 +53,19 @@ export function ProductsCard({
     handleSubmit(item.id)
   }
 
+
+  const handleCardSubmit = async () => {
+    const cardPromises = [
+      handlePress(item.id),
+      handleSubmit(item.id, quantity, note),
+    ]
+    await Promise.allSettled(cardPromises)
+  }
+
   const handleClose = () => {
     setAddQuantity(false)
     setSelectedProduct(null)
+
   }
 
   return (
@@ -68,15 +78,12 @@ export function ProductsCard({
       <TouchableOpacity
         onPress={() => {
           if (!leftStates[item.id] || rightStates[item.id]) {
-            setTimeout(() => {
-              handlePress(item.id)
-            }, 3000)
+            handlePress(item.id)
           } else {
             setShowModal2(true)
           }
-          setTimeout(() => {
-            handleSubmit(item.id, quantity, note)
-          }, 3000)
+
+          handleCardSubmit()
         }}
       >
         <PanGestureHandler
