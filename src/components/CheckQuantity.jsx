@@ -10,20 +10,28 @@ export const CheckQuantity = ({ viewPacking, quantity, quantity_packing, quantit
         if (!packed) {
             if (viewPacking) {
                 setMessage(
-                    quantity > quantity_packing
+                    quantity_packing && quantity > quantity_packing
                         ? `Missing ${quantity - quantity_packing}`
-                        : quantity < quantity_packing
+                        : quantity_packing && quantity < quantity_packing
                             ? `Overweight ${quantity_packing - quantity}`
                             : ''
                 )
             } else {
-                setMessage(
+                if (!quantity_loading && quantity_packing) {
+                    setMessage(
+                        quantity > quantity_packing
+                            ? `Missing ${quantity - quantity_packing}`
+                            : quantity < quantity_packing
+                                ? `Overweight ${quantity_packing - quantity}`
+                                : ''
+                    )
+                } else if (quantity_packing && quantity_loading) {
                     quantity > quantity_loading
                         ? `Missing ${quantity - quantity_loading}`
                         : quantity < quantity_loading
                             ? `Overweight ${quantity_loading - quantity}`
                             : ''
-                )
+                }
             }
         } else {
             setMessage(
