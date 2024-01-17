@@ -1,11 +1,5 @@
 import React, { useEffect } from 'react'
-import {
-  ActivityIndicator,
-  FlatList,
-  Platform,
-  Text,
-  View
-} from 'react-native'
+import { ActivityIndicator, FlatList, Platform, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { ProductsCardBulkVan } from '../../components/ProductsCardBulkVan'
 import { insertShort } from '../../config/urls.config'
@@ -55,7 +49,7 @@ function ProductsBulk() {
                   {type.bulkType}
                 </Text>
               </View>
-              <View style={{ marginTop: 50 }}>
+              <View style={{ marginTop: 15 }}>
                 {type.bulkProducts.map((product, index) => (
                   <ProductsCardBulkVan
                     key={product.id + index}

@@ -40,25 +40,20 @@ function ProductsLoading() {
         </View>
       </View>
       {productsLoading ? (
-        <View>
-          <FlatList
-            data={productsLoading.data}
-            renderItem={({ item, index }) => (
-              <ProductsCard
-                key={index}
-                item={item}
-                colorPress={colors.green}
-                colorRight={colors.orange}
-                colorLeft={colors.danger}
-                products={productsLoading}
-                setProducts={setLoadingProducts}
-                handleSubmit={handleSubmit}
-                error={error}
-              />
-            )}
-            keyExtractor={(item, index) => index.toString()}
-            ListFooterComponent={<View style={{ height: 60 }} />}
-          />
+        <View style={ProductStyles.cardsProducts}>
+          {productsLoading.data.map((item, index) => (
+            <ProductsCard
+              key={index}
+              item={item}
+              colorPress={colors.green}
+              colorRight={colors.orange}
+              colorLeft={colors.danger}
+              products={productsLoading}
+              setProducts={setLoadingProducts}
+              handleSubmit={handleSubmit}
+              error={error}
+            />
+          ))}
         </View>
       ) : (
         <View
