@@ -16,7 +16,7 @@ import { useShortVanStore } from '../../store/useShortVanStore'
 import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
 import { ProductStyles } from '../../styles/ProductStyles'
 
-function ProductsVan() {
+function ProductsVan({ route }) {
   const { restaurantData, loading, error, setFetchShortVanProducts } =
     useShortVanStore()
   const { employeeToken } = useEmployeeStore()
@@ -29,7 +29,9 @@ function ProductsVan() {
   return (
     <SafeAreaView style={ProductStyles.products}>
       <View style={CustomerDayStyles.title2}>
-        <Text style={CustomerDayStyles.customerTitle}>Route 1</Text>
+        <Text style={CustomerDayStyles.customerTitle}>
+          {route.params.nameRoute}
+        </Text>
       </View>
       {loading ? (
         <ActivityIndicator size="large" color="#0000ff" />

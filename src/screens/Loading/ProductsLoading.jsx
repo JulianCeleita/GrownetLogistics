@@ -10,7 +10,7 @@ import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
 import { colors } from '../../styles/GlobalStyles'
 import { ProductStyles } from '../../styles/ProductStyles'
 
-function ProductsLoading() {
+function ProductsLoading({ route }) {
   const {
     productsLoading,
     setLoadingProducts,
@@ -31,9 +31,9 @@ function ProductsLoading() {
         <View style={{ paddingHorizontal: 43, width: '100%' }}>
           <View style={ProductStyles.customerTitleContainer}>
             <Text style={ProductStyles.customerTitle}>
-              <Text>Restaurant 1 - </Text>
+              <Text>{route.params.accountName} - </Text>
               <Text style={{ flexWrap: 'wrap' }}>
-                {productsLoading ? productsLoading.reference : 'Loading...'}
+                {productsLoading ? route.params.orderNumber : 'Loading...'}
               </Text>
             </Text>
           </View>

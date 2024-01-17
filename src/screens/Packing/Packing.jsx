@@ -15,13 +15,13 @@ const Packing = () => {
   const handleRoutePress = (nameRoute) => {
     setSelectedRoute(nameRoute)
     setOrdersByDate(nameRoute, routesByDate)
-    navigation.navigate('CustomerDayPacking')
+    navigation.navigate('CustomerDayPacking', { nameRoute: nameRoute })
   }
 
   return (
     <SafeAreaView style={{ backgroundColor: 'white', height: '100%' }}>
       <ScrollView>
-        {/* <LinearGradient
+        <LinearGradient
           colors={['#00478C', '#026CD2']}
           start={{ x: 0, y: 0.5 }}
           end={{ x: 1, y: 0.5 }}
@@ -35,8 +35,8 @@ const Packing = () => {
             />
             <Text style={DeliveryStyles.textTittle}>Packing</Text>
           </View>
-        </LinearGradient> */}
-        <LinearGradient
+        </LinearGradient>
+        {/* <LinearGradient
           colors={['#00478C', '#026CD2']}
           start={{ x: 0, y: 0.5 }}
           end={{ x: 1, y: 0.5 }}
@@ -62,7 +62,7 @@ const Packing = () => {
             />
             <Text style={DeliveryStyles.textTittle}>Packing</Text>
           </View>
-        </LinearGradient>
+        </LinearGradient> */}
         <View style={DeliveryStyles.delivery}>
           {routesByDate.map((order) => (
             <TouchableOpacity

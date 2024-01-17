@@ -17,7 +17,7 @@ import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
 import { colors } from '../../styles/GlobalStyles'
 import { ProductStyles } from '../../styles/ProductStyles'
 
-function ProductsPacking() {
+function ProductsPacking({ route }) {
   const {
     productsPacking,
     setProductsPacking,
@@ -31,7 +31,6 @@ function ProductsPacking() {
   useEffect(() => {
     setFetchPackingProducts(employeeToken, selectedCustomer)
   }, [])
-
   return (
     <SafeAreaView style={ProductStyles.products}>
       <ScrollView>
@@ -39,9 +38,9 @@ function ProductsPacking() {
           <View style={{ paddingHorizontal: 43, width: '100%' }}>
             <View style={ProductStyles.customerTitleContainer}>
               <Text style={ProductStyles.customerTitle}>
-                <Text>Restaurant 1 - </Text>
+                <Text>{route.params.accountName} - </Text>
                 <Text style={{ flexWrap: 'wrap' }}>
-                  {productsPacking ? productsPacking.reference : 'Loading...'}
+                  {productsPacking ? route.params.orderNumber : 'Loading...'}
                 </Text>
               </Text>
             </View>

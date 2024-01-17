@@ -16,7 +16,7 @@ function ShortsBulk() {
   const handleRoutePress = (nameRoute) => {
     setSelectedRoute(nameRoute)
     setOrdersByDate(nameRoute, routesByDate)
-    navigation.navigate('ProductsBulk')
+    navigation.navigate('ProductsBulk', { nameRoute: nameRoute })
   }
 
   return (
@@ -40,18 +40,18 @@ function ShortsBulk() {
 
       <View style={DeliveryStyles.delivery}>
         {routesByDate.map((order) => (
-        <TouchableOpacity
-          style={[
-            DeliveryStyles.card,
-            { marginTop: Platform.OS === 'ios' ? 20 : 30 },
-          ]}
-          onPress={() => handleRoutePress(order.nameRoute)}
-          key={order.nameRoute}
-        >
-          <CircleProgress />
-          <Text style={DeliveryStyles.tittleRoute}>{order.nameRoute}</Text>
-        </TouchableOpacity>          
-          ))}
+          <TouchableOpacity
+            style={[
+              DeliveryStyles.card,
+              { marginTop: Platform.OS === 'ios' ? 20 : 30 },
+            ]}
+            onPress={() => handleRoutePress(order.nameRoute)}
+            key={order.nameRoute}
+          >
+            <CircleProgress />
+            <Text style={DeliveryStyles.tittleRoute}>{order.nameRoute}</Text>
+          </TouchableOpacity>
+        ))}
       </View>
     </SafeAreaView>
   )

@@ -19,7 +19,7 @@ import { Ionicons } from '@expo/vector-icons'
 import { colors } from '../../styles/GlobalStyles'
 import ProductSearcher from '../../components/ProductSearch'
 
-function CustomerDayPacking() {
+function CustomerDayPacking({ route }) {
   const { ordersByDate } = useOrdersByDate()
   const { employeeToken } = useEmployeeStore()
   const { setPercentages } = usePercentageStore()
@@ -49,7 +49,6 @@ function CustomerDayPacking() {
       fetchData()
     }, [employeeToken]),
   )
-
   return (
     <SafeAreaView style={CustomerDayStyles.customerPricipal}>
       <ScrollView>
@@ -61,7 +60,9 @@ function CustomerDayPacking() {
           />
         ) : (
           <View style={CustomerDayStyles.title2}>
-            <Text style={CustomerDayStyles.customerTitle}>Route 1</Text>
+            <Text style={CustomerDayStyles.customerTitle}>
+              {route.params.nameRoute}
+            </Text>
             <TouchableOpacity
               onPress={handleSearch}
               style={CustomerDayStyles.icon}

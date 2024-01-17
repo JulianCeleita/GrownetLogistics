@@ -21,10 +21,18 @@ const CustomerCard = ({ customer, loadingCard }) => {
 
   const handleNavigateToProducts = () => {
     if (!loadingCard) {
-      navigation.navigate('ProductsPacking')
+      navigation.navigate('ProductsPacking', {
+        selectedCustomer: customer.accountNumber,
+        accountName: customer.accountName,
+        orderNumber: customer.orders_reference,
+      })
       setSelectedCustomer(customer.accountNumber)
     } else {
-      navigation.navigate('ProductsLoading')
+      navigation.navigate('ProductsLoading', {
+        selectedCustomer: customer.accountNumber,
+        accountName: customer.accountName,
+        orderNumber: customer.orders_reference,
+      })
       setSelectedCustomerL(customer.accountNumber)
     }
   }
