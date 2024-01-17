@@ -6,7 +6,7 @@ import { AntDesign } from '@expo/vector-icons'
 
 export const CheckStatusCard = ({
     itemId,
-    validateState,
+    statePacking,
     pressedStates,
     rightStates,
     leftStates,
@@ -20,13 +20,13 @@ export const CheckStatusCard = ({
 
     useEffect(() => {
         if (!pressedStates[itemId] && !rightStates[itemId] && !leftStates[itemId]) {
-            if (validateState === "FULL") {
+            if (statePacking === "FULL") {
                 setColorCheck(colorPress)
                 setIconCheck('checkcircleo')
-            } else if (validateState === "ND") {
+            } else if (statePacking === "ND") {
                 setColorCheck(colorRight)
                 setIconCheck('arrowright')
-            } else if (validateState === "SHORT") {
+            } else if (statePacking === "SHORT") {
                 setColorCheck(colorLeft)
                 setIconCheck('closecircleo')
             }
@@ -44,7 +44,7 @@ export const CheckStatusCard = ({
         }
 
     }, [
-        validateState,
+        statePacking,
         pressedStates,
         rightStates,
         leftStates,
