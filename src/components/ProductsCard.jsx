@@ -1,12 +1,6 @@
 import { AntDesign } from '@expo/vector-icons'
-import React, { useState, useEffect } from 'react'
-import {
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-  Dimensions,
-} from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { PanGestureHandler } from 'react-native-gesture-handler'
 import ModalProduct from '../components/ModalProduct'
 import { useCardEvents } from '../hooks/useCardEvents'
@@ -46,9 +40,6 @@ export function ProductsCard({
   const [showModal2, setShowModal2] = useState(false)
   const [tempIsPressed, setTempIsPressed] = useState(false)
   const [isPressed, setIsPressed] = useState(false)
-  const [quantityCompared, setQuantityCompared] = useState(
-    item.quantity_packing,
-  )
 
   const validateView = viewPacking ? item.state_packing : item.state_loading
 
@@ -56,12 +47,10 @@ export function ProductsCard({
     declareNotAvailable(item.id)
     setShowModal(false)
     handleSubmit(item.id)
-    setQuantityCompared(0)
   }
   const confirm2 = () => {
     handlePress(item.id)
     setShowModal2(false)
-    setQuantityCompared(item.quantity)
     handleSubmit(item.id)
   }
 
@@ -97,9 +86,7 @@ export function ProductsCard({
       >
         <PanGestureHandler
           enabled={!addQuantity}
-          onGestureEvent={(e) =>
-            handleGestureEvent(e, item.id, setQuantityCompared)
-          }
+          onGestureEvent={(e) => handleGestureEvent(e, item.id)}
           activeOffsetX={[negativeOffset, positiveOffset]}
         >
           <View>
@@ -113,50 +100,18 @@ export function ProductsCard({
                     Qty: {item.quantity}
                   </Text>
 
-                  {!viewPacking &&
-                  quantityCompared < item.quantity &&
-                  !isPressed &&
-                  !rightStates[item.id] &&
-                  !leftStates[item.id] &&
-                  !item.quantity_loading ? (
+                  {item.packed && item.quantity > item.packed ? (
                     <Text
                       style={[
                         ProductStyles.textCard,
                         { color: colors.danger, marginRight: 50 },
                       ]}
                     >
-                      {`Missing ${item.quantity - item.quantity_packing || 0}`}
+                      {`Missing ${item.quantity - item.packed}`}
                     </Text>
                   ) : null}
 
-                  {!viewPacking &&
-                  quantityCompared > item.quantity &&
-                  !isPressed &&
-                  !rightStates[item.id] &&
-                  !leftStates[item.id] &&
-                  !item.quantity_loading ? (
-                    <Text
-                      style={[
-                        ProductStyles.textCard,
-                        { color: colors.green, marginRight: 50 },
-                      ]}
-                    >
-                      {`Overweight ${item.quantity_packing - item.quantity}`}
-                    </Text>
-                  ) : null}
-
-                  {rightStates[item.id] && item.quantity > item.packed ? (
-                    <Text
-                      style={[
-                        ProductStyles.textCard,
-                        { color: colors.danger, marginRight: 50 },
-                      ]}
-                    >
-                      {`Missing ${item.quantity - item.packed || 0}`}
-                    </Text>
-                  ) : null}
-
-                  {rightStates[item.id] && item.quantity < item.packed ? (
+                  {item.packed && item.quantity < item.packed ? (
                     <Text
                       style={[
                         ProductStyles.textCard,
@@ -221,7 +176,7 @@ export function ProductsCard({
               </View>
             </View>
 
-            <View style={[ProductStyles.card, GlobalStyles.boxShadow]}>
+            {/* <View style={[ProductStyles.card, GlobalStyles.boxShadow]}>
               <View style={ProductStyles.productTittle}>
                 <Text style={ProductStyles.tittleCard}>
                   {item.name} {item.presentationName}
@@ -313,7 +268,7 @@ export function ProductsCard({
               >
                 <AntDesign name={'checkcircleo'} size={30} color="white" />
               </View>
-            </View>
+            </View> */}
 
             {addQuantity && selectedProduct === item.id ? (
               <View
