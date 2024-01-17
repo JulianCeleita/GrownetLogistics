@@ -6,6 +6,7 @@ export const DeliveryStyles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
+    height: 100,
   },
   tittle: {
     backgroundColor: colors.bluePrimary,
