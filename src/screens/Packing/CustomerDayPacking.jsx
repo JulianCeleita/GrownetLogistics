@@ -37,7 +37,7 @@ function CustomerDayPacking() {
       fetchData()
     }, [employeeToken]),
   )
-  console.log('ordersByDate', ordersByDate)
+
   return (
     <SafeAreaView style={CustomerDayStyles.customerPricipal}>
       <ScrollView>
