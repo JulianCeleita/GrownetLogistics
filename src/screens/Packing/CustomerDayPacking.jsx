@@ -1,6 +1,6 @@
 import { useFocusEffect } from '@react-navigation/native'
-import React, { useCallback } from 'react'
-import { ScrollView, Text, View } from 'react-native'
+import React, { useCallback, useState } from 'react'
+import { ScrollView, Text, TextInput, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import mainAxios from '../../../axios.config'
 import CustomerCard from '../../components/CustomerCard'
@@ -14,6 +14,11 @@ function CustomerDayPacking() {
   const { ordersByDate } = useOrdersByDate()
   const { employeeToken } = useEmployeeStore()
   const { setPercentages } = usePercentageStore()
+  const [searchPhrase, setSearchPhrase] = useState('')
+
+  const filteredData = ordersByDate.filter((order) => {
+    return order.accountName.includes(searchPhrase)
+  })
 
   useFocusEffect(
     useCallback(() => {
@@ -32,17 +37,23 @@ function CustomerDayPacking() {
       fetchData()
     }, [employeeToken]),
   )
-
+  console.log('ordersByDate', ordersByDate)
   return (
     <SafeAreaView style={CustomerDayStyles.customerPricipal}>
       <ScrollView>
         <View style={CustomerDayStyles.title2}>
           <Text style={CustomerDayStyles.customerTitle}>Route 1</Text>
         </View>
+        <TextInput
+          style={''}
+          placeholder="Buscar"
+          value={searchPhrase}
+          onChangeText={setSearchPhrase}
+        />
         <View style={CustomerDayStyles.cardsCustomers}>
-          {ordersByDate?.map((order) => {
+          {filteredData?.map((order, index) => {
             return (
-              <View key={order.accountName}>
+              <View key={index}>
                 <CustomerCard customer={order} />
               </View>
             )

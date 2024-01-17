@@ -1,11 +1,12 @@
 import { AntDesign } from '@expo/vector-icons'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { PanGestureHandler } from 'react-native-gesture-handler'
 import ModalProduct from '../components/ModalProduct'
 import { useCardEvents } from '../hooks/useCardEvents'
 import { GlobalStyles, colors } from '../styles/GlobalStyles'
 import { ProductStyles } from '../styles/ProductStyles'
+import { CheckQuantity } from './CheckQuantity'
 
 export function ProductsCard({
   item,
@@ -41,7 +42,7 @@ export function ProductsCard({
   const [tempIsPressed, setTempIsPressed] = useState(false)
   const [isPressed, setIsPressed] = useState(false)
 
-  const validateView = viewPacking ? item.state_packing : item.state_loading
+  const validateState = viewPacking ? item.state_packing : item.state_loading
 
   const confirm = () => {
     declareNotAvailable(item.id)
@@ -100,27 +101,14 @@ export function ProductsCard({
                     Qty: {item.quantity}
                   </Text>
 
-                  {item.packed && item.quantity > item.packed ? (
-                    <Text
-                      style={[
-                        ProductStyles.textCard,
-                        { color: colors.danger, marginRight: 50 },
-                      ]}
-                    >
-                      {`Missing ${item.quantity - item.packed}`}
-                    </Text>
-                  ) : null}
-
-                  {item.packed && item.quantity < item.packed ? (
-                    <Text
-                      style={[
-                        ProductStyles.textCard,
-                        { color: colors.green, marginRight: 50 },
-                      ]}
-                    >
-                      {`Overweight ${item.packed - item.quantity}`}
-                    </Text>
-                  ) : null}
+                  {/* Componente para le manejo del Missing y el Overweight */}
+                  <CheckQuantity
+                    viewPacking={viewPacking}
+                    quantity={item.quantity}
+                    quantity_packing={item.quantity_packing}
+                    quantity_loading={item.quantity_loading}
+                    packed={item.packed}
+                  />
                 </View>
               </View>
 
@@ -132,17 +120,11 @@ export function ProductsCard({
                       ? colors.gray
                       : tempIsPressed
                         ? colorPress
-                        : pressedStates[item.id] ||
-                            validateView === 'FULL' ||
-                            validateView === 'FULL'
+                        : pressedStates[item.id] || validateState === 'FULL'
                           ? colorPress
-                          : rightStates[item.id] ||
-                              validateView === 'ND' ||
-                              validateView === 'ND'
+                          : rightStates[item.id] || validateState === 'ND'
                             ? colorRight
-                            : leftStates[item.id] ||
-                                validateView === 'SHORT' ||
-                                validateView === 'SHORT'
+                            : leftStates[item.id] || validateState === 'SHORT'
                               ? colorLeft
                               : colors.gray,
                   },
@@ -157,16 +139,11 @@ export function ProductsCard({
                         ? 'checkcircleo'
                         : pressedStates[item.id] ||
                             (addQuantity && quantity === item.quantity) ||
-                            validateView === 'FULL' ||
-                            validateView === 'FULL'
+                            validateState === 'FULL'
                           ? 'checkcircleo'
-                          : rightStates[item.id] ||
-                              validateView === 'ND' ||
-                              validateView === 'ND'
+                          : rightStates[item.id] || validateState === 'ND'
                             ? 'arrowright'
-                            : leftStates[item.id] ||
-                                validateView === 'SHORT' ||
-                                validateView === 'SHORT'
+                            : leftStates[item.id] || validateState === 'SHORT'
                               ? 'closecircleo'
                               : 'questioncircleo'
                   }

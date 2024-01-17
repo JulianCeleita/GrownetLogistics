@@ -43,7 +43,7 @@ const CustomDate = () => {
   const handleDatesAvailables = () => {
     const postData = {
       days: 7,
-      supplier: 1,
+      supplier: idSupplier,
     }
     mainAxios
       .post(datesAvailables, postData, {
