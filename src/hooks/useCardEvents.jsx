@@ -138,5 +138,7 @@ export const useCardEvents = (quantityStore, products, setProducts, error) => {
     setShowModal,
     quantity,
     setQuantity,
+    setAddQuantity,
+    setSelectedProduct
   }
 }

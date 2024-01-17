@@ -36,6 +36,8 @@ export function ProductsCard({
     handleGestureEvent,
     declareNotAvailable,
     declareDifferentQty,
+    setAddQuantity,
+    setSelectedProduct
   } = useCardEvents(item.quantity, products, setProducts, error)
 
   const [showModal2, setShowModal2] = useState(false)
@@ -49,6 +51,11 @@ export function ProductsCard({
     handlePress(item.id)
     setShowModal2(false)
     handleSubmit(item.id)
+  }
+
+  const handleClose = () => {
+    setAddQuantity(false)
+    setSelectedProduct(null)
   }
 
   return (
@@ -140,25 +147,37 @@ export function ProductsCard({
                     />
                   </View>
                 </View>
-                <TouchableOpacity
-                  style={[
-                    GlobalStyles.btnPrimary,
-                    { width: 150, marginTop: 10, paddingVertical: 8 },
-                  ]}
-                  onPress={() => {
-                    if (addQuantity && selectedProduct === item.id) {
-                      if (parseInt(quantity) === item.quantity) {
-                        handlePress([item.id])
-                        handleSubmit(item.id, quantity, note)
-                      } else {
-                        declareDifferentQty(item.id)
-                        handleSubmit(item.id, quantity, note)
+                <View style={{ flexDirection: 'row', marginTop: 8, gap: 12 }}>
+                  <TouchableOpacity
+                    style={[
+                      GlobalStyles.btnPrimary,
+                      { width: 150, paddingVertical: 8 },
+                    ]}
+                    onPress={() => {
+                      if (addQuantity && selectedProduct === item.id) {
+                        if (parseInt(quantity) === item.quantity) {
+                          handlePress([item.id])
+                          handleSubmit(item.id, quantity, note)
+                        } else {
+                          declareDifferentQty(item.id)
+                          handleSubmit(item.id, quantity, note)
+                        }
                       }
-                    }
-                  }}
-                >
-                  <Text style={GlobalStyles.textBtnSecundary}>Send</Text>
-                </TouchableOpacity>
+                    }}
+                  >
+                    <Text style={GlobalStyles.textBtnSecundary}>Send</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={handleClose}
+                    style={{
+                      ...GlobalStyles.btnOutline,
+                      width: 100, paddingVertical: 8
+                    }}
+                  >
+                    <Text style={GlobalStyles.textBtnOutline}>Close</Text>
+                  </TouchableOpacity>
+
+                </View>
               </View>
             ) : null}
           </View>
