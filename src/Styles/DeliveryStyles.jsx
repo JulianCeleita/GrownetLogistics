@@ -57,9 +57,7 @@ export const DeliveryStyles = StyleSheet.create({
     alignItems: 'center',
     flexWrap: 'wrap',
     justifyContent: 'center',
-    backgroundColor: 'white',
     height: '100%',
-    zIndex: -1,
   },
   card: {
     alignItems: 'center',
