@@ -11,6 +11,7 @@ import ModalProduct from '../components/ModalProduct'
 import { useCardEvents } from '../hooks/useCardEvents'
 import { GlobalStyles, colors } from '../styles/GlobalStyles'
 import { ProductStyles } from '../styles/ProductStyles'
+import { CheckQuantity } from './CheckQuantity'
 
 export function ProductsCard({
   item,
@@ -47,7 +48,6 @@ export function ProductsCard({
   const [isPressed, setIsPressed] = useState(false)
 
   const validateState = viewPacking ? item.state_packing : item.state_loading;
-  const compareQuantity = viewPacking ? item.quantity_packing : item.quantity_loading;
 
   const confirm = () => {
     declareNotAvailable(item.id)
@@ -59,14 +59,6 @@ export function ProductsCard({
     setShowModal2(false)
     handleSubmit(item.id)
   }
-
-  console.log('--------------------------');
-  console.log('name: ', item.name);
-  console.log('item.quantity: ', item.quantity);
-  console.log('item.quantity_packing: ', item.quantity_packing);
-  console.log('item.quantity_loading: ', item.quantity_loading);
-  console.log('item.state_packing: ', item.state_packing);
-  console.log('item.state_loading: ', item.state_loading);
 
   return (
     <View
@@ -114,29 +106,15 @@ export function ProductsCard({
                     Qty: {item.quantity}
                   </Text>
 
-                  {item.quantity > compareQuantity ||
-                    item.quantity > item.packed ? (
-                    <Text
-                      style={[
-                        ProductStyles.textCard,
-                        { color: colors.danger, marginRight: 50 },
-                      ]}
-                    >
-                      {`Missing ${item.quantity - compareQuantity}`}
-                    </Text>
-                  ) : null}
+                  {/* Componente para le manejo del Missing y el Overweight */}
+                  <CheckQuantity
+                    viewPacking={viewPacking}
+                    quantity={item.quantity}
+                    quantity_packing={item.quantity_packing}
+                    quantity_loading={item.quantity_loading}
+                    packed={item.packed}
+                  />
 
-                  {item.quantity < compareQuantity ||
-                    item.quantity < item.packed ? (
-                    <Text
-                      style={[
-                        ProductStyles.textCard,
-                        { color: colors.green, marginRight: 50 },
-                      ]}
-                    >
-                      {`Overweight ${compareQuantity - item.quantity}`}
-                    </Text>
-                  ) : null}
                 </View>
               </View>
 
@@ -149,15 +127,12 @@ export function ProductsCard({
                       : tempIsPressed
                         ? colorPress
                         : pressedStates[item.id] ||
-                          validateState === "FULL" ||
                           validateState === "FULL"
                           ? colorPress
                           : rightStates[item.id] ||
-                            validateState === "ND" ||
                             validateState === "ND"
                             ? colorRight
                             : leftStates[item.id] ||
-                              validateState === "SHORT" ||
                               validateState === "SHORT"
                               ? colorLeft
                               : colors.gray,
@@ -173,15 +148,12 @@ export function ProductsCard({
                         ? 'checkcircleo'
                         : pressedStates[item.id] ||
                           (addQuantity && quantity === item.quantity) ||
-                          validateState === "FULL" ||
                           validateState === "FULL"
                           ? 'checkcircleo'
                           : rightStates[item.id] ||
-                            validateState === "ND" ||
                             validateState === "ND"
                             ? 'arrowright'
                             : leftStates[item.id] ||
-                              validateState === "SHORT" ||
                               validateState === "SHORT"
                               ? 'closecircleo'
                               : 'questioncircleo'
