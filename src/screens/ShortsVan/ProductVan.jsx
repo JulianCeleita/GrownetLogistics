@@ -58,7 +58,7 @@ function ProductsVan() {
               <View style={{ marginTop: 50 }}>
                 {restaurant.vanProducts.map((product, index) => (
                   <ProductsCardBulkVan
-                    key={product.id}
+                    key={index}
                     item={product}
                     handleSubmit={handleSubmit}
                   />
