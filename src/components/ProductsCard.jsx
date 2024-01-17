@@ -37,7 +37,7 @@ export function ProductsCard({
     declareNotAvailable,
     declareDifferentQty,
     setAddQuantity,
-    setSelectedProduct
+    setSelectedProduct,
   } = useCardEvents(item.quantity, products, setProducts, error)
 
   const [showModal2, setShowModal2] = useState(false)
@@ -53,7 +53,6 @@ export function ProductsCard({
     handleSubmit(item.id)
   }
 
-
   const handleCardSubmit = async () => {
     const cardPromises = [
       handlePress(item.id),
@@ -65,7 +64,6 @@ export function ProductsCard({
   const handleClose = () => {
     setAddQuantity(false)
     setSelectedProduct(null)
-
   }
 
   return (
@@ -154,12 +152,23 @@ export function ProductsCard({
                     />
                   </View>
                 </View>
-                <View style={{ flexDirection: 'row', marginTop: 8, gap: 12 }}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    marginTop: 8,
+                    gap: 12,
+                  }}
+                >
                   <TouchableOpacity
-                    style={[
-                      GlobalStyles.btnPrimary,
-                      { width: 150, paddingVertical: 8 },
-                    ]}
+                    onPress={handleClose}
+                    style={{
+                      ...GlobalStyles.btnOutline,
+                    }}
+                  >
+                    <Text style={GlobalStyles.textBtnOutline}>Cancel</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={[GlobalStyles.btnPrimary]}
                     onPress={() => {
                       if (addQuantity && selectedProduct === item.id) {
                         if (parseInt(quantity) === item.quantity) {
@@ -174,16 +183,6 @@ export function ProductsCard({
                   >
                     <Text style={GlobalStyles.textBtnSecundary}>Send</Text>
                   </TouchableOpacity>
-                  <TouchableOpacity
-                    onPress={handleClose}
-                    style={{
-                      ...GlobalStyles.btnOutline,
-                      width: 100, paddingVertical: 8
-                    }}
-                  >
-                    <Text style={GlobalStyles.textBtnOutline}>Close</Text>
-                  </TouchableOpacity>
-
                 </View>
               </View>
             ) : null}
