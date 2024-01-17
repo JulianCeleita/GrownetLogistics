@@ -1,5 +1,12 @@
 import React, { useEffect } from 'react'
-import { ActivityIndicator, FlatList, Platform, Text, View } from 'react-native'
+import {
+  ActivityIndicator,
+  FlatList,
+  Platform,
+  ScrollView,
+  Text,
+  View,
+} from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { ProductsCardBulkVan } from '../../components/ProductsCardBulkVan'
 import { insertShort } from '../../config/urls.config'
@@ -33,22 +40,19 @@ function ProductsVan() {
           <Text>Error: {error}</Text>
         </View>
       ) : (
-        <FlatList
-          data={restaurantData}
-          renderItem={({ item: restaurant }) => (
-            <>
-              <View key={restaurant.vanName}>
-                <Text
-                  style={[
-                    CustomerDayStyles.restaurantTypeTitle,
-                    {
-                      marginBottom: Platform.OS === 'ios' ? 5 : null,
-                    },
-                  ]}
-                >
-                  {restaurant.vanName}
-                </Text>
-              </View>
+        <ScrollView>
+          {restaurantData.map((restaurant) => (
+            <View key={restaurant.vanName}>
+              <Text
+                style={[
+                  CustomerDayStyles.restaurantTypeTitle,
+                  {
+                    marginBottom: Platform.OS === 'ios' ? 5 : null,
+                  },
+                ]}
+              >
+                {restaurant.vanName}
+              </Text>
               <View>
                 {restaurant.vanProducts.map((product, index) => (
                   <ProductsCardBulkVan
@@ -58,11 +62,9 @@ function ProductsVan() {
                   />
                 ))}
               </View>
-            </>
-          )}
-          keyExtractor={(restaurant) => restaurant.vanName}
-          style={{ marginTop: 40 }}
-        />
+            </View>
+          ))}
+        </ScrollView>
       )}
     </SafeAreaView>
   )

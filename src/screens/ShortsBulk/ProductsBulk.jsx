@@ -1,5 +1,12 @@
 import React, { useEffect } from 'react'
-import { ActivityIndicator, FlatList, Platform, Text, View } from 'react-native'
+import {
+  ActivityIndicator,
+  FlatList,
+  Platform,
+  ScrollView,
+  Text,
+  View,
+} from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { ProductsCardBulkVan } from '../../components/ProductsCardBulkVan'
 import { insertShort } from '../../config/urls.config'
@@ -33,11 +40,10 @@ function ProductsBulk() {
           <Text>Error: {error}</Text>
         </View>
       ) : (
-        <FlatList
-          data={typeData}
-          renderItem={({ item: type }) => (
-            <>
-              <View key={type.bulkType} style={{ marginBottom: -50 }}>
+        <ScrollView>
+          {typeData.map((type) => (
+            <React.Fragment key={type.bulkType}>
+              <View style={{ marginBottom: -50 }}>
                 <Text
                   style={[
                     CustomerDayStyles.restaurantTypeTitle,
@@ -58,11 +64,9 @@ function ProductsBulk() {
                   />
                 ))}
               </View>
-            </>
-          )}
-          keyExtractor={(type) => `${type.bulkType}`}
-          style={{ marginTop: 20 }}
-        />
+            </React.Fragment>
+          ))}
+        </ScrollView>
       )}
     </SafeAreaView>
   )
