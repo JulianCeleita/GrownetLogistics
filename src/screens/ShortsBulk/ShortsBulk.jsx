@@ -8,6 +8,7 @@ import CircleProgress from '../../components/CircleProgress'
 import useOrdersByDate from '../../store/useOrdersByDateStore'
 import { DeliveryStyles } from '../../styles/DeliveryStyles'
 import { GlobalStyles } from '../../styles/GlobalStyles'
+import { BtnGoBack } from '../../components/BtnGoBack'
 
 function ShortsBulk() {
   const navigation = useNavigation()
@@ -22,7 +23,7 @@ function ShortsBulk() {
   return (
     <SafeAreaView>
       <ScrollView>
-
+        <BtnGoBack color='white' />
         <View style={[DeliveryStyles.tittle, GlobalStyles.boxShadow]}>
           <MaterialCommunityIcons
             name="package-variant"

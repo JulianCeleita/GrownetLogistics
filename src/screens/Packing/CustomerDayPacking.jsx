@@ -18,6 +18,7 @@ import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
 import { Ionicons } from '@expo/vector-icons'
 import { colors } from '../../styles/GlobalStyles'
 import ProductSearcher from '../../components/ProductSearch'
+import { BtnGoBack } from '../../components/BtnGoBack'
 
 function CustomerDayPacking({ route }) {
   const { ordersByDate } = useOrdersByDate()
@@ -52,6 +53,7 @@ function CustomerDayPacking({ route }) {
   return (
     <SafeAreaView style={CustomerDayStyles.customerPricipal}>
       <ScrollView>
+        <BtnGoBack color={colors.darkBlue} />
         {search ? (
           <ProductSearcher
             setSearch={setSearch}

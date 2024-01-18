@@ -16,6 +16,7 @@ import { usePackingStore } from '../../store/usePackingStore'
 import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
 import { colors } from '../../styles/GlobalStyles'
 import { ProductStyles } from '../../styles/ProductStyles'
+import { BtnGoBack } from '../../components/BtnGoBack'
 
 function ProductsPacking({ route }) {
   const {
@@ -34,6 +35,7 @@ function ProductsPacking({ route }) {
   return (
     <SafeAreaView style={ProductStyles.products}>
       <ScrollView>
+        <BtnGoBack color={colors.darkBlue} />
         <View style={CustomerDayStyles.title2}>
           <View style={{ paddingHorizontal: 43, width: '100%' }}>
             <View style={ProductStyles.customerTitleContainer}>

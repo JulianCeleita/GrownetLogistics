@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import {
   ActivityIndicator,
-  FlatList,
   Platform,
   ScrollView,
   Text,
@@ -15,6 +14,8 @@ import useEmployeeStore from '../../store/useEmployeeStore'
 import { useShortBulkStore } from '../../store/useShortBulkStore'
 import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
 import { ProductStyles } from '../../styles/ProductStyles'
+import { BtnGoBack } from '../../components/BtnGoBack'
+import { colors } from '../../styles/GlobalStyles'
 
 function ProductsBulk({ route }) {
   const { typeData, loading, error, setFetchShortBulkProducts } =
@@ -28,7 +29,8 @@ function ProductsBulk({ route }) {
 
   return (
     <SafeAreaView style={ProductStyles.products}>
-      <View style={CustomerDayStyles.title2}>
+      <BtnGoBack color={colors.darkBlue} top={Platform.OS === 'ios' && !Platform.isPad ? 70 : 15} />
+      <View style={{ ...CustomerDayStyles.title2, paddingBottom: 10 }}>
         <Text style={CustomerDayStyles.customerTitle}>
           {route.params.nameRoute}
         </Text>

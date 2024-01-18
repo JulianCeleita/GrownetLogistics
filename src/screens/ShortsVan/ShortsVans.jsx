@@ -7,7 +7,8 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import CircleProgress from '../../components/CircleProgress'
 import useOrdersByDate from '../../store/useOrdersByDateStore'
 import { DeliveryStyles } from '../../styles/DeliveryStyles'
-import { GlobalStyles } from '../../styles/GlobalStyles'
+import { GlobalStyles, colors } from '../../styles/GlobalStyles'
+import { BtnGoBack } from '../../components/BtnGoBack'
 
 function ShortsVans() {
   const navigation = useNavigation()
@@ -22,7 +23,7 @@ function ShortsVans() {
   return (
     <SafeAreaView>
       <ScrollView>
-
+        <BtnGoBack color='white' />
         <View style={[DeliveryStyles.tittle, GlobalStyles.boxShadow]}>
           <MaterialCommunityIcons
             name="truck-fast-outline"

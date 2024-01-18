@@ -7,6 +7,7 @@ import CircleProgress from '../../components/CircleProgress'
 import useOrdersByDate from '../../store/useOrdersByDateStore'
 import { DeliveryStyles } from '../../styles/DeliveryStyles'
 import { GlobalStyles, colors } from '../../styles/GlobalStyles'
+import { BtnGoBack } from '../../components/BtnGoBack'
 
 const Packing = () => {
   const navigation = useNavigation()
@@ -21,6 +22,7 @@ const Packing = () => {
   return (
     <SafeAreaView style={{ backgroundColor: 'white', height: '100%' }}>
       <ScrollView>
+        <BtnGoBack color='white' />
         <View style={[DeliveryStyles.tittle, GlobalStyles.boxShadow,]}>
           <Image
             style={DeliveryStyles.imageTittlePacking}
