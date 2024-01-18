@@ -1,13 +1,12 @@
 import React, { useEffect } from 'react'
 import {
   ActivityIndicator,
-  Dimensions,
-  FlatList,
   ScrollView,
   Text,
-  View,
+  View
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { BtnGoBack } from '../../components/BtnGoBack'
 import { ProductsCard } from '../../components/ProductsCard'
 import { insertPacking } from '../../config/urls.config'
 import { useProductSubmit } from '../../hooks/useProductSubmit'
@@ -16,7 +15,6 @@ import { usePackingStore } from '../../store/usePackingStore'
 import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
 import { colors } from '../../styles/GlobalStyles'
 import { ProductStyles } from '../../styles/ProductStyles'
-import { BtnGoBack } from '../../components/BtnGoBack'
 
 function ProductsPacking({ route }) {
   const {

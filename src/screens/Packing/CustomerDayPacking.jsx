@@ -1,24 +1,23 @@
+import { Ionicons } from '@expo/vector-icons'
 import { useFocusEffect } from '@react-navigation/native'
 import React, { useCallback, useState } from 'react'
 import {
   ScrollView,
   Text,
-  TextInput,
-  View,
   TouchableOpacity,
+  View
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import mainAxios from '../../../axios.config'
+import { BtnGoBack } from '../../components/BtnGoBack'
 import CustomerCard from '../../components/CustomerCard'
+import ProductSearcher from '../../components/ProductSearch'
 import { percentagePacking } from '../../config/urls.config'
 import useEmployeeStore from '../../store/useEmployeeStore'
 import useOrdersByDate from '../../store/useOrdersByDateStore'
 import usePercentageStore from '../../store/usePercentageStore'
 import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
-import { Ionicons } from '@expo/vector-icons'
 import { colors } from '../../styles/GlobalStyles'
-import ProductSearcher from '../../components/ProductSearch'
-import { BtnGoBack } from '../../components/BtnGoBack'
 
 function CustomerDayPacking({ route }) {
   const { ordersByDate } = useOrdersByDate()

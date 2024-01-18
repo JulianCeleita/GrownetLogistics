@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
-import { ActivityIndicator, Text, View, ScrollView } from 'react-native'
+import { ActivityIndicator, ScrollView, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { BtnGoBack } from '../../components/BtnGoBack'
 import { ProductsCard } from '../../components/ProductsCard'
 import { insertLoading } from '../../config/urls.config'
 import { useProductSubmit } from '../../hooks/useProductSubmit'
@@ -9,7 +10,6 @@ import useLoadingStore from '../../store/useLoadingStore'
 import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
 import { colors } from '../../styles/GlobalStyles'
 import { ProductStyles } from '../../styles/ProductStyles'
-import { BtnGoBack } from '../../components/BtnGoBack'
 
 function ProductsLoading({ route }) {
   const {

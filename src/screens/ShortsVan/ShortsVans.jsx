@@ -4,11 +4,11 @@ import { LinearGradient } from 'expo-linear-gradient'
 import React from 'react'
 import { Platform, ScrollView, Text, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { BtnGoBack } from '../../components/BtnGoBack'
 import CircleProgress from '../../components/CircleProgress'
 import useOrdersByDate from '../../store/useOrdersByDateStore'
 import { DeliveryStyles } from '../../styles/DeliveryStyles'
-import { GlobalStyles, colors } from '../../styles/GlobalStyles'
-import { BtnGoBack } from '../../components/BtnGoBack'
+import { GlobalStyles } from '../../styles/GlobalStyles'
 
 function ShortsVans() {
   const navigation = useNavigation()

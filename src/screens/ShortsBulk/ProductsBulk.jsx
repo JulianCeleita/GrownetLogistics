@@ -7,15 +7,15 @@ import {
   View,
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { BtnGoBack } from '../../components/BtnGoBack'
 import { ProductsCardBulkVan } from '../../components/ProductsCardBulkVan'
 import { insertShort } from '../../config/urls.config'
 import { useProductSubmit } from '../../hooks/useProductSubmit'
 import useEmployeeStore from '../../store/useEmployeeStore'
 import { useShortBulkStore } from '../../store/useShortBulkStore'
 import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
-import { ProductStyles } from '../../styles/ProductStyles'
-import { BtnGoBack } from '../../components/BtnGoBack'
 import { colors } from '../../styles/GlobalStyles'
+import { ProductStyles } from '../../styles/ProductStyles'
 
 function ProductsBulk({ route }) {
   const { typeData, loading, error, setFetchShortBulkProducts } =
