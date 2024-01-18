@@ -7,6 +7,7 @@ export const DeliveryStyles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     height: 100,
+    zIndex: 1,
   },
   tittle: {
     backgroundColor: colors.bluePrimary,
@@ -18,7 +19,9 @@ export const DeliveryStyles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 25,
-    marginBottom: -12,
+    alignSelf: 'center',
+    position: 'absolute',
+    zIndex: 2
   },
   textTittle: {
     fontSize: 25,
