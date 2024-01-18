@@ -18,6 +18,7 @@ import { loginEmployee } from '../../config/urls.config'
 import logo from '../../img/Logo_Blanco.png'
 import useEmployeeStore from '../../store/useEmployeeStore'
 import { LoginStyles } from '../../styles/LoginStyles'
+import NumericKeyboard from '../../components/numericKeyboard'
 
 const PinLogin = () => {
   const [pin, setPin] = useState('')
@@ -25,7 +26,7 @@ const PinLogin = () => {
   const [loading, setLoading] = useState(false)
   const [showEmptyInputModal, setShowEmptyInputModal] = useState(false)
   const { setEmployeeToken } = useEmployeeStore()
-  const [keyboardOpen, setKeyboardOpen] = useState(false);
+  const [keyboardOpen, setKeyboardOpen] = useState(false)
   const navigation = useNavigation()
 
   useEffect(() => {
@@ -34,13 +35,13 @@ const PinLogin = () => {
         'keyboardDidShow',
         () => {
           setKeyboardOpen(true)
-        }
+        },
       )
       const keyboardDidHideListener = Keyboard.addListener(
         'keyboardDidHide',
         () => {
           setKeyboardOpen(false)
-        }
+        },
       )
 
       return () => {
@@ -88,7 +89,7 @@ const PinLogin = () => {
   const dismissKeyboard = () => {
     Keyboard.dismiss()
   }
-
+  console.log('pin', pin)
   return (
     <SafeAreaView
       style={{ flex: 1 }}
@@ -99,15 +100,16 @@ const PinLogin = () => {
           <StatusBar style="light" />
           <Image source={logo} style={LoginStyles.logo} />
           <Text style={LoginStyles.loginHeaderText}>Identify yourself</Text>
+
           <TextInput
             style={LoginStyles.input2}
             placeholder="Identifier pin"
-            keyboardType="numeric"
             autoCapitalize="none"
+            editable={false}
             secureTextEntry
             onSubmitEditing={handleSignIn}
-            onChangeText={(text) => setPin(text)}
           />
+          <NumericKeyboard onNumberPress={(number) => setPin(number)} />
           <TouchableOpacity
             style={
               loading
