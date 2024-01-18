@@ -1,12 +1,7 @@
 import React, { useEffect } from 'react'
-import {
-  ActivityIndicator,
-  FlatList,
-  ScrollView,
-  Text,
-  View,
-} from 'react-native'
+import { ActivityIndicator, ScrollView, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { BtnGoBack } from '../../components/BtnGoBack'
 import { ProductsCard } from '../../components/ProductsCard'
 import { insertLoading } from '../../config/urls.config'
 import { useProductSubmit } from '../../hooks/useProductSubmit'
@@ -34,6 +29,8 @@ function ProductsLoading({ route }) {
   return (
     <SafeAreaView style={ProductStyles.products}>
       <ScrollView>
+
+        <BtnGoBack color={colors.darkBlue} />
         <View style={CustomerDayStyles.title2}>
           <View style={{ paddingHorizontal: 43, width: '100%' }}>
             <View style={ProductStyles.customerTitleContainer}>

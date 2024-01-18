@@ -1,19 +1,20 @@
 import React, { useEffect } from 'react'
 import {
   ActivityIndicator,
-  FlatList,
   Platform,
   ScrollView,
   Text,
   View,
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { BtnGoBack } from '../../components/BtnGoBack'
 import { ProductsCardBulkVan } from '../../components/ProductsCardBulkVan'
 import { insertShort } from '../../config/urls.config'
 import { useProductSubmit } from '../../hooks/useProductSubmit'
 import useEmployeeStore from '../../store/useEmployeeStore'
 import { useShortBulkStore } from '../../store/useShortBulkStore'
 import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
+import { colors } from '../../styles/GlobalStyles'
 import { ProductStyles } from '../../styles/ProductStyles'
 
 function ProductsBulk({ route }) {
@@ -28,7 +29,8 @@ function ProductsBulk({ route }) {
 
   return (
     <SafeAreaView style={ProductStyles.products}>
-      <View style={CustomerDayStyles.title2}>
+      <BtnGoBack color={colors.darkBlue} top={Platform.OS === 'ios' && !Platform.isPad ? 70 : 15} />
+      <View style={{ ...CustomerDayStyles.title2, paddingBottom: 10 }}>
         <Text style={CustomerDayStyles.customerTitle}>
           {route.params.nameRoute}
         </Text>

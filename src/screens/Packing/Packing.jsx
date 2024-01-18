@@ -3,10 +3,11 @@ import { LinearGradient } from 'expo-linear-gradient'
 import React from 'react'
 import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { BtnGoBack } from '../../components/BtnGoBack'
 import CircleProgress from '../../components/CircleProgress'
 import useOrdersByDate from '../../store/useOrdersByDateStore'
 import { DeliveryStyles } from '../../styles/DeliveryStyles'
-import { GlobalStyles, colors } from '../../styles/GlobalStyles'
+import { GlobalStyles } from '../../styles/GlobalStyles'
 
 const Packing = () => {
   const navigation = useNavigation()
@@ -21,6 +22,7 @@ const Packing = () => {
   return (
     <SafeAreaView style={{ backgroundColor: 'white', height: '100%' }}>
       <ScrollView>
+        <BtnGoBack color='white' />
         <View style={[DeliveryStyles.tittle, GlobalStyles.boxShadow,]}>
           <Image
             style={DeliveryStyles.imageTittlePacking}

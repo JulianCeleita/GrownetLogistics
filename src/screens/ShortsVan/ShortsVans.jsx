@@ -4,6 +4,7 @@ import { LinearGradient } from 'expo-linear-gradient'
 import React from 'react'
 import { Platform, ScrollView, Text, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { BtnGoBack } from '../../components/BtnGoBack'
 import CircleProgress from '../../components/CircleProgress'
 import useOrdersByDate from '../../store/useOrdersByDateStore'
 import { DeliveryStyles } from '../../styles/DeliveryStyles'
@@ -22,7 +23,7 @@ function ShortsVans() {
   return (
     <SafeAreaView>
       <ScrollView>
-
+        <BtnGoBack color='white' />
         <View style={[DeliveryStyles.tittle, GlobalStyles.boxShadow]}>
           <MaterialCommunityIcons
             name="truck-fast-outline"
