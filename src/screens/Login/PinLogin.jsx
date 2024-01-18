@@ -89,6 +89,10 @@ const PinLogin = () => {
   const dismissKeyboard = () => {
     Keyboard.dismiss()
   }
+  const resetPin = () => {
+    setPin('')
+  }
+
   console.log('pin', pin)
   return (
     <SafeAreaView
@@ -107,9 +111,13 @@ const PinLogin = () => {
             autoCapitalize="none"
             editable={false}
             secureTextEntry
-            onSubmitEditing={handleSignIn}
+            value={pin}
           />
-          <NumericKeyboard onNumberPress={(number) => setPin(number)} />
+          <NumericKeyboard
+            onNumberPress={(number) => setPin(pin + number)}
+            setPin={setPin}
+            pin={pin}
+          />
           <TouchableOpacity
             style={
               loading

@@ -1,8 +1,22 @@
-import React from 'react'
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
-export default function CalculatorKeyboard({ onNumberPress }) {
-  const numbers = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [0]]
+export default function CalculatorKeyboard({ onNumberPress, setPin, pin }) {
+  const numbers = [
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9],
+    [0, 'X'],
+  ]
+
+  const handleOnNumberPress = (number) => {
+    if (number === 'X') {
+      if (pin !== '') {
+        setPin(pin.slice(0, -1))
+      }
+    } else {
+      onNumberPress(number)
+    }
+  }
 
   return (
     <View style={styles.container}>
@@ -11,7 +25,7 @@ export default function CalculatorKeyboard({ onNumberPress }) {
           {row.map((number) => (
             <TouchableOpacity
               key={number}
-              onPress={() => onNumberPress(number)}
+              onPress={() => handleOnNumberPress(number)}
               style={styles.button}
             >
               <Text style={styles.text}>{number}</Text>
