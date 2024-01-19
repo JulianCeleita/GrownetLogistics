@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import mainAxios from '../../axios.config.js'
 import { usePackingStore } from '../store/usePackingStore.js'
 import useEmployeeStore from '../store/useEmployeeStore.js'
-let promiseQueue = []
 
 export const useProductSubmit = (insert) => {
   const { employeeToken } = useEmployeeStore()
