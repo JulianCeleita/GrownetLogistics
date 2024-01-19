@@ -29,7 +29,10 @@ function ProductsBulk({ route }) {
 
   return (
     <SafeAreaView style={ProductStyles.products}>
-      <BtnGoBack color={colors.darkBlue} top={Platform.OS === 'ios' && !Platform.isPad ? 70 : 15} />
+      <BtnGoBack
+        color={colors.darkBlue}
+        top={Platform.OS === 'ios' && !Platform.isPad ? 60 : 15}
+      />
       <View style={{ ...CustomerDayStyles.title2, paddingBottom: 10 }}>
         <Text style={CustomerDayStyles.customerTitle}>
           {route.params.nameRoute}
@@ -47,7 +50,6 @@ function ProductsBulk({ route }) {
         <ScrollView>
           {typeData.map((type, index) => (
             <View key={index}>
-
               <View style={{ marginBottom: -50 }}>
                 <Text
                   style={[

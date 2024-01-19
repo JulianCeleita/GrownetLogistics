@@ -26,10 +26,12 @@ function ProductsVan({ route }) {
   useEffect(() => {
     setFetchShortVanProducts(employeeToken)
   }, [])
-
   return (
     <SafeAreaView style={ProductStyles.products}>
-      <BtnGoBack color={colors.darkBlue} top={Platform.OS === 'ios' && !Platform.isPad ? 70 : 15} />
+      <BtnGoBack
+        color={colors.darkBlue}
+        top={Platform.OS === 'ios' && !Platform.isPad ? 60 : 15}
+      />
       <View style={CustomerDayStyles.title2}>
         <Text style={CustomerDayStyles.customerTitle}>
           {route.params.nameRoute}

@@ -1,40 +1,31 @@
 import React from 'react'
-import Svg, {
-  Circle,
-  Defs,
-  ClipPath,
-  Image as SvgImage,
-} from 'react-native-svg'
+import Svg, { Circle, Text as SvgText } from 'react-native-svg'
 import { DeliveryStyles } from '../styles/DeliveryStyles'
+import { colors } from '../styles/GlobalStyles'
 
 function CircleProgress() {
   const radius = 40
   const strokeWidth = 10
   const circumference = 2 * Math.PI * radius
   const strokeDashoffset = circumference - (60 / 100) * circumference
+  let roundedPercentage = 0
+
   return (
     <Svg style={DeliveryStyles.circle} height={radius * 2} width={radius * 2}>
-      <Defs>
-        <ClipPath id="clipCard">
-          <Circle cx={radius} cy={radius} r={radius - strokeWidth / 2} />
-        </ClipPath>
-      </Defs>
-      <SvgImage
-        href={require('../img/loading.png')}
-        width={45}
-        height={32}
-        preserveAspectRatio="xMidYMid slice"
-        clipPath="url(#clipCard)"
-        x={18}
-        y={22}
-        r={20}
-      />
       <Circle
         cx={radius}
         cy={radius}
         r={radius - strokeWidth / 2}
         fill="transparent"
-        stroke="#8FDE9B"
+        stroke={
+          roundedPercentage <= 49
+            ? '#FFB7B7'
+            : roundedPercentage <= 99
+              ? '#FFCA8C'
+              : roundedPercentage == 100
+                ? colors.green
+                : '#FFB7B7'
+        }
         strokeWidth={strokeWidth}
         strokeDasharray={`${circumference} ${circumference}`}
         strokeDashoffset={0}
@@ -44,11 +35,29 @@ function CircleProgress() {
         cy={radius}
         r={radius - strokeWidth / 2}
         fill="transparent"
-        stroke="#62C471"
+        stroke={
+          roundedPercentage <= 49
+            ? colors.danger
+            : roundedPercentage <= 99
+              ? colors.orange
+              : roundedPercentage == 100
+                ? colors.green
+                : colors.danger
+        }
         strokeWidth={strokeWidth}
         strokeDasharray={`${circumference} ${circumference}`}
         strokeDashoffset={strokeDashoffset}
       />
+      <SvgText
+        x={radius - 0}
+        y={radius + 6}
+        textAnchor="middle"
+        stroke="#00478C"
+        fontSize="18"
+        fill={colors.darkBlue}
+      >
+        {roundedPercentage + '%'}
+      </SvgText>
     </Svg>
   )
 }

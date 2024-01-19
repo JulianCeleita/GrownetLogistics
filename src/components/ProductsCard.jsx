@@ -165,7 +165,14 @@ export function ProductsCard({
                       ...GlobalStyles.btnOutline,
                     }}
                   >
-                    <Text style={GlobalStyles.textBtnOutline}>Cancel</Text>
+                    <Text
+                      style={[
+                        GlobalStyles.textBtnOutline,
+                        { fontSize: Platform.OS === 'ios' ? 15 : 14 },
+                      ]}
+                    >
+                      Cancel
+                    </Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={[GlobalStyles.btnPrimary]}
@@ -181,7 +188,14 @@ export function ProductsCard({
                       }
                     }}
                   >
-                    <Text style={GlobalStyles.textBtnSecundary}>Send</Text>
+                    <Text
+                      style={[
+                        GlobalStyles.textBtnSecundary,
+                        { fontSize: Platform.OS === 'ios' ? 15 : 14 },
+                      ]}
+                    >
+                      Send
+                    </Text>
                   </TouchableOpacity>
                 </View>
               </View>
