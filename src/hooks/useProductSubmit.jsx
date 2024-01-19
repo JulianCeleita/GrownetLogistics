@@ -29,14 +29,12 @@ export const useProductSubmit = (insert) => {
     }
 
     try {
-      console.log('data', data)
+
       const response = await mainAxios.post(insert, data, {
         headers: {
           Authorization: `Bearer ${employeeToken}`,
         },
       })
-
-      console.log('response.data', response.data)
 
       if (response.status === 200) {
         setError(null)

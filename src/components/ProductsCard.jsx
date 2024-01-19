@@ -66,7 +66,6 @@ export function ProductsCard({
     setAddQuantity(false)
     setSelectedProduct(null)
   }
-  // console.log('item', item)
 
   return (
     <View
@@ -83,7 +82,6 @@ export function ProductsCard({
             } else {
               setShowModal2(true)
             }
-
             handleCardSubmit()
           }
         }}

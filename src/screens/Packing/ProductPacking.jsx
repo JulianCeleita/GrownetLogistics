@@ -17,29 +17,15 @@ function ProductsPacking({ route }) {
     setProductsPacking,
     error,
     setFetchPackingProducts,
-    selectedCustomer,
+    selectedOrder,
   } = usePackingStore()
   const { employeeToken } = useEmployeeStore()
   const { handleSubmit } = useProductSubmit(insertPacking)
 
   useEffect(() => {
-    setFetchPackingProducts(employeeToken, selectedCustomer)
+    setFetchPackingProducts(employeeToken, selectedOrder)
   }, [])
-  console.log('que trae', productsPacking)
-
-  function groupProductsByPresentationType(products) {
-    const groupedProducts = {}
-
-    products.forEach((item) => {
-      const presentationType = item.presentationType
-      if (!groupedProducts[presentationType]) {
-        groupedProducts[presentationType] = { presentationType, products: [] }
-      }
-      groupedProducts[presentationType].products.push(item)
-    })
-
-    return Object.values(groupedProducts)
-  }
+  
   return (
     <SafeAreaView style={ProductStyles.products}>
       <ScrollView>

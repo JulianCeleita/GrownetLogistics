@@ -4,20 +4,19 @@ import { productsPackingConfig } from '../config/urls.config'
 
 export const usePackingStore = create((set) => ({
   productsPacking: null,
-  selectedCustomer: null,
+  selectedOrder: null,
   error: null,
 
   setError: (error) => set(() => ({ error: error })),
 
-  setSelectedCustomer: (customer) =>
-    set(() => ({ selectedCustomer: customer })),
+  setSelectedOrder: (order) => set(() => ({ selectedOrder: order })),
 
   setProductsPacking: (products) => set(() => ({ productsPacking: products })),
 
-  setFetchPackingProducts: async (token, accountNumber) => {
+  setFetchPackingProducts: async (token, orderNumber) => {
     try {
       const resp = await mainAxios.get(
-        `${productsPackingConfig}${accountNumber}`,
+        `${productsPackingConfig}${orderNumber}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

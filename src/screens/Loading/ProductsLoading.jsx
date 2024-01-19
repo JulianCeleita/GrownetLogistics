@@ -17,28 +17,14 @@ function ProductsLoading({ route }) {
     setLoadingProducts,
     error,
     setFetchProductsLoading,
-    selectedCustomerL,
+    selectedOrderL,
   } = useLoadingStore()
   const { employeeToken } = useEmployeeStore()
   const { handleSubmit } = useProductSubmit(insertLoading)
 
   useEffect(() => {
-    setFetchProductsLoading(employeeToken, selectedCustomerL)
+    setFetchProductsLoading(employeeToken, selectedOrderL)
   }, [])
-
-  function groupProductsByPresentationType(products) {
-    const groupedProducts = {}
-
-    products.forEach((item) => {
-      const presentationType = item.presentationType
-      if (!groupedProducts[presentationType]) {
-        groupedProducts[presentationType] = { presentationType, products: [] }
-      }
-      groupedProducts[presentationType].products.push(item)
-    })
-
-    return Object.values(groupedProducts)
-  }
 
   return (
     <SafeAreaView style={ProductStyles.products}>
@@ -59,6 +45,7 @@ function ProductsLoading({ route }) {
         {productsLoading ? (
           <View style={ProductStyles.cardsProducts}>
             {productsLoading.data.map((item, index) => (
+
               <ProductsCard
                 key={index}
                 item={item}
