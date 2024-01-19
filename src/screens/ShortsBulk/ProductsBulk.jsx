@@ -1,19 +1,20 @@
 import React, { useEffect } from 'react'
 import {
   ActivityIndicator,
-  FlatList,
   Platform,
   ScrollView,
   Text,
   View,
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { BtnGoBack } from '../../components/BtnGoBack'
 import { ProductsCardBulkVan } from '../../components/ProductsCardBulkVan'
 import { insertShort } from '../../config/urls.config'
 import { useProductSubmit } from '../../hooks/useProductSubmit'
 import useEmployeeStore from '../../store/useEmployeeStore'
 import { useShortBulkStore } from '../../store/useShortBulkStore'
 import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
+import { colors } from '../../styles/GlobalStyles'
 import { ProductStyles } from '../../styles/ProductStyles'
 
 function ProductsBulk({ route }) {
@@ -28,7 +29,11 @@ function ProductsBulk({ route }) {
 
   return (
     <SafeAreaView style={ProductStyles.products}>
-      <View style={CustomerDayStyles.title2}>
+      <BtnGoBack
+        color={colors.darkBlue}
+        top={Platform.OS === 'ios' && !Platform.isPad ? 60 : 15}
+      />
+      <View style={{ ...CustomerDayStyles.title2 }}>
         <Text style={CustomerDayStyles.customerTitle}>
           {route.params.nameRoute}
         </Text>
@@ -45,8 +50,7 @@ function ProductsBulk({ route }) {
         <ScrollView>
           {typeData.map((type, index) => (
             <View key={index}>
-
-              <View style={{ marginBottom: -50 }}>
+              <View style={{ marginBottom: 0 }}>
                 <Text
                   style={[
                     CustomerDayStyles.restaurantTypeTitle,
@@ -64,6 +68,7 @@ function ProductsBulk({ route }) {
                     key={product.id}
                     item={product}
                     handleSubmit={handleSubmit}
+                    viewBulk
                   />
                 ))}
               </View>

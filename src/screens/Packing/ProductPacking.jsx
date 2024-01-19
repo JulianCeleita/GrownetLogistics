@@ -1,13 +1,7 @@
 import React, { useEffect } from 'react'
-import {
-  ActivityIndicator,
-  Dimensions,
-  FlatList,
-  ScrollView,
-  Text,
-  View,
-} from 'react-native'
+import { ActivityIndicator, ScrollView, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { BtnGoBack } from '../../components/BtnGoBack'
 import { ProductsCard } from '../../components/ProductsCard'
 import { insertPacking } from '../../config/urls.config'
 import { useProductSubmit } from '../../hooks/useProductSubmit'
@@ -31,9 +25,25 @@ function ProductsPacking({ route }) {
   useEffect(() => {
     setFetchPackingProducts(employeeToken, selectedCustomer)
   }, [])
+  console.log('que trae', productsPacking)
+
+  function groupProductsByPresentationType(products) {
+    const groupedProducts = {}
+
+    products.forEach((item) => {
+      const presentationType = item.presentationType
+      if (!groupedProducts[presentationType]) {
+        groupedProducts[presentationType] = { presentationType, products: [] }
+      }
+      groupedProducts[presentationType].products.push(item)
+    })
+
+    return Object.values(groupedProducts)
+  }
   return (
     <SafeAreaView style={ProductStyles.products}>
       <ScrollView>
+        <BtnGoBack color={colors.darkBlue} />
         <View style={CustomerDayStyles.title2}>
           <View style={{ paddingHorizontal: 43, width: '100%' }}>
             <View style={ProductStyles.customerTitleContainer}>
@@ -47,34 +57,35 @@ function ProductsPacking({ route }) {
           </View>
         </View>
 
-        {productsPacking ? (
-          <View style={ProductStyles.cardsProducts}>
-            {productsPacking.data.map((item, index) => (
-              <ProductsCard
-                key={index}
-                item={item}
-                colorPress={colors.orange}
-                colorRight={colors.orange}
-                colorLeft={colors.danger}
-                products={productsPacking}
-                setProducts={setProductsPacking}
-                handleSubmit={handleSubmit}
-                viewPacking
-                error={error}
-              />
-            ))}
-          </View>
-        ) : (
-          <View
-            style={{
-              flex: 1,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
+        <View style={ProductStyles.cardsProducts}>
+          {productsPacking ? (
+            groupProductsByPresentationType(productsPacking.data).map(
+              (group, index) => (
+                <View key={index}>
+                  <Text style={ProductStyles.tittleCard}>
+                    {group.presentationType}
+                  </Text>
+                  {group.products.map((item, cardIndex) => (
+                    <ProductsCard
+                      key={cardIndex}
+                      item={item}
+                      colorPress={colors.orange}
+                      colorRight={colors.orange}
+                      colorLeft={colors.danger}
+                      products={group.products}
+                      setProducts={setProductsPacking}
+                      handleSubmit={handleSubmit}
+                      viewPacking
+                      error={error}
+                    />
+                  ))}
+                </View>
+              ),
+            )
+          ) : (
             <ActivityIndicator size="large" color="#0000ff" />
-          </View>
-        )}
+          )}
+        </View>
       </ScrollView>
     </SafeAreaView>
   )
