@@ -6,7 +6,7 @@ import ModalProduct from '../components/ModalProduct'
 import { GlobalStyles, colors } from '../styles/GlobalStyles'
 import { ProductStyles } from '../styles/ProductStyles'
 
-export const ProductsCardBulkVan = ({ item, handleSubmit }) => {
+export const ProductsCardBulkVan = ({ item, handleSubmit, viewBulk }) => {
   const [isPressed, setIsPressed] = useState(false)
   const [left, setLeft] = useState(false)
   const [showModal, setShowModal] = useState(false)
@@ -36,6 +36,37 @@ export const ProductsCardBulkVan = ({ item, handleSubmit }) => {
   const setStateCardDefault = () => {
     setIsPressed(false)
     setLeft(false)
+  }
+
+  if (viewBulk) {
+    return (
+      <View style={[ProductStyles.card, GlobalStyles.boxShadow]}>
+        <View style={ProductStyles.productTittle}>
+          <Text
+            style={{ ...ProductStyles.tittleCard, flex: 1, alignContent: 'center' }}
+          >
+            {item.name}
+          </Text>
+          <Text
+            style={ProductStyles.textCard}
+          >
+            {`Missing ${item.quantity - item.cant_insert}`}
+          </Text>
+        </View>
+        <View
+          style={[
+            ProductStyles.checkBox,
+            { backgroundColor: colors.bluePrimary, },
+          ]}
+        >
+          <AntDesign
+            name={'questioncircleo'}
+            size={30}
+            color="white"
+          />
+        </View>
+      </View>
+    )
   }
 
   return (
