@@ -93,7 +93,6 @@ const PinLogin = () => {
     setPin('')
   }
 
-  console.log('pin', pin)
   return (
     <SafeAreaView
       style={{ flex: 1 }}

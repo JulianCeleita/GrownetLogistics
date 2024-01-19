@@ -9,8 +9,8 @@ import { CustomerDayStyles } from '../styles/CustomerDayStyles'
 import { GlobalStyles, colors } from '../styles/GlobalStyles'
 
 const CustomerCard = ({ customer, loadingCard }) => {
-  const { setSelectedCustomer } = usePackingStore()
-  const { setSelectedCustomerL } = useLoadingStore()
+  const { setSelectedOrder } = usePackingStore()
+  const { setSelectedOrderL } = useLoadingStore()
   const { percentages } = usePercentageStore()
 
   const navigation = useNavigation()
@@ -26,14 +26,14 @@ const CustomerCard = ({ customer, loadingCard }) => {
         accountName: customer.accountName,
         orderNumber: customer.orders_reference,
       })
-      setSelectedCustomer(customer.accountNumber)
+      setSelectedOrder(customer.orders_reference)
     } else {
       navigation.navigate('ProductsLoading', {
         selectedCustomer: customer.accountNumber,
         accountName: customer.accountName,
         orderNumber: customer.orders_reference,
       })
-      setSelectedCustomerL(customer.accountNumber)
+      setSelectedOrderL(customer.orders_reference)
     }
   }
 

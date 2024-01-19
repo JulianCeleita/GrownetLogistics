@@ -17,28 +17,14 @@ function ProductsLoading({ route }) {
     setLoadingProducts,
     error,
     setFetchProductsLoading,
-    selectedCustomerL,
+    selectedOrderL,
   } = useLoadingStore()
   const { employeeToken } = useEmployeeStore()
   const { handleSubmit } = useProductSubmit(insertLoading)
 
   useEffect(() => {
-    setFetchProductsLoading(employeeToken, selectedCustomerL)
+    setFetchProductsLoading(employeeToken, selectedOrderL)
   }, [])
-
-  function groupProductsByPresentationType(products) {
-    const groupedProducts = {}
-
-    products.forEach((item) => {
-      const presentationType = item.presentationType
-      if (!groupedProducts[presentationType]) {
-        groupedProducts[presentationType] = { presentationType, products: [] }
-      }
-      groupedProducts[presentationType].products.push(item)
-    })
-
-    return Object.values(groupedProducts)
-  }
 
   return (
     <SafeAreaView style={ProductStyles.products}>
@@ -58,28 +44,21 @@ function ProductsLoading({ route }) {
         </View>
         {productsLoading ? (
           <View style={ProductStyles.cardsProducts}>
-            {groupProductsByPresentationType(productsLoading.data).map(
-              (group, index) => (
-                <View key={index}>
-                  <Text style={ProductStyles.tittleCard}>
-                    {group.presentationType}
-                  </Text>
-                  {group.products.map((item, cardIndex) => (
-                    <ProductsCard
-                      key={cardIndex}
-                      item={item}
-                      colorPress={colors.green}
-                      colorRight={colors.orange}
-                      colorLeft={colors.danger}
-                      products={group.products}
-                      setProducts={setLoadingProducts}
-                      handleSubmit={handleSubmit}
-                      error={error}
-                    />
-                  ))}
-                </View>
-              ),
-            )}
+            {productsLoading.data.map((item, index) => (
+              <View key={index}>
+                <ProductsCard
+                  key={index}
+                  item={item}
+                  colorPress={colors.green}
+                  colorRight={colors.orange}
+                  colorLeft={colors.danger}
+                  products={item}
+                  setProducts={setLoadingProducts}
+                  handleSubmit={handleSubmit}
+                  error={error}
+                />
+              </View>
+            ))}
           </View>
         ) : (
           <View

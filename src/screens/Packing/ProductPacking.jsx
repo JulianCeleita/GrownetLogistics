@@ -17,29 +17,14 @@ function ProductsPacking({ route }) {
     setProductsPacking,
     error,
     setFetchPackingProducts,
-    selectedCustomer,
+    selectedOrder,
   } = usePackingStore()
   const { employeeToken } = useEmployeeStore()
   const { handleSubmit } = useProductSubmit(insertPacking)
 
   useEffect(() => {
-    setFetchPackingProducts(employeeToken, selectedCustomer)
+    setFetchPackingProducts(employeeToken, selectedOrder)
   }, [])
-  console.log('que trae', productsPacking)
-
-  function groupProductsByPresentationType(products) {
-    const groupedProducts = {}
-
-    products.forEach((item) => {
-      const presentationType = item.presentationType
-      if (!groupedProducts[presentationType]) {
-        groupedProducts[presentationType] = { presentationType, products: [] }
-      }
-      groupedProducts[presentationType].products.push(item)
-    })
-
-    return Object.values(groupedProducts)
-  }
   return (
     <SafeAreaView style={ProductStyles.products}>
       <ScrollView>
@@ -59,28 +44,23 @@ function ProductsPacking({ route }) {
 
         <View style={ProductStyles.cardsProducts}>
           {productsPacking ? (
-            groupProductsByPresentationType(productsPacking.data).map(
-              (group, index) => (
-                <View key={index}>
-                  <Text style={ProductStyles.tittleCard}>
-                    {group.presentationType}
-                  </Text>
-                  {group.products.map((item, cardIndex) => (
-                    <ProductsCard
-                      key={cardIndex}
-                      item={item}
-                      colorPress={colors.orange}
-                      colorRight={colors.orange}
-                      colorLeft={colors.danger}
-                      products={group.products}
-                      setProducts={setProductsPacking}
-                      handleSubmit={handleSubmit}
-                      viewPacking
-                      error={error}
-                    />
-                  ))}
-                </View>
-              ),
+            productsPacking.data.map((item, index) => (
+              <View key={index}>
+                <ProductsCard
+                  key={index}
+                  item={item}
+                  colorPress={colors.orange}
+                  colorRight={colors.orange}
+                  colorLeft={colors.danger}
+                  products={item}
+                  setProducts={setProductsPacking}
+                  handleSubmit={handleSubmit}
+                  viewPacking
+                  error={error}
+                />
+
+              </View>
+            )
             )
           ) : (
             <ActivityIndicator size="large" color="#0000ff" />

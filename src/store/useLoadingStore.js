@@ -5,28 +5,27 @@ import { productsLoadingConfig } from '../config/urls.config'
 const useLoadingStore = create((set) => {
   return {
     productsLoading: null,
-    selectedCustomerL: null,
+    selectedOrderL: null,
     error: null,
 
     setError: (error) => set(() => ({ error: error })),
 
-    setSelectedCustomerL: (customer) =>
-      set(() => ({ selectedCustomerL: customer })),
+    setSelectedOrderL: (order) => set(() => ({ selectedOrderL: order })),
 
     setLoadingProducts: (products) => set({ productsLoading: products }),
 
-    setFetchProductsLoading: async (token, accountNumber) => {
+    setFetchProductsLoading: async (token, orderNumber) => {
       try {
         const response = await mainAxios.get(
-          `${productsLoadingConfig}${accountNumber}`,
+          `${productsLoadingConfig}${orderNumber}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           },
         )
-        const productsLoadingData = await response.data.orders[0]
-        set({ productsLoading: productsLoadingData })
+        const productsLoadingData = await response.data
+        set({ productsLoading: productsLoadingData.orders[0] })
       } catch (error) {
         console.error('Error during request:', error)
       }
