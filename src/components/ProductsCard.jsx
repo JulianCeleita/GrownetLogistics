@@ -75,13 +75,15 @@ export function ProductsCard({
     >
       <TouchableOpacity
         onPress={() => {
-          if (!leftStates[item.id] || rightStates[item.id]) {
-            handlePress(item.id)
-          } else {
-            setShowModal2(true)
-          }
+          if (item.state_packing !== 'ND') {
+            if (!leftStates[item.id] || rightStates[item.id]) {
+              handlePress(item.id)
+            } else {
+              setShowModal2(true)
+            }
 
-          handleCardSubmit()
+            handleCardSubmit()
+          }
         }}
       >
         <PanGestureHandler
@@ -114,6 +116,8 @@ export function ProductsCard({
               <CheckStatusCard
                 itemId={item.id}
                 statePacking={item.state_packing}
+                stateLoading={item.state_loading}
+                viewPacking={viewPacking}
                 pressedStates={pressedStates}
                 rightStates={rightStates}
                 leftStates={leftStates}

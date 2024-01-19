@@ -33,7 +33,7 @@ function ProductsBulk({ route }) {
         color={colors.darkBlue}
         top={Platform.OS === 'ios' && !Platform.isPad ? 60 : 15}
       />
-      <View style={{ ...CustomerDayStyles.title2, paddingBottom: 10 }}>
+      <View style={{ ...CustomerDayStyles.title2 }}>
         <Text style={CustomerDayStyles.customerTitle}>
           {route.params.nameRoute}
         </Text>
@@ -50,7 +50,7 @@ function ProductsBulk({ route }) {
         <ScrollView>
           {typeData.map((type, index) => (
             <View key={index}>
-              <View style={{ marginBottom: -50 }}>
+              <View style={{ marginBottom: 0 }}>
                 <Text
                   style={[
                     CustomerDayStyles.restaurantTypeTitle,
@@ -68,6 +68,7 @@ function ProductsBulk({ route }) {
                     key={product.id}
                     item={product}
                     handleSubmit={handleSubmit}
+                    viewBulk
                   />
                 ))}
               </View>
