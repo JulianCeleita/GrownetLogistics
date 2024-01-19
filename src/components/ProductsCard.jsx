@@ -114,6 +114,8 @@ export function ProductsCard({
               <CheckStatusCard
                 itemId={item.id}
                 statePacking={item.state_packing}
+                stateLoading={item.state_loading}
+                viewPacking={viewPacking}
                 pressedStates={pressedStates}
                 rightStates={rightStates}
                 leftStates={leftStates}
