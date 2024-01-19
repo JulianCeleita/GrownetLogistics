@@ -44,17 +44,16 @@ export const ProductStyles = StyleSheet.create({
     width: '75%',
   },
   tittleCard: {
-    fontSize: 16,
     color: colors.darkBlue,
     fontFamily: 'PoppinsSemi',
-    marginTop: 15,
     textDecorationLine: 'none',
+    fontSize: Platform.OS === 'ios' ? 16 : 14,
   },
   textCard: {
     fontSize: 15,
     color: colors.darkBlue,
     fontFamily: 'PoppinsMedium',
-    marginBottom: 15,
+    fontSize: Platform.OS === 'ios' ? 15 : 14,
   },
   checkBox: {
     height: '100%',

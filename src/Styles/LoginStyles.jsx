@@ -39,6 +39,7 @@ export const LoginStyles = StyleSheet.create({
     borderRadius: 50,
     fontFamily: 'PoppinsRegular',
     textAlign: 'center',
+    fontSize: 25,
   },
   signInButton: {
     backgroundColor: '#144D56',

@@ -22,6 +22,7 @@ export function ProductsCard({
   const positiveOffset = 30
   const negativeOffset = -30
   const [note, setNote] = useState('')
+
   const {
     quantity,
     setQuantity,
@@ -38,7 +39,7 @@ export function ProductsCard({
     declareDifferentQty,
     setAddQuantity,
     setSelectedProduct,
-  } = useCardEvents(item.quantity, products, setProducts, error)
+  } = useCardEvents(item.quantity, products, setProducts, error, viewPacking)
 
   const [showModal2, setShowModal2] = useState(false)
 
@@ -52,11 +53,11 @@ export function ProductsCard({
     setShowModal2(false)
     handleSubmit(item.id)
   }
-
+  const quantityLoading = viewPacking ? quantity : item.quantity_packing
   const handleCardSubmit = async () => {
     const cardPromises = [
       handlePress(item.id),
-      handleSubmit(item.id, quantity, note),
+      handleSubmit(item.id, quantityLoading, note),
     ]
     await Promise.allSettled(cardPromises)
   }
@@ -65,6 +66,7 @@ export function ProductsCard({
     setAddQuantity(false)
     setSelectedProduct(null)
   }
+  // console.log('item', item)
 
   return (
     <View
@@ -75,13 +77,15 @@ export function ProductsCard({
     >
       <TouchableOpacity
         onPress={() => {
-          if (!leftStates[item.id] || rightStates[item.id]) {
-            handlePress(item.id)
-          } else {
-            setShowModal2(true)
-          }
+          if (item.state_packing !== 'ND') {
+            if (!leftStates[item.id] || rightStates[item.id]) {
+              handlePress(item.id)
+            } else {
+              setShowModal2(true)
+            }
 
-          handleCardSubmit()
+            handleCardSubmit()
+          }
         }}
       >
         <PanGestureHandler
@@ -167,7 +171,14 @@ export function ProductsCard({
                       ...GlobalStyles.btnOutline,
                     }}
                   >
-                    <Text style={GlobalStyles.textBtnOutline}>Cancel</Text>
+                    <Text
+                      style={[
+                        GlobalStyles.textBtnOutline,
+                        { fontSize: Platform.OS === 'ios' ? 15 : 14 },
+                      ]}
+                    >
+                      Cancel
+                    </Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={[GlobalStyles.btnPrimary]}
@@ -183,7 +194,14 @@ export function ProductsCard({
                       }
                     }}
                   >
-                    <Text style={GlobalStyles.textBtnSecundary}>Send</Text>
+                    <Text
+                      style={[
+                        GlobalStyles.textBtnSecundary,
+                        { fontSize: Platform.OS === 'ios' ? 15 : 14 },
+                      ]}
+                    >
+                      Send
+                    </Text>
                   </TouchableOpacity>
                 </View>
               </View>

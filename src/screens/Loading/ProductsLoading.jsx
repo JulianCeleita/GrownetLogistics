@@ -26,10 +26,23 @@ function ProductsLoading({ route }) {
     setFetchProductsLoading(employeeToken, selectedCustomerL)
   }, [])
 
+  function groupProductsByPresentationType(products) {
+    const groupedProducts = {}
+
+    products.forEach((item) => {
+      const presentationType = item.presentationType
+      if (!groupedProducts[presentationType]) {
+        groupedProducts[presentationType] = { presentationType, products: [] }
+      }
+      groupedProducts[presentationType].products.push(item)
+    })
+
+    return Object.values(groupedProducts)
+  }
+
   return (
     <SafeAreaView style={ProductStyles.products}>
       <ScrollView>
-
         <BtnGoBack color={colors.darkBlue} />
         <View style={CustomerDayStyles.title2}>
           <View style={{ paddingHorizontal: 43, width: '100%' }}>
@@ -45,19 +58,28 @@ function ProductsLoading({ route }) {
         </View>
         {productsLoading ? (
           <View style={ProductStyles.cardsProducts}>
-            {productsLoading.data.map((item, index) => (
-              <ProductsCard
-                key={index}
-                item={item}
-                colorPress={colors.green}
-                colorRight={colors.orange}
-                colorLeft={colors.danger}
-                products={productsLoading}
-                setProducts={setLoadingProducts}
-                handleSubmit={handleSubmit}
-                error={error}
-              />
-            ))}
+            {groupProductsByPresentationType(productsLoading.data).map(
+              (group, index) => (
+                <View key={index}>
+                  <Text style={ProductStyles.tittleCard}>
+                    {group.presentationType}
+                  </Text>
+                  {group.products.map((item, cardIndex) => (
+                    <ProductsCard
+                      key={cardIndex}
+                      item={item}
+                      colorPress={colors.green}
+                      colorRight={colors.orange}
+                      colorLeft={colors.danger}
+                      products={group.products}
+                      setProducts={setLoadingProducts}
+                      handleSubmit={handleSubmit}
+                      error={error}
+                    />
+                  ))}
+                </View>
+              ),
+            )}
           </View>
         ) : (
           <View
