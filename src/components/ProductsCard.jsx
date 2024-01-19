@@ -22,6 +22,7 @@ export function ProductsCard({
   const positiveOffset = 30
   const negativeOffset = -30
   const [note, setNote] = useState('')
+
   const {
     quantity,
     setQuantity,
@@ -38,7 +39,7 @@ export function ProductsCard({
     declareDifferentQty,
     setAddQuantity,
     setSelectedProduct,
-  } = useCardEvents(item.quantity, products, setProducts, error)
+  } = useCardEvents(item.quantity, products, setProducts, error, viewPacking)
 
   const [showModal2, setShowModal2] = useState(false)
 
@@ -52,11 +53,11 @@ export function ProductsCard({
     setShowModal2(false)
     handleSubmit(item.id)
   }
-
+  const quantityLoading = viewPacking ? quantity : item.quantity_packing
   const handleCardSubmit = async () => {
     const cardPromises = [
       handlePress(item.id),
-      handleSubmit(item.id, quantity, note),
+      handleSubmit(item.id, quantityLoading, note),
     ]
     await Promise.allSettled(cardPromises)
   }
@@ -65,6 +66,7 @@ export function ProductsCard({
     setAddQuantity(false)
     setSelectedProduct(null)
   }
+  // console.log('item', item)
 
   return (
     <View
