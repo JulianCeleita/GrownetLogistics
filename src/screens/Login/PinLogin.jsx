@@ -17,8 +17,9 @@ import ModalAlert from '../../components/ModalAlert'
 import { loginEmployee } from '../../config/urls.config'
 import logo from '../../img/Logo_Blanco.png'
 import useEmployeeStore from '../../store/useEmployeeStore'
-import { LoginStyles } from '../../styles/LoginStyles'
+import { LoginStyles, PinNumericStyle } from '../../styles/LoginStyles'
 import NumericKeyboard from '../../components/numericKeyboard'
+import { colors } from '../../styles/GlobalStyles'
 
 const PinLogin = () => {
   const [pin, setPin] = useState('')
@@ -28,7 +29,11 @@ const PinLogin = () => {
   const { setEmployeeToken } = useEmployeeStore()
   const [keyboardOpen, setKeyboardOpen] = useState(false)
   const navigation = useNavigation()
-
+  useEffect(() => {
+    if (pin.length === 4) {
+      handleSignIn()
+    }
+  }, [pin])
   useEffect(() => {
     if (Platform.OS === 'android') {
       const keyboardDidShowListener = Keyboard.addListener(
@@ -92,6 +97,11 @@ const PinLogin = () => {
   const resetPin = () => {
     setPin('')
   }
+  const handleBackspace = () => {
+    if (pin !== '') {
+      setPin(pin.slice(0, -1))
+    }
+  }
 
   console.log('pin', pin)
   return (
@@ -102,17 +112,24 @@ const PinLogin = () => {
       <TouchableWithoutFeedback onPress={dismissKeyboard}>
         <View style={LoginStyles.container}>
           <StatusBar style="light" />
-          <Image source={logo} style={LoginStyles.logo} />
+          <Image source={logo} style={PinNumericStyle.logo} />
           <Text style={LoginStyles.loginHeaderText}>Identify yourself</Text>
+          <View style={PinNumericStyle.pinContainer}>
+            {[...Array(4)].map((_, index) => (
+              <View
+                key={index}
+                style={[
+                  PinNumericStyle.pinDot,
+                  {
+                    backgroundColor:
+                      pin.length > index ? colors.lightGreen : '#125FAA',
+                    borderColor: pin.length > index ? 'transparent' : '#A7D4FF',
+                  },
+                ]}
+              />
+            ))}
+          </View>
 
-          <TextInput
-            style={LoginStyles.input2}
-            placeholder="Identifier pin"
-            autoCapitalize="none"
-            editable={false}
-            secureTextEntry
-            value={pin}
-          />
           <NumericKeyboard
             onNumberPress={(number) => setPin(pin + number)}
             setPin={setPin}
@@ -124,9 +141,9 @@ const PinLogin = () => {
                 ? LoginStyles.signInButtonDisabled
                 : LoginStyles.signInButton
             }
-            onPress={handleSignIn}
+            onPress={handleBackspace}
           >
-            <Text style={LoginStyles.signInButtonText}>Confirm</Text>
+            <Text style={LoginStyles.signInButtonText}>Delete</Text>
           </TouchableOpacity>
           <ModalAlert
             showModal={showModal}

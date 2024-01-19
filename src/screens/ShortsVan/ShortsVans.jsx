@@ -2,7 +2,13 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
 import { LinearGradient } from 'expo-linear-gradient'
 import React from 'react'
-import { Platform, ScrollView, Text, TouchableOpacity, View } from 'react-native'
+import {
+  Platform,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { BtnGoBack } from '../../components/BtnGoBack'
 import CircleProgress from '../../components/CircleProgress'
@@ -23,7 +29,7 @@ function ShortsVans() {
   return (
     <SafeAreaView>
       <ScrollView>
-        <BtnGoBack color='white' />
+        <BtnGoBack color="white" top={20} />
         <View style={[DeliveryStyles.tittle, GlobalStyles.boxShadow]}>
           <MaterialCommunityIcons
             name="truck-fast-outline"

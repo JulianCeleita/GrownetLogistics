@@ -1,12 +1,7 @@
 import { Ionicons } from '@expo/vector-icons'
 import { useFocusEffect } from '@react-navigation/native'
 import React, { useCallback, useState } from 'react'
-import {
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View
-} from 'react-native'
+import { ScrollView, Text, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import mainAxios from '../../../axios.config'
 import { BtnGoBack } from '../../components/BtnGoBack'
@@ -25,6 +20,7 @@ function CustomerDayPacking({ route }) {
   const { setPercentages } = usePercentageStore()
   const [searchPhrase, setSearchPhrase] = useState('')
   const [search, setSearch] = useState(false)
+  const urlPercentages = percentagePacking + '/733'
 
   const filteredData = ordersByDate.filter((order) => {
     return order.accountName.includes(searchPhrase)
@@ -36,7 +32,7 @@ function CustomerDayPacking({ route }) {
     useCallback(() => {
       async function fetchData() {
         try {
-          const response = await mainAxios.get(percentagePacking, {
+          const response = await mainAxios.get(urlPercentages, {
             headers: {
               Authorization: `Bearer ${employeeToken}`,
             },
@@ -49,6 +45,7 @@ function CustomerDayPacking({ route }) {
       fetchData()
     }, [employeeToken]),
   )
+
   return (
     <SafeAreaView style={CustomerDayStyles.customerPricipal}>
       <ScrollView>

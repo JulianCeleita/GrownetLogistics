@@ -1,7 +1,14 @@
 import { useNavigation } from '@react-navigation/native'
 import { LinearGradient } from 'expo-linear-gradient'
 import React from 'react'
-import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native'
+import {
+  Image,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+  Platform,
+} from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { BtnGoBack } from '../../components/BtnGoBack'
 import CircleProgress from '../../components/CircleProgress'
@@ -22,7 +29,7 @@ const Loading = () => {
   return (
     <SafeAreaView>
       <ScrollView>
-        <BtnGoBack color="white" />
+        <BtnGoBack color="white" top={20} />
         <View style={[DeliveryStyles.tittle, GlobalStyles.boxShadow]}>
           <Image
             style={DeliveryStyles.imageTittle}
