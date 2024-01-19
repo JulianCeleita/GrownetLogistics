@@ -25,6 +25,7 @@ function ProductsPacking({ route }) {
   useEffect(() => {
     setFetchPackingProducts(employeeToken, selectedOrder)
   }, [])
+  
   return (
     <SafeAreaView style={ProductStyles.products}>
       <ScrollView>
@@ -41,31 +42,34 @@ function ProductsPacking({ route }) {
             </View>
           </View>
         </View>
-
-        <View style={ProductStyles.cardsProducts}>
-          {productsPacking ? (
-            productsPacking.data.map((item, index) => (
-              <View key={index}>
-                <ProductsCard
-                  key={index}
-                  item={item}
-                  colorPress={colors.orange}
-                  colorRight={colors.orange}
-                  colorLeft={colors.danger}
-                  products={item}
-                  setProducts={setProductsPacking}
-                  handleSubmit={handleSubmit}
-                  viewPacking
-                  error={error}
-                />
-
-              </View>
-            )
-            )
-          ) : (
+        {productsPacking ? (
+          <View style={ProductStyles.cardsProducts}>
+            {productsPacking.data.map((item, index) => (
+              <ProductsCard
+                key={index}
+                item={item}
+                colorPress={colors.orange}
+                colorRight={colors.orange}
+                colorLeft={colors.danger}
+                products={productsPacking}
+                setProducts={setProductsPacking}
+                handleSubmit={handleSubmit}
+                viewPacking
+                error={error}
+              />
+            ))}
+          </View>
+        ) : (
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
             <ActivityIndicator size="large" color="#0000ff" />
-          )}
-        </View>
+          </View>
+        )}
       </ScrollView>
     </SafeAreaView>
   )

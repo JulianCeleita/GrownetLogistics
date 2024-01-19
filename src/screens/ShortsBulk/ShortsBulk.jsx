@@ -23,7 +23,7 @@ function ShortsBulk() {
   return (
     <SafeAreaView>
       <ScrollView>
-        <BtnGoBack color='white' />
+        <BtnGoBack color="white" top={20} />
         <View style={[DeliveryStyles.tittle, GlobalStyles.boxShadow]}>
           <MaterialCommunityIcons
             name="package-variant"

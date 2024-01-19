@@ -1,12 +1,8 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { PinNumericStyle } from '../styles/LoginStyles'
 
 export default function CalculatorKeyboard({ onNumberPress, setPin, pin }) {
-  const numbers = [
-    [1, 2, 3],
-    [4, 5, 6],
-    [7, 8, 9],
-    [0, 'X'],
-  ]
+  const numbers = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [0]]
 
   const handleOnNumberPress = (number) => {
     if (number === 'X') {
@@ -19,16 +15,16 @@ export default function CalculatorKeyboard({ onNumberPress, setPin, pin }) {
   }
 
   return (
-    <View style={styles.container}>
+    <View style={PinNumericStyle.container}>
       {numbers.map((row, rowIndex) => (
-        <View key={rowIndex} style={styles.row}>
+        <View key={rowIndex} style={PinNumericStyle.row}>
           {row.map((number) => (
             <TouchableOpacity
               key={number}
               onPress={() => handleOnNumberPress(number)}
-              style={styles.button}
+              style={PinNumericStyle.button}
             >
-              <Text style={styles.text}>{number}</Text>
+              <Text style={PinNumericStyle.text}>{number}</Text>
             </TouchableOpacity>
           ))}
         </View>
@@ -36,26 +32,3 @@ export default function CalculatorKeyboard({ onNumberPress, setPin, pin }) {
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'column',
-    justifyContent: 'space-around',
-  },
-  row: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-  },
-  button: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    margin: 10,
-    backgroundColor: '#f0f0f0',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  text: {
-    fontSize: 24,
-  },
-})

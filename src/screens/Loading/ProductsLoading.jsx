@@ -45,19 +45,18 @@ function ProductsLoading({ route }) {
         {productsLoading ? (
           <View style={ProductStyles.cardsProducts}>
             {productsLoading.data.map((item, index) => (
-              <View key={index}>
-                <ProductsCard
-                  key={index}
-                  item={item}
-                  colorPress={colors.green}
-                  colorRight={colors.orange}
-                  colorLeft={colors.danger}
-                  products={item}
-                  setProducts={setLoadingProducts}
-                  handleSubmit={handleSubmit}
-                  error={error}
-                />
-              </View>
+
+              <ProductsCard
+                key={index}
+                item={item}
+                colorPress={colors.green}
+                colorRight={colors.orange}
+                colorLeft={colors.danger}
+                products={productsLoading}
+                setProducts={setLoadingProducts}
+                handleSubmit={handleSubmit}
+                error={error}
+              />
             ))}
           </View>
         ) : (

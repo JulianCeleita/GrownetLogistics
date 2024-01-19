@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native'
 import { colors } from './GlobalStyles'
+import { Platform } from 'react-native'
 
 export const LoginStyles = StyleSheet.create({
   container: {
@@ -135,5 +136,50 @@ export const ModalStyle = StyleSheet.create({
   },
   buttons: {
     flexDirection: 'row',
+  },
+})
+export const PinNumericStyle = StyleSheet.create({
+  container: {
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+    marginBottom: 15,
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
+  button: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    margin: 10,
+    backgroundColor: '#f0f0f0',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  text: {
+    fontSize: Platform.OS === 'ios' && !Platform.isPad ? 24 : 20,
+    fontFamily: 'PoppinsMedium',
+  },
+  logo: {
+    width: 250,
+    height: 150,
+    resizeMode: 'contain',
+    marginBottom: 10,
+  },
+  pinContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+
+  pinDot: {
+    width: 12,
+    height: 12,
+    borderRadius: 7.5,
+    marginHorizontal: 5,
+    borderWidth: 1,
+    borderColor: '#A7D4FF',
   },
 })
