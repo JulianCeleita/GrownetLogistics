@@ -43,25 +43,42 @@ function ProductsLoading({ route }) {
           </View>
         </View>
         {productsLoading ? (
-          <View style={ProductStyles.cardsProducts}>
-            {productsLoading.data.map((item, index) => (
-
-              <ProductsCard
-                key={index}
-                item={item}
-                colorPress={colors.green}
-                colorRight={colors.orange}
-                colorLeft={colors.danger}
-                products={productsLoading}
-                setProducts={setLoadingProducts}
-                handleSubmit={handleSubmit}
-                error={error}
-              />
+          <View>
+            {Object.entries(productsLoading.data.reduce((grouped, product) => {
+              const key = product.presentationType;
+              if (!grouped[key]) {
+                grouped[key] = [];
+              }
+              grouped[key].push(product);
+              return grouped;
+            }, {})).map(([group, products]) => (
+              <View key={group}>
+                {/* TODO: Mejorar el style del titulo */}
+                <Text>{group}</Text>
+                {products.map((product) => (
+                  <ProductsCard
+                    key={product.id}
+                    item={product}
+                    colorPress={colors.green}
+                    colorRight={colors.orange}
+                    colorLeft={colors.danger}
+                    products={productsLoading}
+                    setProducts={setLoadingProducts}
+                    handleSubmit={handleSubmit}
+                    viewPacking
+                    error={error}
+                  />
+                ))}
+              </View>
             ))}
           </View>
         ) : (
           <View
-            style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
           >
             <ActivityIndicator size="large" color="#0000ff" />
           </View>

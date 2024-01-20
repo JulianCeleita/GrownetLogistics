@@ -25,7 +25,7 @@ function ProductsPacking({ route }) {
   useEffect(() => {
     setFetchPackingProducts(employeeToken, selectedOrder)
   }, [])
-  
+
   return (
     <SafeAreaView style={ProductStyles.products}>
       <ScrollView>
@@ -43,20 +43,33 @@ function ProductsPacking({ route }) {
           </View>
         </View>
         {productsPacking ? (
-          <View style={ProductStyles.cardsProducts}>
-            {productsPacking.data.map((item, index) => (
-              <ProductsCard
-                key={index}
-                item={item}
-                colorPress={colors.orange}
-                colorRight={colors.orange}
-                colorLeft={colors.danger}
-                products={productsPacking}
-                setProducts={setProductsPacking}
-                handleSubmit={handleSubmit}
-                viewPacking
-                error={error}
-              />
+          <View>
+            {Object.entries(productsPacking.data.reduce((grouped, product) => {
+              const key = product.presentationType;
+              if (!grouped[key]) {
+                grouped[key] = [];
+              }
+              grouped[key].push(product);
+              return grouped;
+            }, {})).map(([group, products]) => (
+              <View key={group}>
+                {/* TODO: Mejorar el style del titulo */}
+                <Text>{group}</Text>
+                {products.map((product) => (
+                  <ProductsCard
+                    key={product.id}
+                    item={product}
+                    colorPress={colors.orange}
+                    colorRight={colors.orange}
+                    colorLeft={colors.danger}
+                    products={productsPacking}
+                    setProducts={setProductsPacking}
+                    handleSubmit={handleSubmit}
+                    viewPacking
+                    error={error}
+                  />
+                ))}
+              </View>
             ))}
           </View>
         ) : (
