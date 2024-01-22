@@ -29,7 +29,6 @@ export const useProductSubmit = (insert) => {
     }
 
     try {
-
       const response = await mainAxios.post(insert, data, {
         headers: {
           Authorization: `Bearer ${employeeToken}`,
