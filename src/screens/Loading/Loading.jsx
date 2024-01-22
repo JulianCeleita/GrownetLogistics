@@ -40,8 +40,6 @@ const Loading = () => {
         </View>
         <LinearGradient
           colors={['#00478C', '#026CD2']}
-          start={{ x: 0, y: 0.5 }}
-          end={{ x: 1, y: 0.5 }}
           style={DeliveryStyles.packing}
         />
 
@@ -55,7 +53,7 @@ const Loading = () => {
               onPress={() => handleRoutePress(order.nameRoute)}
               key={order.nameRoute}
             >
-              <CircleProgress />
+              <CircleProgress percentage={order.percentage_loading} />
               <Text style={DeliveryStyles.tittleRoute}>{order.nameRoute}</Text>
             </TouchableOpacity>
           ))}

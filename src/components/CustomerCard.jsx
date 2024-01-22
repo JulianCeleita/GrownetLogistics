@@ -18,7 +18,6 @@ const CustomerCard = ({ customer, loadingCard }) => {
   const strokeWidth = 10
   const circumference = 2 * Math.PI * radius
   let roundedPercentage = 0
-
   const handleNavigateToProducts = () => {
     if (!loadingCard) {
       navigation.navigate('ProductsPacking', {
@@ -38,7 +37,7 @@ const CustomerCard = ({ customer, loadingCard }) => {
   }
 
   percentages.forEach((order) => {
-    if (order.accountName === customer.accountName) {
+    if (order.reference === customer.orders_reference) {
       roundedPercentage = Number(order.percentage).toFixed(0)
     }
   })
