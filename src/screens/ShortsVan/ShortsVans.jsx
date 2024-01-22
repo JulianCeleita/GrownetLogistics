@@ -14,11 +14,20 @@ import { BtnGoBack } from '../../components/BtnGoBack'
 import CircleProgress from '../../components/CircleProgress'
 import useOrdersByDate from '../../store/useOrdersByDateStore'
 import { DeliveryStyles } from '../../styles/DeliveryStyles'
-import { GlobalStyles } from '../../styles/GlobalStyles'
+import { GlobalStyles, colors } from '../../styles/GlobalStyles'
+import Svg, {
+  Circle,
+  Defs,
+  ClipPath,
+  Image as SvgImage,
+} from 'react-native-svg'
 
 function ShortsVans() {
   const navigation = useNavigation()
   const { routesByDate, setOrdersByDate, setSelectedRoute } = useOrdersByDate()
+  const radius = 40
+  const strokeWidth = 10
+  const circumference = 2 * Math.PI * radius
 
   const handleRoutePress = (nameRoute) => {
     setSelectedRoute(nameRoute)
@@ -41,8 +50,6 @@ function ShortsVans() {
         </View>
         <LinearGradient
           colors={['#00478C', '#026CD2']}
-          start={{ x: 0, y: 0.5 }}
-          end={{ x: 1, y: 0.5 }}
           style={DeliveryStyles.packing}
         />
 
@@ -56,7 +63,41 @@ function ShortsVans() {
               onPress={() => handleRoutePress(order.nameRoute)}
               key={order.nameRoute}
             >
-              <CircleProgress />
+              <Svg
+                style={DeliveryStyles.circle}
+                height={radius * 2}
+                width={radius * 2}
+              >
+                <Defs>
+                  <ClipPath id="clipCard">
+                    <Circle
+                      cx={radius}
+                      cy={radius}
+                      r={radius - strokeWidth / 2}
+                    />
+                  </ClipPath>
+                </Defs>
+                <SvgImage
+                  href={require('../../img/loading.png')}
+                  width={45}
+                  height={32}
+                  preserveAspectRatio="xMidYMid slice"
+                  clipPath="url(#clipCard)"
+                  x={18}
+                  y={22}
+                  r={20}
+                />
+                <Circle
+                  cx={radius}
+                  cy={radius}
+                  r={radius - strokeWidth / 2}
+                  fill="transparent"
+                  stroke={colors.green}
+                  strokeWidth={strokeWidth}
+                  strokeDasharray={`${circumference} ${circumference}`}
+                  strokeDashoffset={0}
+                />
+              </Svg>
               <Text style={DeliveryStyles.tittleRoute}>{order.nameRoute}</Text>
             </TouchableOpacity>
           ))}

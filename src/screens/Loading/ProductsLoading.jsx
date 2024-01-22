@@ -25,7 +25,7 @@ function ProductsLoading({ route }) {
   useEffect(() => {
     setFetchProductsLoading(employeeToken, selectedOrderL)
   }, [])
-
+  console.log(productsLoading, 'hola')
   return (
     <SafeAreaView style={ProductStyles.products}>
       <ScrollView>
@@ -66,7 +66,6 @@ function ProductsLoading({ route }) {
                     products={productsLoading}
                     setProducts={setLoadingProducts}
                     handleSubmit={handleSubmit}
-                    viewPacking
                     error={error}
                   />
                 ))}

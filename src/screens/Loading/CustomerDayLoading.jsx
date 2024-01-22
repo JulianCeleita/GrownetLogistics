@@ -20,7 +20,6 @@ function CustomerDayLoading({ route }) {
   const { setPercentages } = usePercentageStore()
   const [searchPhrase, setSearchPhrase] = useState('')
   const [search, setSearch] = useState(false)
-
   const filteredData = ordersByDate.filter((order) => {
     return order.accountName.includes(searchPhrase)
   })

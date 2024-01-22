@@ -20,7 +20,6 @@ function CustomerDayPacking({ route }) {
   const { setPercentages } = usePercentageStore()
   const [searchPhrase, setSearchPhrase] = useState('')
   const [search, setSearch] = useState(false)
-  const urlPercentages = percentagePacking + '/733'
 
   const filteredData = ordersByDate.filter((order) => {
     return order.accountName.includes(searchPhrase)
@@ -32,7 +31,7 @@ function CustomerDayPacking({ route }) {
     useCallback(() => {
       async function fetchData() {
         try {
-          const response = await mainAxios.get(urlPercentages, {
+          const response = await mainAxios.get(percentagePacking, {
             headers: {
               Authorization: `Bearer ${employeeToken}`,
             },

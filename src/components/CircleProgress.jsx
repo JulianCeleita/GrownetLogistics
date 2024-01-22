@@ -3,13 +3,12 @@ import Svg, { Circle, Text as SvgText } from 'react-native-svg'
 import { DeliveryStyles } from '../styles/DeliveryStyles'
 import { colors } from '../styles/GlobalStyles'
 
-function CircleProgress() {
+function CircleProgress({ percentage }) {
   const radius = 40
   const strokeWidth = 10
   const circumference = 2 * Math.PI * radius
-  const strokeDashoffset = circumference - (60 / 100) * circumference
-  let roundedPercentage = 0
-
+  const strokeDashoffset = circumference - (percentage / 100) * circumference
+  let roundedPercentage = percentage
   return (
     <Svg style={DeliveryStyles.circle} height={radius * 2} width={radius * 2}>
       <Circle
