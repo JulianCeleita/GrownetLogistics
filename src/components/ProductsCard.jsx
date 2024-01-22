@@ -149,12 +149,12 @@ export function ProductsCard({
                     <TextInput
                       style={ProductStyles.input}
                       keyboardType="numeric"
-                      value={quantity.toString()}
+                      value={quantity?.toString()}
                       onChangeText={(num) => setQuantity(num)}
                     />
                     <TextInput
                       style={[ProductStyles.input, { marginTop: 8 }]}
-                      value={note.toString()}
+                      value={note?.toString()}
                       onChangeText={(note) => setNote(note)}
                     />
                   </View>
