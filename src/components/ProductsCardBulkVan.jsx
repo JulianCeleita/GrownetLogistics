@@ -5,6 +5,7 @@ import { PanGestureHandler } from 'react-native-gesture-handler'
 import ModalProduct from '../components/ModalProduct'
 import { GlobalStyles, colors } from '../styles/GlobalStyles'
 import { ProductStyles } from '../styles/ProductStyles'
+import { CheckStatusCardVan } from './CheckStatusCardVan'
 
 export const ProductsCardBulkVan = ({ item, handleSubmit, viewBulk }) => {
   const [isPressed, setIsPressed] = useState(false)
@@ -12,7 +13,7 @@ export const ProductsCardBulkVan = ({ item, handleSubmit, viewBulk }) => {
   const [showModal, setShowModal] = useState(false)
   const [selectedItem, setSelectedItem] = useState(null)
   const [right, setRight] = useState(false)
-  const [quantity, setQuantity] = useState(item.quantity)
+  const [quantity, setQuantity] = useState(null)
   const [note, setNote] = useState('')
   const [modalCard, setModalCard] = useState(false)
   const [showModalNA, setShowModalNA] = useState(false)
@@ -26,11 +27,11 @@ export const ProductsCardBulkVan = ({ item, handleSubmit, viewBulk }) => {
     setLeft(false)
     setRight(false)
     handleClose(false)
+    setIsNA(false)
     handleSubmit(itemId, null, '', 'FULL')
   }
 
   const handleDeclareNA = () => {
-    console.log('declareNA');
     setShowModalNA(true)
   }
 
@@ -38,9 +39,6 @@ export const ProductsCardBulkVan = ({ item, handleSubmit, viewBulk }) => {
     setSelectedItem(itemId)
     const { translationX } = event.nativeEvent
     if (translationX < 0) {
-      setLeft(true)
-      setRight(false)
-      setIsPressed(false)
       setShowModal(true)
     }
 
@@ -50,6 +48,10 @@ export const ProductsCardBulkVan = ({ item, handleSubmit, viewBulk }) => {
   }
 
   const confirm = () => {
+    setLeft(true)
+    setRight(false)
+    setIsPressed(false)
+    setIsNA(false)
     setShowModal(false)
     handleSubmit(item.id, 0, '', 'SHORT')
   }
@@ -133,40 +135,26 @@ export const ProductsCardBulkVan = ({ item, handleSubmit, viewBulk }) => {
                   },
                 ]}
               >
-                {`Missing ${item.quantity - item.cant_insert}`}
+                {
+                  quantity
+                    ? `Missing ${item.quantity - quantity}`
+                    : !quantity && item.quantity_defitive
+                      ? `Missing ${item.quantity - item.quantity_defitive}`
+                      : `Missing ${item.quantity - item.cant_insert}`
+                }
+
               </Text>
             </View>
-            <View
-              style={[
-                ProductStyles.checkBox,
-                {
-                  backgroundColor:
-                    isPressed || right || item.last_state === 'FULL'
-                      ? colors.bluePrimary
-                      : left ||
-                        item.last_state === 'SHORT' ||
-                        isNA
-                        ? colors.danger
-                        : colors.gray,
-                },
-              ]}
-            >
-              <AntDesign
-                name={
-                  isPressed ||
-                    right ||
-                    item.last_state === 'FULL'
-                    ? 'checkcircleo'
-                    : left ||
-                      item.last_state === 'SHORT' ||
-                      isNA
-                      ? 'minuscircleo'
-                      : 'questioncircleo'
-                }
-                size={30}
-                color="white"
-              />
-            </View>
+
+            <CheckStatusCardVan
+              item={item}
+              isPressed={isPressed}
+              right={right}
+              left={left}
+              isNA={isNA}
+            />
+
+
           </View>
         </PanGestureHandler>
       </TouchableOpacity>
@@ -189,7 +177,7 @@ export const ProductsCardBulkVan = ({ item, handleSubmit, viewBulk }) => {
               <TextInput
                 style={ProductStyles.input}
                 keyboardType="numeric"
-                value={quantity.toString()}
+                value={quantity && quantity.toString()}
                 onChangeText={(num) => setQuantity(num)}
               />
               <TextInput
@@ -224,11 +212,14 @@ export const ProductsCardBulkVan = ({ item, handleSubmit, viewBulk }) => {
             <TouchableOpacity
               style={[GlobalStyles.btnPrimary]}
               onPress={() => {
-                handleSubmit(item.id, quantity, note)
-                setLeft(false)
-                setIsPressed(false)
-                setRight(true)
-                handleClose()
+                if (quantity && Number(quantity) > 0) {
+                  handleSubmit(item.id, quantity, note)
+                  setLeft(false)
+                  setIsPressed(false)
+                  setRight(true)
+                  setIsNA(false)
+                  handleClose()
+                }
               }}
             >
               <Text
