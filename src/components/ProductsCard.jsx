@@ -66,7 +66,10 @@ export function ProductsCard({
     setAddQuantity(false)
     setSelectedProduct(null)
   }
-
+  console.log(item.state_loading + '   ' + item.name)
+  if (products.state_loading === 'SHORT') {
+    setShowModal2(true)
+  }
   return (
     <View
       style={{
@@ -80,7 +83,7 @@ export function ProductsCard({
             if (!leftStates[item.id] || rightStates[item.id]) {
               handlePress(item.id)
             } else {
-              setShowModal2(true)
+              //setShowModal2(true)
             }
             handleCardSubmit()
           }

@@ -25,7 +25,7 @@ function ProductsLoading({ route }) {
   useEffect(() => {
     setFetchProductsLoading(employeeToken, selectedOrderL)
   }, [])
-
+  console.log(productsLoading, 'hola')
   return (
     <SafeAreaView style={ProductStyles.products}>
       <ScrollView>

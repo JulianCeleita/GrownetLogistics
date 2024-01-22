@@ -44,7 +44,6 @@ function CustomerDayPacking({ route }) {
       fetchData()
     }, [employeeToken]),
   )
-  console.log(ordersByDate)
 
   return (
     <SafeAreaView style={CustomerDayStyles.customerPricipal}>
