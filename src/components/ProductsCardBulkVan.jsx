@@ -123,21 +123,25 @@ export const ProductsCardBulkVan = ({ item, handleSubmit, viewBulk }) => {
               >
                 {item.name}
               </Text>
-              <Text
-                style={[
-                  ProductStyles.textCard,
-                  {
-                    color: left,
-                    textDecorationLine: isNA ? 'line-through' : 'none',
-                  },
-                ]}
-              >
-                {quantity
-                  ? `Missing ${item.quantity - quantity}`
-                  : !quantity && item.quantity_defitive
-                    ? `Missing ${item.quantity - item.quantity_defitive}`
-                    : `Missing ${item.quantity - item.cant_insert}`}
-              </Text>
+              <View style={ProductStyles.qty}>
+                <Text style={ProductStyles.textCard}>Qty: {item.quantity}</Text>
+                <Text
+                  style={[
+                    ProductStyles.textCard,
+                    {
+                      marginRight: 25,
+                      color: colors.danger,
+                      textDecorationLine: isNA ? 'line-through' : 'none',
+                    },
+                  ]}
+                >
+                  {quantity
+                    ? `Missing ${item.quantity - quantity}`
+                    : !quantity && item.quantity_defitive
+                      ? `Missing ${item.quantity - item.quantity_defitive}`
+                      : `Missing ${item.quantity - item.cant_insert}`}
+                </Text>
+              </View>
             </View>
 
             <CheckStatusCardVan
