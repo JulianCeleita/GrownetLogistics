@@ -71,39 +71,37 @@ export const ProductsCardBulkVan = ({ item, handleSubmit, viewBulk }) => {
     setModalCard(false)
   }
 
+
   useEffect(() => {
     if (item.state_definitive === "N/A") {
       setIsNA(true)
     }
   }, [])
 
-
   if (viewBulk) {
     return (
       <View style={[ProductStyles.card, GlobalStyles.boxShadow]}>
         <View style={ProductStyles.productTittle}>
           <Text
-            style={{ ...ProductStyles.tittleCard, flex: 1, alignContent: 'center' }}
+            style={{
+              ...ProductStyles.tittleCard,
+              flex: 1,
+              alignContent: 'center',
+            }}
           >
             {item.name}
           </Text>
-          <Text
-            style={ProductStyles.textCard}
-          >
+          <Text style={ProductStyles.textCard}>
             {`Missing ${item.quantity - item.cant_insert}`}
           </Text>
         </View>
         <View
           style={[
             ProductStyles.checkBox,
-            { backgroundColor: colors.bluePrimary, },
+            { backgroundColor: colors.bluePrimary },
           ]}
         >
-          <AntDesign
-            name={'questioncircleo'}
-            size={30}
-            color="white"
-          />
+          <AntDesign name={'questioncircleo'} size={30} color="white" />
         </View>
       </View>
     )
@@ -133,24 +131,26 @@ export const ProductsCardBulkVan = ({ item, handleSubmit, viewBulk }) => {
               >
                 {item.name}
               </Text>
-              <Text
-                style={[
-                  ProductStyles.textCard,
-                  {
-                    color: left,
-                    textDecorationLine: isNA ? 'line-through' : 'none',
-                  },
-                ]}
-              >
-                {
-                  quantity
+
+              <View style={ProductStyles.qty}>
+                <Text style={ProductStyles.textCard}>Qty: {item.quantity}</Text>
+                <Text
+                  style={[
+                    ProductStyles.textCard,
+                    {
+                      marginRight: 25,
+                      color: colors.danger,
+                      textDecorationLine: isNA ? 'line-through' : 'none',
+                    },
+                  ]}
+                >
+                  {quantity
                     ? `Missing ${item.quantity - item.cant_insert}`
                     : !quantity && item.quantity_defitive
                       ? `Missing ${item.quantity - item.quantity_defitive}`
-                      : `Missing ${item.quantity - item.cant_insert}`
-                }
-
-              </Text>
+                      : `Missing ${item.quantity - item.cant_insert}`}
+                </Text>
+              </View>
             </View>
 
             <CheckStatusCardVan
@@ -160,8 +160,6 @@ export const ProductsCardBulkVan = ({ item, handleSubmit, viewBulk }) => {
               left={left}
               isNA={isNA}
             />
-
-
           </View>
         </PanGestureHandler>
       </TouchableOpacity>
