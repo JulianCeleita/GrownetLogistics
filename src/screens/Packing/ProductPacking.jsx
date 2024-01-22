@@ -43,18 +43,19 @@ function ProductsPacking({ route }) {
           </View>
         </View>
         {productsPacking ? (
-          <View>
-            {Object.entries(productsPacking.data.reduce((grouped, product) => {
-              const key = product.presentationType;
-              if (!grouped[key]) {
-                grouped[key] = [];
-              }
-              grouped[key].push(product);
-              return grouped;
-            }, {})).map(([group, products]) => (
+          <View style={ProductStyles.cardsProducts}>
+            {Object.entries(
+              productsPacking.data.reduce((grouped, product) => {
+                const key = product.presentationType
+                if (!grouped[key]) {
+                  grouped[key] = []
+                }
+                grouped[key].push(product)
+                return grouped
+              }, {}),
+            ).map(([group, products]) => (
               <View key={group}>
-                {/* TODO: Mejorar el style del titulo */}
-                <Text>{group}</Text>
+                <Text style={ProductStyles.tittleCard}>{group}</Text>
                 {products.map((product) => (
                   <ProductsCard
                     key={product.id}
