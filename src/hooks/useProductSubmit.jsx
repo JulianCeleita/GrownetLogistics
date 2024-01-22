@@ -27,7 +27,7 @@ export const useProductSubmit = (insert) => {
     } else {
       data.quantity = parseInt(quantity)
     }
-
+    console.log('data: ', data)
     try {
       const response = await mainAxios.post(insert, data, {
         headers: {

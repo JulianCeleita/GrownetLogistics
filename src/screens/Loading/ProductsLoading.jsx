@@ -66,7 +66,6 @@ function ProductsLoading({ route }) {
                     products={productsLoading}
                     setProducts={setLoadingProducts}
                     handleSubmit={handleSubmit}
-                    viewPacking
                     error={error}
                   />
                 ))}
