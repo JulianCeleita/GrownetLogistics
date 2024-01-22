@@ -44,14 +44,16 @@ function ProductsLoading({ route }) {
         </View>
         {productsLoading ? (
           <View>
-            {Object.entries(productsLoading.data.reduce((grouped, product) => {
-              const key = product.presentationType;
-              if (!grouped[key]) {
-                grouped[key] = [];
-              }
-              grouped[key].push(product);
-              return grouped;
-            }, {})).map(([group, products]) => (
+            {Object.entries(
+              productsLoading.data.reduce((grouped, product) => {
+                const key = product.presentationType
+                if (!grouped[key]) {
+                  grouped[key] = []
+                }
+                grouped[key].push(product)
+                return grouped
+              }, {}),
+            ).map(([group, products]) => (
               <View key={group}>
                 {/* TODO: Mejorar el style del titulo */}
                 <Text>{group}</Text>
@@ -65,7 +67,6 @@ function ProductsLoading({ route }) {
                     products={productsLoading}
                     setProducts={setLoadingProducts}
                     handleSubmit={handleSubmit}
-                    viewPacking
                     error={error}
                   />
                 ))}
