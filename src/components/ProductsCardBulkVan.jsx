@@ -1,5 +1,5 @@
 import { AntDesign } from '@expo/vector-icons'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { PanGestureHandler } from 'react-native-gesture-handler'
 import ModalProduct from '../components/ModalProduct'
@@ -71,6 +71,13 @@ export const ProductsCardBulkVan = ({ item, handleSubmit, viewBulk }) => {
     setModalCard(false)
   }
 
+  useEffect(() => {
+    if (item.state_definitive === "N/A") {
+      setIsNA(true)
+    }
+  }, [])
+
+
   if (viewBulk) {
     return (
       <View style={[ProductStyles.card, GlobalStyles.boxShadow]}>
@@ -137,7 +144,7 @@ export const ProductsCardBulkVan = ({ item, handleSubmit, viewBulk }) => {
               >
                 {
                   quantity
-                    ? `Missing ${item.quantity - quantity}`
+                    ? `Missing ${item.quantity - item.cant_insert}`
                     : !quantity && item.quantity_defitive
                       ? `Missing ${item.quantity - item.quantity_defitive}`
                       : `Missing ${item.quantity - item.cant_insert}`
@@ -195,7 +202,10 @@ export const ProductsCardBulkVan = ({ item, handleSubmit, viewBulk }) => {
             }}
           >
             <TouchableOpacity
-              onPress={handleClose}
+              onPress={() => {
+                handleClose()
+                setQuantity(null)
+              }}
               style={{
                 ...GlobalStyles.btnOutline,
               }}
