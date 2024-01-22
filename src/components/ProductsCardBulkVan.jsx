@@ -30,7 +30,7 @@ export const ProductsCardBulkVan = ({ item, handleSubmit, viewBulk }) => {
   }
 
   const handleDeclareNA = () => {
-    console.log('declareNA');
+    console.log('declareNA')
     setShowModalNA(true)
   }
 
@@ -68,33 +68,30 @@ export const ProductsCardBulkVan = ({ item, handleSubmit, viewBulk }) => {
   const handleClose = () => {
     setModalCard(false)
   }
-
   if (viewBulk) {
     return (
       <View style={[ProductStyles.card, GlobalStyles.boxShadow]}>
         <View style={ProductStyles.productTittle}>
           <Text
-            style={{ ...ProductStyles.tittleCard, flex: 1, alignContent: 'center' }}
+            style={{
+              ...ProductStyles.tittleCard,
+              flex: 1,
+              alignContent: 'center',
+            }}
           >
             {item.name}
           </Text>
-          <Text
-            style={ProductStyles.textCard}
-          >
+          <Text style={ProductStyles.textCard}>
             {`Missing ${item.quantity - item.cant_insert}`}
           </Text>
         </View>
         <View
           style={[
             ProductStyles.checkBox,
-            { backgroundColor: colors.bluePrimary, },
+            { backgroundColor: colors.bluePrimary },
           ]}
         >
-          <AntDesign
-            name={'questioncircleo'}
-            size={30}
-            color="white"
-          />
+          <AntDesign name={'questioncircleo'} size={30} color="white" />
         </View>
       </View>
     )
@@ -124,17 +121,21 @@ export const ProductsCardBulkVan = ({ item, handleSubmit, viewBulk }) => {
               >
                 {item.name}
               </Text>
-              <Text
-                style={[
-                  ProductStyles.textCard,
-                  {
-                    color: left,
-                    textDecorationLine: isNA ? 'line-through' : 'none',
-                  },
-                ]}
-              >
-                {`Missing ${item.quantity - item.cant_insert}`}
-              </Text>
+              <View style={ProductStyles.qty}>
+                <Text style={ProductStyles.textCard}>Qty: {item.quantity}</Text>
+                <Text
+                  style={[
+                    ProductStyles.textCard,
+                    {
+                      marginRight: 25,
+                      color: colors.danger,
+                      textDecorationLine: isNA ? 'line-through' : 'none',
+                    },
+                  ]}
+                >
+                  {`Missing ${item.quantity - item.cant_insert}`}
+                </Text>
+              </View>
             </View>
             <View
               style={[
@@ -143,9 +144,7 @@ export const ProductsCardBulkVan = ({ item, handleSubmit, viewBulk }) => {
                   backgroundColor:
                     isPressed || right || item.last_state === 'FULL'
                       ? colors.bluePrimary
-                      : left ||
-                        item.last_state === 'SHORT' ||
-                        isNA
+                      : left || item.last_state === 'SHORT' || isNA
                         ? colors.danger
                         : colors.gray,
                 },
@@ -153,13 +152,9 @@ export const ProductsCardBulkVan = ({ item, handleSubmit, viewBulk }) => {
             >
               <AntDesign
                 name={
-                  isPressed ||
-                    right ||
-                    item.last_state === 'FULL'
+                  isPressed || right || item.last_state === 'FULL'
                     ? 'checkcircleo'
-                    : left ||
-                      item.last_state === 'SHORT' ||
-                      isNA
+                    : left || item.last_state === 'SHORT' || isNA
                       ? 'minuscircleo'
                       : 'questioncircleo'
                 }
