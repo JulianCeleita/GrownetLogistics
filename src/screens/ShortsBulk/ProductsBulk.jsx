@@ -62,7 +62,7 @@ function ProductsBulk({ route }) {
                   {type.bulkType}
                 </Text>
               </View>
-              <View style={{ marginTop: 15 }}>
+              <View>
                 {type.bulkProducts.map((product) => (
                   <ProductsCardBulkVan
                     key={product.id}
