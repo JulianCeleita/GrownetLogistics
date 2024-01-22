@@ -43,18 +43,19 @@ function ProductsLoading({ route }) {
           </View>
         </View>
         {productsLoading ? (
-          <View>
-            {Object.entries(productsLoading.data.reduce((grouped, product) => {
-              const key = product.presentationType;
-              if (!grouped[key]) {
-                grouped[key] = [];
-              }
-              grouped[key].push(product);
-              return grouped;
-            }, {})).map(([group, products]) => (
+          <View style={ProductStyles.cardsProducts}>
+            {Object.entries(
+              productsLoading.data.reduce((grouped, product) => {
+                const key = product.presentationType
+                if (!grouped[key]) {
+                  grouped[key] = []
+                }
+                grouped[key].push(product)
+                return grouped
+              }, {}),
+            ).map(([group, products]) => (
               <View key={group}>
-                {/* TODO: Mejorar el style del titulo */}
-                <Text>{group}</Text>
+                <Text style={ProductStyles.tittleCard}>{group}</Text>
                 {products.map((product) => (
                   <ProductsCard
                     key={product.id}
