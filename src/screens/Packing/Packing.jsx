@@ -19,13 +19,11 @@ import { GlobalStyles } from '../../styles/GlobalStyles'
 const Packing = () => {
   const navigation = useNavigation()
   const { routesByDate, setOrdersByDate, setSelectedRoute } = useOrdersByDate()
-
   const handleRoutePress = (nameRoute) => {
     setSelectedRoute(nameRoute)
     setOrdersByDate(nameRoute, routesByDate)
     navigation.navigate('CustomerDayPacking', { nameRoute: nameRoute })
   }
-
   return (
     <SafeAreaView style={{ backgroundColor: 'white', height: '100%' }}>
       <ScrollView>
@@ -40,8 +38,6 @@ const Packing = () => {
         </View>
         <LinearGradient
           colors={['#00478C', '#026CD2']}
-          start={{ x: 0, y: 0.5 }}
-          end={{ x: 1, y: 0.5 }}
           style={DeliveryStyles.packing}
         />
 
@@ -55,7 +51,7 @@ const Packing = () => {
               onPress={() => handleRoutePress(order.nameRoute)}
               key={order.nameRoute}
             >
-              <CircleProgress />
+              <CircleProgress percentage={order.percentage_packing} />
               <Text style={DeliveryStyles.tittleRoute}>{order.nameRoute}</Text>
             </TouchableOpacity>
           ))}

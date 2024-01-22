@@ -1,6 +1,6 @@
 import { AntDesign } from '@expo/vector-icons'
 import React, { useState } from 'react'
-import { Text, TouchableOpacity, View } from 'react-native'
+import { Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { PanGestureHandler } from 'react-native-gesture-handler'
 import ModalProduct from '../components/ModalProduct'
 import { GlobalStyles, colors } from '../styles/GlobalStyles'
@@ -11,11 +11,27 @@ export const ProductsCardBulkVan = ({ item, handleSubmit, viewBulk }) => {
   const [left, setLeft] = useState(false)
   const [showModal, setShowModal] = useState(false)
   const [selectedItem, setSelectedItem] = useState(null)
+  const [right, setRight] = useState(false)
+  const [quantity, setQuantity] = useState(item.quantity)
+  const [note, setNote] = useState('')
+  const [modalCard, setModalCard] = useState(false)
+  const [showModalNA, setShowModalNA] = useState(false)
+  const [isNA, setIsNA] = useState(false)
+
+  const positiveOffset = 30
+  const negativeOffset = -30
 
   const handlePress = (itemId) => {
     setIsPressed(!isPressed)
     setLeft(false)
+    setRight(false)
+    handleClose(false)
     handleSubmit(itemId, null, '', 'FULL')
+  }
+
+  const handleDeclareNA = () => {
+    console.log('declareNA');
+    setShowModalNA(true)
   }
 
   const handleGestureEvent = (event, itemId) => {
@@ -23,19 +39,34 @@ export const ProductsCardBulkVan = ({ item, handleSubmit, viewBulk }) => {
     const { translationX } = event.nativeEvent
     if (translationX < 0) {
       setLeft(true)
+      setRight(false)
       setIsPressed(false)
       setShowModal(true)
+    }
+
+    if (translationX > 0) {
+      setModalCard(true)
     }
   }
 
   const confirm = () => {
     setShowModal(false)
-    handleSubmit(item.id, null, '', 'SHORT')
+    handleSubmit(item.id, 0, '', 'SHORT')
+  }
+
+  const confirmNA = () => {
+    setShowModalNA(false)
+    setIsNA(true)
+    handleSubmit(item.id, 0, '', 'N/A')
   }
 
   const setStateCardDefault = () => {
     setIsPressed(false)
     setLeft(false)
+    setModalCard(false)
+  }
+  const handleClose = () => {
+    setModalCard(false)
   }
 
   if (viewBulk) {
@@ -71,10 +102,14 @@ export const ProductsCardBulkVan = ({ item, handleSubmit, viewBulk }) => {
 
   return (
     <View>
-      <TouchableOpacity onPress={() => handlePress(item.id)}>
+      <TouchableOpacity
+        onPress={() => handlePress(item.id)}
+        onLongPress={() => handleDeclareNA()}
+        delayLongPress={2000}
+      >
         <PanGestureHandler
           onGestureEvent={(e) => handleGestureEvent(e, item.id)}
-          activeOffsetX={-30}
+          activeOffsetX={[negativeOffset, positiveOffset]}
         >
           <View style={[ProductStyles.card, GlobalStyles.boxShadow]}>
             <View style={ProductStyles.productTittle}>
@@ -82,11 +117,8 @@ export const ProductsCardBulkVan = ({ item, handleSubmit, viewBulk }) => {
                 style={[
                   ProductStyles.tittleCard,
                   {
-                    textDecorationLine:
-                      left || item.state_definitive === 'SHORT'
-                        ? 'line-through'
-                        : 'none',
-                    color: left ? colors.bluePrimary : colors.darkBlue,
+                    color: colors.darkBlue,
+                    textDecorationLine: isNA ? 'line-through' : 'none',
                   },
                 ]}
               >
@@ -96,11 +128,8 @@ export const ProductsCardBulkVan = ({ item, handleSubmit, viewBulk }) => {
                 style={[
                   ProductStyles.textCard,
                   {
-                    textDecorationLine:
-                      left || item.state_definitive === 'SHORT'
-                        ? 'line-through'
-                        : 'none',
                     color: left,
+                    textDecorationLine: isNA ? 'line-through' : 'none',
                   },
                 ]}
               >
@@ -112,19 +141,25 @@ export const ProductsCardBulkVan = ({ item, handleSubmit, viewBulk }) => {
                 ProductStyles.checkBox,
                 {
                   backgroundColor:
-                    isPressed || item.state_definitive === 'FULL'
+                    isPressed || right || item.last_state === 'FULL'
                       ? colors.bluePrimary
-                      : left || item.state_definitive === 'SHORT'
-                        ? colors.bluePrimary
+                      : left ||
+                        item.last_state === 'SHORT' ||
+                        isNA
+                        ? colors.danger
                         : colors.gray,
                 },
               ]}
             >
               <AntDesign
                 name={
-                  isPressed || item.state_definitive === 'FULL'
+                  isPressed ||
+                    right ||
+                    item.last_state === 'FULL'
                     ? 'checkcircleo'
-                    : left || item.state_definitive === 'SHORT'
+                    : left ||
+                      item.last_state === 'SHORT' ||
+                      isNA
                       ? 'minuscircleo'
                       : 'questioncircleo'
                 }
@@ -135,6 +170,91 @@ export const ProductsCardBulkVan = ({ item, handleSubmit, viewBulk }) => {
           </View>
         </PanGestureHandler>
       </TouchableOpacity>
+      {modalCard ? (
+        <View
+          style={[
+            ProductStyles.details,
+            GlobalStyles.boxShadow,
+            { borderColor: colors.bluePrimary },
+          ]}
+        >
+          <View style={ProductStyles.information}>
+            <View>
+              <Text style={ProductStyles.textCard}>Packed:</Text>
+              <Text style={[ProductStyles.textCard, { marginTop: 12 }]}>
+                Note:
+              </Text>
+            </View>
+            <View style={ProductStyles.inputsCard}>
+              <TextInput
+                style={ProductStyles.input}
+                keyboardType="numeric"
+                value={quantity.toString()}
+                onChangeText={(num) => setQuantity(num)}
+              />
+              <TextInput
+                style={[ProductStyles.input, { marginTop: 8 }]}
+                value={note.toString()}
+                onChangeText={(note) => setNote(note)}
+              />
+            </View>
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              marginTop: 8,
+              gap: 12,
+            }}
+          >
+            <TouchableOpacity
+              onPress={handleClose}
+              style={{
+                ...GlobalStyles.btnOutline,
+              }}
+            >
+              <Text
+                style={[
+                  GlobalStyles.textBtnOutline,
+                  { fontSize: Platform.OS === 'ios' ? 15 : 14 },
+                ]}
+              >
+                Cancel
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[GlobalStyles.btnPrimary]}
+              onPress={() => {
+                handleSubmit(item.id, quantity, note)
+                setLeft(false)
+                setIsPressed(false)
+                setRight(true)
+                handleClose()
+              }}
+            >
+              <Text
+                style={[
+                  GlobalStyles.textBtnSecundary,
+                  { fontSize: Platform.OS === 'ios' ? 15 : 14 },
+                ]}
+              >
+                Send
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      ) : null}
+
+      {showModalNA ? (
+        <ModalProduct
+          showModal={showModalNA}
+          setShowModal={setShowModalNA}
+          confirm={confirmNA}
+          setStateCardDefault={setStateCardDefault}
+          title={item.name + ' will be marked as N/A'}
+          text={' Are you sure you want to mark this item as N/A?'}
+        />
+      ) : null}
+
       {showModal && selectedItem === item.id ? (
         <ModalProduct
           showModal={showModal}

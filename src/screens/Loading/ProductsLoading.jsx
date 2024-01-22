@@ -43,7 +43,7 @@ function ProductsLoading({ route }) {
           </View>
         </View>
         {productsLoading ? (
-          <View>
+          <View style={ProductStyles.cardsProducts}>
             {Object.entries(
               productsLoading.data.reduce((grouped, product) => {
                 const key = product.presentationType
@@ -55,8 +55,7 @@ function ProductsLoading({ route }) {
               }, {}),
             ).map(([group, products]) => (
               <View key={group}>
-                {/* TODO: Mejorar el style del titulo */}
-                <Text>{group}</Text>
+                <Text style={ProductStyles.tittleCard}>{group}</Text>
                 {products.map((product) => (
                   <ProductsCard
                     key={product.id}
