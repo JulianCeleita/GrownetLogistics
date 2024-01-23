@@ -7,7 +7,12 @@ import { GlobalStyles, colors } from '../styles/GlobalStyles'
 import { ProductStyles } from '../styles/ProductStyles'
 import { CheckStatusCardVan } from './CheckStatusCardVan'
 
-export const ProductsCardBulkVan = ({ item, handleSubmit, viewBulk }) => {
+export const ProductsCardBulkVan = ({
+  item,
+  handleSubmit,
+  viewBulk,
+  viewVan,
+}) => {
   const [isPressed, setIsPressed] = useState(false)
   const [left, setLeft] = useState(false)
   const [showModal, setShowModal] = useState(false)
@@ -22,6 +27,10 @@ export const ProductsCardBulkVan = ({ item, handleSubmit, viewBulk }) => {
   const positiveOffset = 30
   const negativeOffset = -30
   const quantityPressed = item.quantity - item.cant_insert
+  let result1 = item.quantity_defitive
+    ? quantityPressed - item.quantity_defitive
+    : null
+  let result2 = quantity ? quantityPressed - quantity : null
 
   const handlePress = (itemId) => {
     setIsPressed(!isPressed)
@@ -29,8 +38,8 @@ export const ProductsCardBulkVan = ({ item, handleSubmit, viewBulk }) => {
     setRight(false)
     handleClose(false)
     setIsNA(false)
-    console.log('se ejcuto esto', quantityPressed)
-    handleSubmit(itemId, quantityPressed, '', 'FULL')
+
+    handleSubmit(itemId, quantityPressed, '', 'FULL', viewVan)
   }
 
   const handleDeclareNA = () => {
@@ -90,7 +99,7 @@ export const ProductsCardBulkVan = ({ item, handleSubmit, viewBulk }) => {
               alignContent: 'center',
             }}
           >
-            {item.name} {item.presentationName} 
+            {item.name} {item.presentationName}
           </Text>
           <Text style={ProductStyles.textCard}>
             {`Missing ${item.quantity - item.cant_insert}`}
@@ -147,11 +156,13 @@ export const ProductsCardBulkVan = ({ item, handleSubmit, viewBulk }) => {
                     },
                   ]}
                 >
-                  {quantity && item.quantity_defitive
-                    ? `Missing ${quantityPressed - item.quantity_defitive}`
-                    : quantity
-                      ? `Missing ${quantity - quantityPressed}`
-                      : ''}
+                  {result1 === 0 || result2 === 0
+                    ? ''
+                    : item.quantity_defitive
+                      ? `Missing ${result1}`
+                      : quantity
+                        ? `Missing ${result2}`
+                        : ''}
                 </Text>
               </View>
             </View>
@@ -223,8 +234,7 @@ export const ProductsCardBulkVan = ({ item, handleSubmit, viewBulk }) => {
               style={[GlobalStyles.btnPrimary]}
               onPress={() => {
                 if (quantity && Number(quantity) > 0) {
-                  console.log('se dataVan', dataVan)
-                  handleSubmit(item.id, quantity, note)
+                  handleSubmit(item.id, quantity, note, '', viewVan)
                   setLeft(false)
                   setIsPressed(false)
                   setRight(true)

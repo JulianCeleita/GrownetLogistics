@@ -67,10 +67,10 @@ function ProductsVan({ route }) {
                       key={index}
                       item={product}
                       handleSubmit={handleSubmit}
+                      viewVan
                     />
                   ))}
                 </View>
-
               </View>
             ))}
           </View>
