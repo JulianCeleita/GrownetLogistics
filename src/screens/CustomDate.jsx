@@ -40,25 +40,25 @@ const CustomDate = () => {
     }).start()
   }, [showMore])
 
-  const handleDatesAvailables = () => {
+  const handleDatesAvailables = async () => {
     const postData = {
       days: 2,
       supplier: idSupplier,
     }
-    mainAxios
-      .post(datesAvailables, postData, {
+
+    try {
+      const response = await mainAxios.post(datesAvailables, postData, {
         headers: {
           Authorization: `Bearer ${employeeToken}`,
         },
       })
-      .then((response) => {
-        const { principal, next } = response.data.operation
-        const allDates = [...principal, ...next] || []
-        setAvailableDates(allDates)
-      })
-      .catch((error) => {
-        console.error('Error al obtener las fechas', error)
-      })
+
+      const { principal, next } = response.data.operation
+      const allDates = [...principal, ...next] || []
+      setAvailableDates(allDates)
+    } catch (error) {
+      console.error('Error al obtener las fechas', error)
+    }
   }
 
   const handleDatePress = (date) => {
