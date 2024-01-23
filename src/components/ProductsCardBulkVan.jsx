@@ -129,8 +129,7 @@ export const ProductsCardBulkVan = ({ item, handleSubmit, viewBulk }) => {
                   },
                 ]}
               >
-                {item.name} {item.presentationName} 
-                {console.log(item)}
+                {item.name} {item.presentationName}
               </Text>
 
               <View style={ProductStyles.qty}>

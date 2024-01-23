@@ -57,7 +57,7 @@ function ProductsVan({ route }) {
                   },
                 ]}
               >
-                {restaurant.vanName}
+                {`${restaurant.vanName} - ${restaurant.reference_orders}`}
               </Text>
               <View>
                 {restaurant.vanProducts.map((product, index) => (
