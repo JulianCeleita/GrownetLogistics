@@ -89,7 +89,7 @@ export const ProductsCardBulkVan = ({ item, handleSubmit, viewBulk }) => {
               alignContent: 'center',
             }}
           >
-            {item.name}
+            {item.name} {item.presentationName} 
           </Text>
           <Text style={ProductStyles.textCard}>
             {`Missing ${item.quantity - item.cant_insert}`}
@@ -129,7 +129,8 @@ export const ProductsCardBulkVan = ({ item, handleSubmit, viewBulk }) => {
                   },
                 ]}
               >
-                {item.name}
+                {item.name} {item.presentationName} 
+                {console.log(item)}
               </Text>
 
               <View style={ProductStyles.qty}>
