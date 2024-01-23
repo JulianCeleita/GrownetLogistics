@@ -21,6 +21,7 @@ export const ProductsCardBulkVan = ({ item, handleSubmit, viewBulk }) => {
 
   const positiveOffset = 30
   const negativeOffset = -30
+  const quantityPressed = item.quantity - item.cant_insert
 
   const handlePress = (itemId) => {
     setIsPressed(!isPressed)
@@ -28,7 +29,8 @@ export const ProductsCardBulkVan = ({ item, handleSubmit, viewBulk }) => {
     setRight(false)
     handleClose(false)
     setIsNA(false)
-    handleSubmit(itemId, null, '', 'FULL')
+    console.log('se ejcuto esto', quantityPressed)
+    handleSubmit(itemId, quantityPressed, '', 'FULL')
   }
 
   const handleDeclareNA = () => {
@@ -71,9 +73,8 @@ export const ProductsCardBulkVan = ({ item, handleSubmit, viewBulk }) => {
     setModalCard(false)
   }
 
-
   useEffect(() => {
-    if (item.state_definitive === "N/A") {
+    if (item.state_definitive === 'N/A') {
       setIsNA(true)
     }
   }, [])
@@ -106,7 +107,7 @@ export const ProductsCardBulkVan = ({ item, handleSubmit, viewBulk }) => {
       </View>
     )
   }
-
+  console.log('item', item)
   return (
     <View>
       <TouchableOpacity
@@ -133,7 +134,9 @@ export const ProductsCardBulkVan = ({ item, handleSubmit, viewBulk }) => {
               </Text>
 
               <View style={ProductStyles.qty}>
-                <Text style={ProductStyles.textCard}>Qty: {item.quantity}</Text>
+                <Text style={ProductStyles.textCard}>
+                  Qty: {quantityPressed}
+                </Text>
                 <Text
                   style={[
                     ProductStyles.textCard,
@@ -144,11 +147,11 @@ export const ProductsCardBulkVan = ({ item, handleSubmit, viewBulk }) => {
                     },
                   ]}
                 >
-                  {quantity
-                    ? `Missing ${item.quantity - item.cant_insert}`
-                    : !quantity && item.quantity_defitive
-                      ? `Missing ${item.quantity - item.quantity_defitive}`
-                      : `Missing ${item.quantity - item.cant_insert}`}
+                  {quantity && item.quantity_defitive
+                    ? `Missing ${quantityPressed - item.quantity_defitive}`
+                    : quantity
+                      ? `Missing ${quantity - quantityPressed}`
+                      : ''}
                 </Text>
               </View>
             </View>
@@ -202,7 +205,6 @@ export const ProductsCardBulkVan = ({ item, handleSubmit, viewBulk }) => {
             <TouchableOpacity
               onPress={() => {
                 handleClose()
-                setQuantity(null)
               }}
               style={{
                 ...GlobalStyles.btnOutline,
@@ -221,6 +223,7 @@ export const ProductsCardBulkVan = ({ item, handleSubmit, viewBulk }) => {
               style={[GlobalStyles.btnPrimary]}
               onPress={() => {
                 if (quantity && Number(quantity) > 0) {
+                  console.log('se dataVan', dataVan)
                   handleSubmit(item.id, quantity, note)
                   setLeft(false)
                   setIsPressed(false)

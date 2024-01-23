@@ -48,7 +48,7 @@ function ProductsVan({ route }) {
       ) : (
         <ScrollView>
           {restaurantData.map((restaurant) => (
-            <View key={restaurant.vanName}>
+            <View key={restaurant.customerName}>
               <Text
                 style={[
                   CustomerDayStyles.restaurantTypeTitle,
@@ -57,10 +57,10 @@ function ProductsVan({ route }) {
                   },
                 ]}
               >
-                {restaurant.vanName}
+                {restaurant.customerName}
               </Text>
               <View>
-                {restaurant.vanProducts.map((product, index) => (
+                {restaurant.products.map((product, index) => (
                   <ProductsCardBulkVan
                     key={index}
                     item={product}
