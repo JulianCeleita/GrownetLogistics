@@ -5,6 +5,7 @@ import {
   ScrollView,
   Text,
   View,
+  KeyboardAvoidingView,
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { ProductsCardBulkVan } from '../../components/ProductsCardBulkVan'
@@ -16,6 +17,7 @@ import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
 import { ProductStyles } from '../../styles/ProductStyles'
 import { BtnGoBack } from '../../components/BtnGoBack'
 import { colors } from '../../styles/GlobalStyles'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 function ProductsVan({ route }) {
   const { restaurantData, loading, error, setFetchShortVanProducts } =
@@ -28,52 +30,58 @@ function ProductsVan({ route }) {
   }, [])
   return (
     <SafeAreaView style={ProductStyles.products}>
-      <ScrollView stickyHeaderIndices={[0]}>
-        <View style={CustomerDayStyles.title2}>
-          <BtnGoBack
-            color={colors.darkBlue}
-            top={Platform.OS === 'ios' && !Platform.isPad ? 60 : 5}
-          />
-          <Text style={CustomerDayStyles.customerTitle}>
-            {route.params.nameRoute}
-          </Text>
-        </View>
-        {loading ? (
-          <ActivityIndicator size="large" color="#0000ff" />
-        ) : error ? (
-          <View
-            style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
-          >
-            <Text>Error: {error}</Text>
+      <KeyboardAwareScrollView enableOnAndroid extraScrollHeight={205}>
+        <ScrollView stickyHeaderIndices={[0]}>
+          <View style={CustomerDayStyles.title2}>
+            <BtnGoBack
+              color={colors.darkBlue}
+              top={Platform.OS === 'ios' && !Platform.isPad ? 60 : 5}
+            />
+            <Text style={CustomerDayStyles.customerTitle}>
+              {route.params.nameRoute}
+            </Text>
           </View>
-        ) : (
-          <View>
-            {restaurantData.map((restaurant) => (
-              <View key={restaurant.vanName}>
-                <Text
-                  style={[
-                    CustomerDayStyles.restaurantTypeTitle,
-                    {
-                      marginBottom: Platform.OS === 'ios' ? 5 : null,
-                    },
-                  ]}
-                >
-                  {`${restaurant.vanName} - ${restaurant.reference_orders}`}
-                </Text>
-                <View>
-                  {restaurant.vanProducts.map((product, index) => (
-                    <ProductsCardBulkVan
-                      key={index}
-                      item={product}
-                      handleSubmit={handleSubmit}
-                    />
-                  ))}
+          {loading ? (
+            <ActivityIndicator size="large" color="#0000ff" />
+          ) : error ? (
+            <View
+              style={{
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <Text>Error: {error}</Text>
+            </View>
+          ) : (
+            <View>
+              {restaurantData.map((restaurant) => (
+                <View key={restaurant.vanName}>
+                  <Text
+                    style={[
+                      CustomerDayStyles.restaurantTypeTitle,
+                      {
+                        marginBottom: Platform.OS === 'ios' ? 5 : null,
+                      },
+                    ]}
+                  >
+                    {`${restaurant.vanName} - ${restaurant.reference_orders}`}
+                  </Text>
+                  <View>
+                    {restaurant.vanProducts.map((product, index) => (
+                      <ProductsCardBulkVan
+                        key={index}
+                        item={product}
+                        handleSubmit={handleSubmit}
+                      />
+                    ))}
+                  </View>
                 </View>
-              </View>
-            ))}
-          </View>
-        )}
-      </ScrollView>
+              ))}
+            </View>
+          )}
+        </ScrollView>
+      </KeyboardAwareScrollView>
     </SafeAreaView>
   )
 }
