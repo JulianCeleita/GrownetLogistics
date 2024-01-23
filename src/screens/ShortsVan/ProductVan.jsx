@@ -38,6 +38,7 @@ function ProductsVan({ route }) {
             {route.params.nameRoute}
           </Text>
         </View>
+
         {loading ? (
           <ActivityIndicator size="large" color="#0000ff" />
         ) : error ? (
@@ -49,7 +50,7 @@ function ProductsVan({ route }) {
         ) : (
           <View>
             {restaurantData.map((restaurant) => (
-              <View key={restaurant.vanName}>
+              <View key={restaurant.customerName}>
                 <Text
                   style={[
                     CustomerDayStyles.restaurantTypeTitle,
@@ -58,10 +59,10 @@ function ProductsVan({ route }) {
                     },
                   ]}
                 >
-                  {`${restaurant.vanName} - ${restaurant.reference_orders}`}
+                  {`${restaurant.customerName} - ${restaurant.reference_orders}`}
                 </Text>
                 <View>
-                  {restaurant.vanProducts.map((product, index) => (
+                  {restaurant.products.map((product, index) => (
                     <ProductsCardBulkVan
                       key={index}
                       item={product}
@@ -69,6 +70,7 @@ function ProductsVan({ route }) {
                     />
                   ))}
                 </View>
+
               </View>
             ))}
           </View>
