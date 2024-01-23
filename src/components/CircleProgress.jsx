@@ -8,7 +8,8 @@ function CircleProgress({ percentage }) {
   const strokeWidth = 10
   const circumference = 2 * Math.PI * radius
   const strokeDashoffset = circumference - (percentage / 100) * circumference
-  let roundedPercentage = percentage
+  console.log(percentage)
+  let roundedPercentage = Math.round(percentage)
   return (
     <Svg style={DeliveryStyles.circle} height={radius * 2} width={radius * 2}>
       <Circle

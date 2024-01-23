@@ -47,31 +47,33 @@ function CustomerDayLoading({ route }) {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
-      <ScrollView>
-        <BtnGoBack color={colors.darkBlue} />
-        {search ? (
-          <ProductSearcher
-            setSearch={setSearch}
-            searchPhrase={searchPhrase}
-            setSearchPhrase={setSearchPhrase}
-          />
-        ) : (
-          <View style={CustomerDayStyles.title2}>
-            <Text style={CustomerDayStyles.customerTitle}>
-              {route.params.nameRoute}
-            </Text>
-            <TouchableOpacity
-              onPress={handleSearch}
-              style={CustomerDayStyles.icon}
-            >
-              <Ionicons
-                name="md-search-circle-outline"
-                size={35}
-                color={colors.darkBlue}
-              />
-            </TouchableOpacity>
-          </View>
-        )}
+      <ScrollView stickyHeaderIndices={[0]}>
+        <View>
+          <BtnGoBack color={colors.darkBlue} />
+          {search ? (
+            <ProductSearcher
+              setSearch={setSearch}
+              searchPhrase={searchPhrase}
+              setSearchPhrase={setSearchPhrase}
+            />
+          ) : (
+            <View style={CustomerDayStyles.title2}>
+              <Text style={CustomerDayStyles.customerTitle}>
+                {route.params.nameRoute}
+              </Text>
+              <TouchableOpacity
+                onPress={handleSearch}
+                style={CustomerDayStyles.icon}
+              >
+                <Ionicons
+                  name="md-search-circle-outline"
+                  size={35}
+                  color={colors.darkBlue}
+                />
+              </TouchableOpacity>
+            </View>
+          )}
+        </View>
         <View style={CustomerDayStyles.cardsCustomers}>
           {filteredData?.map((order, index) => {
             return (
