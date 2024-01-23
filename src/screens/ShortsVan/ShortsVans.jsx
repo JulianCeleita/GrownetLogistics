@@ -36,7 +36,7 @@ function ShortsVans() {
   }
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ backgroundColor: 'white', height: '100%' }}>
       <ScrollView>
         <BtnGoBack color="white" top={20} />
         <View style={[DeliveryStyles.tittle, GlobalStyles.boxShadow]}>
