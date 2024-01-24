@@ -20,7 +20,7 @@ import { colors } from '../../styles/GlobalStyles'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 function ProductsVan({ route }) {
-  const { restaurantData, loading, error, setFetchShortVanProducts } =
+  const { restaurantData, setRestaurantData, loading, error, setFetchShortVanProducts } =
     useShortVanStore()
   const { employeeToken } = useEmployeeStore()
   const { handleSubmit } = useProductSubmit(insertShort)
@@ -28,6 +28,26 @@ function ProductsVan({ route }) {
   useEffect(() => {
     setFetchShortVanProducts(employeeToken)
   }, [])
+
+  const updateProductsVan = (itemId, quantity) => {
+    console.log('entre a updateProducts');
+    const newProducts = restaurantData.map((itemProd) => {
+      return {
+        ...itemProd,
+        products: itemProd.products.map((product) => {
+          if (product.id === itemId) {
+            return {
+              ...product,
+              packed: quantity,
+            }
+          }
+          return product
+        }),
+      }
+    })
+    setRestaurantData(newProducts)
+  }
+
   return (
     <SafeAreaView style={ProductStyles.products}>
       <View style={CustomerDayStyles.title2}>
@@ -69,7 +89,7 @@ function ProductsVan({ route }) {
                         key={index}
                         item={product}
                         handleSubmit={handleSubmit}
-                        viewVan
+                        updateProductsVan={updateProductsVan}
                       />
                     ))}
                   </View>
