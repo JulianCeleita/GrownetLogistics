@@ -97,9 +97,10 @@ export const CustomerDayStyles = StyleSheet.create({
     color: colors.darkBlue,
   },
   restaurantTypeTitle: {
-    fontSize: 18,
-    color: '#026CD2',
+    fontSize: 16,
+    color: colors.bluePrimary,
     fontFamily: 'PoppinsSemi',
     textAlign: 'left',
+    marginTop: 10,
   },
 })
