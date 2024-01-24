@@ -178,19 +178,29 @@ export const ProductsCardBulkVan = ({
                     ProductStyles.textCard,
                     {
                       marginRight: 25,
-                      color: colors.danger,
+                      color: quantityPressed > item.packed ? colors.danger : colors.green,
                       textDecorationLine: isNA ? 'line-through' : 'none',
                     },
                   ]}
                 >
-                  {item.packed && item.packed !== quantityPressed
+                  {item.packed &&
+                    item.packed !== quantityPressed &&
+                    quantityPressed > item.packed
                     ? `Missing ${quantityPressed - item.packed}`
-                    : !item.packed &&
+                    : item.packed &&
+                      item.packed !== quantityPressed &&
+                      quantityPressed < item.packed
+                      ? `Overweight ${item.packed - quantityPressed}`
+                      : !item.packed &&
                         item.quantity_defitive &&
-                        item.quantity_defitive !== quantityPressed
-                      ? `Missing ${quantityPressed - item.quantity_defitive}`
-                      : ''}
+                        item.quantity_defitive !== quantityPressed &&
+                        quantityPressed > item.quantity_defitive
+                        ? `Missing ${quantityPressed - item.quantity_defitive}`
+                        : item.quantity_defitive > quantityPressed
+                          ? `Overweight ${item.quantity_defitive - quantityPressed}`
+                          : null}
                 </Text>
+
               </View>
             </View>
 
