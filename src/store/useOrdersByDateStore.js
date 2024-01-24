@@ -26,8 +26,6 @@ const useOrdersByDate = create((set) => {
           },
         })
 
-        const RoutesByDate = await response.data.routes
-        console.log('RoutesByDate', RoutesByDate)
         let RoutesByDate = await response.data.routes
         RoutesByDate.sort((a, b) => {
           return a.nameRoute.localeCompare(b.nameRoute)

@@ -36,7 +36,6 @@ const Packing = () => {
 
   useFocusEffect(
     useCallback(() => {
-      console.log('Carga de porcentajes en packing');
       setRoutesByDate(employeeToken, selectedDate)
     }, [],))
 

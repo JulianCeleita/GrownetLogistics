@@ -36,7 +36,6 @@ const Loading = () => {
 
   useFocusEffect(
     useCallback(() => {
-      console.log('Carga de porcentajes en loading');
       setRoutesByDate(employeeToken, selectedDate)
     }, [],))
 
