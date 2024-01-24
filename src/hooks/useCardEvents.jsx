@@ -37,7 +37,7 @@ export const useCardEvents = (quantityStore, products, setProducts, error) => {
 
       const updatedProducts = {
         ...products,
-        data: products.map((item) => {
+        data: products.data.map((item) => {
           if (item.id === itemId) {
             return {
               ...item,
@@ -87,7 +87,7 @@ export const useCardEvents = (quantityStore, products, setProducts, error) => {
 
     const updatedProducts = {
       ...products,
-      data: products.map((item) => {
+      data: products.data.map((item) => {
         if (item.id === itemId) {
           return { ...item, packed: newLeftStates[itemId] ? 0 : '' }
         }
@@ -108,7 +108,7 @@ export const useCardEvents = (quantityStore, products, setProducts, error) => {
 
     const updatedProducts = {
       ...products,
-      data: products.map((item) => {
+      data: products.data.map((item) => {
         if (item.id === itemId) {
           return { ...item, packed: newRightStates[itemId] ? quantity : '' }
         }
