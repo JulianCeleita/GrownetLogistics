@@ -1,25 +1,24 @@
 import { useNavigation } from '@react-navigation/native'
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Image,
   Keyboard,
-  SafeAreaView,
   Platform,
+  SafeAreaView,
   StatusBar,
   Text,
-  TextInput,
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
 } from 'react-native'
 import mainAxios from '../../../axios.config'
 import ModalAlert from '../../components/ModalAlert'
+import NumericKeyboard from '../../components/numericKeyboard'
 import { loginEmployee } from '../../config/urls.config'
 import logo from '../../img/Logo_Blanco.png'
 import useEmployeeStore from '../../store/useEmployeeStore'
-import { LoginStyles, PinNumericStyle } from '../../styles/LoginStyles'
-import NumericKeyboard from '../../components/numericKeyboard'
 import { colors } from '../../styles/GlobalStyles'
+import { LoginStyles, PinNumericStyle } from '../../styles/LoginStyles'
 
 const PinLogin = () => {
   const [pin, setPin] = useState('')
@@ -104,9 +103,9 @@ const PinLogin = () => {
   }
 
   return (
-    <SafeAreaView
+    <View
       style={{ flex: 1 }}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      // behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
       <TouchableWithoutFeedback onPress={dismissKeyboard}>
         <View style={LoginStyles.container}>
@@ -162,7 +161,7 @@ const PinLogin = () => {
           />
         </View>
       </TouchableWithoutFeedback>
-    </SafeAreaView>
+    </View>
   )
 }
 

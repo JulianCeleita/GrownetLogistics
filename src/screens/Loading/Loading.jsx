@@ -8,8 +8,8 @@ import {
   TouchableOpacity,
   View,
   Platform,
+  SafeAreaView,
 } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
 import { BtnGoBack } from '../../components/BtnGoBack'
 import CircleProgress from '../../components/CircleProgress'
 import useOrdersByDate from '../../store/useOrdersByDateStore'

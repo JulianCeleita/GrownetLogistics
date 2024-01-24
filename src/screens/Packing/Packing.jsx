@@ -8,8 +8,8 @@ import {
   Text,
   TouchableOpacity,
   View,
+  SafeAreaView,
 } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
 import { BtnGoBack } from '../../components/BtnGoBack'
 import CircleProgress from '../../components/CircleProgress'
 import useOrdersByDate from '../../store/useOrdersByDateStore'
@@ -25,7 +25,7 @@ const Packing = () => {
     navigation.navigate('CustomerDayPacking', { nameRoute: nameRoute })
   }
   return (
-    <SafeAreaView style={{ backgroundColor: 'white', height: '100%' }}>
+    <View style={{ backgroundColor: 'white', height: '100%' }}>
       <ScrollView>
         <BtnGoBack color="white" top={20} />
         <View style={[DeliveryStyles.tittle, GlobalStyles.boxShadow]}>
@@ -57,7 +57,7 @@ const Packing = () => {
           ))}
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   )
 }
 

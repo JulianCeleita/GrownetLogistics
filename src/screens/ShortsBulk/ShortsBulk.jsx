@@ -2,8 +2,13 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
 import { LinearGradient } from 'expo-linear-gradient'
 import React from 'react'
-import { ScrollView, Text, TouchableOpacity, View } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import {
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+  SafeAreaView,
+} from 'react-native'
 import { BtnGoBack } from '../../components/BtnGoBack'
 import CircleProgress from '../../components/CircleProgress'
 import useOrdersByDate from '../../store/useOrdersByDateStore'
