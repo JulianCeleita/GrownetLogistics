@@ -33,7 +33,7 @@ function ProductsVan({ route }) {
       <View style={CustomerDayStyles.title2}>
         <BtnGoBack
           color={colors.darkBlue}
-          top={Platform.OS === 'ios' && !Platform.isPad ? 60 : 5}
+          top={Platform.OS === 'ios' && !Platform.isPad ? 14 : 5}
         />
         <Text style={CustomerDayStyles.customerTitle}>
           {route.params.nameRoute}
