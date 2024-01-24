@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
+  SafeAreaView,
 } from 'react-native'
 import mainAxios from '../../../axios.config'
 import ModalAlert from '../../components/ModalAlert'
@@ -17,7 +18,6 @@ import { login } from '../../config/urls.config'
 import logo from '../../img/Logo_Blanco.png'
 import useTokenStore from '../../store/useTokenStore'
 import { LoginStyles } from '../../styles/LoginStyles'
-import { SafeAreaView } from 'react-native-safe-area-context'
 
 const LoginPage = () => {
   const [username, setUsername] = useState('')
@@ -117,9 +117,9 @@ const LoginPage = () => {
             showModal={showEmptyInputModal}
             closeModal={closeModal}
             handleOutsidePress={handleOutsidePress}
-            Title='We apologize'
-            message='Password and email cannot be empty.'
-            message2='Try again'
+            Title="We apologize"
+            message="Password and email cannot be empty."
+            message2="Try again"
           />
         </View>
       </TouchableWithoutFeedback>

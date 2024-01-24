@@ -6,10 +6,9 @@ import {
   ScrollView,
   Text,
   TouchableOpacity,
-  View,
   Platform,
+  View,
 } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
 import { BtnGoBack } from '../../components/BtnGoBack'
 import CircleProgress from '../../components/CircleProgress'
 import useOrdersByDate from '../../store/useOrdersByDateStore'
@@ -40,10 +39,12 @@ const Loading = () => {
     }, [],))
 
   return (
-    <SafeAreaView style={{ backgroundColor: 'white', height: '100%' }}>
+    <View style={{ backgroundColor: 'white', height: '100%' }}>
       <ScrollView>
-        <BtnGoBack color="white" top={20} />
-        <View style={[DeliveryStyles.tittle, GlobalStyles.boxShadow]}>
+        <BtnGoBack color="white" top={Platform.OS === 'ios' ? 65 : 20} />
+        <View style={[DeliveryStyles.tittle, GlobalStyles.boxShadow, {
+          marginTop: Platform.OS === 'ios' ? 65 : 30,
+        }]}>
           <Image
             style={DeliveryStyles.imageTittle}
             source={require('../../img/loadingBlanco.png')}
@@ -72,7 +73,7 @@ const Loading = () => {
           ))}
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   )
 }
 

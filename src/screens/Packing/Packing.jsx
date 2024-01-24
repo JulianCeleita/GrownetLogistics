@@ -8,8 +8,8 @@ import {
   Text,
   TouchableOpacity,
   View,
+  SafeAreaView,
 } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
 import { BtnGoBack } from '../../components/BtnGoBack'
 import CircleProgress from '../../components/CircleProgress'
 import useOrdersByDate from '../../store/useOrdersByDateStore'
@@ -40,10 +40,12 @@ const Packing = () => {
     }, [],))
 
   return (
-    <SafeAreaView style={{ backgroundColor: 'white', height: '100%' }}>
+    <View style={{ backgroundColor: 'white', height: '100%' }}>
       <ScrollView>
-        <BtnGoBack color="white" top={20} />
-        <View style={[DeliveryStyles.tittle, GlobalStyles.boxShadow]}>
+        <BtnGoBack color="white" top={Platform.OS === 'ios' ? 65 : 20} />
+        <View style={[DeliveryStyles.tittle, GlobalStyles.boxShadow, {
+          marginTop: Platform.OS === 'ios' ? 65 : 30,
+        }]}>
           <Image
             style={DeliveryStyles.imageTittlePacking}
             source={require('../../img/packingBlanco.png')}
@@ -53,7 +55,10 @@ const Packing = () => {
         </View>
         <LinearGradient
           colors={['#00478C', '#026CD2']}
-          style={DeliveryStyles.packing}
+          style={[
+            DeliveryStyles.packing,
+            { height: Platform.OS === 'ios' ? 140 : 100 },
+          ]}
         />
 
         <View style={DeliveryStyles.delivery}>
@@ -72,7 +77,7 @@ const Packing = () => {
           ))}
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   )
 }
 
