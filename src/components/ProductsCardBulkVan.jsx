@@ -10,8 +10,8 @@ import { CheckStatusCardVan } from './CheckStatusCardVan'
 export const ProductsCardBulkVan = ({
   item,
   handleSubmit,
+  updateProductsVan,
   viewBulk,
-  viewVan,
 }) => {
   const [isPressed, setIsPressed] = useState(false)
   const [left, setLeft] = useState(false)
@@ -31,7 +31,7 @@ export const ProductsCardBulkVan = ({
   let result1 = item.quantity_defitive
     ? quantityPressed - item.quantity_defitive
     : null
-  let result2 = quantity ? quantityPressed - quantity : null
+  let result2 = item.packed ? quantityPressed - item.packed : null
 
   const handlePress = (itemId) => {
     if (isNA) {
@@ -42,8 +42,8 @@ export const ProductsCardBulkVan = ({
     setRight(false)
     handleClose(false)
     setIsNA(false)
-
-    handleSubmit(itemId, quantityPressed, '', 'FULL', viewVan)
+    updateProductsVan(itemId, quantityPressed)
+    handleSubmit(itemId, quantityPressed, '', 'FULL')
   }
 
   const handleDeclareNA = () => {
@@ -71,12 +71,14 @@ export const ProductsCardBulkVan = ({
     setIsPressed(false)
     setIsNA(false)
     setShowModal(false)
+    updateProductsVan(item.id, null)
     handleSubmit(item.id, 0, '', 'SHORT')
   }
 
   const confirmNA = () => {
     setShowModalNA(false)
     setIsNA(true)
+    updateProductsVan(item.id, null)
     handleSubmit(item.id, 0, '', 'N/A')
   }
   const confirmRevertNA = () => {
@@ -99,6 +101,15 @@ export const ProductsCardBulkVan = ({
       setIsNA(true)
     }
   }, [])
+
+  if (item.id === selectedItem) {
+    console.log('----------------------------------------------------');
+    console.log('name', item.name);
+    console.log('quantityPressed', quantityPressed);
+    console.log('packed', item.packed);
+    console.log('quantity_defitive', item.quantity_defitive);
+  }
+
 
   if (viewBulk) {
     return (
@@ -128,7 +139,9 @@ export const ProductsCardBulkVan = ({
       </View>
     )
   }
+
   //console.log('item', item)
+
   return (
     <View>
       <TouchableOpacity
@@ -168,13 +181,16 @@ export const ProductsCardBulkVan = ({
                     },
                   ]}
                 >
-                  {result1 === 0 || result2 === 0
-                    ? ''
-                    : item.quantity_defitive
-                      ? `Missing ${result1}`
-                      : quantity
-                        ? `Missing ${result2}`
-                        : ''}
+                  {
+                    item.packed &&
+                      item.packed !== quantityPressed
+                      ? `Missing ${quantityPressed - item.packed}`
+                      : !item.packed &&
+                        item.quantity_defitive &&
+                        item.quantity_defitive !== quantityPressed
+                        ? `Missing ${quantityPressed - item.quantity_defitive}`
+                        : ''
+                  }
                 </Text>
               </View>
             </View>
@@ -246,7 +262,8 @@ export const ProductsCardBulkVan = ({
               style={[GlobalStyles.btnPrimary]}
               onPress={() => {
                 if (quantity && Number(quantity) > 0) {
-                  handleSubmit(item.id, quantity, note, '', viewVan)
+                  updateProductsVan(item.id, quantity)
+                  handleSubmit(item.id, quantity, note, '')
                   setLeft(false)
                   setIsPressed(false)
                   setRight(true)

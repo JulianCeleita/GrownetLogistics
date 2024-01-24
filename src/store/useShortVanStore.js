@@ -7,6 +7,8 @@ export const useShortVanStore = create((set) => ({
   loading: false,
   error: null,
   setError: (error) => set({ error }),
+  setLoading: (loading) => set({ loading }),
+  setRestaurantData: (restaurantData) => set({ restaurantData }),
   setFetchShortVanProducts: async (token) => {
     try {
       set({ loading: true, error: null })
@@ -16,9 +18,7 @@ export const useShortVanStore = create((set) => ({
         },
       })
 
-
       const { status, van } = response.data
-
 
       if (status === 200 && Array.isArray(van)) {
         set({
