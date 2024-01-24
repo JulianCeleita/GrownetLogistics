@@ -54,6 +54,9 @@ export const ProductsCardBulkVan = ({
   }
 
   const handleGestureEvent = (event, itemId) => {
+    if (isNA) {
+      return
+    }
     setSelectedItem(itemId)
     const { translationX } = event.nativeEvent
     if (translationX < 0) {
@@ -103,13 +106,12 @@ export const ProductsCardBulkVan = ({
   }, [])
 
   if (item.id === selectedItem) {
-    console.log('----------------------------------------------------');
-    console.log('name', item.name);
-    console.log('quantityPressed', quantityPressed);
-    console.log('packed', item.packed);
-    console.log('quantity_defitive', item.quantity_defitive);
+    console.log('----------------------------------------------------')
+    console.log('name', item.name)
+    console.log('quantityPressed', quantityPressed)
+    console.log('packed', item.packed)
+    console.log('quantity_defitive', item.quantity_defitive)
   }
-
 
   if (viewBulk) {
     return (
@@ -181,16 +183,13 @@ export const ProductsCardBulkVan = ({
                     },
                   ]}
                 >
-                  {
-                    item.packed &&
-                      item.packed !== quantityPressed
-                      ? `Missing ${quantityPressed - item.packed}`
-                      : !item.packed &&
+                  {item.packed && item.packed !== quantityPressed
+                    ? `Missing ${quantityPressed - item.packed}`
+                    : !item.packed &&
                         item.quantity_defitive &&
                         item.quantity_defitive !== quantityPressed
-                        ? `Missing ${quantityPressed - item.quantity_defitive}`
-                        : ''
-                  }
+                      ? `Missing ${quantityPressed - item.quantity_defitive}`
+                      : ''}
                 </Text>
               </View>
             </View>
