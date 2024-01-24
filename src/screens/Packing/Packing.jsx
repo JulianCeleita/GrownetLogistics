@@ -38,7 +38,10 @@ const Packing = () => {
         </View>
         <LinearGradient
           colors={['#00478C', '#026CD2']}
-          style={DeliveryStyles.packing}
+          style={[
+            DeliveryStyles.packing,
+            { paddingTop: Platform.OS === 'ios' ? 50 : 0 },
+          ]}
         />
 
         <View style={DeliveryStyles.delivery}>
