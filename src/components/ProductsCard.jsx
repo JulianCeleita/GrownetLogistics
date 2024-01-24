@@ -79,9 +79,7 @@ export function ProductsCard({
           if (item.state_packing !== 'ND') {
             if (!leftStates[item.id] || rightStates[item.id]) {
               handlePress(item.id)
-            } else {
-              setShowModal2(true)
-            }
+            } 
             handleCardSubmit()
           }
         }}
