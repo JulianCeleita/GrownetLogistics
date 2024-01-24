@@ -9,25 +9,29 @@ export const CheckStatusCardVan = ({ item, isPressed, right, left, isNA }) => {
   const [colorCheck, setColorCheck] = useState(colors.gray)
 
   useEffect(() => {
-    if (!isPressed && !right && !left) {
+    if (isNA) {
+      setColorCheck(colors.danger)
+      setIconCheck('minuscircleo')
+    } else if (isPressed || right) {
+      setColorCheck(colors.bluePrimary)
+      setIconCheck('checkcircleo')
+    } else if (!isPressed && !right && !left) {
       if (item.state_definitive === 'FULL') {
         setColorCheck(colors.bluePrimary)
         setIconCheck('checkcircleo')
       } else if (item.state_definitive === 'SHORT') {
         setColorCheck(colors.danger)
         setIconCheck('minuscircleo')
-      } else if (item.state_definitive === 'N/A') {
-        setColorCheck(colors.danger)
-        setIconCheck('minuscircleo')
+      } else if (!isNA) {
+        setColorCheck(colors.gray)
+        setIconCheck('questioncircleo')
       }
+    } else if (left) {
+      setColorCheck(colors.danger)
+      setIconCheck('minuscircleo')
     } else {
-      if (isPressed || right) {
-        setColorCheck(colors.bluePrimary)
-        setIconCheck('checkcircleo')
-      } else if (left || isNA) {
-        setColorCheck(colors.danger)
-        setIconCheck('minuscircleo')
-      }
+      setColorCheck(colors.gray)
+      setIconCheck('questioncircleo')
     }
   }, [isPressed, right, left, isNA])
 
