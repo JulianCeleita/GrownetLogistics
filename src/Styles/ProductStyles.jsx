@@ -122,6 +122,7 @@ export const ProductStyles = StyleSheet.create({
     fontFamily: 'PoppinsBold',
     textAlign: 'center',
     marginBottom: 10,
+    marginTop: 10,
   },
 })
 

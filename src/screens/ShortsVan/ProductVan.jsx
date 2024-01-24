@@ -30,58 +30,52 @@ function ProductsVan({ route }) {
   }, [])
   return (
     <SafeAreaView style={ProductStyles.products}>
-      <ScrollView stickyHeaderIndices={[0]}>
-        <View style={CustomerDayStyles.title2}>
-          <BtnGoBack
-            color={colors.darkBlue}
-            top={Platform.OS === 'ios' && !Platform.isPad ? 60 : 5}
-          />
-          <Text style={CustomerDayStyles.customerTitle}>
-            {route.params.nameRoute}
-          </Text>
-        </View>
-
-        {loading ? (
-          <ActivityIndicator size="large" color="#0000ff" />
-        ) : error ? (
-          <View
-            style={{
-              flex: 1,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            <Text>Error: {error}</Text>
-          </View>
-        ) : (
-          <View>
-            {restaurantData.map((restaurant) => (
-              <View key={restaurant.customerName}>
-                <Text
-                  style={[
-                    CustomerDayStyles.restaurantTypeTitle,
-                    {
-                      marginBottom: Platform.OS === 'ios' ? 5 : null,
-                    },
-                  ]}
-                >
-                  {`${restaurant.customerName} - ${restaurant.reference_orders}`}
-                </Text>
-                <View>
-                  {restaurant.products.map((product, index) => (
-                    <ProductsCardBulkVan
-                      key={index}
-                      item={product}
-                      handleSubmit={handleSubmit}
-                      viewVan
-                    />
-                  ))}
+      <View style={CustomerDayStyles.title2}>
+        <BtnGoBack
+          color={colors.darkBlue}
+          top={Platform.OS === 'ios' && !Platform.isPad ? 60 : 5}
+        />
+        <Text style={CustomerDayStyles.customerTitle}>
+          {route.params.nameRoute}
+        </Text>
+      </View>
+      <KeyboardAwareScrollView enableOnAndroid extraScrollHeight={210}>
+        <ScrollView stickyHeaderIndices={[0]}>
+          {loading ? (
+            <ActivityIndicator size="large" color="#0000ff" />
+          ) : error ? (
+            <View
+              style={{
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <Text>Error: {error}</Text>
+            </View>
+          ) : (
+            <View>
+              {restaurantData.map((restaurant) => (
+                <View key={restaurant.customerName}>
+                  <Text style={[CustomerDayStyles.restaurantTypeTitle]}>
+                    {`${restaurant.customerName} - ${restaurant.reference_orders}`}
+                  </Text>
+                  <View>
+                    {restaurant.products.map((product, index) => (
+                      <ProductsCardBulkVan
+                        key={index}
+                        item={product}
+                        handleSubmit={handleSubmit}
+                        viewVan
+                      />
+                    ))}
+                  </View>
                 </View>
-              </View>
-            ))}
-          </View>
-        )}
-      </ScrollView>
+              ))}
+            </View>
+          )}
+        </ScrollView>
+      </KeyboardAwareScrollView>
     </SafeAreaView>
   )
 }
