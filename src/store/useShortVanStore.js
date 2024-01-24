@@ -24,6 +24,7 @@ export const useShortVanStore = create((set) => ({
         set({
           restaurantData: van.map((restaurant) => ({
             customerName: restaurant.custom,
+            reference_orders: restaurant.reference_orders,
             products: restaurant.products,
           })),
           loading: false,

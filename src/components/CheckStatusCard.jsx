@@ -26,7 +26,7 @@ export const CheckStatusCard = ({
                 if (statePacking === "FULL") {
                     setColorCheck(colorPress)
                     setIconCheck('checkcircleo')
-                } else if (statePacking === "ND") {
+                } else if (statePacking === "ND" || statePacking === "PD") {
                     setColorCheck(colorRight)
                     setIconCheck('arrowright')
                 } else if (statePacking === "SHORT") {
@@ -37,7 +37,7 @@ export const CheckStatusCard = ({
                 if (stateLoading === "FULL") {
                     setColorCheck(colorPress)
                     setIconCheck('checkcircleo')
-                } else if (stateLoading === "ND") {
+                } else if (stateLoading === "ND" || stateLoading === "PD") {
                     setColorCheck(colorRight)
                     setIconCheck('arrowright')
                 } else if (stateLoading === "SHORT") {
