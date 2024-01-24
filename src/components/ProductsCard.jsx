@@ -181,8 +181,9 @@ export function ProductsCard({
                   <TouchableOpacity
                     style={[GlobalStyles.btnPrimary]}
                     onPress={() => {
+                      console.log(typeof quantity, quantity);
                       if (addQuantity && selectedProduct === item.id) {
-                        if (parseInt(quantity) === item.quantity) {
+                        if (quantity === item.quantity) {
                           handlePress([item.id])
                           handleSubmit(item.id, quantity, note)
                         } else {
