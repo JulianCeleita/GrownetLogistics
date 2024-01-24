@@ -25,12 +25,12 @@ function ProductsLoading({ route }) {
   useEffect(() => {
     setFetchProductsLoading(employeeToken, selectedOrderL)
   }, [])
-  console.log(productsLoading, 'hola')
+
   return (
     <SafeAreaView style={ProductStyles.products}>
-      <ScrollView>
-        <BtnGoBack color={colors.darkBlue} />
+      <ScrollView stickyHeaderIndices={[0]}>
         <View style={CustomerDayStyles.title2}>
+          <BtnGoBack color={colors.darkBlue} top={0} />
           <View style={{ paddingHorizontal: 43, width: '100%' }}>
             <View style={ProductStyles.customerTitleContainer}>
               <Text style={ProductStyles.customerTitle}>

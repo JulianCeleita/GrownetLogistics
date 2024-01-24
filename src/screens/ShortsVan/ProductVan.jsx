@@ -28,50 +28,54 @@ function ProductsVan({ route }) {
   }, [])
   return (
     <SafeAreaView style={ProductStyles.products}>
-      <BtnGoBack
-        color={colors.darkBlue}
-        top={Platform.OS === 'ios' && !Platform.isPad ? 60 : 15}
-      />
-      <View style={CustomerDayStyles.title2}>
-        <Text style={CustomerDayStyles.customerTitle}>
-          {route.params.nameRoute}
-        </Text>
-      </View>
-      {loading ? (
-        <ActivityIndicator size="large" color="#0000ff" />
-      ) : error ? (
-        <View
-          style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
-        >
-          <Text>Error: {error}</Text>
+      <ScrollView stickyHeaderIndices={[0]}>
+        <View style={CustomerDayStyles.title2}>
+          <BtnGoBack
+            color={colors.darkBlue}
+            top={Platform.OS === 'ios' && !Platform.isPad ? 60 : 5}
+          />
+          <Text style={CustomerDayStyles.customerTitle}>
+            {route.params.nameRoute}
+          </Text>
         </View>
-      ) : (
-        <ScrollView>
-          {restaurantData.map((restaurant) => (
-            <View key={restaurant.vanName}>
-              <Text
-                style={[
-                  CustomerDayStyles.restaurantTypeTitle,
-                  {
-                    marginBottom: Platform.OS === 'ios' ? 5 : null,
-                  },
-                ]}
-              >
-                {restaurant.vanName}
-              </Text>
-              <View>
-                {restaurant.vanProducts.map((product, index) => (
-                  <ProductsCardBulkVan
-                    key={index}
-                    item={product}
-                    handleSubmit={handleSubmit}
-                  />
-                ))}
+
+        {loading ? (
+          <ActivityIndicator size="large" color="#0000ff" />
+        ) : error ? (
+          <View
+            style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
+          >
+            <Text>Error: {error}</Text>
+          </View>
+        ) : (
+          <View>
+            {restaurantData.map((restaurant) => (
+              <View key={restaurant.customerName}>
+                <Text
+                  style={[
+                    CustomerDayStyles.restaurantTypeTitle,
+                    {
+                      marginBottom: Platform.OS === 'ios' ? 5 : null,
+                    },
+                  ]}
+                >
+                  {`${restaurant.customerName} - ${restaurant.reference_orders}`}
+                </Text>
+                <View>
+                  {restaurant.products.map((product, index) => (
+                    <ProductsCardBulkVan
+                      key={index}
+                      item={product}
+                      handleSubmit={handleSubmit}
+                      viewVan
+                    />
+                  ))}
+                </View>
               </View>
-            </View>
-          ))}
-        </ScrollView>
-      )}
+            ))}
+          </View>
+        )}
+      </ScrollView>
     </SafeAreaView>
   )
 }

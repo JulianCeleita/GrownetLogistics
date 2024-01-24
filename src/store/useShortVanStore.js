@@ -9,29 +9,35 @@ export const useShortVanStore = create((set) => ({
   setError: (error) => set({ error }),
   setFetchShortVanProducts: async (token) => {
     try {
-      set({ loading: true, error: null });
+      set({ loading: true, error: null })
       const response = await mainAxios.get(shortVanConfig, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      });
+      })
 
-      const { status, van } = response.data;
+
+      const { status, van } = response.data
+
 
       if (status === 200 && Array.isArray(van)) {
         set({
           restaurantData: van.map((restaurant) => ({
-            vanName: restaurant.custom,
-            vanProducts: restaurant.products,
+            customerName: restaurant.custom,
+            reference_orders: restaurant.reference_orders,
+            products: restaurant.products,
           })),
           loading: false,
-        });
+        })
       } else {
-        set({ loading: false, error: 'Error en la respuesta del servidor.' });
+        set({ loading: false, error: 'Error en la respuesta del servidor.' })
       }
     } catch (error) {
-      set({ loading: false, error: 'Error de autenticación. Verifica las credenciales.' });
-      console.error('Error de autenticación. Verifica las credenciales.', error);
+      set({
+        loading: false,
+        error: 'Error de autenticación. Verifica las credenciales.',
+      })
+      console.error('Error de autenticación. Verifica las credenciales.', error)
     }
   },
-}));
+}))

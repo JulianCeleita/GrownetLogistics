@@ -23,8 +23,9 @@ export const CustomerDayStyles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 10,
+    paddingTop: 10,
     width: '100%',
+    backgroundColor: 'white',
   },
   customerTitle: {
     fontSize: 22,
@@ -97,7 +98,7 @@ export const CustomerDayStyles = StyleSheet.create({
   },
   restaurantTypeTitle: {
     fontSize: 18,
-    color: "#026CD2",
+    color: '#026CD2',
     fontFamily: 'PoppinsSemi',
     textAlign: 'left',
   },

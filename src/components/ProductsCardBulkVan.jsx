@@ -7,7 +7,12 @@ import { GlobalStyles, colors } from '../styles/GlobalStyles'
 import { ProductStyles } from '../styles/ProductStyles'
 import { CheckStatusCardVan } from './CheckStatusCardVan'
 
-export const ProductsCardBulkVan = ({ item, handleSubmit, viewBulk }) => {
+export const ProductsCardBulkVan = ({
+  item,
+  handleSubmit,
+  viewBulk,
+  viewVan,
+}) => {
   const [isPressed, setIsPressed] = useState(false)
   const [left, setLeft] = useState(false)
   const [showModal, setShowModal] = useState(false)
@@ -21,6 +26,11 @@ export const ProductsCardBulkVan = ({ item, handleSubmit, viewBulk }) => {
 
   const positiveOffset = 30
   const negativeOffset = -30
+  const quantityPressed = item.quantity - item.cant_insert
+  let result1 = item.quantity_defitive
+    ? quantityPressed - item.quantity_defitive
+    : null
+  let result2 = quantity ? quantityPressed - quantity : null
 
   const handlePress = (itemId) => {
     setIsPressed(!isPressed)
@@ -28,7 +38,8 @@ export const ProductsCardBulkVan = ({ item, handleSubmit, viewBulk }) => {
     setRight(false)
     handleClose(false)
     setIsNA(false)
-    handleSubmit(itemId, null, '', 'FULL')
+
+    handleSubmit(itemId, quantityPressed, '', 'FULL', viewVan)
   }
 
   const handleDeclareNA = () => {
@@ -71,9 +82,8 @@ export const ProductsCardBulkVan = ({ item, handleSubmit, viewBulk }) => {
     setModalCard(false)
   }
 
-
   useEffect(() => {
-    if (item.state_definitive === "N/A") {
+    if (item.state_definitive === 'N/A') {
       setIsNA(true)
     }
   }, [])
@@ -89,7 +99,7 @@ export const ProductsCardBulkVan = ({ item, handleSubmit, viewBulk }) => {
               alignContent: 'center',
             }}
           >
-            {item.name}
+            {item.name} {item.presentationName}
           </Text>
           <Text style={ProductStyles.textCard}>
             {`Missing ${item.quantity - item.cant_insert}`}
@@ -106,7 +116,7 @@ export const ProductsCardBulkVan = ({ item, handleSubmit, viewBulk }) => {
       </View>
     )
   }
-
+  console.log('item', item)
   return (
     <View>
       <TouchableOpacity
@@ -129,11 +139,13 @@ export const ProductsCardBulkVan = ({ item, handleSubmit, viewBulk }) => {
                   },
                 ]}
               >
-                {item.name}
+                {item.name} {item.presentationName}
               </Text>
 
               <View style={ProductStyles.qty}>
-                <Text style={ProductStyles.textCard}>Qty: {item.quantity}</Text>
+                <Text style={ProductStyles.textCard}>
+                  Qty: {quantityPressed}
+                </Text>
                 <Text
                   style={[
                     ProductStyles.textCard,
@@ -144,11 +156,13 @@ export const ProductsCardBulkVan = ({ item, handleSubmit, viewBulk }) => {
                     },
                   ]}
                 >
-                  {quantity
-                    ? `Missing ${item.quantity - item.cant_insert}`
-                    : !quantity && item.quantity_defitive
-                      ? `Missing ${item.quantity - item.quantity_defitive}`
-                      : `Missing ${item.quantity - item.cant_insert}`}
+                  {result1 === 0 || result2 === 0
+                    ? ''
+                    : item.quantity_defitive
+                      ? `Missing ${result1}`
+                      : quantity
+                        ? `Missing ${result2}`
+                        : ''}
                 </Text>
               </View>
             </View>
@@ -202,7 +216,6 @@ export const ProductsCardBulkVan = ({ item, handleSubmit, viewBulk }) => {
             <TouchableOpacity
               onPress={() => {
                 handleClose()
-                setQuantity(null)
               }}
               style={{
                 ...GlobalStyles.btnOutline,
@@ -221,7 +234,7 @@ export const ProductsCardBulkVan = ({ item, handleSubmit, viewBulk }) => {
               style={[GlobalStyles.btnPrimary]}
               onPress={() => {
                 if (quantity && Number(quantity) > 0) {
-                  handleSubmit(item.id, quantity, note)
+                  handleSubmit(item.id, quantity, note, '', viewVan)
                   setLeft(false)
                   setIsPressed(false)
                   setRight(true)

@@ -2,10 +2,12 @@ import { useEffect, useState } from 'react'
 import mainAxios from '../../axios.config.js'
 import { usePackingStore } from '../store/usePackingStore.js'
 import useEmployeeStore from '../store/useEmployeeStore.js'
+import { useShortVanStore } from '../store/useShortVanStore.js'
 
 export const useProductSubmit = (insert) => {
   const { employeeToken } = useEmployeeStore()
   const { setError } = usePackingStore()
+  const { setFetchShortVanProducts } = useShortVanStore()
 
   const [isLoading, setIsLoading] = useState(false)
 
@@ -14,20 +16,23 @@ export const useProductSubmit = (insert) => {
     quantity = 0,
     note = '',
     state = null,
+    viewVan,
   ) => {
     setIsLoading(true)
 
     const data = {
       note,
       id: itemId,
+      state: state,
+      quantity: parseInt(quantity),
     }
 
-    if (state) {
-      data.state = state
-    } else {
-      data.quantity = parseInt(quantity)
-    }
-    console.log('data: ', data)
+    // if (state) {
+    //   data.state = state
+    // } else {
+    //   data.quantity = parseInt(quantity)
+    // }
+    console.log('datatttt: ', data)
     try {
       const response = await mainAxios.post(insert, data, {
         headers: {
@@ -47,6 +52,7 @@ export const useProductSubmit = (insert) => {
       throw error
     } finally {
       setIsLoading(false)
+      viewVan && setFetchShortVanProducts(employeeToken)
     }
   }
 
