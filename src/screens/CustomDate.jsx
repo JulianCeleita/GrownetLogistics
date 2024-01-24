@@ -25,7 +25,7 @@ const CustomDate = () => {
   const navigation = useNavigation()
   const { idSupplier } = useTokenStore()
   const { employeeToken } = useEmployeeStore()
-  const { setRoutesByDate } = useOrdersByDate()
+  const { setSelectedDate } = useOrdersByDate()
   const [numberOfDates, setNumberOfDates] = useState(1)
 
   useEffect(() => {
@@ -63,7 +63,7 @@ const CustomDate = () => {
 
   const handleDatePress = (date) => {
     if (date) {
-      setRoutesByDate(employeeToken, date)
+      setSelectedDate(date)
       navigation.navigate('Main')
     }
   }

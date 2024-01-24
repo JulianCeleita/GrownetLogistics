@@ -8,6 +8,10 @@ const useOrdersByDate = create((set) => {
     routesByDate: [],
     ordersByDate: [],
     selectedRoute: '',
+    selectedDate: '',
+    setSelectedDate: (selectedDate) => {
+      set({ selectedDate })
+    },
     setSelectedRoute: (route) => {
       set({ selectedRoute: route })
     },
@@ -22,6 +26,7 @@ const useOrdersByDate = create((set) => {
           },
         })
         const RoutesByDate = await response.data.routes
+        console.log('RoutesByDate', RoutesByDate)
         set({ routesByDate: RoutesByDate })
       } catch (error) {
         console.error('Error during request:', error)
