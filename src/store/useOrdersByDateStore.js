@@ -21,7 +21,11 @@ const useOrdersByDate = create((set) => {
             Authorization: `Bearer ${token}`,
           },
         })
-        const RoutesByDate = await response.data.routes
+        let RoutesByDate = await response.data.routes
+
+        RoutesByDate.sort((a, b) => {
+          return a.nameRoute.localeCompare(b.nameRoute)
+        })
         set({ routesByDate: RoutesByDate })
       } catch (error) {
         console.error('Error during request:', error)
