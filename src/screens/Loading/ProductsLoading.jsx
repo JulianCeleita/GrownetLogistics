@@ -25,6 +25,7 @@ function ProductsLoading({ route }) {
   useEffect(() => {
     setFetchProductsLoading(employeeToken, selectedOrderL)
   }, [])
+
   return (
     <SafeAreaView style={ProductStyles.products}>
       <ScrollView stickyHeaderIndices={[0]}>
