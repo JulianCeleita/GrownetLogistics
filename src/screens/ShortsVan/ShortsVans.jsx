@@ -8,7 +8,6 @@ import {
   Text,
   TouchableOpacity,
   View,
-  SafeAreaView,
 } from 'react-native'
 import Svg, {
   Circle,
@@ -35,10 +34,12 @@ function ShortsVans() {
   }
 
   return (
-    <SafeAreaView style={{ backgroundColor: 'white', height: '100%' }}>
+    <View style={{ backgroundColor: 'white', height: '100%' }}>
       <ScrollView>
-        <BtnGoBack color="white" top={20} />
-        <View style={[DeliveryStyles.tittle, GlobalStyles.boxShadow]}>
+        <BtnGoBack color="white" top={Platform.OS === 'ios' ? 65 : 20} />
+        <View style={[DeliveryStyles.tittle, GlobalStyles.boxShadow, {
+          marginTop: Platform.OS === 'ios' ? 65 : 30,
+        }]}>
           <MaterialCommunityIcons
             name="truck-fast-outline"
             style={{ marginRight: 10 }}
@@ -102,7 +103,7 @@ function ShortsVans() {
           ))}
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   )
 }
 

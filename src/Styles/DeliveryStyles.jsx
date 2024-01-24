@@ -6,8 +6,8 @@ export const DeliveryStyles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
-    height: 100,
     zIndex: 1,
+    height: Platform.OS === 'ios' ? 140 : 100
   },
   tittle: {
     backgroundColor: colors.bluePrimary,

@@ -27,8 +27,10 @@ const Packing = () => {
   return (
     <View style={{ backgroundColor: 'white', height: '100%' }}>
       <ScrollView>
-        <BtnGoBack color="white" top={20} />
-        <View style={[DeliveryStyles.tittle, GlobalStyles.boxShadow]}>
+        <BtnGoBack color="white" top={Platform.OS === 'ios' ? 65 : 20} />
+        <View style={[DeliveryStyles.tittle, GlobalStyles.boxShadow, {
+          marginTop: Platform.OS === 'ios' ? 65 : 30,
+        }]}>
           <Image
             style={DeliveryStyles.imageTittlePacking}
             source={require('../../img/packingBlanco.png')}
@@ -40,7 +42,7 @@ const Packing = () => {
           colors={['#00478C', '#026CD2']}
           style={[
             DeliveryStyles.packing,
-            { paddingTop: Platform.OS === 'ios' ? 50 : 0 },
+            { height: Platform.OS === 'ios' ? 140 : 100 },
           ]}
         />
 

@@ -7,7 +7,6 @@ import {
   Text,
   TouchableOpacity,
   View,
-  SafeAreaView,
 } from 'react-native'
 import { BtnGoBack } from '../../components/BtnGoBack'
 import CircleProgress from '../../components/CircleProgress'
@@ -36,10 +35,12 @@ function ShortsBulk() {
   }
 
   return (
-    <SafeAreaView style={{ backgroundColor: 'white', height: '100%' }}>
+    <View style={{ backgroundColor: 'white', height: '100%' }}>
       <ScrollView>
-        <BtnGoBack color="white" top={20} />
-        <View style={[DeliveryStyles.tittle, GlobalStyles.boxShadow]}>
+        <BtnGoBack color="white" top={Platform.OS === 'ios' ? 65 : 20} />
+        <View style={[DeliveryStyles.tittle, GlobalStyles.boxShadow, {
+          marginTop: Platform.OS === 'ios' ? 65 : 30,
+        }]}>
           <MaterialCommunityIcons
             name="package-variant"
             style={{ marginRight: 10 }}
@@ -104,7 +105,7 @@ function ShortsBulk() {
           ))}
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   )
 }
 
