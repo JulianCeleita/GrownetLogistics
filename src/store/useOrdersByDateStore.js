@@ -9,8 +9,8 @@ const useOrdersByDate = create((set) => {
     ordersByDate: [],
     selectedRoute: '',
     selectedDate: '',
-    setSelectedDate: (selectedDate) => {
-      set({ selectedDate })
+    setSelectedDate: (date) => {
+      set({ selectedDate: date })
     },
     setSelectedRoute: (route) => {
       set({ selectedRoute: route })
@@ -26,12 +26,11 @@ const useOrdersByDate = create((set) => {
           },
         })
 
-        const RoutesByDate = await response.data.routes
-        console.log('RoutesByDate', RoutesByDate)
         let RoutesByDate = await response.data.routes
         RoutesByDate.sort((a, b) => {
           return a.nameRoute.localeCompare(b.nameRoute)
         })
+        console.log('RoutesByDate', RoutesByDate)
 
         set({ routesByDate: RoutesByDate })
       } catch (error) {

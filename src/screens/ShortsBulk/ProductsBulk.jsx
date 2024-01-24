@@ -16,15 +16,21 @@ import { useShortBulkStore } from '../../store/useShortBulkStore'
 import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
 import { colors } from '../../styles/GlobalStyles'
 import { ProductStyles } from '../../styles/ProductStyles'
+import useOrdersByDate from '../../store/useOrdersByDateStore'
 
 function ProductsBulk({ route }) {
   const { typeData, loading, error, setFetchShortBulkProducts } =
     useShortBulkStore()
   const { employeeToken } = useEmployeeStore()
+  const { selectedDate, selectedRoute } = useOrdersByDate()
   const { handleSubmit } = useProductSubmit(insertShort)
 
   useEffect(() => {
-    setFetchShortBulkProducts(employeeToken)
+    const dataBulk = {
+      routeName: selectedRoute,
+      date: selectedDate,
+    }
+    setFetchShortBulkProducts(employeeToken, dataBulk)
   }, [])
 
   return (

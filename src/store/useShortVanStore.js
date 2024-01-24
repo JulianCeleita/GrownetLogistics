@@ -9,10 +9,14 @@ export const useShortVanStore = create((set) => ({
   setError: (error) => set({ error }),
   setLoading: (loading) => set({ loading }),
   setRestaurantData: (restaurantData) => set({ restaurantData }),
-  setFetchShortVanProducts: async (token) => {
+  setFetchShortVanProducts: async (token, data) => {
     try {
       set({ loading: true, error: null })
-      const response = await mainAxios.get(shortVanConfig, {
+      const dataVan = {
+        date: data.date,
+        routeName: data.routeName,
+      }
+      const response = await mainAxios.post(shortVanConfig, dataVan, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
