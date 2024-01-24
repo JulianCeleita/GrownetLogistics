@@ -178,7 +178,21 @@ export const ProductsCardBulkVan = ({
                     ProductStyles.textCard,
                     {
                       marginRight: 25,
-                      color: quantityPressed > item.packed ? colors.danger : colors.green,
+                      color: (item.packed &&
+                        item.packed !== quantityPressed &&
+                        quantityPressed > item.packed) ||
+                      (!item.packed &&
+                        item.quantity_defitive &&
+                        item.quantity_defitive !== quantityPressed &&
+                        quantityPressed > item.quantity_defitive)
+                        ? colors.danger // Para "Missing"
+                        : (item.packed &&
+                            item.packed !== quantityPressed &&
+                            quantityPressed < item.packed) ||
+                          (item.quantity_defitive &&
+                            item.quantity_defitive > quantityPressed)
+                        ? colors.green // Para "Overweight"
+                        : 'black',
                       textDecorationLine: isNA ? 'line-through' : 'none',
                     },
                   ]}
