@@ -9,18 +9,16 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import Svg, {
+  Circle,
+  ClipPath,
+  Defs,
+  Image as SvgImage,
+} from 'react-native-svg'
 import { BtnGoBack } from '../../components/BtnGoBack'
-import CircleProgress from '../../components/CircleProgress'
 import useOrdersByDate from '../../store/useOrdersByDateStore'
 import { DeliveryStyles } from '../../styles/DeliveryStyles'
 import { GlobalStyles, colors } from '../../styles/GlobalStyles'
-import Svg, {
-  Circle,
-  Defs,
-  ClipPath,
-  Image as SvgImage,
-} from 'react-native-svg'
 
 function ShortsVans() {
   const navigation = useNavigation()
@@ -36,10 +34,12 @@ function ShortsVans() {
   }
 
   return (
-    <SafeAreaView style={{ backgroundColor: 'white', height: '100%' }}>
+    <View style={{ backgroundColor: 'white', height: '100%' }}>
       <ScrollView>
-        <BtnGoBack color="white" top={20} />
-        <View style={[DeliveryStyles.tittle, GlobalStyles.boxShadow]}>
+        <BtnGoBack color="white" top={Platform.OS === 'ios' ? 65 : 20} />
+        <View style={[DeliveryStyles.tittle, GlobalStyles.boxShadow, {
+          marginTop: Platform.OS === 'ios' ? 65 : 30,
+        }]}>
           <MaterialCommunityIcons
             name="truck-fast-outline"
             style={{ marginRight: 10 }}
@@ -103,7 +103,7 @@ function ShortsVans() {
           ))}
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   )
 }
 
