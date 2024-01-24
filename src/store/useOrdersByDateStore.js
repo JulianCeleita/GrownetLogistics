@@ -25,6 +25,7 @@ const useOrdersByDate = create((set) => {
             Authorization: `Bearer ${token}`,
           },
         })
+
         let RoutesByDate = await response.data.routes
         RoutesByDate.sort((a, b) => {
           return a.nameRoute.localeCompare(b.nameRoute)
