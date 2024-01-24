@@ -24,15 +24,13 @@ export const useProductSubmit = (insert) => {
       note,
       id: itemId,
       state: state,
-      quantity: quantity.includes('.') || quantity.includes(',') ? parseFloat(quantity) : parseInt(quantity),
+      quantity: quantity === 0
+        ? quantity
+        : quantity.includes('.') || quantity.includes(',')
+          ? parseFloat(quantity)
+          : parseInt(quantity),
     }
 
-    // if (state) {
-    //   data.state = state
-    // } else {
-    //   data.quantity = parseInt(quantity)
-    // }
-    console.log('datatttt: ', data)
     try {
       const response = await mainAxios.post(insert, data, {
         headers: {
