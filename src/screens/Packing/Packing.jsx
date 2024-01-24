@@ -1,6 +1,6 @@
-import { useNavigation } from '@react-navigation/native'
+import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { LinearGradient } from 'expo-linear-gradient'
-import React from 'react'
+import React, { useCallback } from 'react'
 import {
   Image,
   Platform,
@@ -15,15 +15,25 @@ import CircleProgress from '../../components/CircleProgress'
 import useOrdersByDate from '../../store/useOrdersByDateStore'
 import { DeliveryStyles } from '../../styles/DeliveryStyles'
 import { GlobalStyles } from '../../styles/GlobalStyles'
+import useEmployeeStore from '../../store/useEmployeeStore'
 
 const Packing = () => {
+
   const navigation = useNavigation()
-  const { routesByDate, setOrdersByDate, setSelectedRoute } = useOrdersByDate()
+  const { routesByDate, setOrdersByDate, setSelectedRoute, setRoutesByDate, selectedDate } = useOrdersByDate()
+  const { employeeToken } = useEmployeeStore()
   const handleRoutePress = (nameRoute) => {
     setSelectedRoute(nameRoute)
     setOrdersByDate(nameRoute, routesByDate)
     navigation.navigate('CustomerDayPacking', { nameRoute: nameRoute })
   }
+
+  useFocusEffect(
+    useCallback(() => {
+      console.log('Carga de porcentajes en packing');
+      setRoutesByDate(employeeToken, selectedDate)
+    }, [],))
+
   return (
     <View style={{ backgroundColor: 'white', height: '100%' }}>
       <ScrollView>
