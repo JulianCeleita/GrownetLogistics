@@ -1,13 +1,11 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import mainAxios from '../../axios.config.js'
 import { usePackingStore } from '../store/usePackingStore.js'
 import useEmployeeStore from '../store/useEmployeeStore.js'
-import { useShortVanStore } from '../store/useShortVanStore.js'
 
 export const useProductSubmit = (insert) => {
   const { employeeToken } = useEmployeeStore()
   const { setError } = usePackingStore()
-  const { setFetchShortVanProducts } = useShortVanStore()
 
   const [isLoading, setIsLoading] = useState(false)
 
@@ -16,7 +14,6 @@ export const useProductSubmit = (insert) => {
     quantity = 0,
     note = '',
     state = null,
-    viewVan,
   ) => {
     setIsLoading(true)
 
@@ -26,7 +23,7 @@ export const useProductSubmit = (insert) => {
       state: state,
       quantity: quantity === 0
         ? quantity
-        : quantity.includes('.') || quantity.includes(',')
+        : isNaN(quantity)
           ? parseFloat(quantity)
           : parseInt(quantity),
     }
@@ -50,7 +47,6 @@ export const useProductSubmit = (insert) => {
       throw error
     } finally {
       setIsLoading(false)
-      viewVan && setFetchShortVanProducts(employeeToken)
     }
   }
 
