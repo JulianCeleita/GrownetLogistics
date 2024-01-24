@@ -207,7 +207,9 @@ export const ProductsCardBulkVan = ({
                     ProductStyles.textCard,
                     {
                       marginRight: 25,
+
                       color: colorMessage,
+
                       textDecorationLine: isNA ? 'line-through' : 'none',
                     },
                   ]}
