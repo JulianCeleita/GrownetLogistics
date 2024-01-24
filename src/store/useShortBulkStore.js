@@ -7,10 +7,14 @@ export const useShortBulkStore = create((set) => ({
   loading: false,
   error: null,
   setError: (error) => set({ error }),
-  setFetchShortBulkProducts: async (token) => {
+  setFetchShortBulkProducts: async (token, data) => {
     try {
       set({ loading: true, error: null })
-      const response = await mainAxios.get(shortBulkConfig, {
+      const dataBulk = {
+        date: data.date,
+        routeName: data.routeName,
+      }
+      const response = await mainAxios.post(shortBulkConfig, dataBulk, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
