@@ -8,6 +8,10 @@ const useOrdersByDate = create((set) => {
     routesByDate: [],
     ordersByDate: [],
     selectedRoute: '',
+    selectedDate: '',
+    setSelectedDate: (selectedDate) => {
+      set({ selectedDate })
+    },
     setSelectedRoute: (route) => {
       set({ selectedRoute: route })
     },
@@ -21,11 +25,14 @@ const useOrdersByDate = create((set) => {
             Authorization: `Bearer ${token}`,
           },
         })
-        let RoutesByDate = await response.data.routes
 
+        const RoutesByDate = await response.data.routes
+        console.log('RoutesByDate', RoutesByDate)
+        let RoutesByDate = await response.data.routes
         RoutesByDate.sort((a, b) => {
           return a.nameRoute.localeCompare(b.nameRoute)
         })
+
         set({ routesByDate: RoutesByDate })
       } catch (error) {
         console.error('Error during request:', error)
