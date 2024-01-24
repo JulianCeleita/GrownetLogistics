@@ -20,7 +20,13 @@ import useEmployeeStore from '../../store/useEmployeeStore'
 const Packing = () => {
 
   const navigation = useNavigation()
-  const { routesByDate, setOrdersByDate, setSelectedRoute, setRoutesByDate, selectedDate } = useOrdersByDate()
+  const {
+    routesByDate,
+    setOrdersByDate,
+    setSelectedRoute,
+    setRoutesByDate,
+    selectedDate
+  } = useOrdersByDate()
   const { employeeToken } = useEmployeeStore()
   const handleRoutePress = (nameRoute) => {
     setSelectedRoute(nameRoute)
@@ -30,7 +36,6 @@ const Packing = () => {
 
   useFocusEffect(
     useCallback(() => {
-      console.log('Carga de porcentajes en packing');
       setRoutesByDate(employeeToken, selectedDate)
     }, [],))
 
