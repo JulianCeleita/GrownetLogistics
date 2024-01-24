@@ -22,6 +22,7 @@ export const ProductsCardBulkVan = ({
   const [note, setNote] = useState('')
   const [modalCard, setModalCard] = useState(false)
   const [showModalNA, setShowModalNA] = useState(false)
+  const [showModalRevertNA, setShowModalRevertNA] = useState(false)
   const [isNA, setIsNA] = useState(false)
 
   const positiveOffset = 30
@@ -33,6 +34,9 @@ export const ProductsCardBulkVan = ({
   let result2 = item.packed ? quantityPressed - item.packed : null
 
   const handlePress = (itemId) => {
+    if (isNA) {
+      return
+    }
     setIsPressed(!isPressed)
     setLeft(false)
     setRight(false)
@@ -44,6 +48,9 @@ export const ProductsCardBulkVan = ({
 
   const handleDeclareNA = () => {
     setShowModalNA(true)
+  }
+  const handleRevertNA = () => {
+    setShowModalRevertNA(true)
   }
 
   const handleGestureEvent = (event, itemId) => {
@@ -73,6 +80,11 @@ export const ProductsCardBulkVan = ({
     setIsNA(true)
     updateProductsVan(item.id, null)
     handleSubmit(item.id, 0, '', 'N/A')
+  }
+  const confirmRevertNA = () => {
+    setShowModalRevertNA(false)
+    setIsNA(false)
+    handleSubmit(item.id, 0, '', 'null')
   }
 
   const setStateCardDefault = () => {
@@ -128,11 +140,13 @@ export const ProductsCardBulkVan = ({
     )
   }
 
+  //console.log('item', item)
+
   return (
     <View>
       <TouchableOpacity
         onPress={() => handlePress(item.id)}
-        onLongPress={() => handleDeclareNA()}
+        onLongPress={() => (isNA ? handleRevertNA() : handleDeclareNA())}
         delayLongPress={2000}
       >
         <PanGestureHandler
@@ -279,6 +293,16 @@ export const ProductsCardBulkVan = ({
           setStateCardDefault={setStateCardDefault}
           title={item.name + ' will be marked as N/A'}
           text={' Are you sure you want to mark this item as N/A?'}
+        />
+      ) : null}
+      {showModalRevertNA ? (
+        <ModalProduct
+          showModal={showModalRevertNA}
+          setShowModal={setShowModalRevertNA}
+          confirm={confirmRevertNA}
+          setStateCardDefault={setStateCardDefault}
+          title={item.name + ' will enable the product'}
+          text={' Are you sure you enable this article?'}
         />
       ) : null}
 
