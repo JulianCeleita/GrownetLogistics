@@ -92,7 +92,10 @@ export const ProductsCardBulkVan = ({
 
   if (item.id === selectedItem) {
     console.log('----------------------------------------------------');
-    console.log('item', item.name, item?.packed);
+    console.log('name', item.name);
+    console.log('quantityPressed', quantityPressed);
+    console.log('packed', item.packed);
+    console.log('quantity_defitive', item.quantity_defitive);
   }
 
 
@@ -164,13 +167,16 @@ export const ProductsCardBulkVan = ({
                     },
                   ]}
                 >
-                  {result1 === 0 || result2 === 0
-                    ? ''
-                    : item.quantity_defitive && !left
-                      ? `Missing ${result1}`
-                      : item.packed
-                        ? `Missing ${result2}`
-                        : ''}
+                  {
+                    item.packed &&
+                      item.packed !== quantityPressed
+                      ? `Missing ${quantityPressed - item.packed}`
+                      : !item.packed &&
+                        item.quantity_defitive &&
+                        item.quantity_defitive !== quantityPressed
+                        ? `Missing ${quantityPressed - item.quantity_defitive}`
+                        : ''
+                  }
                 </Text>
               </View>
             </View>
