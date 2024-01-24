@@ -105,13 +105,13 @@ export const ProductsCardBulkVan = ({
     }
   }, [])
 
-  if (item.id === selectedItem) {
-    console.log('----------------------------------------------------')
-    console.log('name', item.name)
-    console.log('quantityPressed', quantityPressed)
-    console.log('packed', item.packed)
-    console.log('quantity_defitive', item.quantity_defitive)
-  }
+  // if (item.id === selectedItem) {
+  //   console.log('----------------------------------------------------')
+  //   console.log('name', item.name)
+  //   console.log('quantityPressed', quantityPressed)
+  //   console.log('packed', item.packed)
+  //   console.log('quantity_defitive', item.quantity_defitive)
+  // }
 
   if (viewBulk) {
     return (
@@ -142,7 +142,36 @@ export const ProductsCardBulkVan = ({
     )
   }
 
-  //console.log('item', item)
+  // console.log('item', item.packed)
+  let message = ''
+  let colorMessage = colors.default
+
+  if (
+    item.packed &&
+    item.packed !== quantityPressed &&
+    quantityPressed > item.packed
+  ) {
+    message = `Missing ${quantityPressed - item.packed}`
+    colorMessage = colors.danger
+  } else if (
+    item.packed &&
+    item.packed !== quantityPressed &&
+    quantityPressed < item.packed
+  ) {
+    message = `Overweight ${item.packed - quantityPressed}`
+    colorMessage = colors.green
+  } else if (
+    !item.packed &&
+    item.quantity_defitive &&
+    item.quantity_defitive !== quantityPressed &&
+    quantityPressed > item.quantity_defitive
+  ) {
+    message = `Missing ${quantityPressed - item.quantity_defitive}`
+    colorMessage = colors.danger
+  } else if (item.quantity_defitive > quantityPressed) {
+    message = `Overweight ${item.quantity_defitive - quantityPressed}`
+    colorMessage = colors.green
+  }
 
   return (
     <View>
@@ -178,29 +207,13 @@ export const ProductsCardBulkVan = ({
                     ProductStyles.textCard,
                     {
                       marginRight: 25,
-                      color: quantityPressed > item.packed ? colors.danger : colors.green,
+                      color: colorMessage,
                       textDecorationLine: isNA ? 'line-through' : 'none',
                     },
                   ]}
                 >
-                  {item.packed &&
-                    item.packed !== quantityPressed &&
-                    quantityPressed > item.packed
-                    ? `Missing ${quantityPressed - item.packed}`
-                    : item.packed &&
-                      item.packed !== quantityPressed &&
-                      quantityPressed < item.packed
-                      ? `Overweight ${item.packed - quantityPressed}`
-                      : !item.packed &&
-                        item.quantity_defitive &&
-                        item.quantity_defitive !== quantityPressed &&
-                        quantityPressed > item.quantity_defitive
-                        ? `Missing ${quantityPressed - item.quantity_defitive}`
-                        : item.quantity_defitive > quantityPressed
-                          ? `Overweight ${item.quantity_defitive - quantityPressed}`
-                          : null}
+                  {message}
                 </Text>
-
               </View>
             </View>
 
