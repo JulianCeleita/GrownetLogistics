@@ -18,15 +18,21 @@ import { ProductStyles } from '../../styles/ProductStyles'
 import { BtnGoBack } from '../../components/BtnGoBack'
 import { colors } from '../../styles/GlobalStyles'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import useOrdersByDate from '../../store/useOrdersByDateStore'
 
 function ProductsVan({ route }) {
   const { restaurantData, setRestaurantData, loading, error, setFetchShortVanProducts } =
     useShortVanStore()
   const { employeeToken } = useEmployeeStore()
   const { handleSubmit } = useProductSubmit(insertShort)
+  const { selectedDate, selectedRoute } = useOrdersByDate()
 
   useEffect(() => {
-    setFetchShortVanProducts(employeeToken)
+    const dataVan = {
+      routeName: selectedRoute,
+      date: selectedDate,
+    }
+    setFetchShortVanProducts(employeeToken, dataVan)
   }, [])
 
   const updateProductsVan = (itemId, quantity) => {
