@@ -24,7 +24,7 @@ export const useProductSubmit = (insert) => {
       note,
       id: itemId,
       state: state,
-      quantity: parseInt(quantity),
+      quantity: quantity.includes('.') || quantity.includes(',') ? parseFloat(quantity) : parseInt(quantity),
     }
 
     // if (state) {
