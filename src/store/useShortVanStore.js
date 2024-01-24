@@ -8,10 +8,7 @@ export const useShortVanStore = create((set) => ({
   error: null,
   setError: (error) => set({ error }),
   setLoading: (loading) => set({ loading }),
-  setRestaurantData: (restaurantData) => {
-    console.log('restaurantData', restaurantData)
-    set({ restaurantData })
-  },
+  setRestaurantData: (restaurantData) => set({ restaurantData }),
   setFetchShortVanProducts: async (token) => {
     try {
       set({ loading: true, error: null })

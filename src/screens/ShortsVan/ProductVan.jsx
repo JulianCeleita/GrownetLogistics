@@ -30,7 +30,7 @@ function ProductsVan({ route }) {
   }, [])
 
   const updateProductsVan = (itemId, quantity) => {
-    console.log('entre a updateProducts');
+
     const newProducts = restaurantData.map((itemProd) => {
       return {
         ...itemProd,
@@ -39,6 +39,7 @@ function ProductsVan({ route }) {
             return {
               ...product,
               packed: quantity,
+              quantity_defitive: quantity === null ? null : product.quantity_defitive,
             }
           }
           return product
