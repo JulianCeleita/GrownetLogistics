@@ -9,6 +9,7 @@ export const CheckQuantity = ({ viewPacking, quantity, quantity_packing, quantit
     useEffect(() => {
         if (!packed) {
             if (viewPacking) {
+                // Vista de packing
                 setMessage(
                     quantity_packing && quantity > quantity_packing
                         ? `Missing ${quantity - quantity_packing}`
@@ -17,7 +18,8 @@ export const CheckQuantity = ({ viewPacking, quantity, quantity_packing, quantit
                             : ''
                 )
             } else {
-                if (!quantity_loading && quantity_packing) {
+                // Vista de loading
+                if (quantity_packing) {
                     setMessage(
                         quantity > quantity_packing
                             ? `Missing ${quantity - quantity_packing}`
@@ -25,7 +27,7 @@ export const CheckQuantity = ({ viewPacking, quantity, quantity_packing, quantit
                                 ? `Overweight ${quantity_packing - quantity}`
                                 : ''
                     )
-                } else if (quantity_packing && quantity_loading) {
+                } else if (quantity_loading) {
                     quantity > quantity_loading
                         ? `Missing ${quantity - quantity_loading}`
                         : quantity < quantity_loading
