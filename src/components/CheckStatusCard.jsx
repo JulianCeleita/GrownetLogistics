@@ -15,6 +15,8 @@ export const CheckStatusCard = ({
   colorPress,
   colorRight,
   colorLeft,
+  declareNotAvailable,
+  handleSubmit,
 }) => {
   const [colorCheck, setColorCheck] = useState(colors.gray)
   const [iconCheck, setIconCheck] = useState('questioncircleo')
@@ -45,6 +47,8 @@ export const CheckStatusCard = ({
         } else if (statePacking === 'SHORT') {
           setColorCheck(colorLeft)
           setIconCheck('closecircleo')
+          declareNotAvailable(itemId)
+          handleSubmit(itemId)
         }
       }
     } else {

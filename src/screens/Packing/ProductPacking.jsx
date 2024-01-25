@@ -1,5 +1,11 @@
 import React, { useCallback } from 'react'
-import { ActivityIndicator, Platform, ScrollView, Text, View } from 'react-native'
+import {
+  ActivityIndicator,
+  Platform,
+  ScrollView,
+  Text,
+  View,
+} from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { BtnGoBack } from '../../components/BtnGoBack'
 import { ProductsCard } from '../../components/ProductsCard'
@@ -35,7 +41,10 @@ function ProductsPacking({ route }) {
 
   return (
     <SafeAreaView style={ProductStyles.products}>
-      <BtnGoBack color={colors.darkBlue} top={Platform.OS === 'ios' && !Platform.isPad ? 67 : 10} />
+      <BtnGoBack
+        color={colors.darkBlue}
+        top={Platform.OS === 'ios' && !Platform.isPad ? 67 : 10}
+      />
       <View style={{ paddingHorizontal: 43, width: '100%' }}>
         <View style={ProductStyles.customerTitleContainer}>
           <Text style={ProductStyles.customerTitle}>
