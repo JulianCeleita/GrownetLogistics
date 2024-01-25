@@ -21,13 +21,14 @@ export const useProductSubmit = (insert) => {
       note,
       id: itemId,
       state: state,
-      quantity: quantity === 0
-        ? quantity
-        : isNaN(quantity)
-          ? parseFloat(quantity)
-          : parseInt(quantity),
+      quantity:
+        quantity === 0
+          ? quantity
+          : isNaN(quantity)
+            ? parseFloat(quantity)
+            : parseInt(quantity),
     }
-
+    console.log('data', data)
     try {
       const response = await mainAxios.post(insert, data, {
         headers: {

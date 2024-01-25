@@ -172,6 +172,7 @@ export const ProductsCardBulkVan = ({
     message = `Overweight ${item.quantity_defitive - quantityPressed}`
     colorMessage = colors.green
   }
+  let missingStatus = message.includes('Missing')
 
   return (
     <View>
@@ -225,6 +226,7 @@ export const ProductsCardBulkVan = ({
               right={right}
               left={left}
               isNA={isNA}
+              missingStatus={missingStatus}
             />
           </View>
         </PanGestureHandler>
