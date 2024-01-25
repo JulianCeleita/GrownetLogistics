@@ -21,14 +21,16 @@ export const useProductSubmit = (insert) => {
       note,
       id: itemId,
       state: state,
-      quantity: quantity === 0
-        ? quantity
-        : isNaN(quantity)
-          ? parseFloat(quantity)
-          : parseInt(quantity),
+    }
+
+    if (typeof quantity === 'string' && quantity.includes('.')) {
+      data.quantity = parseFloat(quantity.replace(',', '.'));
+    } else {
+      data.quantity = parseInt(quantity);
     }
 
     try {
+      console.log('data', data);
       const response = await mainAxios.post(insert, data, {
         headers: {
           Authorization: `Bearer ${employeeToken}`,

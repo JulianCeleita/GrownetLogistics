@@ -15,7 +15,7 @@ import { useShortVanStore } from '../../store/useShortVanStore'
 import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
 import { ProductStyles } from '../../styles/ProductStyles'
 import { BtnGoBack } from '../../components/BtnGoBack'
-import { colors } from '../../styles/GlobalStyles'
+import { GlobalStyles, colors } from '../../styles/GlobalStyles'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import useOrdersByDate from '../../store/useOrdersByDateStore'
 import { useFocusEffect } from '@react-navigation/native'
@@ -76,11 +76,32 @@ function ProductsVan({ route }) {
       <View style={CustomerDayStyles.title2}>
         <BtnGoBack
           color={colors.darkBlue}
-          top={Platform.OS === 'ios' && !Platform.isPad ? 14 : 5}
+          top={Platform.OS === 'ios' && !Platform.isPad ? 14 : 14}
         />
-        <Text style={CustomerDayStyles.customerTitle}>
-          {route.params.nameRoute}
-        </Text>
+        <View>
+          <Text style={CustomerDayStyles.customerTitle}>
+            {route.params.nameRoute}
+          </Text>
+          <View style={CustomerDayStyles.titleNA}>
+            <Text style={CustomerDayStyles.restaurantTypeTitle}>N/A</Text>
+            <TouchableOpacity onPress={toggleButton} activeOpacity={1}>
+              <View
+                style={[
+                  CustomerDayStyles.toggleButton,
+                  toggle && CustomerDayStyles.toggleOn,
+                  GlobalStyles.boxShadow,
+                ]}
+              >
+                <View
+                  style={[
+                    CustomerDayStyles.toggleDot,
+                    toggle && CustomerDayStyles.toggleDotOn,
+                  ]}
+                />
+              </View>
+            </TouchableOpacity>
+          </View>
+        </View>
       </View>
       <KeyboardAwareScrollView
         enableOnAndroid
