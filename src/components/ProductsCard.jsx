@@ -100,7 +100,6 @@ export function ProductsCard({
             <View style={[ProductStyles.card, GlobalStyles.boxShadow]}>
               <View style={ProductStyles.productTittle}>
                 <Text style={ProductStyles.tittleCard}>
-                  {item.id} -
                   {item.name} {item.presentationName}
                 </Text>
                 <View style={ProductStyles.qty}>
