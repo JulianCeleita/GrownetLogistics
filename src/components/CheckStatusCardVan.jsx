@@ -10,7 +10,7 @@ export const CheckStatusCardVan = ({ item, isPressed, right, left, isNA }) => {
 
   useEffect(() => {
     if (isNA) {
-      setColorCheck(colors.danger)
+      setColorCheck(colors.bluePrimary)
       setIconCheck('minuscircleo')
     } else if (isPressed || right) {
       setColorCheck(colors.bluePrimary)
