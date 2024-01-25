@@ -82,7 +82,7 @@ function ProductsVan({ route }) {
           <Text style={CustomerDayStyles.customerTitle}>
             {route.params.nameRoute}
           </Text>
-          <View style={CustomerDayStyles.titleNA}>
+          {/* <View style={CustomerDayStyles.titleNA}>
             <Text style={CustomerDayStyles.restaurantTypeTitle}>N/A</Text>
             <TouchableOpacity onPress={toggleButton} activeOpacity={1}>
               <View
@@ -100,7 +100,7 @@ function ProductsVan({ route }) {
                 />
               </View>
             </TouchableOpacity>
-          </View>
+          </View> */}
         </View>
       </View>
       <KeyboardAwareScrollView
@@ -122,24 +122,6 @@ function ProductsVan({ route }) {
             </View>
           ) : (
             <View>
-              {/* <View>
-                <Text style={CustomerDayStyles.restaurantTypeTitle}>N/A</Text>
-                <TouchableOpacity onPress={toggleButton}>
-                  <View
-                    style={[
-                      CustomerDayStyles.toggleButton,
-                      toggle && CustomerDayStyles.toggleOn,
-                    ]}
-                  >
-                    <View
-                      style={[
-                        CustomerDayStyles.toggleDot,
-                        toggle && CustomerDayStyles.toggleDotOn,
-                      ]}
-                    />
-                  </View>
-                </TouchableOpacity>
-              </View> */}
               {restaurantData.map((restaurant) => (
                 <View key={restaurant.customerName}>
                   <Text style={[CustomerDayStyles.restaurantTypeTitle]}>
