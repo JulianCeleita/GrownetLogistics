@@ -66,7 +66,6 @@ export function ProductsCard({
     setAddQuantity(false)
     setSelectedProduct(null)
   }
-
   return (
     <View
       style={{
@@ -79,7 +78,7 @@ export function ProductsCard({
           if (item.state_packing !== 'ND') {
             if (!leftStates[item.id] || rightStates[item.id]) {
               handlePress(item.id)
-            } 
+            }
             handleCardSubmit()
           }
         }}
@@ -122,6 +121,8 @@ export function ProductsCard({
                 colorPress={colorPress}
                 colorRight={colorRight}
                 colorLeft={colorLeft}
+                declareNotAvailable={declareNotAvailable}
+                handleSubmit={handleSubmit}
               />
             </View>
 
@@ -179,7 +180,7 @@ export function ProductsCard({
                   <TouchableOpacity
                     style={[GlobalStyles.btnPrimary]}
                     onPress={() => {
-                      console.log(typeof quantity, quantity);
+                      console.log(typeof quantity, quantity)
                       if (addQuantity && selectedProduct === item.id) {
                         if (quantity === item.quantity) {
                           handlePress([item.id])
