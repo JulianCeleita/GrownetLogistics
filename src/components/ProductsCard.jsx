@@ -53,7 +53,12 @@ export function ProductsCard({
     setShowModal2(false)
     handleSubmit(item.id)
   }
-  const quantityLoading = viewPacking ? quantity : item.quantity_packing
+  const quantityLoading = viewPacking
+    ? quantity
+    : item.quantity_packing
+      ? item.quantity_packing
+      : item.quantity
+
   const handleCardSubmit = async () => {
     const cardPromises = [
       handlePress(item.id),
@@ -66,7 +71,9 @@ export function ProductsCard({
     setAddQuantity(false)
     setSelectedProduct(null)
   }
-  //console.log('item', item)
+
+  // console.log('item', item)
+
   return (
     <View
       style={{
@@ -93,6 +100,7 @@ export function ProductsCard({
             <View style={[ProductStyles.card, GlobalStyles.boxShadow]}>
               <View style={ProductStyles.productTittle}>
                 <Text style={ProductStyles.tittleCard}>
+                  {item.id} -
                   {item.name} {item.presentationName}
                 </Text>
                 <View style={ProductStyles.qty}>
