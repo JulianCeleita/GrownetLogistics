@@ -178,7 +178,7 @@ export const ProductsCardBulkVan = ({
       <TouchableOpacity
         onPress={() => handlePress(item.id)}
         onLongPress={() => (isNA ? handleRevertNA() : handleDeclareNA())}
-        delayLongPress={2000}
+        delayLongPress={1000}
       >
         <PanGestureHandler
           onGestureEvent={(e) => handleGestureEvent(e, item.id)}
