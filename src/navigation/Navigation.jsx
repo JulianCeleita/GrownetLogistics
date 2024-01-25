@@ -101,12 +101,12 @@ function MyTabs() {
         }}
       />
       <Tab.Screen
-        name="Loading"
-        component={StackLoading}
+        name="Preloading"
+        component={StackBulk}
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
-              name="truck-delivery-outline"
+              name="package-variant"
               size={size}
               color={color}
             />
@@ -115,12 +115,12 @@ function MyTabs() {
         }}
       />
       <Tab.Screen
-        name="Shorts Bulk"
-        component={StackBulk}
+        name="Loading"
+        component={StackLoading}
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
-              name="package-variant"
+              name="truck-delivery-outline"
               size={size}
               color={color}
             />
