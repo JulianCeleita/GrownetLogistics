@@ -93,7 +93,7 @@ function ProductsVan({ route }) {
               {restaurantData.map((restaurant) => (
                 <View key={restaurant.customerName}>
                   <Text style={[CustomerDayStyles.restaurantTypeTitle]}>
-                    {`${restaurant.customerName} - ${restaurant.reference_orders}`}
+                    {restaurant.customerName}
                   </Text>
                   <View>
                     {restaurant.products.map((product, index) => (
