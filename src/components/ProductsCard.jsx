@@ -77,7 +77,7 @@ export function ProductsCard({
     >
       <TouchableOpacity
         onPress={() => {
-          if (viewLoading) {
+          if (!viewPacking) {
             if (item.state_packing !== 'ND' && item.state_packing !== 'SHORT') {
               if (!leftStates[item.id] || rightStates[item.id]) {
                 handlePress(item.id)
