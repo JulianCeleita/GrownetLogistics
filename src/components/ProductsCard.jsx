@@ -130,8 +130,6 @@ export function ProductsCard({
                 colorPress={colorPress}
                 colorRight={colorRight}
                 colorLeft={colorLeft}
-                declareNotAvailable={declareNotAvailable}
-                handleSubmit={handleSubmit}
               />
             </View>
 
