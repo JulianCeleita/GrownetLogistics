@@ -47,8 +47,6 @@ export const CheckStatusCard = ({
         } else if (statePacking === 'SHORT') {
           setColorCheck(colorLeft)
           setIconCheck('closecircleo')
-          declareNotAvailable(itemId)
-          handleSubmit(itemId)
         }
       }
     } else {
