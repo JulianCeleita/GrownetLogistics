@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useCallback } from 'react'
 import { ActivityIndicator, Platform, ScrollView, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { BtnGoBack } from '../../components/BtnGoBack'
@@ -11,6 +11,8 @@ import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
 import { colors } from '../../styles/GlobalStyles'
 import { ProductStyles } from '../../styles/ProductStyles'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { useFocusEffect } from '@react-navigation/native'
+
 function ProductsPacking({ route }) {
   const {
     productsPacking,
@@ -22,9 +24,14 @@ function ProductsPacking({ route }) {
   const { employeeToken } = useEmployeeStore()
   const { handleSubmit } = useProductSubmit(insertPacking)
 
-  useEffect(() => {
-    setFetchPackingProducts(employeeToken, selectedOrder)
-  }, [])
+  useFocusEffect(
+    useCallback(() => {
+      setFetchPackingProducts(employeeToken, selectedOrder)
+      return () => {
+        setProductsPacking(null)
+      }
+    }, [employeeToken, selectedOrder]),
+  )
 
   return (
     <SafeAreaView style={ProductStyles.products}>
