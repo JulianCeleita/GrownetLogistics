@@ -42,7 +42,7 @@ export const CheckStatusCard = ({
         } else if (stateLoading === 'SHORT') {
           setColorCheck(colorLeft)
           setIconCheck('closecircleo')
-        } else if (statePacking === 'SHORT') {
+        } else if (statePacking === 'SHORT' && stateLoading === 'ND') {
           setColorCheck(colorLeft)
           setIconCheck('closecircleo')
         }
