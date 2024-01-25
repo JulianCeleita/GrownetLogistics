@@ -17,6 +17,7 @@ export function ProductsCard({
   setProducts,
   handleSubmit,
   viewPacking,
+  viewLoading,
   error,
 }) {
   const positiveOffset = 30
@@ -76,7 +77,14 @@ export function ProductsCard({
     >
       <TouchableOpacity
         onPress={() => {
-          if (item.state_packing !== 'ND' && item.state_packing !== 'SHORT') {
+          if (viewLoading) {
+            if (item.state_packing !== 'ND' && item.state_packing !== 'SHORT') {
+              if (!leftStates[item.id] || rightStates[item.id]) {
+                handlePress(item.id)
+              }
+              handleCardSubmit()
+            }
+          } else {
             if (!leftStates[item.id] || rightStates[item.id]) {
               handlePress(item.id)
             }
