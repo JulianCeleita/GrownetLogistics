@@ -102,5 +102,25 @@ export const CustomerDayStyles = StyleSheet.create({
     fontFamily: 'PoppinsSemi',
     textAlign: 'left',
     marginTop: 10,
+  },  
+  toggleButton: {
+    width: 60,
+    height: 30,
+    backgroundColor: '#ccc',
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  toggleOn: {
+    backgroundColor: '#ccc',
+  },
+  toggleDot: {
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    backgroundColor: '#888',
+  },
+  toggleDotOn: {
+    backgroundColor: 'green',
   },
 })

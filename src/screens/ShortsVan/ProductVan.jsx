@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useState } from 'react'
 import {
   ActivityIndicator,
   Platform,
@@ -19,13 +19,20 @@ import { colors } from '../../styles/GlobalStyles'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import useOrdersByDate from '../../store/useOrdersByDateStore'
 import { useFocusEffect } from '@react-navigation/native'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
 function ProductsVan({ route }) {
-  const { restaurantData, setRestaurantData, loading, error, setFetchShortVanProducts } =
-    useShortVanStore()
+  const {
+    restaurantData,
+    setRestaurantData,
+    loading,
+    error,
+    setFetchShortVanProducts,
+  } = useShortVanStore()
   const { employeeToken } = useEmployeeStore()
   const { handleSubmit } = useProductSubmit(insertShort)
   const { selectedDate, selectedRoute } = useOrdersByDate()
+  const [toggle, setToggle] = useState(false)
 
   useFocusEffect(
     useCallback(() => {
@@ -41,7 +48,6 @@ function ProductsVan({ route }) {
   )
 
   const updateProductsVan = (itemId, quantity) => {
-
     const newProducts = restaurantData.map((itemProd) => {
       return {
         ...itemProd,
@@ -50,7 +56,8 @@ function ProductsVan({ route }) {
             return {
               ...product,
               packed: quantity,
-              quantity_defitive: quantity === null ? null : product.quantity_defitive,
+              quantity_defitive:
+                quantity === null ? null : product.quantity_defitive,
             }
           }
           return product
@@ -58,6 +65,10 @@ function ProductsVan({ route }) {
       }
     })
     setRestaurantData(newProducts)
+  }
+
+  const toggleButton = () => {
+    setToggle(!toggle)
   }
 
   return (
@@ -90,6 +101,24 @@ function ProductsVan({ route }) {
             </View>
           ) : (
             <View>
+              <View>
+                <Text style={CustomerDayStyles.restaurantTypeTitle}>N/A</Text>
+                <TouchableOpacity onPress={toggleButton}>
+                  <View
+                    style={[
+                      CustomerDayStyles.toggleButton,
+                      toggle && CustomerDayStyles.toggleOn,
+                    ]}
+                  >
+                    <View
+                      style={[
+                        CustomerDayStyles.toggleDot,
+                        toggle && CustomerDayStyles.toggleDotOn,
+                      ]}
+                    />
+                  </View>
+                </TouchableOpacity>
+              </View>
               {restaurantData.map((restaurant) => (
                 <View key={restaurant.customerName}>
                   <Text style={[CustomerDayStyles.restaurantTypeTitle]}>
@@ -104,6 +133,7 @@ function ProductsVan({ route }) {
                         updateProductsVan={updateProductsVan}
                       />
                     ))}
+                    {console.log(restaurant.products)}
                   </View>
                 </View>
               ))}
