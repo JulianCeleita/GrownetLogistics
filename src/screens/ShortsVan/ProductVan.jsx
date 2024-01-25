@@ -84,7 +84,7 @@ function ProductsVan({ route }) {
           </Text>
           <View style={CustomerDayStyles.titleNA}>
             <Text style={CustomerDayStyles.restaurantTypeTitle}>N/A</Text>
-            <TouchableOpacity onPress={toggleButton}>
+            <TouchableOpacity onPress={toggleButton} activeOpacity={1}>
               <View
                 style={[
                   CustomerDayStyles.toggleButton,
