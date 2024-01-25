@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import {
   ActivityIndicator,
   Platform,
@@ -17,21 +17,27 @@ import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
 import { colors } from '../../styles/GlobalStyles'
 import { ProductStyles } from '../../styles/ProductStyles'
 import useOrdersByDate from '../../store/useOrdersByDateStore'
+import { useFocusEffect } from '@react-navigation/native'
 
 function ProductsBulk({ route }) {
-  const { typeData, loading, error, setFetchShortBulkProducts } =
+  const { typeData, loading, error, setFetchShortBulkProducts, setTypeData } =
     useShortBulkStore()
   const { employeeToken } = useEmployeeStore()
   const { selectedDate, selectedRoute } = useOrdersByDate()
   const { handleSubmit } = useProductSubmit(insertShort)
 
-  useEffect(() => {
-    const dataBulk = {
-      routeName: selectedRoute,
-      date: selectedDate,
-    }
-    setFetchShortBulkProducts(employeeToken, dataBulk)
-  }, [])
+  useFocusEffect(
+    useCallback(() => {
+      const dataBulk = {
+        routeName: selectedRoute,
+        date: selectedDate,
+      }
+      setFetchShortBulkProducts(employeeToken, dataBulk)
+      return () => {
+        setTypeData([])
+      }
+    }, [employeeToken, selectedRoute, selectedDate]),
+  )
 
   return (
     <SafeAreaView style={ProductStyles.products}>
