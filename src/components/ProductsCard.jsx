@@ -66,6 +66,7 @@ export function ProductsCard({
     setAddQuantity(false)
     setSelectedProduct(null)
   }
+  //console.log('item', item)
   return (
     <View
       style={{
@@ -75,7 +76,7 @@ export function ProductsCard({
     >
       <TouchableOpacity
         onPress={() => {
-          if (item.state_packing !== 'ND') {
+          if (item.state_packing !== 'ND' && item.state_packing !== 'SHORT') {
             if (!leftStates[item.id] || rightStates[item.id]) {
               handlePress(item.id)
             }
