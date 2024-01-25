@@ -17,7 +17,6 @@ export function ProductsCard({
   setProducts,
   handleSubmit,
   viewPacking,
-  viewLoading,
   error,
 }) {
   const positiveOffset = 30
