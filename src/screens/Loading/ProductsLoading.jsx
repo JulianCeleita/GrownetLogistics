@@ -26,10 +26,8 @@ function ProductsLoading({ route }) {
 
   useFocusEffect(
     useCallback(() => {
-      console.log('Petición de productos de carga Loading');
       setFetchProductsLoading(employeeToken, selectedOrderL)
       return () => {
-        console.log('Limpiando productos de carga Loading');
         setLoadingProducts(null)
       }
     }, [employeeToken, selectedOrderL]),

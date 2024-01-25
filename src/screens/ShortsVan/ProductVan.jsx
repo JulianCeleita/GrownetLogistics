@@ -1,11 +1,10 @@
-import React, { useEffect } from 'react'
+import React, { useCallback } from 'react'
 import {
   ActivityIndicator,
   Platform,
   ScrollView,
   Text,
   View,
-  KeyboardAvoidingView,
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { ProductsCardBulkVan } from '../../components/ProductsCardBulkVan'
@@ -19,6 +18,7 @@ import { BtnGoBack } from '../../components/BtnGoBack'
 import { colors } from '../../styles/GlobalStyles'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import useOrdersByDate from '../../store/useOrdersByDateStore'
+import { useFocusEffect } from '@react-navigation/native'
 
 function ProductsVan({ route }) {
   const { restaurantData, setRestaurantData, loading, error, setFetchShortVanProducts } =
@@ -27,13 +27,18 @@ function ProductsVan({ route }) {
   const { handleSubmit } = useProductSubmit(insertShort)
   const { selectedDate, selectedRoute } = useOrdersByDate()
 
-  useEffect(() => {
-    const dataVan = {
-      routeName: selectedRoute,
-      date: selectedDate,
-    }
-    setFetchShortVanProducts(employeeToken, dataVan)
-  }, [])
+  useFocusEffect(
+    useCallback(() => {
+      const dataVan = {
+        routeName: selectedRoute,
+        date: selectedDate,
+      }
+      setFetchShortVanProducts(employeeToken, dataVan)
+      return () => {
+        setRestaurantData([])
+      }
+    }, [employeeToken, selectedRoute, selectedDate]),
+  )
 
   const updateProductsVan = (itemId, quantity) => {
 

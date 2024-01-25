@@ -7,6 +7,7 @@ export const useShortBulkStore = create((set) => ({
   loading: false,
   error: null,
   setError: (error) => set({ error }),
+  setTypeData: (typeData) => set({ typeData }),
   setFetchShortBulkProducts: async (token, data) => {
     try {
       set({ loading: true, error: null })
