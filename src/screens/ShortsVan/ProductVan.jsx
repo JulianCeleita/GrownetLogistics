@@ -101,7 +101,7 @@ function ProductsVan({ route }) {
             </View>
           ) : (
             <View>
-              <View>
+              {/* <View>
                 <Text style={CustomerDayStyles.restaurantTypeTitle}>N/A</Text>
                 <TouchableOpacity onPress={toggleButton}>
                   <View
@@ -118,7 +118,7 @@ function ProductsVan({ route }) {
                     />
                   </View>
                 </TouchableOpacity>
-              </View>
+              </View> */}
               {restaurantData.map((restaurant) => (
                 <View key={restaurant.customerName}>
                   <Text style={[CustomerDayStyles.restaurantTypeTitle]}>
@@ -134,6 +134,19 @@ function ProductsVan({ route }) {
                       />
                     ))}
                     {console.log(restaurant.products)}
+                    {/* {restaurant.products
+                      .filter((product) =>
+                        toggle ? true : product.state_definitive !== 'N/A',
+                      )
+                      .map((product, index) => (
+                      <ProductsCardBulkVan
+                        key={index}
+                        item={product}
+                        handleSubmit={handleSubmit}
+                        updateProductsVan={updateProductsVan}
+                      />
+                    ))}
+                    {console.log(restaurant.products)} */}
                   </View>
                 </View>
               ))}
