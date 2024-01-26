@@ -120,13 +120,7 @@ export const ProductsCardBulkVan = ({
     return (
       <View style={[ProductStyles.card, GlobalStyles.boxShadow]}>
         <View style={ProductStyles.productTittle}>
-          <Text
-            style={{
-              ...ProductStyles.tittleCard,
-              flex: 1,
-              alignContent: 'center',
-            }}
-          >
+          <Text style={ProductStyles.tittleCard}>
             {item.name} {item.presentationName}
           </Text>
           <Text style={ProductStyles.textCard}>
