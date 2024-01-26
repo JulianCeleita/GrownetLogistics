@@ -70,7 +70,7 @@ function ProductsLoading({ route }) {
                       key={product.id}
                       item={product}
                       colorPress={colors.green}
-                      colorRight={colors.orange}
+                      colorRight={colors.green}
                       colorLeft={colors.danger}
                       products={productsLoading}
                       setProducts={setLoadingProducts}
