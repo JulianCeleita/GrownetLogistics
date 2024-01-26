@@ -96,11 +96,39 @@ export const CustomerDayStyles = StyleSheet.create({
     fontFamily: 'PoppinsRegular',
     color: colors.darkBlue,
   },
+  titleNA: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    position: 'absolute',
+    top: -20,
+    left: 85,
+  },
   restaurantTypeTitle: {
     fontSize: 16,
-    color: colors.bluePrimary,
+    color: colors.darkBlue,
     fontFamily: 'PoppinsSemi',
-    textAlign: 'left',
-    marginTop: 10,
+    marginRight: 5,
+  },
+  toggleButton: {
+    width: 60,
+    height: 30,
+    backgroundColor: colors.lightBlue,
+    borderRadius: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical: 3,
+    marginHorizontal: 2,
+  },
+  toggleOn: {
+    backgroundColor: colors.lightBlue,
+  },
+  toggleDot: {
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    backgroundColor: colors.darkBlue,
+  },
+  toggleDotOn: {
+    backgroundColor: colors.green,
   },
 })

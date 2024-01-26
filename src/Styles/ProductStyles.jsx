@@ -124,6 +124,11 @@ export const ProductStyles = StyleSheet.create({
     marginBottom: 10,
     marginTop: 10,
   },
+  textNA: {
+    fontFamily: 'PoppinsMedium',
+    fontSize: 18,
+    color: 'white',
+  },
 })
 
 export const SearchStyles = StyleSheet.create({

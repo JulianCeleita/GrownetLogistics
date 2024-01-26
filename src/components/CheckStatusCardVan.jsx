@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View } from 'react-native'
+import { View, Text } from 'react-native'
 import { ProductStyles } from '../styles/ProductStyles'
 import { colors } from '../styles/GlobalStyles'
 import { AntDesign } from '@expo/vector-icons'
@@ -53,7 +53,13 @@ export const CheckStatusCardVan = ({
         },
       ]}
     >
-      <AntDesign name={iconCheck} size={30} color="white" />
+      {isNA ? (
+        <View>
+          <Text style={ProductStyles.textNA}>N/A</Text>
+        </View>
+      ) : (
+        <AntDesign name={iconCheck} size={30} color="white" />
+      )}
     </View>
   )
 }
