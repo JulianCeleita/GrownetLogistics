@@ -9,7 +9,7 @@ export const useShortVanStore = create((set) => ({
   setError: (error) => set({ error }),
   setLoading: (loading) => set({ loading }),
   setRestaurantData: (restaurantData) => set({ restaurantData }),
-  setFetchShortVanProducts: async (token, data) => {
+  setFetchShortVanProducts: async (token, data, toggle) => {
     try {
       set({ loading: true, error: null })
       const dataVan = {
@@ -28,7 +28,11 @@ export const useShortVanStore = create((set) => ({
         set({
           restaurantData: van.map((restaurant) => ({
             customerName: restaurant.custom,
-            products: restaurant.products,
+            products: toggle
+              ? restaurant.products
+              : restaurant.products.filter((product) => {
+                  return product.state_definitive !== 'N/A'
+                }),
           })),
           loading: false,
         })

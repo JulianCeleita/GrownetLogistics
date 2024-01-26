@@ -30,7 +30,6 @@ const useOrdersByDate = create((set) => {
         RoutesByDate.sort((a, b) => {
           return a.nameRoute.localeCompare(b.nameRoute)
         })
-        console.log('RoutesByDate', RoutesByDate)
 
         set({ routesByDate: RoutesByDate })
       } catch (error) {
