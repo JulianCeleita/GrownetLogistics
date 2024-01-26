@@ -20,9 +20,9 @@ export const LoginStyles = StyleSheet.create({
     fontSize: Platform.OS === 'ios' ? 17 : 14,
     marginBottom: 20,
     fontFamily: 'PoppinsRegular',
+    alignSelf: 'center',
   },
   input: {
-    width: '80%',
     backgroundColor: '#fff',
     marginBottom: 20,
     paddingHorizontal: 20,
