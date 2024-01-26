@@ -73,7 +73,21 @@ export function ProductsCard({
   }
 
   // console.log('item', item)
-
+  const handlePressAction = () => {
+    if (!viewPacking) {
+      if (item.state_packing !== 'ND' && item.state_packing !== 'SHORT') {
+        if (!leftStates[item.id] || rightStates[item.id]) {
+          handlePress(item.id)
+        }
+        handleCardSubmit()
+      }
+    } else {
+      if (!leftStates[item.id] || rightStates[item.id]) {
+        handlePress(item.id)
+      }
+      handleCardSubmit()
+    }
+  }
   return (
     <View
       style={{
@@ -82,21 +96,7 @@ export function ProductsCard({
       key={item.id}
     >
       <TouchableOpacity
-        onPress={() => {
-          if (!viewPacking) {
-            if (item.state_packing !== 'ND' && item.state_packing !== 'SHORT') {
-              if (!leftStates[item.id] || rightStates[item.id]) {
-                handlePress(item.id)
-              }
-              handleCardSubmit()
-            }
-          } else {
-            if (!leftStates[item.id] || rightStates[item.id]) {
-              handlePress(item.id)
-            }
-            handleCardSubmit()
-          }
-        }}
+        onPress={handlePressAction}
         disabled={viewPacking && item.state_loading !== null}
       >
         <PanGestureHandler
