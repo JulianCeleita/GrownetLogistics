@@ -6,17 +6,39 @@ import { colors } from '../styles/GlobalStyles'
 export const CheckQuantity = ({ viewPacking, quantity, quantity_packing, quantity_loading, packed }) => {
     const [message, setMessage] = useState('')
 
+    console.log({ quantity, quantity_packing, quantity_loading });
+
     useEffect(() => {
         if (!packed) {
             if (viewPacking) {
                 // Vista de packing
-                setMessage(
-                    quantity_packing && quantity > quantity_packing
-                        ? `Missing ${quantity - quantity_packing}`
-                        : quantity_packing && quantity < quantity_packing
-                            ? `Overweight ${quantity_packing - quantity}`
-                            : ''
-                )
+                if (quantity_loading && quantity_packing) {
+                    setMessage(
+                        quantity > quantity_loading
+                            ? `Missing ${quantity - quantity_loading}`
+                            : quantity < quantity_loading
+                                ? `Overweight ${quantity_loading - quantity}`
+                                : ''
+                    )
+                } else if (!quantity_packing && quantity_loading) {
+                    setMessage(
+                        quantity > quantity_loading
+                            ? `Missing ${quantity - quantity_loading}`
+                            : quantity < quantity_loading
+                                ? `Overweight ${quantity_loading - quantity}`
+                                : ''
+                    )
+                } else if (!quantity_loading && quantity_packing) {
+                    setMessage(
+                        quantity > quantity_packing
+                            ? `Missing ${quantity - quantity_packing}`
+                            : quantity < quantity_packing
+                                ? `Overweight ${quantity_packing - quantity}`
+                                : ''
+                    )
+
+                }
+
             } else {
                 // Vista de loading
                 if (quantity_packing) {
