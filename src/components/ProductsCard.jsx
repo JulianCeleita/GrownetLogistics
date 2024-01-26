@@ -83,7 +83,14 @@ export function ProductsCard({
     >
       <TouchableOpacity
         onPress={() => {
-          if (item.state_packing !== 'ND' && item.state_packing !== 'SHORT') {
+          if (!viewPacking) {
+            if (item.state_packing !== 'ND' && item.state_packing !== 'SHORT') {
+              if (!leftStates[item.id] || rightStates[item.id]) {
+                handlePress(item.id)
+              }
+              handleCardSubmit()
+            }
+          } else {
             if (!leftStates[item.id] || rightStates[item.id]) {
               handlePress(item.id)
             }

@@ -105,6 +105,12 @@ function ProductsVan({ route }) {
                 <View
                   style={[
                     CustomerDayStyles.toggleDot,
+                    toggle && CustomerDayStyles.toggleDotOff,
+                  ]}
+                />
+                <View
+                  style={[
+                    CustomerDayStyles.toggleDot2,
                     toggle && CustomerDayStyles.toggleDotOn,
                   ]}
                 />
