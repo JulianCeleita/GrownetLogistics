@@ -41,7 +41,7 @@ export const CheckQuantity = ({ viewPacking, quantity, quantity_packing, quantit
 
             } else {
                 // Vista de loading
-                if (quantity_packing) {
+                if (quantity_packing && !quantity_loading) {
                     setMessage(
                         quantity > quantity_packing
                             ? `Missing ${quantity - quantity_packing}`
@@ -49,7 +49,7 @@ export const CheckQuantity = ({ viewPacking, quantity, quantity_packing, quantit
                                 ? `Overweight ${quantity_packing - quantity}`
                                 : ''
                     )
-                } else if (quantity_loading) {
+                } else if (quantity_loading && quantity_packing) {
                     setMessage(
                         quantity > quantity_loading
                             ? `Missing ${quantity - quantity_loading}`
