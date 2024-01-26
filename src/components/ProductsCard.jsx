@@ -97,6 +97,7 @@ export function ProductsCard({
             handleCardSubmit()
           }
         }}
+        disabled={viewPacking && item.state_loading !== null}
       >
         <PanGestureHandler
           enabled={!addQuantity}
