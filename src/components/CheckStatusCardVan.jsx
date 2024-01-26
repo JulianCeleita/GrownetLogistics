@@ -4,12 +4,21 @@ import { ProductStyles } from '../styles/ProductStyles'
 import { colors } from '../styles/GlobalStyles'
 import { AntDesign } from '@expo/vector-icons'
 
-export const CheckStatusCardVan = ({ item, isPressed, right, left, isNA }) => {
+export const CheckStatusCardVan = ({
+  item,
+  isPressed,
+  right,
+  left,
+  isNA,
+  missingStatus,
+}) => {
   const [iconCheck, setIconCheck] = useState('questioncircleo')
   const [colorCheck, setColorCheck] = useState(colors.gray)
-
   useEffect(() => {
-    if (isNA) {
+    if (missingStatus) {
+      setColorCheck(colors.danger)
+      setIconCheck('minuscircleo')
+    } else if (isNA) {
       setColorCheck(colors.bluePrimary)
       setIconCheck('minuscircleo')
     } else if (isPressed || right) {
@@ -33,7 +42,7 @@ export const CheckStatusCardVan = ({ item, isPressed, right, left, isNA }) => {
       setColorCheck(colors.gray)
       setIconCheck('questioncircleo')
     }
-  }, [isPressed, right, left, isNA])
+  }, [isPressed, right, left, isNA, missingStatus])
 
   return (
     <View
