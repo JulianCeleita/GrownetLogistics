@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native'
+import { Platform, StyleSheet } from 'react-native'
 import { colors } from './GlobalStyles'
 import { Dimensions } from 'react-native'
 
@@ -100,8 +100,15 @@ export const CustomerDayStyles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     position: 'absolute',
-    top: -20,
+    height: 80,
+    top: Platform.OS === 'ios' ? -18 : -20,
     left: 85,
+  },
+  restaurantTypeTitle: {
+    fontSize: 16,
+    color: colors.darkBlue,
+    fontFamily: 'PoppinsSemi',
+    marginRight: 5,
   },
   restaurantTypeTitle: {
     fontSize: 16,

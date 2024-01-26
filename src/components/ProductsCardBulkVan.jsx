@@ -84,6 +84,9 @@ export const ProductsCardBulkVan = ({
     updateProductsVan(item.id, null)
     handleSubmit(item.id, 0, '', 'N/A')
   }
+  if (item.name === 'Eggs') {
+    console.log(item.name, item.quantity, item.quantity_defitive, item.packed)
+  }
   const confirmRevertNA = () => {
     setShowModalRevertNA(false)
     setIsNA(false)
@@ -117,13 +120,7 @@ export const ProductsCardBulkVan = ({
     return (
       <View style={[ProductStyles.card, GlobalStyles.boxShadow]}>
         <View style={ProductStyles.productTittle}>
-          <Text
-            style={{
-              ...ProductStyles.tittleCard,
-              flex: 1,
-              alignContent: 'center',
-            }}
-          >
+          <Text style={ProductStyles.tittleCard}>
             {item.name} {item.presentationName}
           </Text>
           <Text style={ProductStyles.textCard}>

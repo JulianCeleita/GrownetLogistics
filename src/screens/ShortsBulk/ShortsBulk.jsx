@@ -2,12 +2,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
 import { LinearGradient } from 'expo-linear-gradient'
 import React from 'react'
-import {
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native'
+import { ScrollView, Text, TouchableOpacity, View } from 'react-native'
 import { BtnGoBack } from '../../components/BtnGoBack'
 import CircleProgress from '../../components/CircleProgress'
 import useOrdersByDate from '../../store/useOrdersByDateStore'
@@ -38,13 +33,19 @@ function ShortsBulk() {
     <View style={{ backgroundColor: 'white', height: '100%' }}>
       <ScrollView>
         <BtnGoBack color="white" top={Platform.OS === 'ios' ? 65 : 20} />
-        <View style={[DeliveryStyles.tittle, GlobalStyles.boxShadow, {
-          marginTop: Platform.OS === 'ios' ? 65 : 30,
-        }]}>
+        <View
+          style={[
+            DeliveryStyles.tittle,
+            GlobalStyles.boxShadow,
+            {
+              marginTop: Platform.OS === 'ios' ? 65 : 30,
+            },
+          ]}
+        >
           <MaterialCommunityIcons
             name="package-variant"
             style={{ marginRight: 10 }}
-            size={50}
+            size={45}
             color={'white'}
           />
           <Text style={DeliveryStyles.textTittle}>Shorts Bulk</Text>

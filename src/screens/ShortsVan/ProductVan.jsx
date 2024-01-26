@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import {
   ActivityIndicator,
   Platform,
@@ -40,12 +40,22 @@ function ProductsVan({ route }) {
         routeName: selectedRoute,
         date: selectedDate,
       }
-      setFetchShortVanProducts(employeeToken, dataVan)
+      setFetchShortVanProducts(employeeToken, dataVan, toggle)
+
       return () => {
         setRestaurantData([])
+        setToggle(false)
       }
     }, [employeeToken, selectedRoute, selectedDate]),
   )
+
+  useEffect(() => {
+    const dataVan = {
+      routeName: selectedRoute,
+      date: selectedDate,
+    }
+    setFetchShortVanProducts(employeeToken, dataVan, toggle)
+  }, [toggle])
 
   const updateProductsVan = (itemId, quantity) => {
     const newProducts = restaurantData.map((itemProd) => {
@@ -68,7 +78,7 @@ function ProductsVan({ route }) {
   }
 
   const toggleButton = () => {
-    setToggle(!toggle)
+    setToggle((previousToggle) => !previousToggle)
   }
 
   return (
@@ -142,20 +152,6 @@ function ProductsVan({ route }) {
                         updateProductsVan={updateProductsVan}
                       />
                     ))}
-                    {console.log(restaurant.products)}
-                    {/* {restaurant.products
-                      .filter((product) =>
-                        toggle ? true : product.state_definitive !== 'N/A',
-                      )
-                      .map((product, index) => (
-                      <ProductsCardBulkVan
-                        key={index}
-                        item={product}
-                        handleSubmit={handleSubmit}
-                        updateProductsVan={updateProductsVan}
-                      />
-                    ))}
-                    {console.log(restaurant.products)} */}
                   </View>
                 </View>
               ))}
