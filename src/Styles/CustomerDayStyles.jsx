@@ -100,6 +100,7 @@ export const CustomerDayStyles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     position: 'absolute',
+    height: 80,
     top: Platform.OS === 'ios' ? -18 : -20,
     left: 85,
   },
