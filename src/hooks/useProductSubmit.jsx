@@ -21,14 +21,16 @@ export const useProductSubmit = (insert) => {
       note,
       id: itemId,
       state: state,
+
     }
 
     if (typeof quantity === 'string' && quantity.includes('.')) {
       data.quantity = parseFloat(quantity.replace(',', '.'));
     } else {
       data.quantity = parseInt(quantity);
-    }
 
+    }
+    console.log('data', data)
     try {
       console.log('data', data);
       const response = await mainAxios.post(insert, data, {

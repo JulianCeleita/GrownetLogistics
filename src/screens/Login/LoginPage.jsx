@@ -1,4 +1,5 @@
 import { useNavigation } from '@react-navigation/native'
+import { KeyboardAvoidingView } from 'react-native';
 import React, { useState } from 'react'
 import {
   Image,
@@ -69,12 +70,13 @@ const LoginPage = () => {
   }
 
   return (
-    <SafeAreaView
-      style={{ flex: 1 }}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-    >
-      <TouchableWithoutFeedback onPress={dismissKeyboard}>
-        <View style={LoginStyles.container}>
+    <TouchableWithoutFeedback onPress={dismissKeyboard}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={LoginStyles.container}
+        contentContainerStyle={{ flex: 1, justifyContent: 'center' }}
+      >
+        <View>
           <StatusBar style="light" />
           <Image source={logo} style={LoginStyles.logo} />
           <Text style={LoginStyles.loginHeaderText}>
@@ -105,25 +107,25 @@ const LoginPage = () => {
           >
             <Text style={LoginStyles.signInButtonText}>Log in</Text>
           </TouchableOpacity>
-          <ModalAlert
-            showModal={showModal}
-            closeModal={closeModal}
-            handleOutsidePress={handleOutsidePress}
-            Title="We're sorry"
-            message="Password or email are incorrect"
-            message2="Try again"
-          />
-          <ModalAlert
-            showModal={showEmptyInputModal}
-            closeModal={closeModal}
-            handleOutsidePress={handleOutsidePress}
-            Title="We apologize"
-            message="Password and email cannot be empty."
-            message2="Try again"
-          />
         </View>
-      </TouchableWithoutFeedback>
-    </SafeAreaView>
+        <ModalAlert
+          showModal={showModal}
+          closeModal={closeModal}
+          handleOutsidePress={handleOutsidePress}
+          Title="We're sorry"
+          message="Password or email are incorrect"
+          message2="Try again"
+        />
+        <ModalAlert
+          showModal={showEmptyInputModal}
+          closeModal={closeModal}
+          handleOutsidePress={handleOutsidePress}
+          Title="We apologize"
+          message="Password and email cannot be empty."
+          message2="Try again"
+        />
+      </KeyboardAvoidingView>
+    </TouchableWithoutFeedback>
   )
 }
 

@@ -24,22 +24,31 @@ export const CheckStatusCard = ({
   useEffect(() => {
     if (!pressedStates[itemId] && !rightStates[itemId] && !leftStates[itemId]) {
       if (viewPacking) {
-        if (statePacking === 'FULL') {
-          setColorCheck(colorPress)
-          setIconCheck('checkcircleo')
-        } else if (statePacking === 'ND' || statePacking === 'PD') {
-          setColorCheck(colorRight)
-          setIconCheck('arrowright')
-        } else if (statePacking === 'SHORT') {
+        if (stateLoading === 'SHORT') {
           setColorCheck(colorLeft)
           setIconCheck('closecircleo')
+        } else if (stateLoading === 'ND') {
+          setColorCheck(colorPress)
+          setIconCheck('arrowright')
+        } else {
+          if (statePacking === 'FULL') {
+            setColorCheck(colorPress)
+            setIconCheck('checkcircleo')
+          } else if (statePacking === 'ND' || statePacking === 'PD') {
+            setColorCheck(colorRight)
+            console.log('entro aqui oacking')
+            setIconCheck('arrowright')
+          } else if (statePacking === 'SHORT') {
+            setColorCheck(colorLeft)
+            setIconCheck('closecircleo')
+          }
         }
       } else {
         if (stateLoading === 'FULL') {
           setColorCheck(colorPress)
           setIconCheck('checkcircleo')
         } else if (stateLoading === 'ND' || stateLoading === 'PD') {
-          setColorCheck(colorRight)
+          setColorCheck(colorPress)
           setIconCheck('arrowright')
         } else if (stateLoading === 'SHORT') {
           setColorCheck(colorLeft)
@@ -54,7 +63,7 @@ export const CheckStatusCard = ({
         setColorCheck(colorPress)
         setIconCheck('checkcircleo')
       } else if (rightStates[itemId] === true) {
-        setColorCheck(colorRight)
+        setColorCheck(colorPress)
         setIconCheck('arrowright')
       } else if (leftStates[itemId] === true) {
         setColorCheck(colorLeft)
