@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native'
+import { Platform, StyleSheet } from 'react-native'
 import { colors } from './GlobalStyles'
 import { Dimensions } from 'react-native'
 
@@ -100,7 +100,7 @@ export const CustomerDayStyles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     position: 'absolute',
-    top: -20,
+    top: Platform.OS === 'ios' ? -18 : -8,
     left: 85,
   },
   restaurantTypeTitle: {
@@ -115,13 +115,15 @@ export const CustomerDayStyles = StyleSheet.create({
     backgroundColor: '#D8D8D8',
     borderRadius: 30,
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'flex-start', // Alinea el punto a la izquierda
+    padding: 5, // Añade un poco de espacio alrededor del punto
     marginVertical: 3,
     marginHorizontal: 2,
     flexDirection: 'row',
   },
   toggleOn: {
-    backgroundColor: colors.green,
+    alignItems: 'flex-end', // Alinea el punto a la derecha cuando el toggle está encendido
+    backgroundColor: colors.lightBlue,
   },
   toggleDot: {
     width: 23,
