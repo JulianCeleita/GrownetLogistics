@@ -7,7 +7,7 @@ export const DeliveryStyles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     zIndex: 1,
-    height: Platform.OS === 'ios' ? 140 : 100
+    height: Platform.OS === 'ios' ? 140 : 100,
   },
   tittle: {
     backgroundColor: colors.bluePrimary,
@@ -21,7 +21,7 @@ export const DeliveryStyles = StyleSheet.create({
     marginTop: 25,
     alignSelf: 'center',
     position: 'absolute',
-    zIndex: 2
+    zIndex: 2,
   },
   textTittle: {
     fontSize: 25,
@@ -29,13 +29,13 @@ export const DeliveryStyles = StyleSheet.create({
     fontFamily: 'PoppinsBold',
   },
   imageTittle: {
-    width: 65,
-    height: 47,
+    width: 50,
+    height: 37,
     marginRight: 20,
   },
   imageTittlePacking: {
-    width: 60,
-    height: 52,
+    width: 50,
+    height: 43,
     marginRight: 20,
   },
   tittleRoute: {

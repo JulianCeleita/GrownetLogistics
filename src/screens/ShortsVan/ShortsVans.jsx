@@ -37,13 +37,19 @@ function ShortsVans() {
     <View style={{ backgroundColor: 'white', height: '100%' }}>
       <ScrollView>
         <BtnGoBack color="white" top={Platform.OS === 'ios' ? 65 : 20} />
-        <View style={[DeliveryStyles.tittle, GlobalStyles.boxShadow, {
-          marginTop: Platform.OS === 'ios' ? 65 : 30,
-        }]}>
+        <View
+          style={[
+            DeliveryStyles.tittle,
+            GlobalStyles.boxShadow,
+            {
+              marginTop: Platform.OS === 'ios' ? 65 : 30,
+            },
+          ]}
+        >
           <MaterialCommunityIcons
             name="truck-fast-outline"
             style={{ marginRight: 10 }}
-            size={50}
+            size={45}
             color={'white'}
           />
           <Text style={DeliveryStyles.textTittle}>Shorts Van</Text>
