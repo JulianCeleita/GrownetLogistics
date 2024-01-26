@@ -110,38 +110,27 @@ export const CustomerDayStyles = StyleSheet.create({
     marginRight: 5,
   },
   toggleButton: {
-    width: 55,
+    width: 60,
     height: 30,
-    backgroundColor: '#D8D8D8',
+    backgroundColor: colors.lightBlue,
     borderRadius: 30,
     justifyContent: 'center',
     alignItems: 'flex-start', // Alinea el punto a la izquierda
     padding: 5, // Añade un poco de espacio alrededor del punto
     marginVertical: 3,
     marginHorizontal: 2,
-    flexDirection: 'row',
   },
   toggleOn: {
     alignItems: 'flex-end', // Alinea el punto a la derecha cuando el toggle está encendido
     backgroundColor: colors.lightBlue,
   },
   toggleDot: {
-    width: 23,
-    height: 23,
-    borderRadius: 50,
-    backgroundColor: 'white',
-  },
-  toggleDot2: {
-    width: 23,
-    height: 23,
-    borderRadius: 50,
-    marginRight: 1,
-    backgroundColor: '#D8D8D8',
-  },
-  toggleDotOff: {
-    backgroundColor: colors.green,
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    backgroundColor: colors.darkBlue,
   },
   toggleDotOn: {
-    backgroundColor: 'white',
+    backgroundColor: colors.green,
   },
 })
