@@ -28,11 +28,13 @@ export const CheckQuantity = ({ viewPacking, quantity, quantity_packing, quantit
                                 : ''
                     )
                 } else if (quantity_loading) {
-                    quantity > quantity_loading
-                        ? `Missing ${quantity - quantity_loading}`
-                        : quantity < quantity_loading
-                            ? `Overweight ${quantity_loading - quantity}`
-                            : ''
+                    setMessage(
+                        quantity > quantity_loading
+                            ? `Missing ${quantity - quantity_loading}`
+                            : quantity < quantity_loading
+                                ? `Overweight ${quantity_loading - quantity}`
+                                : ''
+                    )
                 }
             }
         } else {
