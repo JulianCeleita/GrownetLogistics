@@ -101,7 +101,7 @@ export function ProductsCard({
       >
         <PanGestureHandler
           enabled={!addQuantity}
-          onGestureEvent={(e) => handleGestureEvent(e, item.id)}
+          onGestureEvent={(e) => viewPacking && item.state_loading !== null ? () => { } : handleGestureEvent(e, item.id)}
           activeOffsetX={[negativeOffset, positiveOffset]}
         >
           <View>
