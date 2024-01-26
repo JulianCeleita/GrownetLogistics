@@ -82,7 +82,7 @@ function ProductsVan({ route }) {
           <Text style={CustomerDayStyles.customerTitle}>
             {route.params.nameRoute}
           </Text>
-          {/* <View style={CustomerDayStyles.titleNA}>
+          <View style={CustomerDayStyles.titleNA}>
             <Text style={CustomerDayStyles.restaurantTypeTitle}>N/A</Text>
             <TouchableOpacity onPress={toggleButton} activeOpacity={1}>
               <View
@@ -95,12 +95,18 @@ function ProductsVan({ route }) {
                 <View
                   style={[
                     CustomerDayStyles.toggleDot,
+                    toggle && CustomerDayStyles.toggleDotOff,
+                  ]}
+                />
+                <View
+                  style={[
+                    CustomerDayStyles.toggleDot2,
                     toggle && CustomerDayStyles.toggleDotOn,
                   ]}
                 />
               </View>
             </TouchableOpacity>
-          </View> */}
+          </View>
         </View>
       </View>
       <KeyboardAwareScrollView
