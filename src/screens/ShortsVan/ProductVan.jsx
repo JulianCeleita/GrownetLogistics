@@ -78,7 +78,7 @@ function ProductsVan({ route }) {
   }
 
   const toggleButton = () => {
-    setToggle(previousToggle => !previousToggle)
+    setToggle((previousToggle) => !previousToggle)
   }
 
   return (
@@ -105,7 +105,7 @@ function ProductsVan({ route }) {
                 <View
                   style={[
                     CustomerDayStyles.toggleDot,
-                    toggle && CustomerDayStyles.toggleDotOn,
+                    toggle && CustomerDayStyles.toggleDotOff,
                   ]}
                 />
                 <View

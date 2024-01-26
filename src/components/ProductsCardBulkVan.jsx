@@ -84,6 +84,9 @@ export const ProductsCardBulkVan = ({
     updateProductsVan(item.id, null)
     handleSubmit(item.id, 0, '', 'N/A')
   }
+  if (item.name === 'Eggs') {
+    console.log(item.name, item.quantity, item.quantity_defitive, item.packed)
+  }
   const confirmRevertNA = () => {
     setShowModalRevertNA(false)
     setIsNA(false)
