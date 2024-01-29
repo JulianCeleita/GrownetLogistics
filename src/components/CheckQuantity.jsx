@@ -9,12 +9,14 @@ export const CheckQuantity = ({
   quantity_packing,
   quantity_loading,
   packed,
+
   stateLoading,
   statePacking,
 }) => {
   const [message, setMessage] = useState('')
 
   //console.log({ quantity, quantity_packing, quantity_loading })
+
 
   useEffect(() => {
     if (!packed) {
@@ -74,6 +76,7 @@ export const CheckQuantity = ({
             : '',
       )
     }
+
     if (
       (statePacking === 'PD' && quantity_packing && !quantity_loading) ||
       (statePacking === 'PD' && stateLoading === 'PD')
@@ -86,6 +89,7 @@ export const CheckQuantity = ({
             : '',
       )
     }
+
   }, [viewPacking, quantity_packing, quantity_loading, packed])
 
   return (

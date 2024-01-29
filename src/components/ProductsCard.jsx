@@ -43,6 +43,8 @@ export function ProductsCard({
 
   const [showModal2, setShowModal2] = useState(false)
 
+  const isNA = item.state_definitive === 'N/A'
+
   const confirm = () => {
     declareNotAvailable(item.id)
     setShowModal(false)
@@ -75,7 +77,11 @@ export function ProductsCard({
   //console.log('item', item)
   const handlePressAction = () => {
     if (!viewPacking) {
-      if (item.state_packing !== 'ND' && item.state_packing !== 'SHORT') {
+      if (
+        item.state_packing !== 'ND' &&
+        item.state_packing !== 'SHORT' &&
+        item.state_definitive === 'N/A'
+      ) {
         if (!leftStates[item.id] || rightStates[item.id]) {
           handlePress(item.id)
         }
@@ -88,25 +94,17 @@ export function ProductsCard({
       handleCardSubmit()
     }
   }
-  if (item.id === 2495) {
-    console.log(
-      item.name,
-      'Qty',
-      item.quantity,
-      'Qp: ',
-      item.quantity_packing,
-      'QL: ',
-      item.quantity_loading,
-      'packed: ',
-      item.packed,
-      'ST Loading: ',
-      item.state_loading,
-      'ST Packing: ',
-      item.state_packing,
-      'SFULL: ',
-      item.state_definitive,
-    )
-  }
+
+  const handleGestureEventWrapper = (e) => {
+    if (
+      item.state_definitive === 'N/A' ||
+      (viewPacking && item.state_loading !== null)
+    ) {
+      return () => {}
+    } else {
+      return handleGestureEvent(e, item.id)
+    }
+
 
   return (
     <View
@@ -121,18 +119,27 @@ export function ProductsCard({
       >
         <PanGestureHandler
           enabled={!addQuantity}
-          onGestureEvent={(e) =>
-            viewPacking && item.state_loading !== null
-              ? () => {}
-              : handleGestureEvent(e, item.id)
-          }
+
+          onGestureEvent={handleGestureEventWrapper}
+
           activeOffsetX={[negativeOffset, positiveOffset]}
         >
           <View>
             <View style={[ProductStyles.card, GlobalStyles.boxShadow]}>
               <View style={ProductStyles.productTittle}>
-                <Text style={ProductStyles.tittleCard}>
-                  {item.id}
+
+                <Text
+                  style={[
+                    ProductStyles.tittleCard,
+                    {
+                      textDecorationLine: isNA ? 'line-through' : 'none',
+                    },
+                  ]}
+                >
+
+              
+               
+
                   {item.name} {item.presentationName}
                 </Text>
                 <View style={ProductStyles.qty}>
@@ -164,6 +171,7 @@ export function ProductsCard({
                 colorPress={colorPress}
                 colorRight={colorRight}
                 colorLeft={colorLeft}
+                isNA={isNA}
               />
             </View>
 

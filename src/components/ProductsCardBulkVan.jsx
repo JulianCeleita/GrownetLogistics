@@ -28,10 +28,6 @@ export const ProductsCardBulkVan = ({
   const positiveOffset = 30
   const negativeOffset = -30
   const quantityPressed = item.quantity - item.cant_insert
-  let result1 = item.quantity_defitive
-    ? quantityPressed - item.quantity_defitive
-    : null
-  let result2 = item.packed ? quantityPressed - item.packed : null
 
   const handlePress = (itemId) => {
     if (isNA) {
@@ -120,7 +116,15 @@ export const ProductsCardBulkVan = ({
     return (
       <View style={[ProductStyles.card, GlobalStyles.boxShadow]}>
         <View style={ProductStyles.productTittle}>
-          <Text style={ProductStyles.tittleCard}>
+          <Text
+            style={[
+              ProductStyles.tittleCard,
+              {
+                color: colors.darkBlue,
+                textDecorationLine: isNA ? 'line-through' : 'none',
+              },
+            ]}
+          >
             {item.name} {item.presentationName}
           </Text>
           <Text style={ProductStyles.textCard}>
@@ -133,13 +137,18 @@ export const ProductsCardBulkVan = ({
             { backgroundColor: colors.bluePrimary },
           ]}
         >
-          <AntDesign name={'questioncircleo'} size={30} color="white" />
+          {isNA ? (
+            <View>
+              <Text style={ProductStyles.textNA}>N/A</Text>
+            </View>
+          ) : (
+            <AntDesign name={'questioncircleo'} size={30} color="white" />
+          )}
         </View>
       </View>
     )
   }
 
-  // console.log('item', item.packed)
   let message = ''
   let colorMessage = colors.default
 
@@ -170,6 +179,8 @@ export const ProductsCardBulkVan = ({
     colorMessage = colors.green
   }
   let missingStatus = message.includes('Missing')
+
+  console.log('item', item)
 
   return (
     <View>
