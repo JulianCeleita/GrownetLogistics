@@ -148,14 +148,18 @@ export const ProductsCardBulkVan = ({
     item.packed !== quantityPressed &&
     quantityPressed > item.packed
   ) {
-    message = `Missing ${(quantityPressed - item.packed).toFixed(1)}`
+    let diff = quantityPressed - item.packed
+    let diffString = diff % 1 === 0 ? diff : diff.toFixed(1)
+    message = `Missing ${diffString}`
     colorMessage = colors.danger
   } else if (
     item.packed &&
     item.packed !== quantityPressed &&
     quantityPressed < item.packed
   ) {
-    message = `Overweight ${(item.packed - quantityPressed).toFixed(1)}`
+    let diff = item.packed - quantityPressed
+    let diffString = diff % 1 === 0 ? diff : diff.toFixed(1)
+    message = `Overweight ${diffString}`
     colorMessage = colors.green
   } else if (
     !item.packed &&
@@ -163,12 +167,17 @@ export const ProductsCardBulkVan = ({
     item.quantity_defitive !== quantityPressed &&
     quantityPressed > item.quantity_defitive
   ) {
-    message = `Missing ${(quantityPressed - item.quantity_defitive).toFixed(1)}`
+    let diff = quantityPressed - item.quantity_defitive
+    let diffString = diff % 1 === 0 ? diff : diff.toFixed(1)
+    message = `Missing ${diffString}`
     colorMessage = colors.danger
   } else if (item.quantity_defitive > quantityPressed) {
-    message = `Overweight ${(item.quantity_defitive - quantityPressed).toFixed(1)}`
+    let diff = item.quantity_defitive - quantityPressed
+    let diffString = diff % 1 === 0 ? diff : diff.toFixed(1)
+    message = `Overweight ${diffString}`
     colorMessage = colors.green
   }
+
   let missingStatus = message.includes('Missing')
 
   console.log('item', item)
