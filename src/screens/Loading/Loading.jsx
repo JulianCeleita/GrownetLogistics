@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Platform,
   View,
+  ActivityIndicator,
 } from 'react-native'
 import { BtnGoBack } from '../../components/BtnGoBack'
 import CircleProgress from '../../components/CircleProgress'
@@ -23,7 +24,9 @@ const Loading = () => {
     setOrdersByDate,
     setSelectedRoute,
     setRoutesByDate,
-    selectedDate
+    selectedDate,
+    setRoutesByDateClean,
+    isLoading,
   } = useOrdersByDate()
   const { employeeToken } = useEmployeeStore()
 
@@ -36,6 +39,9 @@ const Loading = () => {
   useFocusEffect(
     useCallback(() => {
       setRoutesByDate(employeeToken, selectedDate)
+      return () => {
+        setRoutesByDateClean([])
+      }
     }, [],))
 
   return (
@@ -43,7 +49,7 @@ const Loading = () => {
       <ScrollView>
         <BtnGoBack color="white" top={Platform.OS === 'ios' ? 65 : 20} />
         <View style={[DeliveryStyles.tittle, GlobalStyles.boxShadow, {
-          marginTop: Platform.OS === 'ios' ? 65 : 30,
+          marginTop: Platform.OS === 'ios' ? 80 : 30,
         }]}>
           <Image
             style={DeliveryStyles.imageTittle}
@@ -57,21 +63,36 @@ const Loading = () => {
           style={DeliveryStyles.packing}
         />
 
-        <View style={DeliveryStyles.delivery}>
-          {routesByDate.map((order) => (
-            <TouchableOpacity
-              style={[
-                DeliveryStyles.card,
-                { marginTop: Platform.OS === 'ios' ? 20 : 30 },
-              ]}
-              onPress={() => handleRoutePress(order.nameRoute)}
-              key={order.nameRoute}
-            >
-              <CircleProgress percentage={order.percentage_loading} />
-              <Text style={DeliveryStyles.tittleRoute}>{order.nameRoute}</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
+        {!isLoading ? (
+          <View style={DeliveryStyles.delivery}>
+            {routesByDate.map((order) => (
+              <TouchableOpacity
+                style={[
+                  DeliveryStyles.card,
+                  { marginTop: Platform.OS === 'ios' ? 20 : 30 },
+                ]}
+                onPress={() => handleRoutePress(order.nameRoute)}
+                key={order.nameRoute}
+              >
+                <CircleProgress percentage={order.percentage_loading} />
+                <Text style={DeliveryStyles.tittleRoute}>{order.nameRoute}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        ) : (
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              paddingTop: 40,
+            }}
+          >
+            <ActivityIndicator size="large" color="#0000ff" />
+          </View>
+        )}
+
+
       </ScrollView>
     </View>
   )

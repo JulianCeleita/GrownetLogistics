@@ -57,21 +57,25 @@ function ProductsVan({ route }) {
     setFetchShortVanProducts(employeeToken, dataVan, toggle)
   }, [toggle])
 
-  const updateProductsVan = (itemId, quantity) => {
+  const updateProductsVan = (itemId, quantity = null, state = null) => {
     const newProducts = restaurantData.map((itemProd) => {
       return {
         ...itemProd,
-        products: itemProd.products.map((product) => {
-          if (product.id === itemId) {
-            return {
-              ...product,
-              packed: quantity,
-              quantity_defitive:
-                quantity === null ? null : product.quantity_defitive,
+        products: itemProd.products
+          .map((product) => {
+            if (product.id === itemId) {
+              return {
+                ...product,
+                packed: quantity,
+                state_definitive: state ? state : null,
+                quantity_defitive: quantity === null
+                  ? null
+                  : product.quantity_defitive,
+              }
             }
-          }
-          return product
-        }),
+            return product
+          })
+          .filter(product => !(product.state_definitive === "N/A")),
       }
     })
     setRestaurantData(newProducts)
