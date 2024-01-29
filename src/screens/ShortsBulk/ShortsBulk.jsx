@@ -38,7 +38,7 @@ function ShortsBulk() {
             DeliveryStyles.tittle,
             GlobalStyles.boxShadow,
             {
-              marginTop: Platform.OS === 'ios' ? 65 : 30,
+              marginTop: Platform.OS === 'ios' ? 80 : 30,
             },
           ]}
         >
