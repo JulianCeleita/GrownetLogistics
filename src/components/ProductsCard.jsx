@@ -72,7 +72,7 @@ export function ProductsCard({
     setSelectedProduct(null)
   }
 
-  // console.log('item', item)
+  //console.log('item', item)
   const handlePressAction = () => {
     if (!viewPacking) {
       if (item.state_packing !== 'ND' && item.state_packing !== 'SHORT') {
@@ -88,6 +88,26 @@ export function ProductsCard({
       handleCardSubmit()
     }
   }
+  if (item.id === 2495) {
+    console.log(
+      item.name,
+      'Qty',
+      item.quantity,
+      'Qp: ',
+      item.quantity_packing,
+      'QL: ',
+      item.quantity_loading,
+      'packed: ',
+      item.packed,
+      'ST Loading: ',
+      item.state_loading,
+      'ST Packing: ',
+      item.state_packing,
+      'SFULL: ',
+      item.state_definitive,
+    )
+  }
+
   return (
     <View
       style={{
@@ -101,13 +121,18 @@ export function ProductsCard({
       >
         <PanGestureHandler
           enabled={!addQuantity}
-          onGestureEvent={(e) => viewPacking && item.state_loading !== null ? () => { } : handleGestureEvent(e, item.id)}
+          onGestureEvent={(e) =>
+            viewPacking && item.state_loading !== null
+              ? () => {}
+              : handleGestureEvent(e, item.id)
+          }
           activeOffsetX={[negativeOffset, positiveOffset]}
         >
           <View>
             <View style={[ProductStyles.card, GlobalStyles.boxShadow]}>
               <View style={ProductStyles.productTittle}>
                 <Text style={ProductStyles.tittleCard}>
+                  {item.id}
                   {item.name} {item.presentationName}
                 </Text>
                 <View style={ProductStyles.qty}>
@@ -122,6 +147,8 @@ export function ProductsCard({
                     quantity_packing={item.quantity_packing}
                     quantity_loading={item.quantity_loading}
                     packed={item.packed}
+                    stateLoading={item.state_loading}
+                    statePacking={item.state_packing}
                   />
                 </View>
               </View>
