@@ -76,12 +76,11 @@ export function ProductsCard({
 
   //console.log('item', item)
   const handlePressAction = () => {
+    if (item.state_definitive === 'N/A') {
+      return () => {}
+    }
     if (!viewPacking) {
-      if (
-        item.state_packing !== 'ND' &&
-        item.state_packing !== 'SHORT' &&
-        item.state_definitive === 'N/A'
-      ) {
+      if (item.state_packing !== 'ND' && item.state_packing !== 'SHORT') {
         if (!leftStates[item.id] || rightStates[item.id]) {
           handlePress(item.id)
         }
@@ -105,6 +104,7 @@ export function ProductsCard({
       return handleGestureEvent(e, item.id)
     }
   }
+
   return (
     <View
       style={{

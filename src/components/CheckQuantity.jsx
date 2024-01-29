@@ -9,7 +9,6 @@ export const CheckQuantity = ({
   quantity_packing,
   quantity_loading,
   packed,
-
   stateLoading,
   statePacking,
 }) => {
@@ -98,6 +97,9 @@ export const CheckQuantity = ({
             ? `Overweight ${(quantity_packing - quantity) % 1 === 0 ? quantity_packing - quantity : (quantity_packing - quantity).toFixed(1)}`
             : '',
       )
+    }
+    if (packed === 0) {
+      setMessage('')
     }
   }, [viewPacking, quantity_packing, quantity_loading, packed])
 
