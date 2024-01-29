@@ -42,8 +42,8 @@ function ProductsLoading({ route }) {
   const filteredData =
     productsLoading && productsLoading.data
       ? productsLoading.data.filter((item) =>
-          item.name.toLowerCase().includes(searchPhrase.toLowerCase()),
-        )
+        item.name.toLowerCase().includes(searchPhrase.toLowerCase()),
+      )
       : []
 
   useFocusEffect(
@@ -54,6 +54,15 @@ function ProductsLoading({ route }) {
       }
     }, [employeeToken, selectedOrderL]),
   )
+
+  const groupedProducts = filteredData.reduce((grouped, product) => {
+    const key = product.presentationType
+    if (!grouped[key]) {
+      grouped[key] = []
+    }
+    grouped[key].push(product)
+    return grouped
+  }, {});
 
   return (
     <SafeAreaView style={ProductStyles.products}>
@@ -97,21 +106,12 @@ function ProductsLoading({ route }) {
           {productsLoading ? (
             filteredData.length > 0 ? (
               <View style={ProductStyles.cardsProducts}>
-                {Object.entries(
-                  productsLoading.data.reduce((grouped, product) => {
-                    const key = product.presentationType
-                    if (!grouped[key]) {
-                      grouped[key] = []
-                    }
-                    grouped[key].push(product)
-                    return grouped
-                  }, {}),
-                ).map(([group, products]) => (
+                {Object.entries(groupedProducts).map(([group, products]) => (
                   <View key={group}>
                     <Text style={CustomerDayStyles.restaurantTypeTitle}>
                       {group}
                     </Text>
-                    {filteredData.map((product) => (
+                    {products.map((product) => (
                       <ProductsCard
                         key={product.id}
                         item={product}
@@ -120,8 +120,6 @@ function ProductsLoading({ route }) {
                         colorLeft={colors.danger}
                         products={productsLoading}
                         setProducts={setLoadingProducts}
-                        handleSubmit={handleSubmit}
-                        error={error}
                       />
                     ))}
                   </View>

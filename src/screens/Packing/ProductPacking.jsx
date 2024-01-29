@@ -41,8 +41,8 @@ function ProductsPacking({ route }) {
   const filteredData =
     productsPacking && productsPacking.data
       ? productsPacking.data.filter((item) =>
-          item.name.toLowerCase().includes(searchPhrase.toLowerCase()),
-        )
+        item.name.toLowerCase().includes(searchPhrase.toLowerCase()),
+      )
       : []
 
   useFocusEffect(
@@ -53,6 +53,15 @@ function ProductsPacking({ route }) {
       }
     }, [employeeToken, selectedOrder]),
   )
+
+  const groupedProducts = filteredData.reduce((grouped, product) => {
+    const key = product.presentationType
+    if (!grouped[key]) {
+      grouped[key] = []
+    }
+    grouped[key].push(product)
+    return grouped
+  }, {});
 
   return (
     <SafeAreaView style={ProductStyles.products}>
@@ -96,21 +105,12 @@ function ProductsPacking({ route }) {
           {productsPacking ? (
             filteredData.length > 0 ? (
               <View style={ProductStyles.cardsProducts}>
-                {Object.entries(
-                  productsPacking.data.reduce((grouped, product) => {
-                    const key = product.presentationType
-                    if (!grouped[key]) {
-                      grouped[key] = []
-                    }
-                    grouped[key].push(product)
-                    return grouped
-                  }, {}),
-                ).map(([group, products]) => (
+                {Object.entries(groupedProducts).map(([group, products]) => (
                   <View key={group}>
                     <Text style={CustomerDayStyles.restaurantTypeTitle}>
                       {group}
                     </Text>
-                    {filteredData.map((product) => (
+                    {products.map((product) => (
                       <ProductsCard
                         key={product.id}
                         item={product}
@@ -119,9 +119,6 @@ function ProductsPacking({ route }) {
                         colorLeft={colors.danger}
                         products={productsPacking}
                         setProducts={setProductsPacking}
-                        handleSubmit={handleSubmit}
-                        viewPacking
-                        error={error}
                       />
                     ))}
                   </View>
