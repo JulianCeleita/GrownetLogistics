@@ -143,21 +143,23 @@ function ProductsVan({ route }) {
           ) : (
             <View>
               {restaurantData.map((restaurant) => (
-                <View key={restaurant.customerName}>
-                  <Text style={[CustomerDayStyles.restaurantTypeTitle]}>
-                    {restaurant.customerName}
-                  </Text>
-                  <View>
-                    {restaurant.products.map((product, index) => (
-                      <ProductsCardBulkVan
-                        key={index}
-                        item={product}
-                        handleSubmit={handleSubmit}
-                        updateProductsVan={updateProductsVan}
-                      />
-                    ))}
+                restaurant.products.length > 0 && (
+                  <View key={restaurant.customerName}>
+                    <Text style={[CustomerDayStyles.restaurantTypeTitle]}>
+                      {restaurant.customerName}
+                    </Text>
+                    <View>
+                      {restaurant.products.map((product, index) => (
+                        <ProductsCardBulkVan
+                          key={index}
+                          item={product}
+                          handleSubmit={handleSubmit}
+                          updateProductsVan={updateProductsVan}
+                        />
+                      ))}
+                    </View>
                   </View>
-                </View>
+                )
               ))}
             </View>
           )}
