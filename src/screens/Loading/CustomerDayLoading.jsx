@@ -49,15 +49,18 @@ function CustomerDayLoading({ route }) {
     <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
       <ScrollView stickyHeaderIndices={[0]}>
         <View>
-          <BtnGoBack color={colors.darkBlue} />
           {search ? (
-            <ProductSearcher
-              setSearch={setSearch}
-              searchPhrase={searchPhrase}
-              setSearchPhrase={setSearchPhrase}
-            />
+            <View>
+              <BtnGoBack color={colors.darkBlue} top={30} />
+              <ProductSearcher
+                setSearch={setSearch}
+                searchPhrase={searchPhrase}
+                setSearchPhrase={setSearchPhrase}
+              />
+            </View>
           ) : (
             <View style={CustomerDayStyles.title2}>
+              <BtnGoBack color={colors.darkBlue} />
               <Text style={CustomerDayStyles.customerTitle}>
                 {route.params.nameRoute}
               </Text>

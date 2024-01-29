@@ -82,8 +82,8 @@ export const CheckStatusCard = ({
     }
 
     if (
-      quantity < quantity_packing ||
-      quantity < quantity_loading ||
+      (stateLoading != null && quantity < quantity_packing) ||
+      (stateLoading != null && quantity < quantity_loading) ||
       quantity < packed
     ) {
       setColorCheck(colorPress)
