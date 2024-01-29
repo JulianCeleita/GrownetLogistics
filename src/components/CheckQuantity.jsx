@@ -9,8 +9,14 @@ export const CheckQuantity = ({
   quantity_packing,
   quantity_loading,
   packed,
+
+  stateLoading,
+  statePacking,
 }) => {
   const [message, setMessage] = useState('')
+
+  //console.log({ quantity, quantity_packing, quantity_loading })
+
 
   useEffect(() => {
     if (!packed) {
@@ -70,6 +76,20 @@ export const CheckQuantity = ({
             : '',
       )
     }
+
+    if (
+      (statePacking === 'PD' && quantity_packing && !quantity_loading) ||
+      (statePacking === 'PD' && stateLoading === 'PD')
+    ) {
+      setMessage(
+        quantity > quantity_packing
+          ? `Missing ${quantity - quantity_packing}`
+          : quantity < quantity_packing
+            ? `Overweight ${quantity_packing - quantity}`
+            : '',
+      )
+    }
+
   }, [viewPacking, quantity_packing, quantity_loading, packed])
 
   return (

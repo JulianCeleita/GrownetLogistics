@@ -74,7 +74,7 @@ export function ProductsCard({
     setSelectedProduct(null)
   }
 
-  // console.log('item', item)
+  //console.log('item', item)
   const handlePressAction = () => {
     if (!viewPacking) {
       if (
@@ -94,6 +94,7 @@ export function ProductsCard({
       handleCardSubmit()
     }
   }
+
   const handleGestureEventWrapper = (e) => {
     if (
       item.state_definitive === 'N/A' ||
@@ -103,7 +104,7 @@ export function ProductsCard({
     } else {
       return handleGestureEvent(e, item.id)
     }
-  }
+
 
   return (
     <View
@@ -118,12 +119,15 @@ export function ProductsCard({
       >
         <PanGestureHandler
           enabled={!addQuantity}
+
           onGestureEvent={handleGestureEventWrapper}
+
           activeOffsetX={[negativeOffset, positiveOffset]}
         >
           <View>
             <View style={[ProductStyles.card, GlobalStyles.boxShadow]}>
               <View style={ProductStyles.productTittle}>
+
                 <Text
                   style={[
                     ProductStyles.tittleCard,
@@ -132,6 +136,10 @@ export function ProductsCard({
                     },
                   ]}
                 >
+
+              
+               
+
                   {item.name} {item.presentationName}
                 </Text>
                 <View style={ProductStyles.qty}>
@@ -146,6 +154,8 @@ export function ProductsCard({
                     quantity_packing={item.quantity_packing}
                     quantity_loading={item.quantity_loading}
                     packed={item.packed}
+                    stateLoading={item.state_loading}
+                    statePacking={item.state_packing}
                   />
                 </View>
               </View>
