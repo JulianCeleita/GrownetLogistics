@@ -70,14 +70,13 @@ export const ProductsCardBulkVan = ({
     setIsPressed(false)
     setIsNA(false)
     setShowModal(false)
-    updateProductsVan(item.id, null)
+    updateProductsVan(item.id)
     handleSubmit(item.id, 0, '', 'SHORT')
   }
 
   const confirmNA = () => {
     setShowModalNA(false)
-    setIsNA(true)
-    updateProductsVan(item.id, null)
+    updateProductsVan(item.id, null, 'N/A')
     handleSubmit(item.id, 0, '', 'N/A')
   }
   if (item.name === 'Eggs') {
@@ -103,14 +102,6 @@ export const ProductsCardBulkVan = ({
       setIsNA(true)
     }
   }, [])
-
-  // if (item.id === selectedItem) {
-  //   console.log('----------------------------------------------------')
-  //   console.log('name', item.name)
-  //   console.log('quantityPressed', quantityPressed)
-  //   console.log('packed', item.packed)
-  //   console.log('quantity_defitive', item.quantity_defitive)
-  // }
 
   if (viewBulk) {
     return (
