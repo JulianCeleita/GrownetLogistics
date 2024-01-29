@@ -104,8 +104,7 @@ export function ProductsCard({
     } else {
       return handleGestureEvent(e, item.id)
     }
-
-
+  }
   return (
     <View
       style={{
@@ -119,15 +118,12 @@ export function ProductsCard({
       >
         <PanGestureHandler
           enabled={!addQuantity}
-
           onGestureEvent={handleGestureEventWrapper}
-
           activeOffsetX={[negativeOffset, positiveOffset]}
         >
           <View>
             <View style={[ProductStyles.card, GlobalStyles.boxShadow]}>
               <View style={ProductStyles.productTittle}>
-
                 <Text
                   style={[
                     ProductStyles.tittleCard,
@@ -136,10 +132,6 @@ export function ProductsCard({
                     },
                   ]}
                 >
-
-              
-               
-
                   {item.name} {item.presentationName}
                 </Text>
                 <View style={ProductStyles.qty}>
