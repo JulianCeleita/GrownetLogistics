@@ -17,10 +17,10 @@ export const CheckStatusCardVan = ({
   useEffect(() => {
     if (missingStatus) {
       setColorCheck(colors.danger)
-      setIconCheck('minuscircleo')
+      setIconCheck('arrowright')
     } else if (isNA) {
       setColorCheck(colors.bluePrimary)
-      setIconCheck('minuscircleo')
+      setIconCheck('arrowright')
     } else if (isPressed || right) {
       setColorCheck(colors.bluePrimary)
       setIconCheck('checkcircleo')
@@ -30,14 +30,14 @@ export const CheckStatusCardVan = ({
         setIconCheck('checkcircleo')
       } else if (item.state_definitive === 'SHORT') {
         setColorCheck(colors.danger)
-        setIconCheck('minuscircleo')
+        setIconCheck('closecircleo')
       } else if (!isNA) {
         setColorCheck(colors.gray)
         setIconCheck('questioncircleo')
       }
     } else if (left) {
       setColorCheck(colors.danger)
-      setIconCheck('minuscircleo')
+      setIconCheck('closecircleo')
     } else {
       setColorCheck(colors.gray)
       setIconCheck('questioncircleo')

@@ -144,7 +144,8 @@ export const SearchStyles = StyleSheet.create({
     borderRadius: 40,
     marginTop: 20,
     backgroundColor: '#f2f2f2',
-    width: '80%',
+    marginLeft: 30,
+    width: '74%',
   },
 
   BgInput: {

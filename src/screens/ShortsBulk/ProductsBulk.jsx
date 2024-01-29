@@ -47,7 +47,6 @@ function ProductsBulk({ route }) {
       />
       <ScrollView stickyHeaderIndices={[0]}>
         <View style={CustomerDayStyles.title2}>
-
           <Text style={CustomerDayStyles.customerTitle}>
             {route.params.nameRoute}
           </Text>

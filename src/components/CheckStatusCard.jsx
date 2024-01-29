@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { ProductStyles } from '../styles/ProductStyles'
-import { View } from 'react-native'
+import { Text, View } from 'react-native'
 import { colors } from '../styles/GlobalStyles'
 import { AntDesign } from '@expo/vector-icons'
 
@@ -17,6 +17,11 @@ export const CheckStatusCard = ({
   colorLeft,
   declareNotAvailable,
   handleSubmit,
+  quantity,
+  quantity_packing,
+  quantity_loading,
+  packed,
+  isNA,
 }) => {
   const [colorCheck, setColorCheck] = useState(colors.gray)
   const [iconCheck, setIconCheck] = useState('questioncircleo')
@@ -42,7 +47,6 @@ export const CheckStatusCard = ({
             setIconCheck('checkcircleo')
           } else if (statePacking === 'ND' || statePacking === 'PD') {
             setColorCheck(colorRight)
-            console.log('entro aqui oacking')
             setIconCheck('arrowright')
           } else if (statePacking === 'SHORT') {
             setColorCheck(colorLeft)
@@ -76,11 +80,33 @@ export const CheckStatusCard = ({
         setIconCheck('closecircleo')
       }
     }
+
+    if (
+      (stateLoading != null && quantity < quantity_packing) ||
+      (stateLoading != null && quantity < quantity_loading) ||
+      quantity < packed
+    ) {
+      setColorCheck(colorPress)
+      setIconCheck('checkcircleo')
+    }
   }, [statePacking, pressedStates, rightStates, leftStates])
 
+  let backgroundColorValue = isNA ? colors.bluePrimary : colorCheck
+
   return (
-    <View style={[ProductStyles.checkBox, { backgroundColor: colorCheck }]}>
-      <AntDesign name={iconCheck} size={30} color="white" />
+    <View
+      style={[
+        ProductStyles.checkBox,
+        { backgroundColor: backgroundColorValue },
+      ]}
+    >
+      {isNA ? (
+        <View>
+          <Text style={ProductStyles.textNA}>N/A</Text>
+        </View>
+      ) : (
+        <AntDesign name={iconCheck} size={30} color="white" />
+      )}
     </View>
   )
 }

@@ -107,7 +107,15 @@ export const ProductsCardBulkVan = ({
     return (
       <View style={[ProductStyles.card, GlobalStyles.boxShadow]}>
         <View style={ProductStyles.productTittle}>
-          <Text style={ProductStyles.tittleCard}>
+          <Text
+            style={[
+              ProductStyles.tittleCard,
+              {
+                color: colors.darkBlue,
+                textDecorationLine: isNA ? 'line-through' : 'none',
+              },
+            ]}
+          >
             {item.name} {item.presentationName}
           </Text>
           <Text style={ProductStyles.textCard}>
@@ -120,13 +128,18 @@ export const ProductsCardBulkVan = ({
             { backgroundColor: colors.bluePrimary },
           ]}
         >
-          <AntDesign name={'questioncircleo'} size={30} color="white" />
+          {isNA ? (
+            <View>
+              <Text style={ProductStyles.textNA}>N/A</Text>
+            </View>
+          ) : (
+            <AntDesign name={'questioncircleo'} size={30} color="white" />
+          )}
         </View>
       </View>
     )
   }
 
-  // console.log('item', item.packed)
   let message = ''
   let colorMessage = colors.default
 
@@ -135,14 +148,18 @@ export const ProductsCardBulkVan = ({
     item.packed !== quantityPressed &&
     quantityPressed > item.packed
   ) {
-    message = `Missing ${quantityPressed - item.packed}`
+    let diff = quantityPressed - item.packed
+    let diffString = diff % 1 === 0 ? diff : diff.toFixed(1)
+    message = `Missing ${diffString}`
     colorMessage = colors.danger
   } else if (
     item.packed &&
     item.packed !== quantityPressed &&
     quantityPressed < item.packed
   ) {
-    message = `Overweight ${item.packed - quantityPressed}`
+    let diff = item.packed - quantityPressed
+    let diffString = diff % 1 === 0 ? diff : diff.toFixed(1)
+    message = `Overweight ${diffString}`
     colorMessage = colors.green
   } else if (
     !item.packed &&
@@ -150,13 +167,20 @@ export const ProductsCardBulkVan = ({
     item.quantity_defitive !== quantityPressed &&
     quantityPressed > item.quantity_defitive
   ) {
-    message = `Missing ${quantityPressed - item.quantity_defitive}`
+    let diff = quantityPressed - item.quantity_defitive
+    let diffString = diff % 1 === 0 ? diff : diff.toFixed(1)
+    message = `Missing ${diffString}`
     colorMessage = colors.danger
   } else if (item.quantity_defitive > quantityPressed) {
-    message = `Overweight ${item.quantity_defitive - quantityPressed}`
+    let diff = item.quantity_defitive - quantityPressed
+    let diffString = diff % 1 === 0 ? diff : diff.toFixed(1)
+    message = `Overweight ${diffString}`
     colorMessage = colors.green
   }
+
   let missingStatus = message.includes('Missing')
+
+  console.log('item', item)
 
   return (
     <View>
