@@ -36,6 +36,7 @@ export const CustomerDayStyles = StyleSheet.create({
   icon: {
     position: 'absolute',
     right: 18,
+    top: 5,
   },
   cardsCustomers: {
     flex: 1,

@@ -51,7 +51,7 @@ function CustomerDayLoading({ route }) {
         <View>
           {search ? (
             <View>
-              <BtnGoBack color={colors.darkBlue} top={30} />
+              <BtnGoBack color={colors.darkBlue} top={20} />
               <ProductSearcher
                 setSearch={setSearch}
                 searchPhrase={searchPhrase}

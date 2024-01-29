@@ -7,6 +7,7 @@ import { colors } from '../styles/GlobalStyles'
 function ProductSearcher({ setSearch, searchPhrase, setSearchPhrase }) {
   const handleClose = () => {
     setSearch(false)
+    setSearchPhrase('')
   }
   return (
     <View style={SearchStyles.view}>

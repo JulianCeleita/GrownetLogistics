@@ -142,10 +142,10 @@ export const SearchStyles = StyleSheet.create({
     flexDirection: 'row',
     height: 50,
     borderRadius: 40,
-    marginTop: 20,
+    marginTop: 10,
     backgroundColor: '#f2f2f2',
-    marginLeft: 30,
-    width: '74%',
+    marginLeft: 35,
+    width: '78%',
   },
 
   BgInput: {
@@ -164,6 +164,6 @@ export const SearchStyles = StyleSheet.create({
   },
   iconClose: {
     marginLeft: 5,
-    marginTop: 20,
+    marginTop: 10,
   },
 })
