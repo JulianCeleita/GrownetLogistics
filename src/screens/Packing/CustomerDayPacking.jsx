@@ -23,7 +23,8 @@ function CustomerDayPacking({ route }) {
   const [search, setSearch] = useState(false)
 
   const filteredData = ordersByDate.filter((order) => {
-    return order.accountName.toLowerCase().includes(searchPhrase.toLowerCase())
+    return order.accountName.toLowerCase().includes(searchPhrase.toLowerCase()) ||
+      order.orders_reference.toString().trim().includes(searchPhrase.toString().trim())
   })
   const handleSearch = () => {
     setSearch(true)
