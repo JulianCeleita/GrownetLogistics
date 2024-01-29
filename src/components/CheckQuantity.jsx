@@ -26,7 +26,7 @@ export const CheckQuantity = ({
             quantity > quantity_loading
               ? `Missing ${diffString}`
               : quantity < quantity_loading
-                ? `Overweight ${(quantity_loading - quantity).toFixed(1)}`
+                ? `Overweight ${(quantity_loading - quantity) % 1 === 0 ? quantity_loading - quantity : (quantity_loading - quantity).toFixed(1)}`
                 : '',
           )
         } else if (!quantity_packing && quantity_loading) {
@@ -36,7 +36,7 @@ export const CheckQuantity = ({
             quantity > quantity_loading
               ? `Missing ${diffString}`
               : quantity < quantity_loading
-                ? `Overweight ${(quantity_loading - quantity).toFixed(1)}`
+                ? `Overweight ${(quantity_loading - quantity) % 1 === 0 ? quantity_loading - quantity : (quantity_loading - quantity).toFixed(1)}`
                 : '',
           )
         } else if (!quantity_loading && quantity_packing) {
@@ -46,7 +46,7 @@ export const CheckQuantity = ({
             quantity > quantity_packing
               ? `Missing ${diffString}`
               : quantity < quantity_packing
-                ? `Overweight ${(quantity_packing - quantity).toFixed(1)}`
+                ? `Overweight ${(quantity_packing - quantity) % 1 === 0 ? quantity_packing - quantity : (quantity_packing - quantity).toFixed(1)}`
                 : '',
           )
         }
@@ -58,7 +58,7 @@ export const CheckQuantity = ({
             quantity > quantity_packing
               ? `Missing ${diffString}`
               : quantity < quantity_packing
-                ? `Overweight ${(quantity_packing - quantity).toFixed(1)}`
+                ? `Overweight ${(quantity_packing - quantity) % 1 === 0 ? quantity_packing - quantity : (quantity_packing - quantity).toFixed(1)}`
                 : '',
           )
         } else if (quantity_loading && quantity_packing) {
@@ -68,7 +68,7 @@ export const CheckQuantity = ({
             quantity > quantity_loading
               ? `Missing ${diffString}`
               : quantity < quantity_loading
-                ? `Overweight ${(quantity_loading - quantity).toFixed(1)}`
+                ? `Overweight ${(quantity_loading - quantity) % 1 === 0 ? quantity_loading - quantity : (quantity_loading - quantity).toFixed(1)}`
                 : '',
           )
         }
@@ -80,7 +80,7 @@ export const CheckQuantity = ({
         quantity > packed
           ? `Missing ${diffString}`
           : quantity < packed
-            ? `Overweight ${(packed - quantity).toFixed(1)}`
+            ? `Overweight ${(packed - quantity) % 1 === 0 ? packed - quantity : (packed - quantity).toFixed(1)}`
             : '',
       )
     }
@@ -95,7 +95,7 @@ export const CheckQuantity = ({
         quantity > quantity_packing
           ? `Missing ${diffString}`
           : quantity < quantity_packing
-            ? `Overweight ${(quantity_packing - quantity).toFixed(1)}`
+            ? `Overweight ${(quantity_packing - quantity) % 1 === 0 ? quantity_packing - quantity : (quantity_packing - quantity).toFixed(1)}`
             : '',
       )
     }
