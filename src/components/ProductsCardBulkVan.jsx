@@ -28,10 +28,6 @@ export const ProductsCardBulkVan = ({
   const positiveOffset = 30
   const negativeOffset = -30
   const quantityPressed = item.quantity - item.cant_insert
-  let result1 = item.quantity_defitive
-    ? quantityPressed - item.quantity_defitive
-    : null
-  let result2 = item.packed ? quantityPressed - item.packed : null
 
   const handlePress = (itemId) => {
     if (isNA) {
@@ -74,14 +70,13 @@ export const ProductsCardBulkVan = ({
     setIsPressed(false)
     setIsNA(false)
     setShowModal(false)
-    updateProductsVan(item.id, null)
+    updateProductsVan(item.id)
     handleSubmit(item.id, 0, '', 'SHORT')
   }
 
   const confirmNA = () => {
     setShowModalNA(false)
-    setIsNA(true)
-    updateProductsVan(item.id, null)
+    updateProductsVan(item.id, null, 'N/A')
     handleSubmit(item.id, 0, '', 'N/A')
   }
   if (item.name === 'Eggs') {
@@ -108,19 +103,19 @@ export const ProductsCardBulkVan = ({
     }
   }, [])
 
-  // if (item.id === selectedItem) {
-  //   console.log('----------------------------------------------------')
-  //   console.log('name', item.name)
-  //   console.log('quantityPressed', quantityPressed)
-  //   console.log('packed', item.packed)
-  //   console.log('quantity_defitive', item.quantity_defitive)
-  // }
-
   if (viewBulk) {
     return (
       <View style={[ProductStyles.card, GlobalStyles.boxShadow]}>
         <View style={ProductStyles.productTittle}>
-          <Text style={ProductStyles.tittleCard}>
+          <Text
+            style={[
+              ProductStyles.tittleCard,
+              {
+                color: colors.darkBlue,
+                textDecorationLine: isNA ? 'line-through' : 'none',
+              },
+            ]}
+          >
             {item.name} {item.presentationName}
           </Text>
           <Text style={ProductStyles.textCard}>
@@ -133,13 +128,18 @@ export const ProductsCardBulkVan = ({
             { backgroundColor: colors.bluePrimary },
           ]}
         >
-          <AntDesign name={'questioncircleo'} size={30} color="white" />
+          {isNA ? (
+            <View>
+              <Text style={ProductStyles.textNA}>N/A</Text>
+            </View>
+          ) : (
+            <AntDesign name={'questioncircleo'} size={30} color="white" />
+          )}
         </View>
       </View>
     )
   }
 
-  // console.log('item', item.packed)
   let message = ''
   let colorMessage = colors.default
 
@@ -148,14 +148,14 @@ export const ProductsCardBulkVan = ({
     item.packed !== quantityPressed &&
     quantityPressed > item.packed
   ) {
-    message = `Missing ${quantityPressed - item.packed}`
+    message = `Missing ${(quantityPressed - item.packed).toFixed(1)}`
     colorMessage = colors.danger
   } else if (
     item.packed &&
     item.packed !== quantityPressed &&
     quantityPressed < item.packed
   ) {
-    message = `Overweight ${item.packed - quantityPressed}`
+    message = `Overweight ${(item.packed - quantityPressed).toFixed(1)}`
     colorMessage = colors.green
   } else if (
     !item.packed &&
@@ -163,13 +163,15 @@ export const ProductsCardBulkVan = ({
     item.quantity_defitive !== quantityPressed &&
     quantityPressed > item.quantity_defitive
   ) {
-    message = `Missing ${quantityPressed - item.quantity_defitive}`
+    message = `Missing ${(quantityPressed - item.quantity_defitive).toFixed(1)}`
     colorMessage = colors.danger
   } else if (item.quantity_defitive > quantityPressed) {
-    message = `Overweight ${item.quantity_defitive - quantityPressed}`
+    message = `Overweight ${(item.quantity_defitive - quantityPressed).toFixed(1)}`
     colorMessage = colors.green
   }
   let missingStatus = message.includes('Missing')
+
+  console.log('item', item)
 
   return (
     <View>

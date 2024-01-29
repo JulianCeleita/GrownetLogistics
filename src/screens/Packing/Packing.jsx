@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   View,
   SafeAreaView,
+  ActivityIndicator,
 } from 'react-native'
 import { BtnGoBack } from '../../components/BtnGoBack'
 import CircleProgress from '../../components/CircleProgress'
@@ -25,7 +26,9 @@ const Packing = () => {
     setOrdersByDate,
     setSelectedRoute,
     setRoutesByDate,
-    selectedDate
+    selectedDate,
+    setRoutesByDateClean,
+    isLoading
   } = useOrdersByDate()
   const { employeeToken } = useEmployeeStore()
   const handleRoutePress = (nameRoute) => {
@@ -37,6 +40,9 @@ const Packing = () => {
   useFocusEffect(
     useCallback(() => {
       setRoutesByDate(employeeToken, selectedDate)
+      return () => {
+        setRoutesByDateClean([])
+      }
     }, [],))
 
   return (
@@ -44,7 +50,7 @@ const Packing = () => {
       <ScrollView>
         <BtnGoBack color="white" top={Platform.OS === 'ios' ? 65 : 20} />
         <View style={[DeliveryStyles.tittle, GlobalStyles.boxShadow, {
-          marginTop: Platform.OS === 'ios' ? 65 : 30,
+          marginTop: Platform.OS === 'ios' ? 80 : 30,
         }]}>
           <Image
             style={DeliveryStyles.imageTittlePacking}
@@ -60,22 +66,35 @@ const Packing = () => {
             { height: Platform.OS === 'ios' ? 140 : 100 },
           ]}
         />
+        {!isLoading ? (
+          <View style={DeliveryStyles.delivery}>
+            {routesByDate.map((order) => (
+              <TouchableOpacity
+                style={[
+                  DeliveryStyles.card,
+                  { marginTop: Platform.OS === 'ios' ? 20 : 30 },
+                ]}
+                onPress={() => handleRoutePress(order.nameRoute)}
+                key={order.nameRoute}
+              >
+                <CircleProgress percentage={order.percentage_packing} />
+                <Text style={DeliveryStyles.tittleRoute}>{order.nameRoute}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        ) : (
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              paddingTop: 40,
+            }}
+          >
+            <ActivityIndicator size="large" color="#0000ff" />
+          </View>
+        )}
 
-        <View style={DeliveryStyles.delivery}>
-          {routesByDate.map((order) => (
-            <TouchableOpacity
-              style={[
-                DeliveryStyles.card,
-                { marginTop: Platform.OS === 'ios' ? 20 : 30 },
-              ]}
-              onPress={() => handleRoutePress(order.nameRoute)}
-              key={order.nameRoute}
-            >
-              <CircleProgress percentage={order.percentage_packing} />
-              <Text style={DeliveryStyles.tittleRoute}>{order.nameRoute}</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
       </ScrollView>
     </View>
   )

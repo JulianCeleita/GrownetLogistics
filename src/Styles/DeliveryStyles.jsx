@@ -62,6 +62,7 @@ export const DeliveryStyles = StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'center',
     height: '100%',
+    marginTop: 30,
   },
   card: {
     alignItems: 'center',

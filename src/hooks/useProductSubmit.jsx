@@ -30,9 +30,8 @@ export const useProductSubmit = (insert) => {
       data.quantity = parseInt(quantity);
 
     }
-    console.log('data', data)
+
     try {
-      console.log('data', data);
       const response = await mainAxios.post(insert, data, {
         headers: {
           Authorization: `Bearer ${employeeToken}`,
