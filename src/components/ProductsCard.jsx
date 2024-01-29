@@ -88,25 +88,6 @@ export function ProductsCard({
       handleCardSubmit()
     }
   }
-  if (item.id === 2495) {
-    console.log(
-      item.name,
-      'Qty',
-      item.quantity,
-      'Qp: ',
-      item.quantity_packing,
-      'QL: ',
-      item.quantity_loading,
-      'packed: ',
-      item.packed,
-      'ST Loading: ',
-      item.state_loading,
-      'ST Packing: ',
-      item.state_packing,
-      'SFULL: ',
-      item.state_definitive,
-    )
-  }
 
   return (
     <View
@@ -164,6 +145,10 @@ export function ProductsCard({
                 colorPress={colorPress}
                 colorRight={colorRight}
                 colorLeft={colorLeft}
+                quantity={item.quantity}
+                quantity_packing={item.quantity_packing}
+                quantity_loading={item.quantity_loading}
+                packed={item.packed}
               />
             </View>
 

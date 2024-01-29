@@ -17,6 +17,10 @@ export const CheckStatusCard = ({
   colorLeft,
   declareNotAvailable,
   handleSubmit,
+  quantity,
+  quantity_packing,
+  quantity_loading,
+  packed,
 }) => {
   const [colorCheck, setColorCheck] = useState(colors.gray)
   const [iconCheck, setIconCheck] = useState('questioncircleo')
@@ -42,7 +46,7 @@ export const CheckStatusCard = ({
             setIconCheck('checkcircleo')
           } else if (statePacking === 'ND' || statePacking === 'PD') {
             setColorCheck(colorRight)
-            console.log('entro aqui oacking')
+            //console.log('entro aqui oacking')
             setIconCheck('arrowright')
           } else if (statePacking === 'SHORT') {
             setColorCheck(colorLeft)
@@ -75,6 +79,15 @@ export const CheckStatusCard = ({
         setColorCheck(colorLeft)
         setIconCheck('closecircleo')
       }
+    }
+
+    if (
+      quantity < quantity_packing ||
+      quantity < quantity_loading ||
+      quantity < packed
+    ) {
+      setColorCheck(colorPress)
+      setIconCheck('checkcircleo')
     }
   }, [statePacking, pressedStates, rightStates, leftStates])
 
