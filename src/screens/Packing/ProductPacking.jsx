@@ -16,7 +16,7 @@ import useEmployeeStore from '../../store/useEmployeeStore'
 import { usePackingStore } from '../../store/usePackingStore'
 import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
 import { colors } from '../../styles/GlobalStyles'
-import { ProductStyles } from '../../styles/ProductStyles'
+import { ProductStyles, SearchStyles } from '../../styles/ProductStyles'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { useFocusEffect } from '@react-navigation/native'
 import ProductSearcher from '../../components/ProductSearch'
@@ -91,48 +91,61 @@ function ProductsPacking({ route }) {
       )}
       <KeyboardAwareScrollView enableOnAndroid extraScrollHeight={210}>
         <ScrollView>
-          {productsPacking ? (
-            <View style={ProductStyles.cardsProducts}>
-              {Object.entries(
-                productsPacking.data.reduce((grouped, product) => {
-                  const key = product.presentationType
-                  if (!grouped[key]) {
-                    grouped[key] = []
-                  }
-                  grouped[key].push(product)
-                  return grouped
-                }, {}),
-              ).map(([group, products]) => (
-                <View key={group}>
-                  <Text style={CustomerDayStyles.restaurantTypeTitle}>
-                    {group}
-                  </Text>
-                  {filteredData?.map((product) => (
-                    <ProductsCard
-                      key={product.id}
-                      item={product}
-                      colorPress={colors.orange}
-                      colorRight={colors.orange}
-                      colorLeft={colors.danger}
-                      products={productsPacking}
-                      setProducts={setProductsPacking}
-                      handleSubmit={handleSubmit}
-                      viewPacking
-                      error={error}
-                    />
-                  ))}
-                </View>
-              ))}
-            </View>
+          {filteredData.length > 0 ? (
+            productsPacking ? (
+              <View style={ProductStyles.cardsProducts}>
+                {Object.entries(
+                  productsPacking.data.reduce((grouped, product) => {
+                    const key = product.presentationType
+                    if (!grouped[key]) {
+                      grouped[key] = []
+                    }
+                    grouped[key].push(product)
+                    return grouped
+                  }, {}),
+                ).map(([group, products]) => (
+                  <View key={group}>
+                    <Text style={CustomerDayStyles.restaurantTypeTitle}>
+                      {group}
+                    </Text>
+                    {filteredData.map((product) => (
+                      <ProductsCard
+                        key={product.id}
+                        item={product}
+                        colorPress={colors.orange}
+                        colorRight={colors.orange}
+                        colorLeft={colors.danger}
+                        products={productsPacking}
+                        setProducts={setProductsPacking}
+                        handleSubmit={handleSubmit}
+                        viewPacking
+                        error={error}
+                      />
+                    ))}
+                  </View>
+                ))}
+              </View>
+            ) : (
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                <ActivityIndicator size="large" color="#0000ff" />
+              </View>
+            )
           ) : (
-            <View
-              style={{
-                flex: 1,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-            >
-              <ActivityIndicator size="large" color="#0000ff" />
+            <View style={SearchStyles.alertSearch}>
+              <Ionicons
+                name="alert-circle-outline"
+                size={180}
+                color={colors.gray}
+              />
+              <Text style={SearchStyles.textAlert}>
+                No products found, please search again
+              </Text>
             </View>
           )}
         </ScrollView>

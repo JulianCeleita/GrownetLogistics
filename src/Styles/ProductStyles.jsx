@@ -166,4 +166,13 @@ export const SearchStyles = StyleSheet.create({
     marginLeft: 5,
     marginTop: 10,
   },
+  alertSearch: {
+    alignItems: 'center',
+    marginTop: '20%',
+  },
+  textAlert: {
+    fontFamily: 'PoppinsRegular',
+    color: colors.gray,
+    fontSize: 15,
+  },
 })
