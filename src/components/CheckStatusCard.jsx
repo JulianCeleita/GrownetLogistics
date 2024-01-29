@@ -41,7 +41,7 @@ export const CheckStatusCard = ({
             setIconCheck('checkcircleo')
           } else if (statePacking === 'ND' || statePacking === 'PD') {
             setColorCheck(colorRight)
-            console.log('entro aqui oacking')
+
             setIconCheck('arrowright')
           } else if (statePacking === 'SHORT') {
             setColorCheck(colorLeft)

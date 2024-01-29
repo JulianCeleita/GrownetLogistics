@@ -157,14 +157,14 @@ export const ProductsCardBulkVan = ({
     item.packed !== quantityPressed &&
     quantityPressed > item.packed
   ) {
-    message = `Missing ${quantityPressed - item.packed}`
+    message = `Missing ${(quantityPressed - item.packed).toFixed(1)}`
     colorMessage = colors.danger
   } else if (
     item.packed &&
     item.packed !== quantityPressed &&
     quantityPressed < item.packed
   ) {
-    message = `Overweight ${item.packed - quantityPressed}`
+    message = `Overweight ${(item.packed - quantityPressed).toFixed(1)}`
     colorMessage = colors.green
   } else if (
     !item.packed &&
@@ -172,10 +172,10 @@ export const ProductsCardBulkVan = ({
     item.quantity_defitive !== quantityPressed &&
     quantityPressed > item.quantity_defitive
   ) {
-    message = `Missing ${quantityPressed - item.quantity_defitive}`
+    message = `Missing ${(quantityPressed - item.quantity_defitive).toFixed(1)}`
     colorMessage = colors.danger
   } else if (item.quantity_defitive > quantityPressed) {
-    message = `Overweight ${item.quantity_defitive - quantityPressed}`
+    message = `Overweight ${(item.quantity_defitive - quantityPressed).toFixed(1)}`
     colorMessage = colors.green
   }
   let missingStatus = message.includes('Missing')
