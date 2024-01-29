@@ -88,8 +88,9 @@ export function ProductsCard({
       handleCardSubmit()
     }
   }
-  if (item.id === 2493) {
+  if (item.id === 2495) {
     console.log(
+      item.name,
       'Qty',
       item.quantity,
       'Qp: ',
@@ -98,9 +99,9 @@ export function ProductsCard({
       item.quantity_loading,
       'packed: ',
       item.packed,
-      'SL: ',
+      'ST Loading: ',
       item.state_loading,
-      'SP: ',
+      'ST Packing: ',
       item.state_packing,
       'SFULL: ',
       item.state_definitive,

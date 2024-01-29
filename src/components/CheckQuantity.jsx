@@ -74,7 +74,10 @@ export const CheckQuantity = ({
             : '',
       )
     }
-    if (statePacking === 'PD' && quantity_packing && !quantity_loading) {
+    if (
+      (statePacking === 'PD' && quantity_packing && !quantity_loading) ||
+      (statePacking === 'PD' && stateLoading === 'PD')
+    ) {
       setMessage(
         quantity > quantity_packing
           ? `Missing ${quantity - quantity_packing}`
