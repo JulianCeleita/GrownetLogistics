@@ -91,8 +91,8 @@ function ProductsLoading({ route }) {
       )}
       <KeyboardAwareScrollView enableOnAndroid extraScrollHeight={210}>
         <ScrollView>
-          {filteredData.length > 0 ? (
-            productsLoading ? (
+          {productsLoading ? (
+            filteredData.length > 0 ? (
               <View style={ProductStyles.cardsProducts}>
                 {Object.entries(
                   productsLoading.data.reduce((grouped, product) => {
@@ -125,26 +125,26 @@ function ProductsLoading({ route }) {
                 ))}
               </View>
             ) : (
-              <View
-                style={{
-                  flex: 1,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-              >
-                <ActivityIndicator size="large" color="#0000ff" />
+              <View style={SearchStyles.alertSearch}>
+                <Ionicons
+                  name="alert-circle-outline"
+                  size={180}
+                  color={colors.gray}
+                />
+                <Text style={SearchStyles.textAlert}>
+                  No products found, please search again
+                </Text>
               </View>
             )
           ) : (
-            <View style={SearchStyles.alertSearch}>
-              <Ionicons
-                name="alert-circle-outline"
-                size={180}
-                color={colors.gray}
-              />
-              <Text style={SearchStyles.textAlert}>
-                No products found, please search again
-              </Text>
+            <View
+              style={{
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <ActivityIndicator size="large" color="#0000ff" />
             </View>
           )}
         </ScrollView>
