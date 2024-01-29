@@ -38,9 +38,12 @@ function ProductsLoading({ route }) {
   const handleSearch = () => {
     setSearch(true)
   }
+
   const filteredData =
     productsLoading && productsLoading.data
-      ? productsLoading.data.filter((item) => item.name.includes(searchPhrase))
+      ? productsLoading.data.filter((item) =>
+          item.name.toLowerCase().includes(searchPhrase.toLowerCase()),
+        )
       : []
 
   useFocusEffect(
