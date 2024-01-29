@@ -1,24 +1,34 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons'
-import { useNavigation } from '@react-navigation/native'
+import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { LinearGradient } from 'expo-linear-gradient'
-import React from 'react'
-import { ScrollView, Text, TouchableOpacity, View } from 'react-native'
-import { BtnGoBack } from '../../components/BtnGoBack'
-import CircleProgress from '../../components/CircleProgress'
-import useOrdersByDate from '../../store/useOrdersByDateStore'
-import { DeliveryStyles } from '../../styles/DeliveryStyles'
-import { GlobalStyles } from '../../styles/GlobalStyles'
+import React, { useCallback } from 'react'
+import { ActivityIndicator, ScrollView, Text, TouchableOpacity, View } from 'react-native'
 import Svg, {
   Circle,
-  Defs,
   ClipPath,
+  Defs,
   Image as SvgImage,
 } from 'react-native-svg'
-import { colors } from '../../styles/GlobalStyles'
+import { BtnGoBack } from '../../components/BtnGoBack'
+import useEmployeeStore from '../../store/useEmployeeStore'
+import useOrdersByDate from '../../store/useOrdersByDateStore'
+import { DeliveryStyles } from '../../styles/DeliveryStyles'
+import { GlobalStyles, colors } from '../../styles/GlobalStyles'
 
 function ShortsBulk() {
   const navigation = useNavigation()
-  const { routesByDate, setOrdersByDate, setSelectedRoute } = useOrdersByDate()
+  const {
+    routesByDate,
+    setOrdersByDate,
+    setSelectedRoute,
+    setRoutesByDate,
+    setRoutesByDateClean,
+    selectedDate,
+    isLoading,
+  } = useOrdersByDate()
+
+  const { employeeToken } = useEmployeeStore()
+
   const radius = 40
   const strokeWidth = 10
   const circumference = 2 * Math.PI * radius
@@ -28,6 +38,14 @@ function ShortsBulk() {
     setOrdersByDate(nameRoute, routesByDate)
     navigation.navigate('ProductsBulk', { nameRoute: nameRoute })
   }
+
+  useFocusEffect(
+    useCallback(() => {
+      setRoutesByDate(employeeToken, selectedDate)
+      return () => {
+        setRoutesByDateClean([])
+      }
+    }, [],))
 
   return (
     <View style={{ backgroundColor: 'white', height: '100%' }}>
@@ -48,63 +66,76 @@ function ShortsBulk() {
             size={45}
             color={'white'}
           />
-          <Text style={DeliveryStyles.textTittle}>Shorts Bulk</Text>
+          <Text style={DeliveryStyles.textTittle}>Preloading</Text>
         </View>
         <LinearGradient
           colors={['#00478C', '#026CD2']}
           style={DeliveryStyles.packing}
         />
 
-        <View style={DeliveryStyles.delivery}>
-          {routesByDate.map((order) => (
-            <TouchableOpacity
-              style={[
-                DeliveryStyles.card,
-                { marginTop: Platform.OS === 'ios' ? 20 : 30 },
-              ]}
-              onPress={() => handleRoutePress(order.nameRoute)}
-              key={order.nameRoute}
-            >
-              <Svg
-                style={DeliveryStyles.circle}
-                height={radius * 2}
-                width={radius * 2}
+        {!isLoading ? (
+          <View style={DeliveryStyles.delivery}>
+            {routesByDate.map((order) => (
+              <TouchableOpacity
+                style={[
+                  DeliveryStyles.card,
+                  { marginTop: Platform.OS === 'ios' ? 20 : 30 },
+                ]}
+                onPress={() => handleRoutePress(order.nameRoute)}
+                key={order.nameRoute}
               >
-                <Defs>
-                  <ClipPath id="clipCard">
-                    <Circle
-                      cx={radius}
-                      cy={radius}
-                      r={radius - strokeWidth / 2}
-                    />
-                  </ClipPath>
-                </Defs>
-                <SvgImage
-                  href={require('../../img/loading.png')}
-                  width={45}
-                  height={32}
-                  preserveAspectRatio="xMidYMid slice"
-                  clipPath="url(#clipCard)"
-                  x={18}
-                  y={22}
-                  r={20}
-                />
-                <Circle
-                  cx={radius}
-                  cy={radius}
-                  r={radius - strokeWidth / 2}
-                  fill="transparent"
-                  stroke={colors.green}
-                  strokeWidth={strokeWidth}
-                  strokeDasharray={`${circumference} ${circumference}`}
-                  strokeDashoffset={0}
-                />
-              </Svg>
+                <Svg
+                  style={DeliveryStyles.circle}
+                  height={radius * 2}
+                  width={radius * 2}
+                >
+                  <Defs>
+                    <ClipPath id="clipCard">
+                      <Circle
+                        cx={radius}
+                        cy={radius}
+                        r={radius - strokeWidth / 2}
+                      />
+                    </ClipPath>
+                  </Defs>
+                  <SvgImage
+                    href={require('../../img/loading.png')}
+                    width={45}
+                    height={32}
+                    preserveAspectRatio="xMidYMid slice"
+                    clipPath="url(#clipCard)"
+                    x={18}
+                    y={22}
+                    r={20}
+                  />
+                  <Circle
+                    cx={radius}
+                    cy={radius}
+                    r={radius - strokeWidth / 2}
+                    fill="transparent"
+                    stroke={colors.green}
+                    strokeWidth={strokeWidth}
+                    strokeDasharray={`${circumference} ${circumference}`}
+                    strokeDashoffset={0}
+                  />
+                </Svg>
 
-              <Text style={DeliveryStyles.tittleRoute}>{order.nameRoute}</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
+                <Text style={DeliveryStyles.tittleRoute}>{order.nameRoute}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        ) : (
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              paddingTop: 40,
+            }}
+          >
+            <ActivityIndicator size="large" color="#0000ff" />
+          </View>
+        )}
       </ScrollView>
     </View>
   )
