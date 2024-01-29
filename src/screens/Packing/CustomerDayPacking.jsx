@@ -13,6 +13,7 @@ import useOrdersByDate from '../../store/useOrdersByDateStore'
 import usePercentageStore from '../../store/usePercentageStore'
 import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
 import { colors } from '../../styles/GlobalStyles'
+import { SearchStyles } from '../../styles/ProductStyles'
 
 function CustomerDayPacking({ route }) {
   const { ordersByDate } = useOrdersByDate()
@@ -78,13 +79,24 @@ function CustomerDayPacking({ route }) {
           )}
         </View>
         <View style={CustomerDayStyles.cardsCustomers}>
-          {filteredData?.map((order, index) => {
-            return (
+          {filteredData.length > 0 ? (
+            filteredData.map((order, index) => (
               <View key={index}>
                 <CustomerCard customer={order} />
               </View>
-            )
-          })}
+            ))
+          ) : (
+            <View style={SearchStyles.alertSearch}>
+              <Ionicons
+                name="alert-circle-outline"
+                size={180}
+                color={colors.gray}
+              />
+              <Text style={SearchStyles.textAlert}>
+                No orders found, please search again
+              </Text>
+            </View>
+          )}
         </View>
       </ScrollView>
     </SafeAreaView>
