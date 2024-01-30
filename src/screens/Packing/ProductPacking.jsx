@@ -105,33 +105,31 @@ function ProductsPacking({ route }) {
         <ScrollView>
           {productsPacking ? (
             filteredData.length > 0 ? (
-
-                  <AnimatedSearchCard search={search}>
-              <View style={ProductStyles.cardsProducts}>
-                {Object.entries(groupedProducts).map(([group, products]) => (
-                  <View key={group}>
-                    <Text style={CustomerDayStyles.restaurantTypeTitle}>
-                      {group}
-                    </Text>
-                    {products.map((product) => (
-                      <ProductsCard
-                        key={product.id}
-                        item={product}
-                        colorPress={colors.orange}
-                        colorRight={colors.orange}
-                        colorLeft={colors.danger}
-                        products={productsPacking}
-                        setProducts={setProductsPacking}
-                        handleSubmit={handleSubmit}
-                        viewPacking
-                        error={error}
-                      />
-                    ))}
-                  </View>
-                ))}
-              </View>
- </AnimatedSearchCard>
-
+              <AnimatedSearchCard search={search}>
+                <View style={ProductStyles.cardsProducts}>
+                  {Object.entries(groupedProducts).map(([group, products]) => (
+                    <View key={group}>
+                      <Text style={CustomerDayStyles.restaurantTypeTitle}>
+                        {group}
+                      </Text>
+                      {products.map((product) => (
+                        <ProductsCard
+                          key={product.id}
+                          item={product}
+                          colorPress={colors.orange}
+                          colorRight={colors.orange}
+                          colorLeft={colors.danger}
+                          products={productsPacking}
+                          setProducts={setProductsPacking}
+                          handleSubmit={handleSubmit}
+                          viewPacking
+                          error={error}
+                        />
+                      ))}
+                    </View>
+                  ))}
+                </View>
+              </AnimatedSearchCard>
             ) : (
               <View style={SearchStyles.alertSearch}>
                 <Ionicons
