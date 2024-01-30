@@ -19,6 +19,9 @@ const useOrdersByDate = create((set) => {
     setRoutesByDateClean: (routes) => {
       set({ routesByDate: routes })
     },
+    setOrdersByDateClean: (orders) => {
+      set({ orderByDate: orders })
+    },
     setRoutesByDate: async (token, date) => {
       try {
         set({ isLoading: true })
