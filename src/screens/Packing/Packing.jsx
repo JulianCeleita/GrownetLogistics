@@ -1,22 +1,21 @@
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { LinearGradient } from 'expo-linear-gradient'
-import React, { useCallback, useEffect } from 'react'
+import React, { useCallback } from 'react'
 import {
+  ActivityIndicator,
   Image,
   Platform,
   ScrollView,
   Text,
   TouchableOpacity,
   View,
-  SafeAreaView,
-  ActivityIndicator,
 } from 'react-native'
 import { BtnGoBack } from '../../components/BtnGoBack'
 import CircleProgress from '../../components/CircleProgress'
+import useEmployeeStore from '../../store/useEmployeeStore'
 import useOrdersByDate from '../../store/useOrdersByDateStore'
 import { DeliveryStyles } from '../../styles/DeliveryStyles'
 import { GlobalStyles } from '../../styles/GlobalStyles'
-import useEmployeeStore from '../../store/useEmployeeStore'
 
 const Packing = () => {
 
@@ -37,23 +36,14 @@ const Packing = () => {
     navigation.navigate('CustomerDayPacking', { nameRoute: nameRoute })
   }
 
-  useEffect(() => {
-    console.log('routesByDate en packing', routesByDate);
-    setRoutesByDate(employeeToken, selectedDate)
-    return () => {
-      setRoutesByDateClean([])
-      console.log('clean packing');
-    }
-  }, [navigation])
-
-  // useFocusEffect(
-  //   useCallback(() => {
-  //     setRoutesByDate(employeeToken, selectedDate)
-  //     return () => {
-  //       setRoutesByDateClean([])
-  //       console.log('clean packing');
-  //     }
-  //   }, [navigation],))
+  useFocusEffect(
+    useCallback(() => {
+      setRoutesByDate(employeeToken, selectedDate)
+      return () => {
+        setRoutesByDateClean([])
+        console.log('clean packing');
+      }
+    }, [navigation],))
 
   return (
     <View style={{ backgroundColor: 'white', height: '100%' }}>
