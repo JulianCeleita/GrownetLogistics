@@ -1,21 +1,21 @@
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { LinearGradient } from 'expo-linear-gradient'
-import React, { useCallback, useEffect } from 'react'
+import React, { useCallback } from 'react'
 import {
+  ActivityIndicator,
   Image,
+  Platform,
   ScrollView,
   Text,
   TouchableOpacity,
-  Platform,
   View,
-  ActivityIndicator,
 } from 'react-native'
 import { BtnGoBack } from '../../components/BtnGoBack'
 import CircleProgress from '../../components/CircleProgress'
+import useEmployeeStore from '../../store/useEmployeeStore'
 import useOrdersByDate from '../../store/useOrdersByDateStore'
 import { DeliveryStyles } from '../../styles/DeliveryStyles'
 import { GlobalStyles } from '../../styles/GlobalStyles'
-import useEmployeeStore from '../../store/useEmployeeStore'
 
 const Loading = () => {
   const navigation = useNavigation()
@@ -36,23 +36,14 @@ const Loading = () => {
     navigation.navigate('CustomerDayLoading', { nameRoute: nameRoute })
   }
 
-  useEffect(() => {
-    console.log('routesByDate en loading', routesByDate);
-    setRoutesByDate(employeeToken, selectedDate)
-    return () => {
-      setRoutesByDateClean([])
-      console.log('clean packing');
-    }
-  }, [navigation])
-
-  // useFocusEffect(
-  //   useCallback(() => {
-  //     setRoutesByDate(employeeToken, selectedDate)
-  //     return () => {
-  //       setRoutesByDateClean([])
-  //       console.log('clean loading');
-  //     }
-  //   }, [navigation],))
+  useFocusEffect(
+    useCallback(() => {
+      setRoutesByDate(employeeToken, selectedDate)
+      return () => {
+        setRoutesByDateClean([])
+        console.log('clean loading');
+      }
+    }, [navigation],))
 
   return (
     <View style={{ backgroundColor: 'white', height: '100%' }}>
