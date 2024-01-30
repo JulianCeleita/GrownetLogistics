@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native'
+import { Platform, StyleSheet } from 'react-native'
 import { colors } from './GlobalStyles'
 
 export const DeliveryStyles = StyleSheet.create({
@@ -62,7 +62,7 @@ export const DeliveryStyles = StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'center',
     height: '100%',
-    marginTop: 30,
+    marginTop: Platform.OS === 'ios' ? 25 : 5,
   },
   card: {
     alignItems: 'center',

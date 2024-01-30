@@ -1,6 +1,5 @@
 import { Platform, StyleSheet } from 'react-native'
 import { colors } from './GlobalStyles'
-import { Dimensions } from 'react-native'
 
 export const CustomerDayStyles = StyleSheet.create({
   customerPricipal: {
