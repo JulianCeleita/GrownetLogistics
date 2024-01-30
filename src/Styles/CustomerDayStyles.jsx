@@ -102,7 +102,7 @@ export const CustomerDayStyles = StyleSheet.create({
     alignItems: 'center',
     position: 'absolute',
     height: 80,
-    top: Platform.OS === 'ios' ? -18 : -20,
+    top: Platform.OS === 'ios' ? -26 : -23,
     left: 85,
   },
   restaurantTypeTitle: {

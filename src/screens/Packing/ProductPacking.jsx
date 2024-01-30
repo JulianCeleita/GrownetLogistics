@@ -41,8 +41,8 @@ function ProductsPacking({ route }) {
   const filteredData =
     productsPacking && productsPacking.data
       ? productsPacking.data.filter((item) =>
-          item.name.toLowerCase().includes(searchPhrase.toLowerCase()),
-        )
+        item.name.toLowerCase().includes(searchPhrase.toLowerCase()),
+      )
       : []
 
   useFocusEffect(
@@ -65,9 +65,12 @@ function ProductsPacking({ route }) {
 
   return (
     <SafeAreaView style={ProductStyles.products}>
+      <BtnGoBack
+        color={colors.darkBlue}
+        top={Platform.OS === 'ios' && !Platform.isPad ? 68 : 10}
+      />
       {search ? (
         <View>
-          <BtnGoBack color={colors.darkBlue} top={20} />
           <ProductSearcher
             setSearch={setSearch}
             searchPhrase={searchPhrase}
@@ -76,11 +79,7 @@ function ProductsPacking({ route }) {
         </View>
       ) : (
         <View style={{ paddingHorizontal: 43, width: '100%' }}>
-          <BtnGoBack
-            color={colors.darkBlue}
-            top={Platform.OS === 'ios' && !Platform.isPad ? 67 : 10}
-          />
-          <View style={ProductStyles.customerTitleContainer}>
+          <View>
             <Text style={ProductStyles.customerTitle}>
               <Text>{route.params.accountName} - </Text>
               <Text style={{ flexWrap: 'wrap' }}>
