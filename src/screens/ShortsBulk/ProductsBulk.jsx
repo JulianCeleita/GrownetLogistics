@@ -43,7 +43,7 @@ function ProductsBulk({ route }) {
     <SafeAreaView style={ProductStyles.products}>
       <BtnGoBack
         color={colors.darkBlue}
-        top={Platform.OS === 'ios' && !Platform.isPad ? 65 : 5}
+        top={Platform.OS === 'ios' && !Platform.isPad ? 68 : 10}
       />
       <ScrollView stickyHeaderIndices={[0]}>
         <View style={CustomerDayStyles.title2}>

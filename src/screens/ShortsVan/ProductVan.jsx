@@ -87,11 +87,11 @@ function ProductsVan({ route }) {
 
   return (
     <SafeAreaView style={ProductStyles.products}>
+      <BtnGoBack
+        color={colors.darkBlue}
+        top={Platform.OS === 'ios' && !Platform.isPad ? 68 : 10}
+      />
       <View style={CustomerDayStyles.title2}>
-        <BtnGoBack
-          color={colors.darkBlue}
-          top={Platform.OS === 'ios' && !Platform.isPad ? 14 : 14}
-        />
         <View>
           <Text style={CustomerDayStyles.customerTitle}>
             {route.params.nameRoute}
