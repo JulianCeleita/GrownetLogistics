@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import {
   ActivityIndicator,
   Platform,
@@ -21,6 +21,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { useFocusEffect } from '@react-navigation/native'
 import { Ionicons } from '@expo/vector-icons'
 import ProductSearcher from '../../components/ProductSearch'
+import { AnimatedSearch, AnimatedSearchCard } from '../../components/animation'
 
 function ProductsLoading({ route }) {
   const {
@@ -36,7 +37,7 @@ function ProductsLoading({ route }) {
   const [searchPhrase, setSearchPhrase] = useState('')
 
   const handleSearch = () => {
-    setSearch(true)
+    setSearch((prevSearch) => !prevSearch)
   }
 
   const filteredData =
@@ -58,14 +59,14 @@ function ProductsLoading({ route }) {
   return (
     <SafeAreaView style={ProductStyles.products}>
       {search ? (
-        <View>
+        <AnimatedSearch search={search}>
           <BtnGoBack color={colors.darkBlue} top={20} />
           <ProductSearcher
             setSearch={setSearch}
             searchPhrase={searchPhrase}
             setSearchPhrase={setSearchPhrase}
           />
-        </View>
+        </AnimatedSearch>
       ) : (
         <View style={{ paddingHorizontal: 43, width: '100%' }}>
           <BtnGoBack
@@ -96,37 +97,39 @@ function ProductsLoading({ route }) {
         <ScrollView>
           {productsLoading ? (
             filteredData.length > 0 ? (
-              <View style={ProductStyles.cardsProducts}>
-                {Object.entries(
-                  productsLoading.data.reduce((grouped, product) => {
-                    const key = product.presentationType
-                    if (!grouped[key]) {
-                      grouped[key] = []
-                    }
-                    grouped[key].push(product)
-                    return grouped
-                  }, {}),
-                ).map(([group, products]) => (
-                  <View key={group}>
-                    <Text style={CustomerDayStyles.restaurantTypeTitle}>
-                      {group}
-                    </Text>
-                    {filteredData.map((product) => (
-                      <ProductsCard
-                        key={product.id}
-                        item={product}
-                        colorPress={colors.green}
-                        colorRight={colors.green}
-                        colorLeft={colors.danger}
-                        products={productsLoading}
-                        setProducts={setLoadingProducts}
-                        handleSubmit={handleSubmit}
-                        error={error}
-                      />
-                    ))}
-                  </View>
-                ))}
-              </View>
+              <AnimatedSearchCard search={search}>
+                <View style={ProductStyles.cardsProducts}>
+                  {Object.entries(
+                    productsLoading.data.reduce((grouped, product) => {
+                      const key = product.presentationType
+                      if (!grouped[key]) {
+                        grouped[key] = []
+                      }
+                      grouped[key].push(product)
+                      return grouped
+                    }, {}),
+                  ).map(([group, products]) => (
+                    <View key={group}>
+                      <Text style={CustomerDayStyles.restaurantTypeTitle}>
+                        {group}
+                      </Text>
+                      {filteredData.map((product) => (
+                        <ProductsCard
+                          key={product.id}
+                          item={product}
+                          colorPress={colors.green}
+                          colorRight={colors.green}
+                          colorLeft={colors.danger}
+                          products={productsLoading}
+                          setProducts={setLoadingProducts}
+                          handleSubmit={handleSubmit}
+                          error={error}
+                        />
+                      ))}
+                    </View>
+                  ))}
+                </View>
+              </AnimatedSearchCard>
             ) : (
               <View style={SearchStyles.alertSearch}>
                 <Ionicons

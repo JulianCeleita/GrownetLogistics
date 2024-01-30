@@ -14,6 +14,10 @@ import usePercentageStore from '../../store/usePercentageStore.js'
 import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
 import { colors } from '../../styles/GlobalStyles'
 import { SearchStyles } from '../../styles/ProductStyles.jsx'
+import {
+  AnimatedSearch,
+  AnimatedSearchCard,
+} from '../../components/animation.jsx'
 
 function CustomerDayLoading({ route }) {
   const { ordersByDate } = useOrdersByDate()
@@ -52,14 +56,14 @@ function CustomerDayLoading({ route }) {
       <ScrollView stickyHeaderIndices={[0]}>
         <View>
           {search ? (
-            <View>
+            <AnimatedSearch search={search}>
               <BtnGoBack color={colors.darkBlue} top={20} />
               <ProductSearcher
                 setSearch={setSearch}
                 searchPhrase={searchPhrase}
                 setSearchPhrase={setSearchPhrase}
               />
-            </View>
+            </AnimatedSearch>
           ) : (
             <View style={CustomerDayStyles.title2}>
               <BtnGoBack color={colors.darkBlue} />
@@ -79,26 +83,28 @@ function CustomerDayLoading({ route }) {
             </View>
           )}
         </View>
-        <View style={CustomerDayStyles.cardsCustomers}>
-          {filteredData.length > 0 ? (
-            filteredData.map((order, index) => (
-              <View key={index}>
-                <CustomerCard customer={order} loadingCard />
+        <AnimatedSearchCard search={search}>
+          <View style={CustomerDayStyles.cardsCustomers}>
+            {filteredData.length > 0 ? (
+              filteredData.map((order, index) => (
+                <View key={index}>
+                  <CustomerCard customer={order} loadingCard />
+                </View>
+              ))
+            ) : (
+              <View style={SearchStyles.alertSearch}>
+                <Ionicons
+                  name="alert-circle-outline"
+                  size={180}
+                  color={colors.gray}
+                />
+                <Text style={SearchStyles.textAlert}>
+                  No orders found, please search again
+                </Text>
               </View>
-            ))
-          ) : (
-            <View style={SearchStyles.alertSearch}>
-              <Ionicons
-                name="alert-circle-outline"
-                size={180}
-                color={colors.gray}
-              />
-              <Text style={SearchStyles.textAlert}>
-                No orders found, please search again
-              </Text>
-            </View>
-          )}
-        </View>
+            )}
+          </View>
+        </AnimatedSearchCard>
       </ScrollView>
     </SafeAreaView>
   )
