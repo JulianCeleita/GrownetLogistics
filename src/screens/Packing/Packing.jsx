@@ -1,6 +1,6 @@
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { LinearGradient } from 'expo-linear-gradient'
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import {
   Image,
   Platform,
@@ -37,13 +37,23 @@ const Packing = () => {
     navigation.navigate('CustomerDayPacking', { nameRoute: nameRoute })
   }
 
-  useFocusEffect(
-    useCallback(() => {
-      setRoutesByDate(employeeToken, selectedDate)
-      return () => {
-        setRoutesByDateClean([])
-      }
-    }, [],))
+  useEffect(() => {
+    console.log('routesByDate en packing', routesByDate);
+    setRoutesByDate(employeeToken, selectedDate)
+    return () => {
+      setRoutesByDateClean([])
+      console.log('clean packing');
+    }
+  }, [navigation])
+
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     setRoutesByDate(employeeToken, selectedDate)
+  //     return () => {
+  //       setRoutesByDateClean([])
+  //       console.log('clean packing');
+  //     }
+  //   }, [navigation],))
 
   return (
     <View style={{ backgroundColor: 'white', height: '100%' }}>
