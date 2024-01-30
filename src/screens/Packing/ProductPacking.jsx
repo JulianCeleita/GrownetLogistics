@@ -41,8 +41,8 @@ function ProductsPacking({ route }) {
   const filteredData =
     productsPacking && productsPacking.data
       ? productsPacking.data.filter((item) =>
-        item.name.toLowerCase().includes(searchPhrase.toLowerCase()),
-      )
+          item.name.toLowerCase().includes(searchPhrase.toLowerCase()),
+        )
       : []
 
   useFocusEffect(
@@ -61,7 +61,7 @@ function ProductsPacking({ route }) {
     }
     grouped[key].push(product)
     return grouped
-  }, {});
+  }, {})
 
   return (
     <SafeAreaView style={ProductStyles.products}>
@@ -119,6 +119,9 @@ function ProductsPacking({ route }) {
                         colorLeft={colors.danger}
                         products={productsPacking}
                         setProducts={setProductsPacking}
+                        handleSubmit={handleSubmit}
+                        viewPacking
+                        error={error}
                       />
                     ))}
                   </View>
