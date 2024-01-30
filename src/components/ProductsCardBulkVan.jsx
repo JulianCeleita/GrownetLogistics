@@ -79,9 +79,7 @@ export const ProductsCardBulkVan = ({
     updateProductsVan(item.id, null, 'N/A')
     handleSubmit(item.id, 0, '', 'N/A')
   }
-  if (item.name === 'Eggs') {
-    console.log(item.name, item.quantity, item.quantity_defitive, item.packed)
-  }
+
   const confirmRevertNA = () => {
     setShowModalRevertNA(false)
     setIsNA(false)
@@ -93,6 +91,7 @@ export const ProductsCardBulkVan = ({
     setLeft(false)
     setModalCard(false)
   }
+
   const handleClose = () => {
     setModalCard(false)
   }
@@ -102,6 +101,13 @@ export const ProductsCardBulkVan = ({
       setIsNA(true)
     }
   }, [])
+
+  const isDecimal = (num) => {
+    if (num % 1 !== 0) {
+      return num.toFixed(1)
+    }
+    return num
+  }
 
   if (viewBulk) {
     return (
@@ -119,7 +125,7 @@ export const ProductsCardBulkVan = ({
             {item.name} {item.presentationName}
           </Text>
           <Text style={ProductStyles.textCard}>
-            {`Missing ${item.quantity - item.cant_insert}`}
+            {`Missing ${isDecimal(item.quantity - item.cant_insert)}`}
           </Text>
         </View>
         <View
@@ -216,9 +222,7 @@ export const ProductsCardBulkVan = ({
                     ProductStyles.textCard,
                     {
                       marginRight: 25,
-
                       color: colorMessage,
-
                       textDecorationLine: isNA ? 'line-through' : 'none',
                     },
                   ]}
