@@ -136,7 +136,6 @@ export const SearchStyles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 10,
   },
   containerSearch: {
     flexDirection: 'row',
@@ -146,6 +145,7 @@ export const SearchStyles = StyleSheet.create({
     backgroundColor: '#f2f2f2',
     marginLeft: 35,
     width: '78%',
+    marginBottom: -10,
   },
 
   BgInput: {

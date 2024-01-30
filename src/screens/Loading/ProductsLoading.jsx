@@ -67,23 +67,18 @@ function ProductsLoading({ route }) {
 
   return (
     <SafeAreaView style={ProductStyles.products}>
-      <BtnGoBack
-        color={colors.darkBlue}
-        top={Platform.OS === 'ios' && !Platform.isPad ? 68 : 10}
-      />
       {search ? (
-        <View>
-          <AnimatedSearch search={search}>
-
-            <ProductSearcher
-              setSearch={setSearch}
-              searchPhrase={searchPhrase}
-              setSearchPhrase={setSearchPhrase}
-            />
-          </AnimatedSearch>
-        </View>
+        <AnimatedSearch search={search}>
+          <BtnGoBack color={colors.darkBlue} top={20} />
+          <ProductSearcher
+            setSearch={setSearch}
+            searchPhrase={searchPhrase}
+            setSearchPhrase={setSearchPhrase}
+          />
+        </AnimatedSearch>
       ) : (
         <View style={{ paddingHorizontal: 43, width: '100%' }}>
+          <BtnGoBack color={colors.darkBlue} />
           <View>
             <Text style={ProductStyles.customerTitle}>
               <Text>{route.params.accountName} - </Text>
