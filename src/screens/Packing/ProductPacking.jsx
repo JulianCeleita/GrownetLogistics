@@ -106,7 +106,6 @@ function ProductsPacking({ route }) {
         <ScrollView>
           {productsPacking ? (
             filteredData.length > 0 ? (
-
               <AnimatedSearchCard search={search}>
                 <View style={ProductStyles.cardsProducts}>
                   {Object.entries(groupedProducts).map(([group, products]) => (
@@ -132,7 +131,6 @@ function ProductsPacking({ route }) {
                   ))}
                 </View>
               </AnimatedSearchCard>
-
             ) : (
               <View style={SearchStyles.alertSearch}>
                 <Ionicons

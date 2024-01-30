@@ -8,7 +8,7 @@ import Animated, {
 
 // Component AnimatedSearchCard
 export const AnimatedSearchCard = ({ search, children }) => {
-  const translateY = useSharedValue(300)
+  const translateY = useSharedValue(50)
 
   useEffect(() => {
     if (search) {

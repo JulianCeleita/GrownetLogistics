@@ -108,7 +108,6 @@ function ProductsLoading({ route }) {
         <ScrollView>
           {productsLoading ? (
             filteredData.length > 0 ? (
-
               <AnimatedSearchCard search={search}>
                 <View style={ProductStyles.cardsProducts}>
                   {Object.entries(groupedProducts).map(([group, products]) => (
@@ -133,7 +132,6 @@ function ProductsLoading({ route }) {
                   ))}
                 </View>
               </AnimatedSearchCard>
-
             ) : (
               <View style={SearchStyles.alertSearch}>
                 <Ionicons
