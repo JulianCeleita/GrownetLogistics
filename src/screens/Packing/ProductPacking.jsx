@@ -100,7 +100,13 @@ function ProductsPacking({ route }) {
           </TouchableOpacity>
         </View>
       )}
-      <KeyboardAwareScrollView enableOnAndroid extraScrollHeight={210}>
+      <KeyboardAwareScrollView
+        enableOnAndroid
+        extraScrollHeight={210}
+        showsVerticalScrollIndicator={false}
+        style={{ marginRight: -3 }}
+        contentContainerStyle={{ paddingRight: 3 }}
+      >
         <ScrollView>
           {productsPacking ? (
             filteredData.length > 0 ? (

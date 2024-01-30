@@ -45,7 +45,12 @@ function ProductsBulk({ route }) {
         color={colors.darkBlue}
         top={Platform.OS === 'ios' && !Platform.isPad ? 68 : 10}
       />
-      <ScrollView stickyHeaderIndices={[0]}>
+      <ScrollView
+        stickyHeaderIndices={[0]}
+        showsVerticalScrollIndicator={false}
+        style={{ marginRight: -3 }}
+        contentContainerStyle={{ paddingRight: 3 }}
+      >
         <View style={CustomerDayStyles.title2}>
           <Text style={CustomerDayStyles.customerTitle}>
             {route.params.nameRoute}

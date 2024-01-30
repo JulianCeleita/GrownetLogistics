@@ -50,7 +50,12 @@ function CustomerDayPacking({ route }) {
 
   return (
     <SafeAreaView style={CustomerDayStyles.customerPricipal}>
-      <ScrollView stickyHeaderIndices={[0]}>
+      <ScrollView
+        stickyHeaderIndices={[0]}
+        showsVerticalScrollIndicator={false}
+        style={{ marginRight: -3 }}
+        contentContainerStyle={{ paddingRight: 3 }}
+      >
         <View>
           {search ? (
             <AnimatedSearch search={search}>
