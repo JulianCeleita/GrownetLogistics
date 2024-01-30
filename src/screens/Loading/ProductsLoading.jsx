@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import {
   ActivityIndicator,
   Platform,
@@ -21,6 +21,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { useFocusEffect } from '@react-navigation/native'
 import { Ionicons } from '@expo/vector-icons'
 import ProductSearcher from '../../components/ProductSearch'
+import { AnimatedSearch, AnimatedSearchCard } from '../../components/animation'
 
 function ProductsLoading({ route }) {
   const {
@@ -36,7 +37,7 @@ function ProductsLoading({ route }) {
   const [searchPhrase, setSearchPhrase] = useState('')
 
   const handleSearch = () => {
-    setSearch(true)
+    setSearch((prevSearch) => !prevSearch)
   }
 
   const filteredData =
@@ -72,11 +73,14 @@ function ProductsLoading({ route }) {
       />
       {search ? (
         <View>
-          <ProductSearcher
-            setSearch={setSearch}
-            searchPhrase={searchPhrase}
-            setSearchPhrase={setSearchPhrase}
-          />
+          <AnimatedSearch search={search}>
+
+            <ProductSearcher
+              setSearch={setSearch}
+              searchPhrase={searchPhrase}
+              setSearchPhrase={setSearchPhrase}
+            />
+          </AnimatedSearch>
         </View>
       ) : (
         <View style={{ paddingHorizontal: 43, width: '100%' }}>
@@ -104,28 +108,32 @@ function ProductsLoading({ route }) {
         <ScrollView>
           {productsLoading ? (
             filteredData.length > 0 ? (
-              <View style={ProductStyles.cardsProducts}>
-                {Object.entries(groupedProducts).map(([group, products]) => (
-                  <View key={group}>
-                    <Text style={CustomerDayStyles.restaurantTypeTitle}>
-                      {group}
-                    </Text>
-                    {products.map((product) => (
-                      <ProductsCard
-                        key={product.id}
-                        item={product}
-                        colorPress={colors.green}
-                        colorRight={colors.green}
-                        colorLeft={colors.danger}
-                        products={productsLoading}
-                        setProducts={setLoadingProducts}
-                        handleSubmit={handleSubmit}
-                        error={error}
-                      />
-                    ))}
-                  </View>
-                ))}
-              </View>
+
+              <AnimatedSearchCard search={search}>
+                <View style={ProductStyles.cardsProducts}>
+                  {Object.entries(groupedProducts).map(([group, products]) => (
+                    <View key={group}>
+                      <Text style={CustomerDayStyles.restaurantTypeTitle}>
+                        {group}
+                      </Text>
+                      {products.map((product) => (
+                        <ProductsCard
+                          key={product.id}
+                          item={product}
+                          colorPress={colors.green}
+                          colorRight={colors.green}
+                          colorLeft={colors.danger}
+                          products={productsLoading}
+                          setProducts={setLoadingProducts}
+                          handleSubmit={handleSubmit}
+                          error={error}
+                        />
+                      ))}
+                    </View>
+                  ))}
+                </View>
+              </AnimatedSearchCard>
+
             ) : (
               <View style={SearchStyles.alertSearch}>
                 <Ionicons
