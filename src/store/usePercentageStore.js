@@ -2,8 +2,8 @@ import { create } from 'zustand'
 
 const usePercentageStore = create((set) => ({
   percentages: [],
-  setPercentages: (perce) => {
-    set({ percentages: perce })
+  setPercentages: (percentages) => {
+    set({ percentages: percentages })
   },
 }))
 

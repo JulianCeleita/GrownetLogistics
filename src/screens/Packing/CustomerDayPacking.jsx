@@ -17,7 +17,7 @@ import { SearchStyles } from '../../styles/ProductStyles'
 import { AnimatedSearch, AnimatedSearchCard } from '../../components/animation'
 
 function CustomerDayPacking({ route }) {
-  const { ordersByDate } = useOrdersByDate()
+  const { ordersByDate, setOrdersByDateClean } = useOrdersByDate()
   const { employeeToken } = useEmployeeStore()
   const { setPercentages } = usePercentageStore()
   const [searchPhrase, setSearchPhrase] = useState('')
@@ -27,24 +27,32 @@ function CustomerDayPacking({ route }) {
     return order.accountName.toLowerCase().includes(searchPhrase.toLowerCase()) ||
       order.orders_reference.toString().trim().includes(searchPhrase.toString().trim())
   })
+
   const handleSearch = () => {
     setSearch(true)
   }
+
+  async function fetchData() {
+    try {
+      console.log('Obteniendo porcentaje de customers packing');
+      const response = await mainAxios.get(percentagePacking, {
+        headers: {
+          Authorization: `Bearer ${employeeToken}`,
+        },
+      })
+      setPercentages(response.data.orders)
+    } catch (error) {
+      console.error('Error al obtener porcentaje:', error)
+    }
+  }
+
   useFocusEffect(
     useCallback(() => {
-      async function fetchData() {
-        try {
-          const response = await mainAxios.get(percentagePacking, {
-            headers: {
-              Authorization: `Bearer ${employeeToken}`,
-            },
-          })
-          setPercentages(response.data.orders)
-        } catch (error) {
-          console.error('Error al obtener porcentaje:', error)
-        }
-      }
       fetchData()
+      return () => {
+        setOrdersByDateClean([])
+        setPercentages([])
+      }
     }, [employeeToken]),
   )
 
