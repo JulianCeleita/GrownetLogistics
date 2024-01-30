@@ -22,7 +22,8 @@ export const useShortBulkStore = create((set) => ({
       })
 
       const { status, products } = response.data
-
+      console.log('VEAMOS QUE TRAE SHORTBULK', response.data)
+ 
       if (status === 200 && Array.isArray(products)) {
         const productsByType = products.reduce((acc, product) => {
           const type = product.presentationType
