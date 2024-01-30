@@ -1,6 +1,5 @@
 import { Platform, StyleSheet } from 'react-native'
 import { colors } from './GlobalStyles'
-import { Dimensions } from 'react-native'
 
 export const CustomerDayStyles = StyleSheet.create({
   customerPricipal: {
@@ -36,6 +35,7 @@ export const CustomerDayStyles = StyleSheet.create({
   icon: {
     position: 'absolute',
     right: 18,
+    top: 5,
   },
   cardsCustomers: {
     flex: 1,
@@ -43,6 +43,7 @@ export const CustomerDayStyles = StyleSheet.create({
     justifyContent: 'center',
     flexDirection: 'row',
     flexWrap: 'wrap',
+    paddingBottom: 20,
   },
   tittleText: {
     fontSize: 24,
@@ -101,7 +102,7 @@ export const CustomerDayStyles = StyleSheet.create({
     alignItems: 'center',
     position: 'absolute',
     height: 80,
-    top: Platform.OS === 'ios' ? -18 : -20,
+    top: Platform.OS === 'ios' ? -26 : -23,
     left: 85,
   },
   restaurantTypeTitle: {

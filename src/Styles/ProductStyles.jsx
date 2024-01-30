@@ -136,16 +136,16 @@ export const SearchStyles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 10,
   },
   containerSearch: {
     flexDirection: 'row',
     height: 50,
     borderRadius: 40,
-    marginTop: 20,
+    marginTop: 10,
     backgroundColor: '#f2f2f2',
-    marginLeft: 30,
-    width: '74%',
+    marginLeft: 35,
+    width: '78%',
+    marginBottom: -10,
   },
 
   BgInput: {
@@ -164,6 +164,15 @@ export const SearchStyles = StyleSheet.create({
   },
   iconClose: {
     marginLeft: 5,
-    marginTop: 20,
+    marginTop: 10,
+  },
+  alertSearch: {
+    alignItems: 'center',
+    marginTop: '20%',
+  },
+  textAlert: {
+    fontFamily: 'PoppinsRegular',
+    color: colors.gray,
+    fontSize: 15,
   },
 })
