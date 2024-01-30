@@ -126,8 +126,11 @@ function ProductsVan({ route }) {
       <KeyboardAwareScrollView
         enableOnAndroid
         extraScrollHeight={Platform.OS === 'android' ? 210 : 210}
+        showsVerticalScrollIndicator={false}
+        style={{ marginRight: -3 }}
+        contentContainerStyle={{ paddingRight: 3 }}
       >
-        <ScrollView stickyHeaderIndices={[0]}>
+        <ScrollView>
           {loading ? (
             <ActivityIndicator size="large" color="#0000ff" />
           ) : error ? (
