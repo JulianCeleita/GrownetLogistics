@@ -20,7 +20,7 @@ const useOrdersByDate = create((set) => {
       set({ routesByDate: routes })
     },
     setOrdersByDateClean: (orders) => {
-      set({ orderByDate: orders })
+      set({ ordersByDate: orders })
     },
     setRoutesByDate: async (token, date) => {
       try {
