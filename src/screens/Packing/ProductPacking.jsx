@@ -21,6 +21,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { useFocusEffect } from '@react-navigation/native'
 import ProductSearcher from '../../components/ProductSearch'
 import { Ionicons } from '@expo/vector-icons'
+import { AnimatedSearch, AnimatedSearchCard } from '../../components/animation'
 
 function ProductsPacking({ route }) {
   const {
@@ -66,14 +67,14 @@ function ProductsPacking({ route }) {
   return (
     <SafeAreaView style={ProductStyles.products}>
       {search ? (
-        <View>
+        <AnimatedSearch search={search}>
           <BtnGoBack color={colors.darkBlue} top={20} />
           <ProductSearcher
             setSearch={setSearch}
             searchPhrase={searchPhrase}
             setSearchPhrase={setSearchPhrase}
           />
-        </View>
+        </AnimatedSearch>
       ) : (
         <View style={{ paddingHorizontal: 43, width: '100%' }}>
           <BtnGoBack
@@ -104,6 +105,8 @@ function ProductsPacking({ route }) {
         <ScrollView>
           {productsPacking ? (
             filteredData.length > 0 ? (
+
+                  <AnimatedSearchCard search={search}>
               <View style={ProductStyles.cardsProducts}>
                 {Object.entries(groupedProducts).map(([group, products]) => (
                   <View key={group}>
@@ -127,6 +130,8 @@ function ProductsPacking({ route }) {
                   </View>
                 ))}
               </View>
+ </AnimatedSearchCard>
+
             ) : (
               <View style={SearchStyles.alertSearch}>
                 <Ionicons
