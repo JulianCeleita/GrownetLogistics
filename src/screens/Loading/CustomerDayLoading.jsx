@@ -20,7 +20,13 @@ import {
 } from '../../components/animation.jsx'
 
 function CustomerDayLoading({ route }) {
-  const { ordersByDate, setOrdersByDateClean } = useOrdersByDate()
+  const { nameRoute } = route.params
+  const {
+    ordersByDate,
+    setOrdersByDateClean,
+    setOrdersByDate,
+    routesByDate
+  } = useOrdersByDate()
   const { employeeToken } = useEmployeeStore()
   const { setPercentages } = usePercentageStore()
   const [searchPhrase, setSearchPhrase] = useState('')
@@ -52,6 +58,7 @@ function CustomerDayLoading({ route }) {
   useFocusEffect(
     useCallback(() => {
       fetchData()
+      setOrdersByDate(nameRoute, routesByDate)
       return () => {
         setOrdersByDateClean([])
         setPercentages([])
@@ -81,7 +88,7 @@ function CustomerDayLoading({ route }) {
             <View style={CustomerDayStyles.title2}>
               <BtnGoBack color={colors.darkBlue} />
               <Text style={CustomerDayStyles.customerTitle}>
-                {route.params.nameRoute}
+                {nameRoute}
               </Text>
               <TouchableOpacity
                 onPress={handleSearch}
