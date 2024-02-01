@@ -27,7 +27,7 @@ export const ProductsCardBulkVan = ({
 
   const positiveOffset = 30
   const negativeOffset = -30
-  const quantityPressed = item.quantity - item.cant_insert
+  const quantityPressed = (item.quantity - item.cant_insert).toFixed(1)
 
   const handlePress = (itemId) => {
     if (isNA) {
