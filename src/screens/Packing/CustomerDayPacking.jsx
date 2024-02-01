@@ -60,7 +60,7 @@ function CustomerDayPacking({ route }) {
         setOrdersByDateClean([])
         setPercentages([])
       }
-    }, [employeeToken]),
+    }, []),
   )
 
   return (
@@ -100,16 +100,16 @@ function CustomerDayPacking({ route }) {
             </View>
           )}
         </View>
+
         <AnimatedSearchCard search={search}>
           <View style={CustomerDayStyles.cardsCustomers}>
-
             {filteredData.length > 0 ? (
               filteredData.map((order, index) => (
                 <View key={index}>
                   <CustomerCard customer={order} />
                 </View>
               ))
-            ) : (
+            ) : filteredData.length < 0 ? (
               <View style={SearchStyles.alertSearch}>
                 <Ionicons
                   name="alert-circle-outline"
@@ -120,8 +120,7 @@ function CustomerDayPacking({ route }) {
                   No orders found, please search again
                 </Text>
               </View>
-            )}
-
+            ) : null}
           </View>
         </AnimatedSearchCard>
       </ScrollView>
