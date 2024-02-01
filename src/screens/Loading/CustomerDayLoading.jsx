@@ -103,15 +103,17 @@ function CustomerDayLoading({ route }) {
             </View>
           )}
         </View>
+
         <AnimatedSearchCard search={search}>
           <View style={CustomerDayStyles.cardsCustomers}>
+
             {filteredData.length > 0 ? (
               filteredData.map((order, index) => (
                 <View key={index}>
                   <CustomerCard customer={order} loadingCard />
                 </View>
               ))
-            ) : (
+            ) : filteredData.length < 0 ? (
               <View style={SearchStyles.alertSearch}>
                 <Ionicons
                   name="alert-circle-outline"
@@ -122,7 +124,18 @@ function CustomerDayLoading({ route }) {
                   No orders found, please search again
                 </Text>
               </View>
-            )}
+            ) : filteredData.length === 0 && searchPhrase !== '' ? (
+              <View style={SearchStyles.alertSearch}>
+                <Ionicons
+                  name="alert-circle-outline"
+                  size={180}
+                  color={colors.gray}
+                />
+                <Text style={SearchStyles.textAlert}>
+                  No orders found, please search again
+                </Text>
+              </View>
+            ) : null}
           </View>
         </AnimatedSearchCard>
       </ScrollView>
