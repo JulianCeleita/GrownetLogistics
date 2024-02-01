@@ -17,7 +17,13 @@ import { SearchStyles } from '../../styles/ProductStyles'
 import { AnimatedSearch, AnimatedSearchCard } from '../../components/animation'
 
 function CustomerDayPacking({ route }) {
-  const { ordersByDate, setOrdersByDateClean } = useOrdersByDate()
+  const { nameRoute } = route.params
+  const {
+    ordersByDate,
+    setOrdersByDate,
+    setOrdersByDateClean,
+    routesByDate
+  } = useOrdersByDate()
   const { employeeToken } = useEmployeeStore()
   const { setPercentages } = usePercentageStore()
   const [searchPhrase, setSearchPhrase] = useState('')
@@ -49,6 +55,7 @@ function CustomerDayPacking({ route }) {
   useFocusEffect(
     useCallback(() => {
       fetchData()
+      setOrdersByDate(nameRoute, routesByDate)
       return () => {
         setOrdersByDateClean([])
         setPercentages([])
@@ -78,7 +85,7 @@ function CustomerDayPacking({ route }) {
             <View style={CustomerDayStyles.title2}>
               <BtnGoBack color={colors.darkBlue} />
               <Text style={CustomerDayStyles.customerTitle}>
-                {route.params.nameRoute}
+                {nameRoute}
               </Text>
               <TouchableOpacity
                 onPress={handleSearch}
@@ -95,6 +102,7 @@ function CustomerDayPacking({ route }) {
         </View>
         <AnimatedSearchCard search={search}>
           <View style={CustomerDayStyles.cardsCustomers}>
+
             {filteredData.length > 0 ? (
               filteredData.map((order, index) => (
                 <View key={index}>
@@ -113,6 +121,7 @@ function CustomerDayPacking({ route }) {
                 </Text>
               </View>
             )}
+
           </View>
         </AnimatedSearchCard>
       </ScrollView>
