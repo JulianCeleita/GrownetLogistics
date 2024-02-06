@@ -1,15 +1,19 @@
+import { Ionicons } from '@expo/vector-icons'
+import { useFocusEffect } from '@react-navigation/native'
 import React, { useCallback, useState } from 'react'
 import {
   ActivityIndicator,
-  Platform,
   ScrollView,
   Text,
-  View,
   TouchableOpacity,
+  View
 } from 'react-native'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { BtnGoBack } from '../../components/BtnGoBack'
+import ProductSearcher from '../../components/ProductSearch'
 import { ProductsCard } from '../../components/ProductsCard'
+import { AnimatedSearch, AnimatedSearchCard } from '../../components/animation'
 import { insertPacking } from '../../config/urls.config'
 import { useProductSubmit } from '../../hooks/useProductSubmit'
 import useEmployeeStore from '../../store/useEmployeeStore'
@@ -17,11 +21,6 @@ import { usePackingStore } from '../../store/usePackingStore'
 import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
 import { colors } from '../../styles/GlobalStyles'
 import { ProductStyles, SearchStyles } from '../../styles/ProductStyles'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { useFocusEffect } from '@react-navigation/native'
-import ProductSearcher from '../../components/ProductSearch'
-import { Ionicons } from '@expo/vector-icons'
-import { AnimatedSearch, AnimatedSearchCard } from '../../components/animation'
 
 function ProductsPacking({ route }) {
   const {
@@ -39,12 +38,12 @@ function ProductsPacking({ route }) {
   const handleSearch = () => {
     setSearch(true)
   }
+
   const filteredData =
     productsPacking && productsPacking.data
       ? productsPacking.data.filter((item) =>
         item.name.toLowerCase().includes(searchPhrase.toLowerCase()),
-      )
-      : []
+      ) : []
 
   useFocusEffect(
     useCallback(() => {

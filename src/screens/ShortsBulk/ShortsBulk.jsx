@@ -19,7 +19,6 @@ function ShortsBulk() {
   const navigation = useNavigation()
   const {
     routesByDate,
-    setOrdersByDate,
     setSelectedRoute,
     setRoutesByDate,
     setRoutesByDateClean,
@@ -35,7 +34,6 @@ function ShortsBulk() {
 
   const handleRoutePress = (nameRoute) => {
     setSelectedRoute(nameRoute)
-    setOrdersByDate(nameRoute, routesByDate)
     navigation.navigate('ProductsBulk', { nameRoute: nameRoute })
   }
 

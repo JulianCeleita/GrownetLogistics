@@ -21,7 +21,6 @@ const Loading = () => {
   const navigation = useNavigation()
   const {
     routesByDate,
-    setOrdersByDate,
     setSelectedRoute,
     setRoutesByDate,
     selectedDate,
@@ -32,7 +31,6 @@ const Loading = () => {
 
   const handleRoutePress = (nameRoute) => {
     setSelectedRoute(nameRoute)
-    setOrdersByDate(nameRoute, routesByDate)
     navigation.navigate('CustomerDayLoading', { nameRoute: nameRoute })
   }
 
@@ -41,9 +39,10 @@ const Loading = () => {
       setRoutesByDate(employeeToken, selectedDate)
       return () => {
         setRoutesByDateClean([])
-        console.log('clean loading');
       }
     }, [navigation],))
+
+  console.log('routesByDate', routesByDate);
 
   return (
     <View style={{ backgroundColor: 'white', height: '100%' }}>
