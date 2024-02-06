@@ -22,6 +22,9 @@ const useOrdersByDate = create((set) => {
     setOrdersByDateClean: (orders) => {
       set({ ordersByDate: orders })
     },
+    setSelectedRoute: (route) => {
+      set({ selectedRoute: route })
+    },
     setRoutesByDate: async (token, date) => {
       try {
         set({ isLoading: true })
@@ -46,22 +49,23 @@ const useOrdersByDate = create((set) => {
         console.error('Error during request:', error)
       }
     },
-    setSelectedRoute: (route) => {
-      set({ selectedRoute: route })
-    },
     setOrdersByDate: (nameRoute, routesByDate) => {
-      const selectedRoute = routesByDate.find(
-        (route) => route.nameRoute === nameRoute,
-      )
-      if (selectedRoute) {
-        const orderByDate = selectedRoute.accounts || []
-        set({ ordersByDate: orderByDate })
-      } else {
-        console.error(
-          'No se encontró la ruta con el nombre especificado:',
-          nameRoute,
+
+      setTimeout(() => {
+        const selectedRoute = routesByDate.find(
+          (route) => route.nameRoute === nameRoute,
         )
-      }
+        if (selectedRoute) {
+          const orderByDate = selectedRoute.accounts || []
+          set({ ordersByDate: orderByDate })
+        } else {
+          console.error(
+            'No se encontró la ruta con el nombre especificado:',
+            nameRoute,
+          )
+        }
+      }, 1000)
+
     },
   }
 })
