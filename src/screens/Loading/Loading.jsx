@@ -42,8 +42,6 @@ const Loading = () => {
       }
     }, [navigation],))
 
-  console.log('routesByDate', routesByDate);
-
   return (
     <View style={{ backgroundColor: 'white', height: '100%' }}>
       <ScrollView>

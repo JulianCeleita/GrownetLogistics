@@ -50,22 +50,18 @@ const useOrdersByDate = create((set) => {
       }
     },
     setOrdersByDate: (nameRoute, routesByDate) => {
-
-      setTimeout(() => {
-        const selectedRoute = routesByDate.find(
-          (route) => route.nameRoute === nameRoute,
+      const selectedRoute = routesByDate.find(
+        (route) => route.nameRoute === nameRoute,
+      )
+      if (selectedRoute) {
+        const orderByDate = selectedRoute.accounts || []
+        set({ ordersByDate: orderByDate })
+      } else {
+        console.error(
+          'No se encontró la ruta con el nombre especificado:',
+          nameRoute,
         )
-        if (selectedRoute) {
-          const orderByDate = selectedRoute.accounts || []
-          set({ ordersByDate: orderByDate })
-        } else {
-          console.error(
-            'No se encontró la ruta con el nombre especificado:',
-            nameRoute,
-          )
-        }
-      }, 1000)
-
+      }
     },
   }
 })
