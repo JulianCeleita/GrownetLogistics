@@ -149,6 +149,7 @@ export const ProductsCardBulkVan = ({
   let message = null;
   let missingStatus = null;
   let overStatus = null;
+  let colorMsg = null;
 
   if (!item.packed && !item.quantity_defitive && item.quantity > item.cant_insert) {
     message = `M: ${item.quantity - item.cant_insert}`
@@ -184,7 +185,13 @@ export const ProductsCardBulkVan = ({
 
   if (message) {
     missingStatus = message.includes('M:');
+    if (missingStatus) {
+      colorMsg = colors.danger;
+    }
     overStatus = message.includes('O:');
+    if (overStatus) {
+      colorMsg = colors.green;
+    }
   }
 
   return (
@@ -213,14 +220,14 @@ export const ProductsCardBulkVan = ({
               </Text>
 
               <View style={ProductStyles.qty}>
-                <Text style={[ProductStyles.textCard, { fontSize: 13 }]}>
+                <Text style={ProductStyles.textCard}>
                   Qty: {item.quantity} - L: {item.cant_insert}
                   {message && (
                     <>
                       <Text>
                         {" "}-{" "}
                       </Text>
-                      <Text style={{ color: colors.danger }}>
+                      <Text style={{ color: colorMsg }}>
                         {message}
                       </Text>
                     </>
