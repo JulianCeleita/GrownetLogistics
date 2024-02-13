@@ -50,7 +50,7 @@ export const ProductStyles = StyleSheet.create({
     fontSize: Platform.OS === 'ios' ? 16 : 14,
   },
   textCard: {
-    fontSize: 15,
+    fontSize: 10,
     color: colors.darkBlue,
     fontFamily: 'PoppinsMedium',
     fontSize: Platform.OS === 'ios' ? 15 : 14,
