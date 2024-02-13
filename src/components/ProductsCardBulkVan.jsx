@@ -146,47 +146,53 @@ export const ProductsCardBulkVan = ({
     )
   }
 
-  let message = ''
-  let colorMessage = colors.default
+  let message = null;
+  let missingStatus = null;
+  let overStatus = null;
+  let colorMsg = null;
 
-  if (
-    item.packed &&
-    item.packed !== quantityPressed &&
-    quantityPressed > item.packed
-  ) {
-    let diff = quantityPressed - item.packed
-    let diffString = diff % 1 === 0 ? diff : diff.toFixed(1)
-    message = `Missing ${diffString}`
-    colorMessage = colors.danger
-  } else if (
-    item.packed &&
-    item.packed !== quantityPressed &&
-    quantityPressed < item.packed
-  ) {
-    let diff = item.packed - quantityPressed
-    let diffString = diff % 1 === 0 ? diff : diff.toFixed(1)
-    message = `Overweight ${diffString}`
-    colorMessage = colors.green
-  } else if (
-    !item.packed &&
-    item.quantity_defitive &&
-    item.quantity_defitive !== quantityPressed &&
-    quantityPressed > item.quantity_defitive
-  ) {
-    let diff = quantityPressed - item.quantity_defitive
-    let diffString = diff % 1 === 0 ? diff : diff.toFixed(1)
-    message = `Missing ${diffString}`
-    colorMessage = colors.danger
-  } else if (item.quantity_defitive > quantityPressed) {
-    let diff = item.quantity_defitive - quantityPressed
-    let diffString = diff % 1 === 0 ? diff : diff.toFixed(1)
-    message = `Overweight ${diffString}`
-    colorMessage = colors.green
+  if (!item.packed && !item.quantity_defitive && item.quantity > item.cant_insert) {
+    message = `M: ${item.quantity - item.cant_insert}`
   }
 
-  let missingStatus = message.includes('Missing')
+  if (!item.packed && !item.quantity_defitive && item.quantity < item.cant_insert) {
+    message = `O: ${item.cant_insert - item.quantity}`
+  }
 
-  console.log('item', item)
+  if (!item.packed && item.quantity_defitive && (item.quantity_defitive + item.cant_insert) < item.quantity) {
+    message = `M: ${item.quantity - (item.quantity_defitive + item.cant_insert)}`
+  }
+
+  if (!item.packed && item.quantity_defitive && (item.quantity_defitive + item.cant_insert) > item.quantity) {
+    message = `O: ${(item.quantity_defitive + item.cant_insert) - item.quantity}`
+  }
+
+  if (item.packed && item.cant_insert > 0 && (item.quantity - item.cant_insert) > item.packed) {
+    message = `M: ${(item.quantity - item.cant_insert) - item.packed}`
+  }
+
+  if (item.packed && item.cant_insert > 0 && (item.quantity - item.cant_insert) < item.packed) {
+    message = `O: ${item.packed - (item.quantity - item.cant_insert)}`
+  }
+
+  if (item.packed && item.cant_insert <= 0 && (item.quantity - item.cant_insert) > item.packed) {
+    message = `M: ${(item.quantity - item.cant_insert) - item.packed}`
+  }
+
+  if (item.packed && item.cant_insert <= 0 && (item.quantity - item.cant_insert) < item.packed) {
+    message = `O: ${item.packed - (item.quantity - item.cant_insert)}`
+  }
+
+  if (message) {
+    missingStatus = message.includes('M:');
+    if (missingStatus) {
+      colorMsg = colors.danger;
+    }
+    overStatus = message.includes('O:');
+    if (overStatus) {
+      colorMsg = colors.green;
+    }
+  }
 
   return (
     <View>
@@ -215,19 +221,18 @@ export const ProductsCardBulkVan = ({
 
               <View style={ProductStyles.qty}>
                 <Text style={ProductStyles.textCard}>
-                  Qty: {quantityPressed}
-                </Text>
-                <Text
-                  style={[
-                    ProductStyles.textCard,
-                    {
-                      marginRight: 25,
-                      color: colorMessage,
-                      textDecorationLine: isNA ? 'line-through' : 'none',
-                    },
-                  ]}
-                >
-                  {message}
+                  Qty: {item.quantity} - L: {item.cant_insert}
+                  {message && (
+                    <>
+                      <Text>
+                        {" "}-{" "}
+                      </Text>
+                      <Text style={{ color: colorMsg }}>
+                        {message}
+                      </Text>
+                    </>
+                  )}
+
                 </Text>
               </View>
             </View>
@@ -239,6 +244,7 @@ export const ProductsCardBulkVan = ({
               left={left}
               isNA={isNA}
               missingStatus={missingStatus}
+              overStatus={overStatus}
             />
           </View>
         </PanGestureHandler>

@@ -22,9 +22,6 @@ const useOrdersByDate = create((set) => {
     setOrdersByDateClean: (orders) => {
       set({ ordersByDate: orders })
     },
-    setSelectedRoute: (route) => {
-      set({ selectedRoute: route })
-    },
     setRoutesByDate: async (token, date) => {
       try {
         set({ isLoading: true })
@@ -48,6 +45,9 @@ const useOrdersByDate = create((set) => {
         set({ isLoading: false })
         console.error('Error during request:', error)
       }
+    },
+    setSelectedRoute: (route) => {
+      set({ selectedRoute: route })
     },
     setOrdersByDate: (nameRoute, routesByDate) => {
 

@@ -3,14 +3,18 @@ import { useFocusEffect } from '@react-navigation/native'
 import React, { useCallback, useState } from 'react'
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import mainAxios from '../../../axios.config'
 import { BtnGoBack } from '../../components/BtnGoBack'
 import CustomerCard from '../../components/CustomerCard'
 import ProductSearcher from '../../components/ProductSearch'
-import { AnimatedSearch, AnimatedSearchCard } from '../../components/animation'
+import { percentagePacking } from '../../config/urls.config'
+import useEmployeeStore from '../../store/useEmployeeStore'
 import useOrdersByDate from '../../store/useOrdersByDateStore'
+import usePercentageStore from '../../store/usePercentageStore'
 import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
 import { colors } from '../../styles/GlobalStyles'
 import { SearchStyles } from '../../styles/ProductStyles'
+import { AnimatedSearch, AnimatedSearchCard } from '../../components/animation'
 
 function CustomerDayPacking({ route }) {
   const { nameRoute } = route.params
@@ -18,9 +22,10 @@ function CustomerDayPacking({ route }) {
     ordersByDate,
     setOrdersByDate,
     setOrdersByDateClean,
-    routesByDate,
+    routesByDate
   } = useOrdersByDate()
-
+  const { employeeToken } = useEmployeeStore()
+  const { setPercentages } = usePercentageStore()
   const [searchPhrase, setSearchPhrase] = useState('')
   const [search, setSearch] = useState(false)
 
@@ -33,13 +38,30 @@ function CustomerDayPacking({ route }) {
     setSearch(true)
   }
 
+  async function fetchData() {
+    try {
+      console.log('Obteniendo porcentaje de customers packing');
+      const response = await mainAxios.get(percentagePacking, {
+        headers: {
+          Authorization: `Bearer ${employeeToken}`,
+        },
+      })
+      setPercentages(response.data.orders)
+    } catch (error) {
+      console.error('Error al obtener porcentaje:', error)
+    }
+  }
+
   useFocusEffect(
     useCallback(() => {
+      fetchData()
       setOrdersByDate(nameRoute, routesByDate)
       return () => {
         setOrdersByDateClean([])
+        setPercentages([])
       }
-    }, []),)
+    }, []),
+  )
 
   return (
     <SafeAreaView style={CustomerDayStyles.customerPricipal}>
@@ -111,7 +133,6 @@ function CustomerDayPacking({ route }) {
               </View>
             ) : null}
           </View>
-
         </AnimatedSearchCard>
       </ScrollView>
     </SafeAreaView>
