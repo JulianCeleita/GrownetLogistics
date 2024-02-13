@@ -22,6 +22,7 @@ const Packing = () => {
   const navigation = useNavigation()
   const {
     routesByDate,
+    setOrdersByDate,
     setSelectedRoute,
     setRoutesByDate,
     selectedDate,
@@ -31,6 +32,7 @@ const Packing = () => {
   const { employeeToken } = useEmployeeStore()
   const handleRoutePress = (nameRoute) => {
     setSelectedRoute(nameRoute)
+    setOrdersByDate(nameRoute, routesByDate)
     navigation.navigate('CustomerDayPacking', { nameRoute: nameRoute })
   }
 
@@ -39,6 +41,7 @@ const Packing = () => {
       setRoutesByDate(employeeToken, selectedDate)
       return () => {
         setRoutesByDateClean([])
+        console.log('clean packing');
       }
     }, [navigation],))
 

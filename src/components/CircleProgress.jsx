@@ -10,7 +10,7 @@ function CircleProgress({ percentage }) {
   const strokeDashoffset = circumference - (percentage / 100) * circumference
   let roundedPercentage = Math.round(percentage)
   return (
-    <Svg height={radius * 2} width={radius * 2}>
+    <Svg style={DeliveryStyles.circle} height={radius * 2} width={radius * 2}>
       <Circle
         cx={radius}
         cy={radius}

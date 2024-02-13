@@ -26,6 +26,7 @@ function ShortsVans() {
   const navigation = useNavigation()
   const {
     routesByDate,
+    setOrdersByDate,
     setSelectedRoute,
     setRoutesByDate,
     setRoutesByDateClean,
@@ -39,6 +40,7 @@ function ShortsVans() {
 
   const handleRoutePress = (nameRoute) => {
     setSelectedRoute(nameRoute)
+    setOrdersByDate(nameRoute, routesByDate)
     navigation.navigate('ProductsVan', { nameRoute: nameRoute })
   }
 

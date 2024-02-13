@@ -77,8 +77,10 @@ export const CustomerDayStyles = StyleSheet.create({
     paddingHorizontal: 5,
   },
   cardsLayout: {
+    width: Platform.OS === 'ios' ? '20%' : '8%',
     justifyContent: 'center',
     alignItems: 'center',
+    width: '30%',
   },
   cardText: {
     alignItems: 'left',
