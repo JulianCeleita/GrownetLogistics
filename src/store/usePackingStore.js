@@ -6,12 +6,17 @@ export const usePackingStore = create((set) => ({
   productsPacking: null,
   selectedOrder: null,
   error: null,
+
   setError: (error) => set(() => ({ error: error })),
+
   setSelectedOrder: (order) => set(() => ({ selectedOrder: order })),
+
   setProductsPacking: (products) => set(() => ({ productsPacking: products })),
+
   setFetchPackingProducts: async (token, orderNumber) => {
     try {
-      const resp = await mainAxios.get(`${productsPackingConfig}${orderNumber}`,
+      const resp = await mainAxios.get(
+        `${productsPackingConfig}${orderNumber}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
