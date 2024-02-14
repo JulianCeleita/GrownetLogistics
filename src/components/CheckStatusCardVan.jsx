@@ -11,15 +11,19 @@ export const CheckStatusCardVan = ({
   left,
   isNA,
   missingStatus,
-  overStatus
+  overStatus,
+  checkStatus
 }) => {
   const [iconCheck, setIconCheck] = useState('questioncircleo')
   const [colorCheck, setColorCheck] = useState(colors.gray)
   useEffect(() => {
-    if (missingStatus) {
+    if (missingStatus && !checkStatus) {
       setColorCheck(colors.danger)
       setIconCheck('arrowright')
-    } else if (overStatus) {
+    } else if (missingStatus && checkStatus) {
+      setColorCheck(colors.bluePrimary)
+      setIconCheck('arrowright')
+    } if (overStatus) {
       setColorCheck(colors.bluePrimary)
       setIconCheck('arrowright')
     } else if (isNA) {
