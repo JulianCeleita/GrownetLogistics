@@ -89,7 +89,7 @@ function ProductsVan({ route }) {
     <SafeAreaView style={ProductStyles.products}>
       <BtnGoBack
         color={colors.darkBlue}
-        top={Platform.OS === 'ios' && !Platform.isPad ? 68 : 10}
+        top={Platform.OS === 'ios' ? 58 : 10}
       />
       <View style={CustomerDayStyles.title2}>
         <View>
@@ -141,7 +141,17 @@ function ProductsVan({ route }) {
                 alignItems: 'center',
               }}
             >
-              <Text>Error: {error}</Text>
+              <Text>{error}</Text>
+            </View>
+          ) : restaurantData.length === 0 ? (
+            <View
+              style={{
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <Text>There are no products in Short status.</Text>
             </View>
           ) : (
             <View>

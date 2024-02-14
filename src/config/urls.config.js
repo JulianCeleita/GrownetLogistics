@@ -8,6 +8,6 @@ export const productsLoadingConfig = process.env.EXPO_PUBLIC_PRODUCTS_LOADING
 export const insertLoading = process.env.EXPO_PUBLIC_INSERT_LOADING
 export const percentagePacking = process.env.EXPO_PUBLIC_PERCENTAGE_PACKING
 export const percentageLoading = process.env.EXPO_PUBLIC_PERCENTAGE_LOADING
-export const insertShort = process.env.EXPO_PUBLIC_SHORT_INSERT
 export const shortBulkConfig = process.env.EXPO_PUBLIC_SHORT_BULK
 export const shortVanConfig = process.env.EXPO_PUBLIC_SHORT_VAN
+export const insertShort = process.env.EXPO_PUBLIC_SHORT_INSERT

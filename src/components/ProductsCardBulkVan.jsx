@@ -147,51 +147,64 @@ export const ProductsCardBulkVan = ({
   }
 
   let message = null;
-  let missingStatus = null;
-  let overStatus = null;
-  let colorMsg = null;
+  let missingStatus = false;
+  let overStatus = false;
+  let checkStatus = false;
+  let colorStatus = null;
+
+  if (!item.packed && (item.quantity - item.cant_insert) === item.packed || (item.quantity - item.cant_insert) === item.quantity_defitive) {
+    message = `M: ${item.quantity - item.cant_insert}`
+    checkStatus = true;
+    colorStatus = colors.danger;
+  }
 
   if (!item.packed && !item.quantity_defitive && item.quantity > item.cant_insert) {
     message = `M: ${item.quantity - item.cant_insert}`
+    missingStatus = true;
+    colorStatus = colors.danger;
   }
 
   if (!item.packed && !item.quantity_defitive && item.quantity < item.cant_insert) {
     message = `O: ${item.cant_insert - item.quantity}`
+    overStatus = true;
+    colorStatus = colors.green;
   }
 
   if (!item.packed && item.quantity_defitive && (item.quantity_defitive + item.cant_insert) < item.quantity) {
     message = `M: ${item.quantity - (item.quantity_defitive + item.cant_insert)}`
+    missingStatus = true;
+    colorStatus = colors.danger;
   }
 
   if (!item.packed && item.quantity_defitive && (item.quantity_defitive + item.cant_insert) > item.quantity) {
     message = `O: ${(item.quantity_defitive + item.cant_insert) - item.quantity}`
+    overStatus = true;
+    colorStatus = colors.green;
   }
 
   if (item.packed && item.cant_insert > 0 && (item.quantity - item.cant_insert) > item.packed) {
     message = `M: ${(item.quantity - item.cant_insert) - item.packed}`
+    missingStatus = true;
+    colorStatus = colors.danger;
   }
 
   if (item.packed && item.cant_insert > 0 && (item.quantity - item.cant_insert) < item.packed) {
     message = `O: ${item.packed - (item.quantity - item.cant_insert)}`
+    overStatus = true;
+    colorStatus = colors.green;
+
   }
 
   if (item.packed && item.cant_insert <= 0 && (item.quantity - item.cant_insert) > item.packed) {
     message = `M: ${(item.quantity - item.cant_insert) - item.packed}`
+    missingStatus = true;
+    colorStatus = colors.danger;
   }
 
   if (item.packed && item.cant_insert <= 0 && (item.quantity - item.cant_insert) < item.packed) {
     message = `O: ${item.packed - (item.quantity - item.cant_insert)}`
-  }
-
-  if (message) {
-    missingStatus = message.includes('M:');
-    if (missingStatus) {
-      colorMsg = colors.danger;
-    }
-    overStatus = message.includes('O:');
-    if (overStatus) {
-      colorMsg = colors.green;
-    }
+    overStatus = true;
+    colorStatus = colors.green;
   }
 
   return (
@@ -227,7 +240,7 @@ export const ProductsCardBulkVan = ({
                       <Text>
                         {" "}-{" "}
                       </Text>
-                      <Text style={{ color: colorMsg }}>
+                      <Text style={{ color: colorStatus }}>
                         {message}
                       </Text>
                     </>
@@ -245,6 +258,7 @@ export const ProductsCardBulkVan = ({
               isNA={isNA}
               missingStatus={missingStatus}
               overStatus={overStatus}
+              checkStatus={checkStatus}
             />
           </View>
         </PanGestureHandler>

@@ -22,7 +22,11 @@ export const useShortVanStore = create((set) => ({
         },
       })
 
-      const { status, van } = response.data
+      if (response.data.length === 0) {
+        return set({ loading: false, restaurantData: [] })
+      }
+
+      const { status, van } = response.data;
 
       if (status === 200 && Array.isArray(van)) {
         set({
@@ -31,20 +35,20 @@ export const useShortVanStore = create((set) => ({
             products: toggle
               ? restaurant.products
               : restaurant.products.filter((product) => {
-                  return product.state_definitive !== 'N/A'
-                }),
+                return product.state_definitive !== 'N/A';
+              }),
           })),
           loading: false,
-        })
+        });
       } else {
-        set({ loading: false, error: 'Error en la respuesta del servidor.' })
+        set({ loading: false, error: 'Error in server response.' });
       }
     } catch (error) {
       set({
         loading: false,
-        error: 'Error de autenticación. Verifica las credenciales.',
+        error: 'Authentication error. Check your credentials.',
       })
-      console.error('Error de autenticación. Verifica las credenciales.', error)
+      console.error('Authentication error. Check your credentials.', error)
     }
   },
 }))
