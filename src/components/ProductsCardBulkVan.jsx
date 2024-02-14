@@ -146,13 +146,13 @@ export const ProductsCardBulkVan = ({
     )
   }
 
-  let message = null;
+  let message = `M: ${item.quantity - item.cant_insert}`;
   let missingStatus = false;
   let overStatus = false;
   let checkStatus = false;
-  let colorStatus = null;
+  let colorStatus = colors.danger;
 
-  if (!item.packed && (item.quantity - item.cant_insert) === item.packed || (item.quantity - item.cant_insert) === item.quantity_defitive) {
+  if ((item.quantity - item.cant_insert) === item.packed || (item.quantity - item.cant_insert) === item.quantity_defitive) {
     message = `M: ${item.quantity - item.cant_insert}`
     checkStatus = true;
     colorStatus = colors.danger;
@@ -206,6 +206,16 @@ export const ProductsCardBulkVan = ({
     overStatus = true;
     colorStatus = colors.green;
   }
+
+  console.log(
+    'name', item.name,
+    'packed', item.packed,
+    'quantity', item.quantity,
+    'cant_insert', item.cant_insert,
+    'message', message,
+    'missingStatus', missingStatus,
+    'overStatus', overStatus
+  );
 
   return (
     <View>
