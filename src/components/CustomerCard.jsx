@@ -20,19 +20,19 @@ const CustomerCard = ({ customer, loadingCard }) => {
   let roundedPercentage = 0
   const handleNavigateToProducts = () => {
     if (!loadingCard) {
+      setSelectedOrder(customer.orders_reference)
       navigation.navigate('ProductsPacking', {
         selectedCustomer: customer.accountNumber,
         accountName: customer.accountName,
         orderNumber: customer.orders_reference,
       })
-      setSelectedOrder(customer.orders_reference)
     } else {
+      setSelectedOrderL(customer.orders_reference)
       navigation.navigate('ProductsLoading', {
         selectedCustomer: customer.accountNumber,
         accountName: customer.accountName,
         orderNumber: customer.orders_reference,
       })
-      setSelectedOrderL(customer.orders_reference)
     }
   }
 
