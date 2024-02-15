@@ -132,7 +132,7 @@ export function ProductsCard({
                     },
                   ]}
                 >
-                  {item.name} {item.presentationName}
+                  {item.name} - {item.uom}
                 </Text>
                 <View style={ProductStyles.qty}>
                   <Text style={ProductStyles.textCard}>

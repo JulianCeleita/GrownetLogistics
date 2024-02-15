@@ -122,7 +122,7 @@ export const ProductsCardBulkVan = ({
               },
             ]}
           >
-            {item.name} {item.presentationName}
+            {item.name} - {item.uom}
           </Text>
           <Text style={ProductStyles.textCard}>
             {`Missing ${isDecimal(item.quantity - item.cant_insert)}`}
@@ -239,7 +239,7 @@ export const ProductsCardBulkVan = ({
                   },
                 ]}
               >
-                {item.name} {item.presentationName}
+                {item.name} - {item.uom}
               </Text>
 
               <View style={ProductStyles.qty}>
