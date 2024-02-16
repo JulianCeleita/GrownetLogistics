@@ -207,15 +207,7 @@ export const ProductsCardBulkVan = ({
     colorStatus = colors.green;
   }
 
-  console.log(
-    'name', item.name,
-    'packed', item.packed,
-    'quantity', item.quantity,
-    'cant_insert', item.cant_insert,
-    'message', message,
-    'missingStatus', missingStatus,
-    'overStatus', overStatus
-  );
+  console.log(item);
 
   return (
     <View>
@@ -244,7 +236,12 @@ export const ProductsCardBulkVan = ({
 
               <View style={ProductStyles.qty}>
                 <Text style={ProductStyles.textCard}>
-                  Qty: {item.quantity} - L: {item.cant_insert}
+                  Qty: {item.quantity}
+                  {item.cant_insert && Number(item.cant_insert) > 0 && (
+                    <Text>
+                      {" "}-{" L: "}{item.cant_insert}
+                    </Text>
+                  )}
                   {message && (
                     <>
                       <Text>
