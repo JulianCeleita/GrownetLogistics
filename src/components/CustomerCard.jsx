@@ -7,6 +7,7 @@ import { usePackingStore } from '../store/usePackingStore'
 import usePercentageStore from '../store/usePercentageStore'
 import { CustomerDayStyles } from '../styles/CustomerDayStyles'
 import { GlobalStyles, colors } from '../styles/GlobalStyles'
+import { Ionicons } from '@expo/vector-icons'
 
 const CustomerCard = ({ customer, loadingCard }) => {
   const { setSelectedOrder } = usePackingStore()
@@ -18,6 +19,7 @@ const CustomerCard = ({ customer, loadingCard }) => {
   const strokeWidth = 10
   const circumference = 2 * Math.PI * radius
   let roundedPercentage = 0
+
   const handleNavigateToProducts = () => {
     if (!loadingCard) {
       setSelectedOrder(customer.orders_reference)
@@ -41,26 +43,35 @@ const CustomerCard = ({ customer, loadingCard }) => {
     let percentL = null;
     percentagesP.forEach((order) => {
       if (order.reference === customer.orders_reference) {
-        percentP = Number(order.percentage).toFixed(0)
+        percentP = Number(order.percentage).toFixed(0);
+        customer.vip = order.vip;
+        customer.crates = order.crates;
       }
     })
     percentagesL.forEach((order) => {
       if (order.reference === customer.orders_reference) {
-        percentL = Number(order.percentage).toFixed(0)
+        percentL = Number(order.percentage).toFixed(0);
+        customer.vip = order.vip;
+        customer.crates = order.crates;
       }
     })
-
     roundedPercentage = percentL <= 0 || percentL === null ? percentP : percentL;
   } else {
     percentagesL.forEach((order) => {
       if (order.reference === customer.orders_reference) {
         roundedPercentage = Number(order.percentage).toFixed(0)
+        customer.vip = order.vip;
+        customer.crates = order.crates;
       }
     })
   }
 
   const strokeDashoffset =
-    circumference - (roundedPercentage / 100) * circumference
+    circumference - (roundedPercentage / 100) * circumference;
+
+  console.log('accountName: ', customer.accountName);
+  console.log('vip: ', customer.vip);
+  console.log('crates: ', customer.crates);
 
   return (
     <View>
@@ -125,6 +136,22 @@ const CustomerCard = ({ customer, loadingCard }) => {
           <Text style={CustomerDayStyles.textCustomer}>
             {customer.orders_reference}
           </Text>
+        </View>
+        <View style={CustomerDayStyles.cardIcons}>
+          {customer.vip === 1 ? (
+            <Ionicons
+              name="ios-star"
+              size={24}
+              color={colors.darkBlue}
+            />
+          ) : null}
+          {customer.crates === 1 ? (
+            <Ionicons
+              name="ios-cube"
+              size={24}
+              color={colors.darkBlue}
+            />
+          ) : null}
         </View>
       </TouchableOpacity>
     </View>
