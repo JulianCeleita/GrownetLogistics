@@ -25,7 +25,7 @@ function CustomerDayPacking({ route }) {
     routesByDate
   } = useOrdersByDate()
   const { employeeToken } = useEmployeeStore()
-  const { setPercentagesP, setFetchPercentagesPacking, setFetchPercentagesLoading } = usePercentageStore()
+  const { setPercentagesP, setFetchPercentagesPacking, setPercentagesL, setFetchPercentagesLoading } = usePercentageStore()
   const [searchPhrase, setSearchPhrase] = useState('')
   const [search, setSearch] = useState(false)
 
@@ -46,6 +46,7 @@ function CustomerDayPacking({ route }) {
       return () => {
         setOrdersByDateClean([])
         setPercentagesP([])
+        setPercentagesL([])
       }
     }, [employeeToken]),
   )
