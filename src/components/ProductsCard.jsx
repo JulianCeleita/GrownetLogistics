@@ -133,7 +133,7 @@ export function ProductsCard({
                       },
                     ]}
                   >
-                    {item.name} - {item.presentationName + ' ' + item.uom}
+                    {item.name} {item.uom + ' - ' + item.presentationName}
                   </Text>
                 ) : (
                   <Text
