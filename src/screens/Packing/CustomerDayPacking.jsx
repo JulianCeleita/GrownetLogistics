@@ -25,7 +25,7 @@ function CustomerDayPacking({ route }) {
     routesByDate
   } = useOrdersByDate()
   const { employeeToken } = useEmployeeStore()
-  const { setPercentages } = usePercentageStore()
+  const { setPercentagesP, setFetchPercentagesPacking, setFetchPercentagesLoading } = usePercentageStore()
   const [searchPhrase, setSearchPhrase] = useState('')
   const [search, setSearch] = useState(false)
 
@@ -38,29 +38,16 @@ function CustomerDayPacking({ route }) {
     setSearch(true)
   }
 
-  async function fetchData() {
-    try {
-      console.log('Obteniendo porcentaje de customers packing');
-      const response = await mainAxios.get(percentagePacking, {
-        headers: {
-          Authorization: `Bearer ${employeeToken}`,
-        },
-      })
-      setPercentages(response.data.orders)
-    } catch (error) {
-      console.error('Error al obtener porcentaje:', error)
-    }
-  }
-
   useFocusEffect(
     useCallback(() => {
-      fetchData()
+      setFetchPercentagesLoading(employeeToken)
+      setFetchPercentagesPacking(employeeToken)
       setOrdersByDate(nameRoute, routesByDate)
       return () => {
         setOrdersByDateClean([])
-        setPercentages([])
+        setPercentagesP([])
       }
-    }, []),
+    }, [employeeToken]),
   )
 
   return (

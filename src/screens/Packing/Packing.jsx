@@ -41,7 +41,6 @@ const Packing = () => {
       setRoutesByDate(employeeToken, selectedDate)
       return () => {
         setRoutesByDateClean([])
-        console.log('clean packing');
       }
     }, [navigation],))
 
