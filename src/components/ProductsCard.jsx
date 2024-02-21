@@ -124,16 +124,29 @@ export function ProductsCard({
           <View>
             <View style={[ProductStyles.card, GlobalStyles.boxShadow]}>
               <View style={ProductStyles.productTittle}>
-                <Text
-                  style={[
-                    ProductStyles.tittleCard,
-                    {
-                      textDecorationLine: isNA ? 'line-through' : 'none',
-                    },
-                  ]}
-                >
-                  {item.name} - {item.uom}
-                </Text>
+                {item.uom != 'Ea' && item.uom != 'Kg' ? (
+                  <Text
+                    style={[
+                      ProductStyles.tittleCard,
+                      {
+                        textDecorationLine: isNA ? 'line-through' : 'none',
+                      },
+                    ]}
+                  >
+                    {item.name} - {item.presentationName + ' ' + item.uom}
+                  </Text>
+                ) : (
+                  <Text
+                    style={[
+                      ProductStyles.tittleCard,
+                      {
+                        textDecorationLine: isNA ? 'line-through' : 'none',
+                      },
+                    ]}
+                  >
+                    {item.name} - {item.uom}
+                  </Text>
+                )}
                 <View style={ProductStyles.qty}>
                   <Text style={ProductStyles.textCard}>
                     Qty: {item.quantity}
