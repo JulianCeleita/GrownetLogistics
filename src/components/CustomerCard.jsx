@@ -11,7 +11,7 @@ import { GlobalStyles, colors } from '../styles/GlobalStyles'
 const CustomerCard = ({ customer, loadingCard }) => {
   const { setSelectedOrder } = usePackingStore()
   const { setSelectedOrderL } = useLoadingStore()
-  const { percentages } = usePercentageStore()
+  const { percentagesP, percentagesL } = usePercentageStore()
 
   const navigation = useNavigation()
   const radius = 33
@@ -36,11 +36,28 @@ const CustomerCard = ({ customer, loadingCard }) => {
     }
   }
 
-  percentages.forEach((order) => {
-    if (order.reference === customer.orders_reference) {
-      roundedPercentage = Number(order.percentage).toFixed(0)
-    }
-  })
+  if (!loadingCard) {
+    let percentP = null;
+    let percentL = null;
+    percentagesP.forEach((order) => {
+      if (order.reference === customer.orders_reference) {
+        percentP = Number(order.percentage).toFixed(0)
+      }
+    })
+    percentagesL.forEach((order) => {
+      if (order.reference === customer.orders_reference) {
+        percentL = Number(order.percentage).toFixed(0)
+      }
+    })
+
+    roundedPercentage = percentL <= 0 || percentL === null ? percentP : percentL;
+  } else {
+    percentagesL.forEach((order) => {
+      if (order.reference === customer.orders_reference) {
+        roundedPercentage = Number(order.percentage).toFixed(0)
+      }
+    })
+  }
 
   const strokeDashoffset =
     circumference - (roundedPercentage / 100) * circumference

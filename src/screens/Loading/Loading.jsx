@@ -40,12 +40,9 @@ const Loading = () => {
     useCallback(() => {
       setRoutesByDate(employeeToken, selectedDate)
       return () => {
-        setRoutesByDateClean([])
-        console.log('clean loading');
+        setRoutesByDateClean([]);
       }
     }, [navigation],))
-
-  console.log('routesByDate', routesByDate);
 
   return (
     <View style={{ backgroundColor: 'white', height: '100%' }}>
