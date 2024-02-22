@@ -15,11 +15,7 @@ export const useProductSubmit = (insert) => {
     note = '',
     state = null,
   ) => {
-    console.log('-----------------------------------------------');
-    console.log('entra aca?', { itemId, quantity, note, state });
-    console.log('-----------------------------------------------');
     setIsLoading(true)
-
     const data = {
       note,
       id: itemId,
