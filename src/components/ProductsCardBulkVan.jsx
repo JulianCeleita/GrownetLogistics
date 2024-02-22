@@ -153,61 +153,63 @@ export const ProductsCardBulkVan = ({
   let colorStatus = colors.danger;
 
   if ((item.quantity - item.cant_insert) === item.packed || (item.quantity - item.cant_insert) === item.quantity_defitive) {
-    message = `M: ${item.quantity - item.cant_insert}`
+    message = `M: ${Number(item.quantity - item.cant_insert).toFixed(1)}`
     checkStatus = true;
     colorStatus = colors.danger;
   }
 
   if (!item.packed && !item.quantity_defitive && item.quantity > item.cant_insert) {
-    message = `M: ${item.quantity - item.cant_insert}`
+    message = `M: ${Number(item.quantity - item.cant_insert).toFixed(1)}`
     missingStatus = true;
     colorStatus = colors.danger;
   }
 
   if (!item.packed && !item.quantity_defitive && item.quantity < item.cant_insert) {
-    message = `O: ${item.cant_insert - item.quantity}`
+    message = `O: ${Number(item.cant_insert - item.quantity).toFixed(1)}`
     overStatus = true;
     colorStatus = colors.green;
   }
 
   if (!item.packed && item.quantity_defitive && (item.quantity_defitive + item.cant_insert) < item.quantity) {
-    message = `M: ${item.quantity - (item.quantity_defitive + item.cant_insert)}`
+    message = `M: ${Number(item.quantity - (item.quantity_defitive + item.cant_insert)).toFixed(1)}`
     missingStatus = true;
     colorStatus = colors.danger;
   }
 
   if (!item.packed && item.quantity_defitive && (item.quantity_defitive + item.cant_insert) > item.quantity) {
-    message = `O: ${(item.quantity_defitive + item.cant_insert) - item.quantity}`
+    message = `O: ${Number((item.quantity_defitive + item.cant_insert) - item.quantity).toFixed(1)}`
     overStatus = true;
     colorStatus = colors.green;
   }
 
   if (item.packed && item.cant_insert > 0 && (item.quantity - item.cant_insert) > item.packed) {
-    message = `M: ${(item.quantity - item.cant_insert) - item.packed}`
+    message = `M: ${Number((item.quantity - item.cant_insert) - item.packed).toFixed(1)}`
     missingStatus = true;
     colorStatus = colors.danger;
   }
 
   if (item.packed && item.cant_insert > 0 && (item.quantity - item.cant_insert) < item.packed) {
-    message = `O: ${item.packed - (item.quantity - item.cant_insert)}`
+    message = `O: ${Number(item.packed - (item.quantity - item.cant_insert)).toFixed(1)}`
     overStatus = true;
     colorStatus = colors.green;
 
   }
 
   if (item.packed && item.cant_insert <= 0 && (item.quantity - item.cant_insert) > item.packed) {
-    message = `M: ${(item.quantity - item.cant_insert) - item.packed}`
+    message = `M: ${Number((item.quantity - item.cant_insert) - item.packed).toFixed(1)}`
     missingStatus = true;
     colorStatus = colors.danger;
   }
 
   if (item.packed && item.cant_insert <= 0 && (item.quantity - item.cant_insert) < item.packed) {
-    message = `O: ${item.packed - (item.quantity - item.cant_insert)}`
+    message = `O: ${Number(item.packed - (item.quantity - item.cant_insert)).toFixed(1)}`
     overStatus = true;
     colorStatus = colors.green;
   }
 
-  console.log(item);
+  if (item.name.includes('Parsley Flat')) {
+    console.log(item.quantity);
+  }
 
   return (
     <View>
@@ -236,10 +238,10 @@ export const ProductsCardBulkVan = ({
 
               <View style={ProductStyles.qty}>
                 <Text style={ProductStyles.textCard}>
-                  Qty: {item.quantity}
+                  Qty: {Number(item.quantity).toFixed(1)}
                   {item.cant_insert && Number(item.cant_insert) > 0 && (
                     <Text>
-                      {" "}-{" L: "}{item.cant_insert}
+                      {" "}-{" L: "}{Number(item.cant_insert).toFixed(1)}
                     </Text>
                   )}
                   {message && (
