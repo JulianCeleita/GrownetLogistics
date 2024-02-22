@@ -15,20 +15,21 @@ export const useProductSubmit = (insert) => {
     note = '',
     state = null,
   ) => {
+    console.log('-----------------------------------------------');
+    console.log('entra aca?', { itemId, quantity, note, state });
+    console.log('-----------------------------------------------');
     setIsLoading(true)
 
     const data = {
       note,
       id: itemId,
       state: state,
-
     }
 
     if (typeof quantity === 'string' && quantity.includes('.')) {
       data.quantity = parseFloat(quantity.replace(',', '.'));
     } else {
       data.quantity = parseInt(quantity);
-
     }
 
     try {
