@@ -62,9 +62,10 @@ export function ProductsCard({
       : item.quantity
 
   const handleCardSubmit = async () => {
+
     const cardPromises = [
       handlePress(item.id),
-      handleSubmit(item.id, quantityLoading, note),
+      handleSubmit(item.id, String(quantityLoading), note),
     ]
     await Promise.allSettled(cardPromises)
   }
@@ -74,10 +75,9 @@ export function ProductsCard({
     setSelectedProduct(null)
   }
 
-  //console.log('item', item)
   const handlePressAction = () => {
     if (item.state_definitive === 'N/A') {
-      return () => {}
+      return () => { }
     }
     if (!viewPacking) {
       if (item.state_packing !== 'ND' && item.state_packing !== 'SHORT') {
@@ -99,7 +99,7 @@ export function ProductsCard({
       item.state_definitive === 'N/A' ||
       (viewPacking && item.state_loading !== null)
     ) {
-      return () => {}
+      return () => { }
     } else {
       return handleGestureEvent(e, item.id)
     }
@@ -152,7 +152,7 @@ export function ProductsCard({
                 )}
                 <View style={ProductStyles.qty}>
                   <Text style={ProductStyles.textCard}>
-                    Qty: {item.quantity}
+                    {item.id} Qty: {item.quantity}
                   </Text>
 
                   {/* Componente para le manejo del Missing y el Overweight */}
