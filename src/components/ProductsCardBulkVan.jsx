@@ -104,7 +104,9 @@ export const ProductsCardBulkVan = ({
 
   const isDecimal = (num) => {
     num = Number(num);
+    console.log('num', num);
     if (num % 1 !== 0) {
+      console.log('num2', num.toFixed(1));
       return num.toFixed(1);
     }
     return num;
@@ -235,12 +237,12 @@ export const ProductsCardBulkVan = ({
               <View style={ProductStyles.qty}>
                 <Text style={ProductStyles.textCard}>
                   Qty: {isDecimal(item.quantity)}
-                  {item.cant_insert && Number(item.cant_insert) > 0 && (
+                  {item.cant_insert && Number(item.cant_insert) > 0 ? (
                     <Text>
                       {" "}-{" L: "}{isDecimal(item.cant_insert)}
                     </Text>
-                  )}
-                  {message && (
+                  ) : null}
+                  {message ? (
                     <>
                       <Text>
                         {" "}-{" "}
@@ -249,7 +251,7 @@ export const ProductsCardBulkVan = ({
                         {message}
                       </Text>
                     </>
-                  )}
+                  ) : null}
 
                 </Text>
               </View>
