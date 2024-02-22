@@ -66,7 +66,6 @@ export const CustomerDayStyles = StyleSheet.create({
   card: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
     backgroundColor: 'white',
     borderRadius: 20,
     margin: 8,
@@ -74,7 +73,7 @@ export const CustomerDayStyles = StyleSheet.create({
     marginTop: 10,
     width: 320,
     paddingVertical: 10,
-    paddingHorizontal: 5,
+    paddingHorizontal: 10,
   },
   cardsLayout: {
     width: Platform.OS === 'ios' ? '20%' : '8%',
@@ -83,9 +82,9 @@ export const CustomerDayStyles = StyleSheet.create({
     width: '30%',
   },
   cardText: {
-    alignItems: 'left',
-    paddingLeft: 15,
-    width: '60%',
+    width: '50%',
+    alignContent: 'center',
+    marginLeft: 10,
   },
   titleCustomer: {
     fontSize: 16,
@@ -149,5 +148,10 @@ export const CustomerDayStyles = StyleSheet.create({
   },
   toggleDotOn: {
     backgroundColor: 'white',
+  },
+  cardIcons: {
+    width: '20%',
+    alignItems: 'center',
+    marginRight: 10,
   },
 })

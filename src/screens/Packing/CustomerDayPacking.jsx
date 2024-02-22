@@ -3,18 +3,16 @@ import { useFocusEffect } from '@react-navigation/native'
 import React, { useCallback, useState } from 'react'
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import mainAxios from '../../../axios.config'
 import { BtnGoBack } from '../../components/BtnGoBack'
 import CustomerCard from '../../components/CustomerCard'
 import ProductSearcher from '../../components/ProductSearch'
-import { percentagePacking } from '../../config/urls.config'
+import { AnimatedSearch, AnimatedSearchCard } from '../../components/animation'
 import useEmployeeStore from '../../store/useEmployeeStore'
 import useOrdersByDate from '../../store/useOrdersByDateStore'
 import usePercentageStore from '../../store/usePercentageStore'
 import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
 import { colors } from '../../styles/GlobalStyles'
 import { SearchStyles } from '../../styles/ProductStyles'
-import { AnimatedSearch, AnimatedSearchCard } from '../../components/animation'
 
 function CustomerDayPacking({ route }) {
   const { nameRoute } = route.params
@@ -25,7 +23,7 @@ function CustomerDayPacking({ route }) {
     routesByDate
   } = useOrdersByDate()
   const { employeeToken } = useEmployeeStore()
-  const { setPercentages } = usePercentageStore()
+  const { setPercentagesP, setFetchPercentagesPacking, setPercentagesL, setFetchPercentagesLoading } = usePercentageStore()
   const [searchPhrase, setSearchPhrase] = useState('')
   const [search, setSearch] = useState(false)
 
@@ -38,29 +36,17 @@ function CustomerDayPacking({ route }) {
     setSearch(true)
   }
 
-  async function fetchData() {
-    try {
-      console.log('Obteniendo porcentaje de customers packing');
-      const response = await mainAxios.get(percentagePacking, {
-        headers: {
-          Authorization: `Bearer ${employeeToken}`,
-        },
-      })
-      setPercentages(response.data.orders)
-    } catch (error) {
-      console.error('Error al obtener porcentaje:', error)
-    }
-  }
-
   useFocusEffect(
     useCallback(() => {
-      fetchData()
+      setFetchPercentagesLoading(employeeToken)
+      setFetchPercentagesPacking(employeeToken)
       setOrdersByDate(nameRoute, routesByDate)
       return () => {
         setOrdersByDateClean([])
-        setPercentages([])
+        setPercentagesP([])
+        setPercentagesL([])
       }
-    }, []),
+    }, [employeeToken]),
   )
 
   return (

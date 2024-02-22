@@ -14,7 +14,7 @@ function ProductSearcher({ setSearch, searchPhrase, setSearchPhrase }) {
       <View style={SearchStyles.containerSearch}>
         <TextInput
           style={SearchStyles.BgInput}
-          placeholder="Buscar"
+          placeholder="Search"
           value={searchPhrase}
           onChangeText={setSearchPhrase}
         />

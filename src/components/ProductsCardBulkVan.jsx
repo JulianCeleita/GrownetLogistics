@@ -103,10 +103,13 @@ export const ProductsCardBulkVan = ({
   }, [])
 
   const isDecimal = (num) => {
+    num = Number(num);
+    console.log('num', num);
     if (num % 1 !== 0) {
-      return num.toFixed(1)
+      console.log('num2', num.toFixed(1));
+      return num.toFixed(1);
     }
-    return num
+    return num;
   }
 
   if (viewBulk) {
@@ -153,64 +156,61 @@ export const ProductsCardBulkVan = ({
   let colorStatus = colors.danger;
 
   if ((item.quantity - item.cant_insert) === item.packed || (item.quantity - item.cant_insert) === item.quantity_defitive) {
-    message = `M: ${item.quantity - item.cant_insert}`
+    message = `M: ${isDecimal(item.quantity - item.cant_insert)}`
     checkStatus = true;
     colorStatus = colors.danger;
   }
 
   if (!item.packed && !item.quantity_defitive && item.quantity > item.cant_insert) {
-    message = `M: ${item.quantity - item.cant_insert}`
+    message = `M: ${isDecimal(item.quantity - item.cant_insert)}`
     missingStatus = true;
     colorStatus = colors.danger;
   }
 
   if (!item.packed && !item.quantity_defitive && item.quantity < item.cant_insert) {
-    message = `O: ${item.cant_insert - item.quantity}`
+    message = `O: ${isDecimal(item.cant_insert - item.quantity)}`
     overStatus = true;
     colorStatus = colors.green;
   }
 
   if (!item.packed && item.quantity_defitive && (item.quantity_defitive + item.cant_insert) < item.quantity) {
-    message = `M: ${item.quantity - (item.quantity_defitive + item.cant_insert)}`
+    message = `M: ${isDecimal(item.quantity - (item.quantity_defitive + item.cant_insert))}`
     missingStatus = true;
     colorStatus = colors.danger;
   }
 
   if (!item.packed && item.quantity_defitive && (item.quantity_defitive + item.cant_insert) > item.quantity) {
-    message = `O: ${(item.quantity_defitive + item.cant_insert) - item.quantity}`
+    message = `O: ${isDecimal((item.quantity_defitive + item.cant_insert) - item.quantity)}`
     overStatus = true;
     colorStatus = colors.green;
   }
 
   if (item.packed && item.cant_insert > 0 && (item.quantity - item.cant_insert) > item.packed) {
-    message = `M: ${(item.quantity - item.cant_insert) - item.packed}`
+    message = `M: ${isDecimal((item.quantity - item.cant_insert) - item.packed)}`
     missingStatus = true;
     colorStatus = colors.danger;
   }
 
   if (item.packed && item.cant_insert > 0 && (item.quantity - item.cant_insert) < item.packed) {
-    message = `O: ${item.packed - (item.quantity - item.cant_insert)}`
+    message = `O: ${isDecimal(item.packed - (item.quantity - item.cant_insert))}`
     overStatus = true;
     colorStatus = colors.green;
-
   }
 
   if (item.packed && item.cant_insert <= 0 && (item.quantity - item.cant_insert) > item.packed) {
-    message = `M: ${(item.quantity - item.cant_insert) - item.packed}`
+    message = `M: ${isDecimal((item.quantity - item.cant_insert) - item.packed)}`
     missingStatus = true;
     colorStatus = colors.danger;
   }
 
   if (item.packed && item.cant_insert <= 0 && (item.quantity - item.cant_insert) < item.packed) {
-    message = `O: ${item.packed - (item.quantity - item.cant_insert)}`
+    message = `O: ${isDecimal(item.packed - (item.quantity - item.cant_insert))}`
     overStatus = true;
     colorStatus = colors.green;
   }
 
-  console.log(item);
-
   return (
-    <View>
+    <View style={{ alignSelf: 'center' }}>
       <TouchableOpacity
         onPress={() => handlePress(item.id)}
         onLongPress={() => (isNA ? handleRevertNA() : handleDeclareNA())}
@@ -236,13 +236,13 @@ export const ProductsCardBulkVan = ({
 
               <View style={ProductStyles.qty}>
                 <Text style={ProductStyles.textCard}>
-                  Qty: {item.quantity}
-                  {item.cant_insert && Number(item.cant_insert) > 0 && (
+                  Qty: {isDecimal(item.quantity)}
+                  {item.cant_insert && Number(item.cant_insert) > 0 ? (
                     <Text>
-                      {" "}-{" L: "}{item.cant_insert}
+                      {" "}-{" L: "}{isDecimal(item.cant_insert)}
                     </Text>
-                  )}
-                  {message && (
+                  ) : null}
+                  {message ? (
                     <>
                       <Text>
                         {" "}-{" "}
@@ -251,7 +251,7 @@ export const ProductsCardBulkVan = ({
                         {message}
                       </Text>
                     </>
-                  )}
+                  ) : null}
 
                 </Text>
               </View>

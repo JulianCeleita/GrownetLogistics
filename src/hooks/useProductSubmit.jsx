@@ -16,19 +16,16 @@ export const useProductSubmit = (insert) => {
     state = null,
   ) => {
     setIsLoading(true)
-
     const data = {
       note,
       id: itemId,
       state: state,
-
     }
 
     if (typeof quantity === 'string' && quantity.includes('.')) {
       data.quantity = parseFloat(quantity.replace(',', '.'));
     } else {
       data.quantity = parseInt(quantity);
-
     }
 
     try {
