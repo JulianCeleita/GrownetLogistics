@@ -103,10 +103,11 @@ export const ProductsCardBulkVan = ({
   }, [])
 
   const isDecimal = (num) => {
+    num = Number(num);
     if (num % 1 !== 0) {
-      return num.toFixed(1)
+      return num.toFixed(1);
     }
-    return num
+    return num;
   }
 
   if (viewBulk) {
@@ -153,66 +154,61 @@ export const ProductsCardBulkVan = ({
   let colorStatus = colors.danger;
 
   if ((item.quantity - item.cant_insert) === item.packed || (item.quantity - item.cant_insert) === item.quantity_defitive) {
-    message = `M: ${Number(item.quantity - item.cant_insert).toFixed(1)}`
+    message = `M: ${isDecimal(item.quantity - item.cant_insert)}`
     checkStatus = true;
     colorStatus = colors.danger;
   }
 
   if (!item.packed && !item.quantity_defitive && item.quantity > item.cant_insert) {
-    message = `M: ${Number(item.quantity - item.cant_insert).toFixed(1)}`
+    message = `M: ${isDecimal(item.quantity - item.cant_insert)}`
     missingStatus = true;
     colorStatus = colors.danger;
   }
 
   if (!item.packed && !item.quantity_defitive && item.quantity < item.cant_insert) {
-    message = `O: ${Number(item.cant_insert - item.quantity).toFixed(1)}`
+    message = `O: ${isDecimal(item.cant_insert - item.quantity)}`
     overStatus = true;
     colorStatus = colors.green;
   }
 
   if (!item.packed && item.quantity_defitive && (item.quantity_defitive + item.cant_insert) < item.quantity) {
-    message = `M: ${Number(item.quantity - (item.quantity_defitive + item.cant_insert)).toFixed(1)}`
+    message = `M: ${isDecimal(item.quantity - (item.quantity_defitive + item.cant_insert))}`
     missingStatus = true;
     colorStatus = colors.danger;
   }
 
   if (!item.packed && item.quantity_defitive && (item.quantity_defitive + item.cant_insert) > item.quantity) {
-    message = `O: ${Number((item.quantity_defitive + item.cant_insert) - item.quantity).toFixed(1)}`
+    message = `O: ${isDecimal((item.quantity_defitive + item.cant_insert) - item.quantity)}`
     overStatus = true;
     colorStatus = colors.green;
   }
 
   if (item.packed && item.cant_insert > 0 && (item.quantity - item.cant_insert) > item.packed) {
-    message = `M: ${Number((item.quantity - item.cant_insert) - item.packed).toFixed(1)}`
+    message = `M: ${isDecimal((item.quantity - item.cant_insert) - item.packed)}`
     missingStatus = true;
     colorStatus = colors.danger;
   }
 
   if (item.packed && item.cant_insert > 0 && (item.quantity - item.cant_insert) < item.packed) {
-    message = `O: ${Number(item.packed - (item.quantity - item.cant_insert)).toFixed(1)}`
+    message = `O: ${isDecimal(item.packed - (item.quantity - item.cant_insert))}`
     overStatus = true;
     colorStatus = colors.green;
-
   }
 
   if (item.packed && item.cant_insert <= 0 && (item.quantity - item.cant_insert) > item.packed) {
-    message = `M: ${Number((item.quantity - item.cant_insert) - item.packed).toFixed(1)}`
+    message = `M: ${isDecimal((item.quantity - item.cant_insert) - item.packed)}`
     missingStatus = true;
     colorStatus = colors.danger;
   }
 
   if (item.packed && item.cant_insert <= 0 && (item.quantity - item.cant_insert) < item.packed) {
-    message = `O: ${Number(item.packed - (item.quantity - item.cant_insert)).toFixed(1)}`
+    message = `O: ${isDecimal(item.packed - (item.quantity - item.cant_insert))}`
     overStatus = true;
     colorStatus = colors.green;
   }
 
-  if (item.name.includes('Parsley Flat')) {
-    console.log(item.quantity);
-  }
-
   return (
-    <View>
+    <View style={{ alignSelf: 'center' }}>
       <TouchableOpacity
         onPress={() => handlePress(item.id)}
         onLongPress={() => (isNA ? handleRevertNA() : handleDeclareNA())}
@@ -238,10 +234,10 @@ export const ProductsCardBulkVan = ({
 
               <View style={ProductStyles.qty}>
                 <Text style={ProductStyles.textCard}>
-                  Qty: {Number(item.quantity).toFixed(1)}
+                  Qty: {isDecimal(item.quantity)}
                   {item.cant_insert && Number(item.cant_insert) > 0 && (
                     <Text>
-                      {" "}-{" L: "}{Number(item.cant_insert).toFixed(1)}
+                      {" "}-{" L: "}{isDecimal(item.cant_insert)}
                     </Text>
                   )}
                   {message && (
