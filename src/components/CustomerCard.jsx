@@ -39,8 +39,8 @@ const CustomerCard = ({ customer, loadingCard }) => {
   }
 
   if (!loadingCard) {
-    let percentP = null;
-    let percentL = null;
+    let percentP = 0;
+    let percentL = 0;
     percentagesP.forEach((order) => {
       if (order.reference === customer.orders_reference) {
         percentP = Number(order.percentage).toFixed(0);
@@ -55,7 +55,13 @@ const CustomerCard = ({ customer, loadingCard }) => {
         customer.crates = order.crates;
       }
     })
-    roundedPercentage = percentL <= 0 || percentL === null ? percentP : percentL;
+
+    if (Number(percentL) === 100) {
+      roundedPercentage = percentL;
+    } else {
+      roundedPercentage = percentP;
+    }
+
   } else {
     percentagesL.forEach((order) => {
       if (order.reference === customer.orders_reference) {
@@ -68,10 +74,6 @@ const CustomerCard = ({ customer, loadingCard }) => {
 
   const strokeDashoffset =
     circumference - (roundedPercentage / 100) * circumference;
-
-  console.log('accountName: ', customer.accountName);
-  console.log('vip: ', customer.vip);
-  console.log('crates: ', customer.crates);
 
   return (
     <View>

@@ -67,17 +67,17 @@ const Packing = () => {
         />
         {!isLoading ? (
           <View style={DeliveryStyles.delivery}>
-            {routesByDate.map((order) => (
+            {routesByDate.map((route) => (
               <TouchableOpacity
                 style={[
                   DeliveryStyles.card,
                   { marginTop: Platform.OS === 'ios' ? 20 : 30 },
                 ]}
-                onPress={() => handleRoutePress(order.nameRoute)}
-                key={order.nameRoute}
+                onPress={() => handleRoutePress(route.nameRoute)}
+                key={route.nameRoute}
               >
-                <CircleProgress percentage={order.percentage_packing} />
-                <Text style={DeliveryStyles.tittleRoute}>{order.nameRoute}</Text>
+                <CircleProgress percentage={route.percentage_loading === 100 ? route.percentage_loading : route.percentage_packing} />
+                <Text style={DeliveryStyles.tittleRoute}>{route.nameRoute}</Text>
               </TouchableOpacity>
             ))}
           </View>
