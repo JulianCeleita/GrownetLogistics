@@ -207,12 +207,6 @@ export const ProductsCardBulkVan = ({
     colorStatus = colors.green;
   }
 
-  console.log('------------------------------------------');
-  console.log('item', item.id);
-  console.log(item.name);
-  console.log(isDecimal(item.quantity));
-
-
   return (
     <View style={{ alignSelf: 'center' }}>
       <TouchableOpacity
@@ -240,7 +234,7 @@ export const ProductsCardBulkVan = ({
 
               <View style={ProductStyles.qty}>
                 <Text style={ProductStyles.textCard}>
-                  {item.id} Qty: {isDecimal(item.quantity)}
+                  Qty: {isDecimal(item.quantity)}
                   {item.cant_insert && Number(item.cant_insert) > 0 && (
                     <Text>
                       {" "}-{" L: "}{isDecimal(item.cant_insert)}
