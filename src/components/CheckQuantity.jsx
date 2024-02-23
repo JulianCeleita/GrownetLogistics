@@ -14,30 +14,25 @@ export const CheckQuantity = ({
 }) => {
   const [message, setMessage] = useState('')
 
-  //console.log({ quantity, quantity_packing, quantity_loading })
+  const calculateMO = () => {
+    let diff = quantity - quantity_loading
+    let diffString = diff % 1 === 0 ? diff : diff.toFixed(1)
+    setMessage(
+      quantity > quantity_loading
+        ? `Missing ${diffString}`
+        : quantity < quantity_loading
+          ? `Overweight ${(quantity_loading - quantity) % 1 === 0 ? quantity_loading - quantity : (quantity_loading - quantity).toFixed(1)}`
+          : '',
+    )
+  }
+
   useEffect(() => {
     if (!packed) {
       if (viewPacking) {
         if (quantity_loading && quantity_packing) {
-          let diff = quantity - quantity_loading
-          let diffString = diff % 1 === 0 ? diff : diff.toFixed(1)
-          setMessage(
-            quantity > quantity_loading
-              ? `Missing ${diffString}`
-              : quantity < quantity_loading
-                ? `Overweight ${(quantity_loading - quantity) % 1 === 0 ? quantity_loading - quantity : (quantity_loading - quantity).toFixed(1)}`
-                : '',
-          )
+          calculateMO()
         } else if (!quantity_packing && quantity_loading) {
-          let diff = quantity - quantity_loading
-          let diffString = diff % 1 === 0 ? diff : diff.toFixed(1)
-          setMessage(
-            quantity > quantity_loading
-              ? `Missing ${diffString}`
-              : quantity < quantity_loading
-                ? `Overweight ${(quantity_loading - quantity) % 1 === 0 ? quantity_loading - quantity : (quantity_loading - quantity).toFixed(1)}`
-                : '',
-          )
+          calculateMO()
         } else if (!quantity_loading && quantity_packing) {
           let diff = quantity - quantity_packing
           let diffString = diff % 1 === 0 ? diff : diff.toFixed(1)
@@ -61,15 +56,10 @@ export const CheckQuantity = ({
                 : '',
           )
         } else if (quantity_loading && quantity_packing) {
-          let diff = quantity - quantity_loading
-          let diffString = diff % 1 === 0 ? diff : diff.toFixed(1)
-          setMessage(
-            quantity > quantity_loading
-              ? `Missing ${diffString}`
-              : quantity < quantity_loading
-                ? `Overweight ${(quantity_loading - quantity) % 1 === 0 ? quantity_loading - quantity : (quantity_loading - quantity).toFixed(1)}`
-                : '',
-          )
+          calculateMO()
+        } else if (quantity_loading && !quantity_packing) {
+          calculateMO()
+
         }
       }
     } else {

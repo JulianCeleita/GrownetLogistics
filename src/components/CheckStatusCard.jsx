@@ -23,19 +23,36 @@ export const CheckStatusCard = ({
     if (!pressedStates[itemId] && !rightStates[itemId] && !leftStates[itemId]) {
       if (viewPacking) {
         //Vista packing
-        if (stateLoading === 'SHORT') {
-          setColorCheck(colorLeft)
-          setIconCheck('closecircleo')
-        } else if (stateLoading === 'ND') {
-          setColorCheck(colorPress)
-          setIconCheck('arrowright')
-        } else if (stateLoading === 'FULL') {
-          setColorCheck(colorPress)
-          setIconCheck('checkcircleo')
-        } else if (stateLoading === 'PD') {
-          setColorCheck(colorPress)
-          setIconCheck('arrowright')
+        if (statePacking === null) {
+          if (stateLoading === 'SHORT') {
+            setColorCheck(colorLeft)
+            setIconCheck('closecircleo')
+          } else if (stateLoading === 'ND') {
+            setColorCheck(colorPress)
+            setIconCheck('arrowright')
+          } else if (stateLoading === 'FULL') {
+            setColorCheck(colorPress)
+            setIconCheck('checkcircleo')
+          } else if (stateLoading === 'PD') {
+            setColorCheck(colorPress)
+            setIconCheck('arrowright')
+          }
+        } else {
+          if (statePacking === 'SHORT') {
+            setColorCheck(colorLeft)
+            setIconCheck('closecircleo')
+          } else if (statePacking === 'ND') {
+            setColorCheck(colorPress)
+            setIconCheck('arrowright')
+          } else if (statePacking === 'FULL') {
+            setColorCheck(colorPress)
+            setIconCheck('checkcircleo')
+          } else if (statePacking === 'PD') {
+            setColorCheck(colorPress)
+            setIconCheck('arrowright')
+          }
         }
+
       } else {
         if (stateLoading === null) {
           if (statePacking === 'SHORT') {
