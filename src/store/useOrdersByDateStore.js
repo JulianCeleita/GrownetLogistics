@@ -56,7 +56,7 @@ const useOrdersByDate = create((set) => {
       )
       if (selectedRoute) {
         const orderByDate = selectedRoute.accounts || []
-        set({ ordersByDate: orderByDate })
+        set({ ordersByDate: orderByDate.sort((a, b) => a.drop - b.drop) })
       } else {
         console.error(
           'No se encontró la ruta con el nombre especificado:',
