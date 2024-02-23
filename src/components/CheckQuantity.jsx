@@ -109,7 +109,7 @@ export const CheckQuantity = ({
         ProductStyles.textCard,
         {
           color: message.includes('Missing') ? colors.danger : colors.green,
-          marginRight: 50,
+          marginRight: message.includes('Missing') ? 50 : 30,
         },
       ]}
     >
