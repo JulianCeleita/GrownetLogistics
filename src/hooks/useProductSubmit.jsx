@@ -23,9 +23,6 @@ export const useProductSubmit = (insert) => {
       quantity: quantity,
     }
 
-      console.log('DATA QUANTITY: ', data.quantity)
-      console.log('Type of quantity', typeof data.quantity)
-
     try {
       const response = await mainAxios.post(insert, data, {
         headers: {

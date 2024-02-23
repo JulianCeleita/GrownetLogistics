@@ -154,6 +154,9 @@ const CustomerCard = ({ customer, loadingCard }) => {
               color={colors.darkBlue}
             />
           ) : null}
+          <Text style={CustomerDayStyles.textCustomer}>
+            {customer.drop === null ? 0 : customer.drop}
+          </Text>
         </View>
       </TouchableOpacity>
     </View>

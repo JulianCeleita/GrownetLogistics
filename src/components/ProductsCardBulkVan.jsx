@@ -104,9 +104,7 @@ export const ProductsCardBulkVan = ({
 
   const isDecimal = (num) => {
     num = Number(num);
-    console.log('num', num);
     if (num % 1 !== 0) {
-      console.log('num2', num.toFixed(1));
       return num.toFixed(1);
     }
     return num;

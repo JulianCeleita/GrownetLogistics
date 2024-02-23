@@ -47,8 +47,6 @@ function ProductsLoading({ route }) {
       )
       : []
 
-      console.log('productsLoading', productsLoading)
-
   useFocusEffect(
     useCallback(() => {
       setFetchProductsLoading(employeeToken, selectedOrderL)
