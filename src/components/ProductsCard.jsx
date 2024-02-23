@@ -104,17 +104,6 @@ export function ProductsCard({
     }
   }
 
-  if (item.id === 10118) {
-    console.log('name: ', item.name);
-    console.log('state_packing: ', item.state_packing);
-    console.log('state_loading: ', item.state_loading);
-    console.log('quantity: ', item.quantity);
-    console.log('quantity_packing: ', item.quantity_packing);
-    console.log('quantity_loading: ', item.quantity_loading);
-    console.log('packed: ', item.packed);
-    console.log(item);
-  }
-
   return (
     <View
       style={{
