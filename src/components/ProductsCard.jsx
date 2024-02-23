@@ -123,19 +123,35 @@ export function ProductsCard({
           <View>
             <View style={[ProductStyles.card, GlobalStyles.boxShadow]}>
               <View style={ProductStyles.productTittle}>
-                <Text
-                  style={[
-                    ProductStyles.tittleCard,
-                    {
-                      textDecorationLine: isNA ? 'line-through' : 'none',
-                    },
-                  ]}
-                >
-                  {item.name} {item.presentationName}
-                </Text>
+                {item.uom != 'Ea' && item.uom != 'Kg' ? (
+                  <Text
+                    style={[
+                      ProductStyles.tittleCard,
+                      {
+                        textDecorationLine: isNA ? 'line-through' : 'none',
+                      },
+                    ]}
+                  >
+                    {item.name} {item.uom}
+                    <Text style={ProductStyles.packingText}>
+                      {' - ' + item.presentationName}
+                    </Text>
+                  </Text>
+                ) : (
+                  <Text
+                    style={[
+                      ProductStyles.tittleCard,
+                      {
+                        textDecorationLine: isNA ? 'line-through' : 'none',
+                      },
+                    ]}
+                  >
+                    {item.name} - {item.uom}
+                  </Text>
+                )}
                 <View style={ProductStyles.qty}>
                   <Text style={ProductStyles.textCard}>
-                    {item.id} Qty: {item.quantity}
+                    Qty: {item.quantity}
                   </Text>
 
                   {/* Componente para le manejo del Missing y el Overweight */}
