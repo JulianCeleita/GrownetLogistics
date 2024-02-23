@@ -151,7 +151,7 @@ export function ProductsCard({
                 )}
                 <View style={ProductStyles.qty}>
                   <Text style={ProductStyles.textCard}>
-                    {item.id} Qty: {item.quantity}
+                    Qty: {item.quantity}
                   </Text>
 
                   {/* Componente para le manejo del Missing y el Overweight */}

@@ -20,13 +20,11 @@ export const useProductSubmit = (insert) => {
       note,
       id: itemId,
       state: state,
+      quantity: quantity,
     }
 
-    if (typeof quantity === 'string' && quantity.includes('.')) {
-      data.quantity = parseFloat(quantity.replace(',', '.'));
-    } else {
-      data.quantity = parseInt(quantity);
-    }
+      console.log('DATA QUANTITY: ', data.quantity)
+      console.log('Type of quantity', typeof data.quantity)
 
     try {
       const response = await mainAxios.post(insert, data, {
@@ -34,6 +32,8 @@ export const useProductSubmit = (insert) => {
           Authorization: `Bearer ${employeeToken}`,
         },
       })
+      console.log('DATA ENVIADA AL BACKEND: ', data)
+      console.log('Response: ', response.data)
 
       if (response.status === 200) {
         setError(null)
