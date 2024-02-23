@@ -62,10 +62,9 @@ export function ProductsCard({
       : item.quantity
 
   const handleCardSubmit = async () => {
-
     const cardPromises = [
       handlePress(item.id),
-      handleSubmit(item.id, String(quantityLoading), note),
+      handleSubmit(item.id, quantityLoading, note),
     ]
     await Promise.allSettled(cardPromises)
   }
