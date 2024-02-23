@@ -13,14 +13,7 @@ export const CheckStatusCard = ({
   rightStates,
   leftStates,
   colorPress,
-  colorRight,
   colorLeft,
-  declareNotAvailable,
-  handleSubmit,
-  quantity,
-  quantity_packing,
-  quantity_loading,
-  packed,
   isNA,
 }) => {
   const [colorCheck, setColorCheck] = useState(colors.gray)
@@ -29,6 +22,7 @@ export const CheckStatusCard = ({
   useEffect(() => {
     if (!pressedStates[itemId] && !rightStates[itemId] && !leftStates[itemId]) {
       if (viewPacking) {
+        //Vista packing
         if (stateLoading === 'SHORT') {
           setColorCheck(colorLeft)
           setIconCheck('closecircleo')
@@ -41,19 +35,14 @@ export const CheckStatusCard = ({
         } else if (stateLoading === 'PD') {
           setColorCheck(colorPress)
           setIconCheck('arrowright')
-        } else {
-          if (statePacking === 'FULL') {
-            setColorCheck(colorPress)
-            setIconCheck('checkcircleo')
-          } else if (statePacking === 'ND' || statePacking === 'PD') {
-            setColorCheck(colorRight)
-            setIconCheck('arrowright')
-          } else if (statePacking === 'SHORT') {
+        }
+      } else {
+        if (stateLoading === null) {
+          if (statePacking === 'SHORT') {
             setColorCheck(colorLeft)
             setIconCheck('closecircleo')
           }
         }
-      } else {
         if (stateLoading === 'FULL') {
           setColorCheck(colorPress)
           setIconCheck('checkcircleo')
@@ -61,9 +50,6 @@ export const CheckStatusCard = ({
           setColorCheck(colorPress)
           setIconCheck('arrowright')
         } else if (stateLoading === 'SHORT') {
-          setColorCheck(colorLeft)
-          setIconCheck('closecircleo')
-        } else if (statePacking === 'SHORT') {
           setColorCheck(colorLeft)
           setIconCheck('closecircleo')
         }
@@ -79,15 +65,6 @@ export const CheckStatusCard = ({
         setColorCheck(colorLeft)
         setIconCheck('closecircleo')
       }
-    }
-
-    if (
-      (stateLoading != null && quantity < quantity_packing) ||
-      (stateLoading != null && quantity < quantity_loading) ||
-      quantity < packed
-    ) {
-      setColorCheck(colorPress)
-      setIconCheck('checkcircleo')
     }
   }, [statePacking, pressedStates, rightStates, leftStates])
 
