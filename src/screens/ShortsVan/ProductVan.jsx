@@ -20,6 +20,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import useOrdersByDate from '../../store/useOrdersByDateStore'
 import { useFocusEffect } from '@react-navigation/native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+import ModalDebugger from '../../components/ModalDebugger'
 
 function ProductsVan({ route }) {
   const {
@@ -33,6 +34,7 @@ function ProductsVan({ route }) {
   const { handleSubmit } = useProductSubmit(insertShort)
   const { selectedDate, selectedRoute } = useOrdersByDate()
   const [toggle, setToggle] = useState(false)
+  const [showModalDebugger, setShowModalDebugger] = useState(false)
 
   useFocusEffect(
     useCallback(() => {
@@ -98,7 +100,12 @@ function ProductsVan({ route }) {
           </Text>
           <View style={CustomerDayStyles.titleNA}>
             <Text style={CustomerDayStyles.restaurantTypeTitle}>N/A</Text>
-            <TouchableOpacity onPress={toggleButton} activeOpacity={1}>
+            <TouchableOpacity
+              onPress={toggleButton}
+              onLongPress={() => setShowModalDebugger(true)}
+              delayLongPress={5000}
+              activeOpacity={1}
+            >
               <View
                 style={[
                   CustomerDayStyles.toggleButton,
@@ -178,6 +185,12 @@ function ProductsVan({ route }) {
           )}
         </ScrollView>
       </KeyboardAwareScrollView>
+      <ModalDebugger
+        showModalDebugger={showModalDebugger}
+        setShowModalDebugger={setShowModalDebugger}
+        Title="Debugger"
+        message={JSON.stringify(restaurantData, null, 2)}
+      />
     </SafeAreaView>
   )
 }

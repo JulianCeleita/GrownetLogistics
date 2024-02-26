@@ -14,6 +14,9 @@ export const ModalStyle = StyleSheet.create({
     bottom: 0,
     width: '100%',
   },
+  viewModalDebugger: {
+    width: '100%',
+  },
   modalView: {
     width: '100%',
     alignItems: 'center',
