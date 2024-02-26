@@ -41,12 +41,12 @@ function ProductsPacking({ route }) {
   const handleSearch = () => {
     setSearch(true)
   }
+
   const filteredData =
     productsPacking && productsPacking.data
       ? productsPacking.data.filter((item) =>
         item.name.toLowerCase().includes(searchPhrase.toLowerCase()),
-      )
-      : []
+      ) : []
 
   useFocusEffect(
     useCallback(() => {

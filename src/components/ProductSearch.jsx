@@ -19,15 +19,17 @@ function ProductSearcher({ setSearch, searchPhrase, setSearchPhrase }) {
           onChangeText={setSearchPhrase}
         />
         <TouchableOpacity style={SearchStyles.iconSearch}>
-          <Feather name="search" size={24} color="#969696" />
+          <Feather name="search" size={20} color="#969696" />
         </TouchableOpacity>
       </View>
-      <TouchableOpacity onPress={handleClose}>
+      <TouchableOpacity
+        onPress={handleClose}
+        style={SearchStyles.iconClose}
+      >
         <Ionicons
           name="ios-close-circle-outline"
-          size={35}
+          size={38}
           color={colors.darkBlue}
-          style={SearchStyles.iconClose}
         />
       </TouchableOpacity>
     </View>

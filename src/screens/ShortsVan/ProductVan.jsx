@@ -13,7 +13,7 @@ import { useProductSubmit } from '../../hooks/useProductSubmit'
 import useEmployeeStore from '../../store/useEmployeeStore'
 import { useShortVanStore } from '../../store/useShortVanStore'
 import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
-import { ProductStyles } from '../../styles/ProductStyles'
+import { ProductStyles, SearchStyles } from '../../styles/ProductStyles'
 import { BtnGoBack } from '../../components/BtnGoBack'
 import { GlobalStyles, colors } from '../../styles/GlobalStyles'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
@@ -21,6 +21,9 @@ import useOrdersByDate from '../../store/useOrdersByDateStore'
 import { useFocusEffect } from '@react-navigation/native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import ModalDebugger from '../../components/ModalDebugger'
+import { Ionicons } from '@expo/vector-icons'
+import { AnimatedSearch } from '../../components/animation'
+import ProductSearcher from '../../components/ProductSearch'
 
 function ProductsVan({ route }) {
   const {
@@ -34,6 +37,8 @@ function ProductsVan({ route }) {
   const { handleSubmit } = useProductSubmit(insertShort)
   const { selectedDate, selectedRoute } = useOrdersByDate()
   const [toggle, setToggle] = useState(false)
+  const [search, setSearch] = useState(false)
+  const [searchPhrase, setSearchPhrase] = useState('')
   const [showModalDebugger, setShowModalDebugger] = useState(false)
 
   useFocusEffect(
@@ -58,6 +63,10 @@ function ProductsVan({ route }) {
     }
     setFetchShortVanProducts(employeeToken, dataVan, toggle)
   }, [toggle])
+
+  const handleSearch = () => {
+    setSearch(true)
+  }
 
   const updateProductsVan = (itemId, quantity = null, state = null) => {
     const newProducts = restaurantData.map((itemProd) => {
@@ -87,49 +96,80 @@ function ProductsVan({ route }) {
     setToggle((previousToggle) => !previousToggle)
   }
 
+  const filteredData = restaurantData.map(restaurant => {
+    let filteredProducts = restaurant.products.filter(product => product.name.trim().toLowerCase().includes(searchPhrase.trim().toLowerCase()));
+    return { ...restaurant, products: filteredProducts };
+  });
+
   return (
     <SafeAreaView style={ProductStyles.products}>
-      <BtnGoBack
-        color={colors.darkBlue}
-        top={Platform.OS === 'ios' ? 58 : 10}
-      />
-      <View style={CustomerDayStyles.title2}>
+      {search ? (
         <View>
-          <Text style={CustomerDayStyles.customerTitle}>
-            {route.params.nameRoute}
-          </Text>
-          <View style={CustomerDayStyles.titleNA}>
-            <Text style={CustomerDayStyles.restaurantTypeTitle}>N/A</Text>
-            <TouchableOpacity
-              onPress={toggleButton}
-              onLongPress={() => setShowModalDebugger(true)}
-              delayLongPress={5000}
-              activeOpacity={1}
-            >
-              <View
-                style={[
-                  CustomerDayStyles.toggleButton,
-                  toggle && CustomerDayStyles.toggleOn,
-                  GlobalStyles.boxShadow,
-                ]}
+          <AnimatedSearch search={search}>
+            <BtnGoBack color={colors.darkBlue} top={20} />
+            <ProductSearcher
+              setSearch={setSearch}
+              searchPhrase={searchPhrase}
+              setSearchPhrase={setSearchPhrase}
+            />
+          </AnimatedSearch>
+        </View>
+      ) : (
+        <View style={{ flexDirection: 'row', paddingHorizontal: 43, width: '100%' }}>
+          <BtnGoBack
+            color={colors.darkBlue}
+            top={Platform.OS === 'ios' ? 16 : 10}
+          />
+          <View style={[CustomerDayStyles.title2, { justifyContent: 'space-evenly', }]}>
+
+            <Text style={[CustomerDayStyles.customerTitle, { width: '60%' }]}>
+              {route.params.nameRoute}
+            </Text>
+            <View style={{ flexDirection: 'row', alignItems: 'center', marginRight: 20 }}>
+              <Text style={CustomerDayStyles.restaurantTypeTitle}>N/A</Text>
+              <TouchableOpacity
+                onPress={toggleButton}
+                onLongPress={() => setShowModalDebugger(true)}
+                delayLongPress={5000}
+                activeOpacity={1}
               >
                 <View
                   style={[
-                    CustomerDayStyles.toggleDot,
-                    toggle && CustomerDayStyles.toggleDotOff,
+                    CustomerDayStyles.toggleButton,
+                    toggle && CustomerDayStyles.toggleOn,
+                    GlobalStyles.boxShadow,
                   ]}
-                />
-                <View
-                  style={[
-                    CustomerDayStyles.toggleDot2,
-                    toggle && CustomerDayStyles.toggleDotOn,
-                  ]}
-                />
-              </View>
+                >
+                  <View
+                    style={[
+                      CustomerDayStyles.toggleDot,
+                      toggle && CustomerDayStyles.toggleDotOff,
+                    ]}
+                  />
+                  <View
+                    style={[
+                      CustomerDayStyles.toggleDot2,
+                      toggle && CustomerDayStyles.toggleDotOn,
+                    ]}
+                  />
+                </View>
+              </TouchableOpacity>
+            </View>
+            <TouchableOpacity
+              onPress={handleSearch}
+              onLongPress={() => setShowModalDebugger(true)}
+              delayLongPress={5000}
+            >
+              <Ionicons
+                name="md-search-circle-outline"
+                size={38}
+                color={colors.darkBlue}
+              />
             </TouchableOpacity>
           </View>
         </View>
-      </View>
+      )}
+
       <KeyboardAwareScrollView
         enableOnAndroid
         extraScrollHeight={Platform.OS === 'android' ? 210 : 210}
@@ -138,9 +178,26 @@ function ProductsVan({ route }) {
         contentContainerStyle={{ paddingRight: 3 }}
       >
         <ScrollView>
-          {loading ? (
-            <ActivityIndicator size="large" color="#0000ff" />
-          ) : error ? (
+
+          {!loading ? (filteredData.map((restaurant) => (
+            restaurant.products.length > 0 && (
+              <View key={restaurant.customerName}>
+                <Text style={[CustomerDayStyles.restaurantTypeTitle]}>
+                  {restaurant.customerName}
+                </Text>
+                <View>
+                  {restaurant.products.map((product, index) => (
+                    <ProductsCardBulkVan
+                      key={index}
+                      item={product}
+                      handleSubmit={handleSubmit}
+                      updateProductsVan={updateProductsVan}
+                    />
+                  ))}
+                </View>
+              </View>
+            )
+          ))) : (
             <View
               style={{
                 flex: 1,
@@ -148,39 +205,7 @@ function ProductsVan({ route }) {
                 alignItems: 'center',
               }}
             >
-              <Text>{error}</Text>
-            </View>
-          ) : restaurantData.length === 0 ? (
-            <View
-              style={{
-                flex: 1,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-            >
-              <Text>There are no products in Short status.</Text>
-            </View>
-          ) : (
-            <View>
-              {restaurantData.map((restaurant) => (
-                restaurant.products.length > 0 && (
-                  <View key={restaurant.customerName}>
-                    <Text style={[CustomerDayStyles.restaurantTypeTitle]}>
-                      {restaurant.customerName}
-                    </Text>
-                    <View>
-                      {restaurant.products.map((product, index) => (
-                        <ProductsCardBulkVan
-                          key={index}
-                          item={product}
-                          handleSubmit={handleSubmit}
-                          updateProductsVan={updateProductsVan}
-                        />
-                      ))}
-                    </View>
-                  </View>
-                )
-              ))}
+              <ActivityIndicator size="large" color="#0000ff" />
             </View>
           )}
         </ScrollView>

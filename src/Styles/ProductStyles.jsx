@@ -140,11 +140,12 @@ export const SearchStyles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    marginBottom: 8,
   },
   containerSearch: {
     flexDirection: 'row',
-    height: 50,
-    borderRadius: 40,
+    height: 46,
+    borderRadius: 10,
     marginTop: 10,
     backgroundColor: '#f2f2f2',
     marginLeft: 35,
@@ -168,7 +169,7 @@ export const SearchStyles = StyleSheet.create({
   },
   iconClose: {
     marginLeft: 5,
-    marginTop: 10,
+    marginTop: 15,
   },
   alertSearch: {
     alignItems: 'center',
