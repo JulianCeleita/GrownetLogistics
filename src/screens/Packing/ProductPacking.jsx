@@ -22,6 +22,7 @@ import { useFocusEffect } from '@react-navigation/native'
 import ProductSearcher from '../../components/ProductSearch'
 import { Ionicons } from '@expo/vector-icons'
 import { AnimatedSearch, AnimatedSearchCard } from '../../components/animation'
+import ModalDebugger from '../../components/ModalDebugger'
 
 function ProductsPacking({ route }) {
   const {
@@ -35,6 +36,7 @@ function ProductsPacking({ route }) {
   const { handleSubmit } = useProductSubmit(insertPacking)
   const [search, setSearch] = useState(false)
   const [searchPhrase, setSearchPhrase] = useState('')
+  const [showModalDebugger, setShowModalDebugger] = useState(false)
 
   const handleSearch = () => {
     setSearch(true)
@@ -90,6 +92,8 @@ function ProductsPacking({ route }) {
           </View>
           <TouchableOpacity
             onPress={handleSearch}
+            onLongPress={() => setShowModalDebugger(true)}
+            delayLongPress={5000}
             style={CustomerDayStyles.icon}
           >
             <Ionicons
@@ -160,6 +164,12 @@ function ProductsPacking({ route }) {
           )}
         </ScrollView>
       </KeyboardAwareScrollView>
+      <ModalDebugger
+        showModalDebugger={showModalDebugger}
+        setShowModalDebugger={setShowModalDebugger}
+        Title="Debugger"
+        message={JSON.stringify(groupedProducts, null, 2)}
+      />
     </SafeAreaView>
   )
 }

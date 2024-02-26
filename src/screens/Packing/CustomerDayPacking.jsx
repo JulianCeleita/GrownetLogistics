@@ -13,6 +13,7 @@ import usePercentageStore from '../../store/usePercentageStore'
 import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
 import { colors } from '../../styles/GlobalStyles'
 import { SearchStyles } from '../../styles/ProductStyles'
+import ModalDebugger from '../../components/ModalDebugger'
 
 function CustomerDayPacking({ route }) {
   const { nameRoute } = route.params
@@ -26,6 +27,7 @@ function CustomerDayPacking({ route }) {
   const { setPercentagesP, setFetchPercentagesPacking, setPercentagesL, setFetchPercentagesLoading } = usePercentageStore()
   const [searchPhrase, setSearchPhrase] = useState('')
   const [search, setSearch] = useState(false)
+  const [showModalDebugger, setShowModalDebugger] = useState(false)
 
   const filteredData = ordersByDate.filter((order) => {
     return order.accountName.toLowerCase().includes(searchPhrase.toLowerCase()) ||
@@ -75,6 +77,8 @@ function CustomerDayPacking({ route }) {
               </Text>
               <TouchableOpacity
                 onPress={handleSearch}
+                onLongPress={() => setShowModalDebugger(true)}
+                delayLongPress={5000}
                 style={CustomerDayStyles.icon}
               >
                 <Ionicons
@@ -121,6 +125,12 @@ function CustomerDayPacking({ route }) {
           </View>
         </AnimatedSearchCard>
       </ScrollView>
+      <ModalDebugger
+        showModalDebugger={showModalDebugger}
+        setShowModalDebugger={setShowModalDebugger}
+        Title="Debugger"
+        message={JSON.stringify(ordersByDate, null, 2)}
+      />
     </SafeAreaView>
   )
 }
