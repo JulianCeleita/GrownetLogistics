@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useState, useRef } from 'react'
 import {
   ActivityIndicator,
   Platform,
@@ -37,6 +37,11 @@ function ProductsPacking({ route }) {
   const [search, setSearch] = useState(false)
   const [searchPhrase, setSearchPhrase] = useState('')
   const [showModalDebugger, setShowModalDebugger] = useState(false)
+  const [responsableDetails, setResponsableDetails] = useState(false)
+
+  const handlePressIn = () => {
+    setResponsableDetails(!responsableDetails)
+  }
 
   const handleSearch = () => {
     setSearch(true)
@@ -45,8 +50,9 @@ function ProductsPacking({ route }) {
   const filteredData =
     productsPacking && productsPacking.data
       ? productsPacking.data.filter((item) =>
-        item.name.toLowerCase().includes(searchPhrase.toLowerCase()),
-      ) : []
+          item.name.toLowerCase().includes(searchPhrase.toLowerCase()),
+        )
+      : []
 
   useFocusEffect(
     useCallback(() => {
@@ -83,12 +89,14 @@ function ProductsPacking({ route }) {
         <View style={{ paddingHorizontal: 43, width: '100%' }}>
           <BtnGoBack color={colors.darkBlue} />
           <View>
-            <Text style={ProductStyles.customerTitle}>
-              <Text>{route.params.accountName} - </Text>
-              <Text style={{ flexWrap: 'wrap' }}>
-                {productsPacking ? route.params.orderNumber : 'Loading...'}
+            <TouchableOpacity onLongPress={handlePressIn} delayLongPress={500}>
+              <Text style={ProductStyles.customerTitle}>
+                <Text>{route.params.accountName} - </Text>
+                <Text style={{ flexWrap: 'wrap' }}>
+                  {productsPacking ? route.params.orderNumber : 'Loading...'}
+                </Text>
               </Text>
-            </Text>
+            </TouchableOpacity>
           </View>
           <TouchableOpacity
             onPress={handleSearch}
@@ -122,18 +130,22 @@ function ProductsPacking({ route }) {
                         {group}
                       </Text>
                       {products.map((product) => (
-                        <ProductsCard
-                          key={product.id}
-                          item={product}
-                          colorPress={colors.orange}
-                          colorRight={colors.orange}
-                          colorLeft={colors.danger}
-                          products={productsPacking}
-                          setProducts={setProductsPacking}
-                          handleSubmit={handleSubmit}
-                          viewPacking
-                          error={error}
-                        />
+                        <>
+                          <ProductsCard
+                            key={product.id}
+                            item={product}
+                            colorPress={colors.orange}
+                            colorRight={colors.orange}
+                            colorLeft={colors.danger}
+                            products={productsPacking}
+                            setProducts={setProductsPacking}
+                            handleSubmit={handleSubmit}
+                            viewPacking
+                            error={error}
+                            responsableDetails={responsableDetails}
+                          />
+                          {console.log('desde atras', product)}
+                        </>
                       ))}
                     </View>
                   ))}

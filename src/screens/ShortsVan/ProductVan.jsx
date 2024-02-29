@@ -40,6 +40,11 @@ function ProductsVan({ route }) {
   const [search, setSearch] = useState(false)
   const [searchPhrase, setSearchPhrase] = useState('')
   const [showModalDebugger, setShowModalDebugger] = useState(false)
+  const [responsableDetails, setResponsableDetails] = useState(false)
+
+  const handlePressIn = () => {
+    setResponsableDetails(!responsableDetails)
+  }
 
   useFocusEffect(
     useCallback(() => {
@@ -79,14 +84,13 @@ function ProductsVan({ route }) {
                 ...product,
                 packed: quantity,
                 state_definitive: state ? state : null,
-                quantity_defitive: quantity === null
-                  ? null
-                  : product.quantity_defitive,
+                quantity_defitive:
+                  quantity === null ? null : product.quantity_defitive,
               }
             }
             return product
           })
-          .filter(product => !(product.state_definitive === "N/A")),
+          .filter((product) => !(product.state_definitive === 'N/A')),
       }
     })
     setRestaurantData(newProducts)
@@ -96,10 +100,15 @@ function ProductsVan({ route }) {
     setToggle((previousToggle) => !previousToggle)
   }
 
-  const filteredData = restaurantData.map(restaurant => {
-    let filteredProducts = restaurant.products.filter(product => product.name.trim().toLowerCase().includes(searchPhrase.trim().toLowerCase()));
-    return { ...restaurant, products: filteredProducts };
-  });
+  const filteredData = restaurantData.map((restaurant) => {
+    let filteredProducts = restaurant.products.filter((product) =>
+      product.name
+        .trim()
+        .toLowerCase()
+        .includes(searchPhrase.trim().toLowerCase()),
+    )
+    return { ...restaurant, products: filteredProducts }
+  })
 
   return (
     <SafeAreaView style={ProductStyles.products}>
@@ -115,17 +124,38 @@ function ProductsVan({ route }) {
           </AnimatedSearch>
         </View>
       ) : (
-        <View style={{ flexDirection: 'row', paddingHorizontal: 43, width: '100%' }}>
+        <View
+          style={{ flexDirection: 'row', paddingHorizontal: 43, width: '100%' }}
+        >
           <BtnGoBack
             color={colors.darkBlue}
             top={Platform.OS === 'ios' ? 16 : 10}
           />
-          <View style={[CustomerDayStyles.title2, { justifyContent: 'space-evenly', }]}>
-
-            <Text style={[CustomerDayStyles.customerTitle, { width: '60%' }]}>
-              {route.params.nameRoute}
-            </Text>
-            <View style={{ flexDirection: 'row', alignItems: 'center', marginRight: 20 }}>
+          <View
+            style={[
+              CustomerDayStyles.title2,
+              { justifyContent: 'space-evenly' },
+            ]}
+          >
+            <TouchableOpacity
+              style={{
+                width: '100%',
+                paddingHorizontal: 90,
+              }}
+              onLongPress={handlePressIn}
+              delayLongPress={500}
+            >
+              <Text style={[CustomerDayStyles.customerTitle]}>
+                {route.params.nameRoute}
+              </Text>
+            </TouchableOpacity>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginRight: 20,
+              }}
+            >
               <Text style={CustomerDayStyles.restaurantTypeTitle}>N/A</Text>
               <TouchableOpacity
                 onPress={toggleButton}
@@ -178,26 +208,29 @@ function ProductsVan({ route }) {
         contentContainerStyle={{ paddingRight: 3 }}
       >
         <ScrollView>
-
-          {!loading ? (filteredData.map((restaurant) => (
-            restaurant.products.length > 0 && (
-              <View key={restaurant.customerName}>
-                <Text style={[CustomerDayStyles.restaurantTypeTitle]}>
-                  {restaurant.customerName}
-                </Text>
-                <View>
-                  {restaurant.products.map((product, index) => (
-                    <ProductsCardBulkVan
-                      key={index}
-                      item={product}
-                      handleSubmit={handleSubmit}
-                      updateProductsVan={updateProductsVan}
-                    />
-                  ))}
-                </View>
-              </View>
+          {!loading ? (
+            filteredData.map(
+              (restaurant) =>
+                restaurant.products.length > 0 && (
+                  <View key={restaurant.customerName}>
+                    <Text style={[CustomerDayStyles.restaurantTypeTitle]}>
+                      {restaurant.customerName}
+                    </Text>
+                    <View>
+                      {restaurant.products.map((product, index) => (
+                        <ProductsCardBulkVan
+                          key={index}
+                          item={product}
+                          handleSubmit={handleSubmit}
+                          updateProductsVan={updateProductsVan}
+                          responsableDetails={responsableDetails}
+                        />
+                      ))}
+                    </View>
+                  </View>
+                ),
             )
-          ))) : (
+          ) : (
             <View
               style={{
                 flex: 1,

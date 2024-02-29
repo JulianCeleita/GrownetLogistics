@@ -18,11 +18,11 @@ export function ProductsCard({
   handleSubmit,
   viewPacking,
   error,
+  responsableDetails,
 }) {
   const positiveOffset = 30
   const negativeOffset = -30
   const [note, setNote] = useState('')
-
   const {
     quantity,
     setQuantity,
@@ -76,7 +76,7 @@ export function ProductsCard({
 
   const handlePressAction = () => {
     if (item.state_definitive === 'N/A') {
-      return () => { }
+      return () => {}
     }
     if (!viewPacking) {
       if (item.state_packing !== 'ND' && item.state_packing !== 'SHORT') {
@@ -98,7 +98,7 @@ export function ProductsCard({
       item.state_definitive === 'N/A' ||
       (viewPacking && item.state_loading !== null)
     ) {
-      return () => { }
+      return () => {}
     } else {
       return handleGestureEvent(e, item.id)
     }
@@ -149,22 +149,32 @@ export function ProductsCard({
                     {item.name} - {item.uom}
                   </Text>
                 )}
-                <View style={ProductStyles.qty}>
-                  <Text style={ProductStyles.textCard}>
-                    Qty: {item.quantity}
-                  </Text>
-
-                  {/* Componente para le manejo del Missing y el Overweight */}
-                  <CheckQuantity
-                    viewPacking={viewPacking}
-                    quantity={item.quantity}
-                    quantity_packing={item.quantity_packing}
-                    quantity_loading={item.quantity_loading}
-                    packed={item.packed}
-                    stateLoading={item.state_loading}
-                    statePacking={item.state_packing}
-                  />
-                </View>
+                {responsableDetails === false ? (
+                  <View style={ProductStyles.qty}>
+                    <Text style={ProductStyles.textCard}>
+                      Qty: ${item.quantity}
+                    </Text>
+                    {/* Componente para le manejo del Missing y el Overweight */}
+                    <CheckQuantity
+                      viewPacking={viewPacking}
+                      quantity={item.quantity}
+                      quantity_packing={item.quantity_packing}
+                      quantity_loading={item.quantity_loading}
+                      packed={item.packed}
+                      stateLoading={item.state_loading}
+                      statePacking={item.state_packing}
+                    />
+                  </View>
+                ) : (
+                  <View>
+                    <Text style={[ProductStyles.textCard, { fontSize: 12 }]}>
+                      Last: Paula Vanegas
+                    </Text>
+                    <Text style={[ProductStyles.textCard, { fontSize: 12 }]}>
+                      20:00 AM
+                    </Text>
+                  </View>
+                )}
               </View>
 
               <CheckStatusCard

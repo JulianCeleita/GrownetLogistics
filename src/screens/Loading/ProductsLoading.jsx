@@ -37,6 +37,11 @@ function ProductsLoading({ route }) {
   const [search, setSearch] = useState(false)
   const [searchPhrase, setSearchPhrase] = useState('')
   const [showModalDebugger, setShowModalDebugger] = useState(false)
+  const [responsableDetails, setResponsableDetails] = useState(false)
+
+  const handlePressIn = () => {
+    setResponsableDetails(!responsableDetails)
+  }
 
   const handleSearch = () => {
     setSearch((prevSearch) => !prevSearch)
@@ -45,8 +50,8 @@ function ProductsLoading({ route }) {
   const filteredData =
     productsLoading && productsLoading.data
       ? productsLoading.data.filter((item) =>
-        item.name.toLowerCase().includes(searchPhrase.toLowerCase()),
-      )
+          item.name.toLowerCase().includes(searchPhrase.toLowerCase()),
+        )
       : []
 
   useFocusEffect(
@@ -82,12 +87,14 @@ function ProductsLoading({ route }) {
         <View style={{ paddingHorizontal: 43, width: '100%' }}>
           <BtnGoBack color={colors.darkBlue} />
           <View>
-            <Text style={ProductStyles.customerTitle}>
-              <Text>{route.params.accountName} - </Text>
-              <Text style={{ flexWrap: 'wrap' }}>
-                {productsLoading ? route.params.orderNumber : 'Loading...'}
+            <TouchableOpacity onLongPress={handlePressIn} delayLongPress={500}>
+              <Text style={ProductStyles.customerTitle}>
+                <Text>{route.params.accountName} - </Text>
+                <Text style={{ flexWrap: 'wrap' }}>
+                  {productsLoading ? route.params.orderNumber : 'Loading...'}
+                </Text>
               </Text>
-            </Text>
+            </TouchableOpacity>
           </View>
           <TouchableOpacity
             onPress={handleSearch}
@@ -131,6 +138,7 @@ function ProductsLoading({ route }) {
                           setProducts={setLoadingProducts}
                           handleSubmit={handleSubmit}
                           error={error}
+                          responsableDetails={responsableDetails}
                         />
                       ))}
                     </View>

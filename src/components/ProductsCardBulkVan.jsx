@@ -12,6 +12,7 @@ export const ProductsCardBulkVan = ({
   handleSubmit,
   updateProductsVan,
   viewBulk,
+  responsableDetails,
 }) => {
   const [isPressed, setIsPressed] = useState(false)
   const [left, setLeft] = useState(false)
@@ -103,11 +104,11 @@ export const ProductsCardBulkVan = ({
   }, [])
 
   const isDecimal = (num) => {
-    num = Number(num);
+    num = Number(num)
     if (num % 1 !== 0) {
-      return num.toFixed(1);
+      return num.toFixed(1)
     }
-    return num;
+    return num
   }
 
   if (viewBulk) {
@@ -147,64 +148,99 @@ export const ProductsCardBulkVan = ({
     )
   }
 
-  let message = `M: ${item.quantity - item.cant_insert}`;
-  let missingStatus = false;
-  let overStatus = false;
-  let checkStatus = false;
-  let colorStatus = colors.danger;
+  let message = `M: ${item.quantity - item.cant_insert}`
+  let missingStatus = false
+  let overStatus = false
+  let checkStatus = false
+  let colorStatus = colors.danger
 
-  if ((item.quantity - item.cant_insert) === item.packed || (item.quantity - item.cant_insert) === item.quantity_defitive) {
+  if (
+    item.quantity - item.cant_insert === item.packed ||
+    item.quantity - item.cant_insert === item.quantity_defitive
+  ) {
     message = `M: ${isDecimal(item.quantity - item.cant_insert)}`
-    checkStatus = true;
-    colorStatus = colors.danger;
+    checkStatus = true
+    colorStatus = colors.danger
   }
 
-  if (!item.packed && !item.quantity_defitive && item.quantity > item.cant_insert) {
+  if (
+    !item.packed &&
+    !item.quantity_defitive &&
+    item.quantity > item.cant_insert
+  ) {
     message = `M: ${isDecimal(item.quantity - item.cant_insert)}`
-    missingStatus = true;
-    colorStatus = colors.danger;
+    missingStatus = true
+    colorStatus = colors.danger
   }
 
-  if (!item.packed && !item.quantity_defitive && item.quantity < item.cant_insert) {
+  if (
+    !item.packed &&
+    !item.quantity_defitive &&
+    item.quantity < item.cant_insert
+  ) {
     message = `O: ${isDecimal(item.cant_insert - item.quantity)}`
-    overStatus = true;
-    colorStatus = colors.green;
+    overStatus = true
+    colorStatus = colors.green
   }
 
-  if (!item.packed && item.quantity_defitive && (item.quantity_defitive + item.cant_insert) < item.quantity) {
+  if (
+    !item.packed &&
+    item.quantity_defitive &&
+    item.quantity_defitive + item.cant_insert < item.quantity
+  ) {
     message = `M: ${isDecimal(item.quantity - (item.quantity_defitive + item.cant_insert))}`
-    missingStatus = true;
-    colorStatus = colors.danger;
+    missingStatus = true
+    colorStatus = colors.danger
   }
 
-  if (!item.packed && item.quantity_defitive && (item.quantity_defitive + item.cant_insert) > item.quantity) {
-    message = `O: ${isDecimal((item.quantity_defitive + item.cant_insert) - item.quantity)}`
-    overStatus = true;
-    colorStatus = colors.green;
+  if (
+    !item.packed &&
+    item.quantity_defitive &&
+    item.quantity_defitive + item.cant_insert > item.quantity
+  ) {
+    message = `O: ${isDecimal(item.quantity_defitive + item.cant_insert - item.quantity)}`
+    overStatus = true
+    colorStatus = colors.green
   }
 
-  if (item.packed && item.cant_insert > 0 && (item.quantity - item.cant_insert) > item.packed) {
-    message = `M: ${isDecimal((item.quantity - item.cant_insert) - item.packed)}`
-    missingStatus = true;
-    colorStatus = colors.danger;
+  if (
+    item.packed &&
+    item.cant_insert > 0 &&
+    item.quantity - item.cant_insert > item.packed
+  ) {
+    message = `M: ${isDecimal(item.quantity - item.cant_insert - item.packed)}`
+    missingStatus = true
+    colorStatus = colors.danger
   }
 
-  if (item.packed && item.cant_insert > 0 && (item.quantity - item.cant_insert) < item.packed) {
+  if (
+    item.packed &&
+    item.cant_insert > 0 &&
+    item.quantity - item.cant_insert < item.packed
+  ) {
     message = `O: ${isDecimal(item.packed - (item.quantity - item.cant_insert))}`
-    overStatus = true;
-    colorStatus = colors.green;
+    overStatus = true
+    colorStatus = colors.green
   }
 
-  if (item.packed && item.cant_insert <= 0 && (item.quantity - item.cant_insert) > item.packed) {
-    message = `M: ${isDecimal((item.quantity - item.cant_insert) - item.packed)}`
-    missingStatus = true;
-    colorStatus = colors.danger;
+  if (
+    item.packed &&
+    item.cant_insert <= 0 &&
+    item.quantity - item.cant_insert > item.packed
+  ) {
+    message = `M: ${isDecimal(item.quantity - item.cant_insert - item.packed)}`
+    missingStatus = true
+    colorStatus = colors.danger
   }
 
-  if (item.packed && item.cant_insert <= 0 && (item.quantity - item.cant_insert) < item.packed) {
+  if (
+    item.packed &&
+    item.cant_insert <= 0 &&
+    item.quantity - item.cant_insert < item.packed
+  ) {
     message = `O: ${isDecimal(item.packed - (item.quantity - item.cant_insert))}`
-    overStatus = true;
-    colorStatus = colors.green;
+    overStatus = true
+    colorStatus = colors.green
   }
 
   return (
@@ -231,28 +267,35 @@ export const ProductsCardBulkVan = ({
               >
                 {item.name} - {item.uom}
               </Text>
-
-              <View style={ProductStyles.qty}>
-                <Text style={ProductStyles.textCard}>
-                  Qty: {isDecimal(item.quantity)}
-                  {item.cant_insert && Number(item.cant_insert) > 0 ? (
-                    <Text>
-                      {" "}-{" L: "}{isDecimal(item.cant_insert)}
-                    </Text>
-                  ) : null}
-                  {message ? (
-                    <>
+              {responsableDetails === false ? (
+                <View style={ProductStyles.qty}>
+                  <Text style={ProductStyles.textCard}>
+                    Qty: {isDecimal(item.quantity)}
+                    {item.cant_insert && Number(item.cant_insert) > 0 ? (
                       <Text>
-                        {" "}-{" "}
+                        {' '}
+                        -{' L: '}
+                        {isDecimal(item.cant_insert)}
                       </Text>
-                      <Text style={{ color: colorStatus }}>
-                        {message}
-                      </Text>
-                    </>
-                  ) : null}
-
-                </Text>
-              </View>
+                    ) : null}
+                    {message ? (
+                      <>
+                        <Text> - </Text>
+                        <Text style={{ color: colorStatus }}>{message}</Text>
+                      </>
+                    ) : null}
+                  </Text>
+                </View>
+              ) : (
+                <View>
+                  <Text style={[ProductStyles.textCard, { fontSize: 12 }]}>
+                    Last: Paula Vanegas
+                  </Text>
+                  <Text style={[ProductStyles.textCard, { fontSize: 12 }]}>
+                    20:00 AM
+                  </Text>
+                </View>
+              )}
             </View>
 
             <CheckStatusCardVan
