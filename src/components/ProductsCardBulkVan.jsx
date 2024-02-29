@@ -86,7 +86,7 @@ export const ProductsCardBulkVan = ({
     setIsNA(false)
     handleSubmit(item.id, 0, '', 'null')
   }
-
+  console.log('van: ', item)
   const setStateCardDefault = () => {
     setIsPressed(false)
     setLeft(false)
@@ -289,10 +289,10 @@ export const ProductsCardBulkVan = ({
               ) : (
                 <View>
                   <Text style={[ProductStyles.textCard, { fontSize: 12 }]}>
-                    Last: Paula Vanegas
+                    Last: {item.user_definitive}
                   </Text>
                   <Text style={[ProductStyles.textCard, { fontSize: 12 }]}>
-                    20:00 AM
+                    {item.date_definitive}
                   </Text>
                 </View>
               )}

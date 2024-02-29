@@ -19,6 +19,8 @@ export function ProductsCard({
   viewPacking,
   error,
   responsableDetails,
+  user,
+  date,
 }) {
   const positiveOffset = 30
   const negativeOffset = -30
@@ -168,10 +170,10 @@ export function ProductsCard({
                 ) : (
                   <View>
                     <Text style={[ProductStyles.textCard, { fontSize: 12 }]}>
-                      Last: Paula Vanegas
+                      Last: {user}
                     </Text>
                     <Text style={[ProductStyles.textCard, { fontSize: 12 }]}>
-                      20:00 AM
+                      {date}
                     </Text>
                   </View>
                 )}

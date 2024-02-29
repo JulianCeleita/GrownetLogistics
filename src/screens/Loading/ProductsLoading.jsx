@@ -139,6 +139,8 @@ function ProductsLoading({ route }) {
                           handleSubmit={handleSubmit}
                           error={error}
                           responsableDetails={responsableDetails}
+                          user={product.user_loading}
+                          date={product.date_loading}
                         />
                       ))}
                     </View>

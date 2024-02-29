@@ -143,8 +143,9 @@ function ProductsPacking({ route }) {
                             viewPacking
                             error={error}
                             responsableDetails={responsableDetails}
+                            user={product.user_packing}
+                            date={product.date_packing}
                           />
-                          {console.log('desde atras', product)}
                         </>
                       ))}
                     </View>

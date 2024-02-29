@@ -18,7 +18,6 @@ import { DeliveryStyles } from '../../styles/DeliveryStyles'
 import { GlobalStyles } from '../../styles/GlobalStyles'
 
 const Packing = () => {
-
   const navigation = useNavigation()
   const {
     routesByDate,
@@ -27,7 +26,7 @@ const Packing = () => {
     setRoutesByDate,
     selectedDate,
     setRoutesByDateClean,
-    isLoading
+    isLoading,
   } = useOrdersByDate()
   const { employeeToken } = useEmployeeStore()
   const handleRoutePress = (nameRoute) => {
@@ -42,15 +41,22 @@ const Packing = () => {
       return () => {
         setRoutesByDateClean([])
       }
-    }, [navigation],))
+    }, [navigation]),
+  )
 
   return (
     <View style={{ backgroundColor: 'white', height: '100%' }}>
       <ScrollView>
         <BtnGoBack color="white" top={Platform.OS === 'ios' ? 65 : 20} />
-        <View style={[DeliveryStyles.tittle, GlobalStyles.boxShadow, {
-          marginTop: Platform.OS === 'ios' ? 80 : 30,
-        }]}>
+        <View
+          style={[
+            DeliveryStyles.tittle,
+            GlobalStyles.boxShadow,
+            {
+              marginTop: Platform.OS === 'ios' ? 80 : 30,
+            },
+          ]}
+        >
           <Image
             style={DeliveryStyles.imageTittlePacking}
             source={require('../../img/packingBlanco.png')}
@@ -76,8 +82,16 @@ const Packing = () => {
                 onPress={() => handleRoutePress(route.nameRoute)}
                 key={route.nameRoute}
               >
-                <CircleProgress percentage={route.percentage_loading === 100 ? route.percentage_loading : route.percentage_packing} />
-                <Text style={DeliveryStyles.tittleRoute}>{route.nameRoute}</Text>
+                <CircleProgress
+                  percentage={
+                    route.percentage_loading === 100
+                      ? route.percentage_loading
+                      : route.percentage_packing
+                  }
+                />
+                <Text style={DeliveryStyles.tittleRoute}>
+                  {route.nameRoute}
+                </Text>
               </TouchableOpacity>
             ))}
           </View>
@@ -93,7 +107,6 @@ const Packing = () => {
             <ActivityIndicator size="large" color="#0000ff" />
           </View>
         )}
-
       </ScrollView>
     </View>
   )
