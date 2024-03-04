@@ -23,6 +23,7 @@ export const usePackingStore = create((set) => ({
           },
         },
       )
+      console.log('resp.data:', resp.data)
       const products = await resp.data
       set({ productsPacking: products.orders[0] })
     } catch (error) {
