@@ -9,7 +9,7 @@ import { CustomerDayStyles } from '../styles/CustomerDayStyles'
 import { GlobalStyles, colors } from '../styles/GlobalStyles'
 import { Ionicons } from '@expo/vector-icons'
 
-const CustomerCard = ({ customer, loadingCard }) => {
+const CustomerCard = ({ customer, loadingCard, prepsCard }) => {
   const { setSelectedOrder } = usePackingStore()
   const { setSelectedOrderL } = useLoadingStore()
   const { percentagesP, percentagesL } = usePercentageStore()
@@ -21,16 +21,23 @@ const CustomerCard = ({ customer, loadingCard }) => {
   let roundedPercentage = 0
 
   const handleNavigateToProducts = () => {
-    if (!loadingCard) {
+    if (loadingCard) {
+      setSelectedOrderL(customer.orders_reference)
+      navigation.navigate('ProductsLoading', {
+        selectedCustomer: customer.accountNumber,
+        accountName: customer.accountName,
+        orderNumber: customer.orders_reference,
+      })
+    } else if (prepsCard) {
       setSelectedOrder(customer.orders_reference)
-      navigation.navigate('ProductsPacking', {
+      navigation.navigate('ProductsPreps', {
         selectedCustomer: customer.accountNumber,
         accountName: customer.accountName,
         orderNumber: customer.orders_reference,
       })
     } else {
-      setSelectedOrderL(customer.orders_reference)
-      navigation.navigate('ProductsLoading', {
+      setSelectedOrder(customer.orders_reference)
+      navigation.navigate('ProductsPacking', {
         selectedCustomer: customer.accountNumber,
         accountName: customer.accountName,
         orderNumber: customer.orders_reference,
@@ -39,41 +46,40 @@ const CustomerCard = ({ customer, loadingCard }) => {
   }
 
   if (!loadingCard) {
-    let percentP = 0;
-    let percentL = 0;
+    let percentP = 0
+    let percentL = 0
     percentagesP.forEach((order) => {
       if (order.reference === customer.orders_reference) {
-        percentP = Number(order.percentage).toFixed(0);
-        customer.vip = order.vip;
-        customer.crates = order.crates;
+        percentP = Number(order.percentage).toFixed(0)
+        customer.vip = order.vip
+        customer.crates = order.crates
       }
     })
     percentagesL.forEach((order) => {
       if (order.reference === customer.orders_reference) {
-        percentL = Number(order.percentage).toFixed(0);
-        customer.vip = order.vip;
-        customer.crates = order.crates;
+        percentL = Number(order.percentage).toFixed(0)
+        customer.vip = order.vip
+        customer.crates = order.crates
       }
     })
 
     if (Number(percentL) === 100) {
-      roundedPercentage = percentL;
+      roundedPercentage = percentL
     } else {
-      roundedPercentage = percentP;
+      roundedPercentage = percentP
     }
-
   } else {
     percentagesL.forEach((order) => {
       if (order.reference === customer.orders_reference) {
         roundedPercentage = Number(order.percentage).toFixed(0)
-        customer.vip = order.vip;
-        customer.crates = order.crates;
+        customer.vip = order.vip
+        customer.crates = order.crates
       }
     })
   }
 
   const strokeDashoffset =
-    circumference - (roundedPercentage / 100) * circumference;
+    circumference - (roundedPercentage / 100) * circumference
 
   return (
     <View>
@@ -141,18 +147,10 @@ const CustomerCard = ({ customer, loadingCard }) => {
         </View>
         <View style={CustomerDayStyles.cardIcons}>
           {customer.vip === 1 ? (
-            <Ionicons
-              name="ios-star"
-              size={24}
-              color={colors.darkBlue}
-            />
+            <Ionicons name="ios-star" size={24} color={colors.darkBlue} />
           ) : null}
           {customer.crates === 1 ? (
-            <Ionicons
-              name="ios-cube"
-              size={24}
-              color={colors.darkBlue}
-            />
+            <Ionicons name="ios-cube" size={24} color={colors.darkBlue} />
           ) : null}
           <Text style={CustomerDayStyles.textCustomer}>
             {customer.drop === null ? 0 : customer.drop}
