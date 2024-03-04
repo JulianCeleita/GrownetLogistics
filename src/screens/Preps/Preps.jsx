@@ -62,7 +62,7 @@ const Preps = () => {
             source={require('../../img/packingBlanco.png')}
             alt="Loading"
           />
-          <Text style={DeliveryStyles.textTittle}>Preps</Text>
+          <Text style={DeliveryStyles.textTittle}>Prep</Text>
         </View>
         <LinearGradient
           colors={['#00478C', '#026CD2']}

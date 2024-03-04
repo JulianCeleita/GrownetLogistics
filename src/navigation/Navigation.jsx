@@ -117,14 +117,14 @@ function MyTabs() {
       }}
     >
       <Tab.Screen
-        name="Packing"
-        component={StackPacking}
+        name="Prep"
+        component={StackPreps}
         options={{
           tabBarIcon: ({ color, focused }) => (
             <>
-              <Feather name="package" size={30} color={color} />
-              <Feather
-                name="package"
+              <MaterialCommunityIcons name="knife" size={30} color={color} />
+              <MaterialCommunityIcons
+                name="knife"
                 size={30}
                 color={colors.lightGreen}
                 style={
@@ -145,14 +145,14 @@ function MyTabs() {
         }}
       />
       <Tab.Screen
-        name="Preps"
-        component={StackPreps}
+        name="Packing"
+        component={StackPacking}
         options={{
           tabBarIcon: ({ color, focused }) => (
             <>
-              <MaterialCommunityIcons name="knife" size={30} color={color} />
-              <MaterialCommunityIcons
-                name="knife"
+              <Feather name="package" size={30} color={color} />
+              <Feather
+                name="package"
                 size={30}
                 color={colors.lightGreen}
                 style={
