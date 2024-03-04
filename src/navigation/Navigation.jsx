@@ -28,8 +28,6 @@ import useEmployeeStore from '../store/useEmployeeStore'
 import useTokenStore from '../store/useTokenStore'
 import { colors } from '../styles/GlobalStyles'
 import ProductsPreps from '../screens/Preps/ProductsPreps'
-import CustomerDayPreps from '../screens/Preps/CustomerDayPreps'
-import Preps from '../screens/Preps/Preps'
 
 const Tab = createBottomTabNavigator()
 const Stack = createNativeStackNavigator()
@@ -49,11 +47,9 @@ function StackPacking() {
 function StackPreps() {
   return (
     <Stack.Navigator
-      initialRouteName="PrepsScreen"
+      initialRouteName="ProductsPreps"
       screenOptions={{ headerShown: false }}
     >
-      <Stack.Screen name="PrepsScreen" component={Preps} />
-      <Stack.Screen name="CustomerDayPreps" component={CustomerDayPreps} />
       <Stack.Screen name="ProductsPreps" component={ProductsPreps} />
     </Stack.Navigator>
   )

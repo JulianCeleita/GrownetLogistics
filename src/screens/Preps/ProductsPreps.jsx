@@ -56,7 +56,7 @@ function ProductsPreps({ route }) {
 
   useFocusEffect(
     useCallback(() => {
-      setFetchPackingProducts(employeeToken, selectedOrder)
+      setFetchPackingProducts(employeeToken, '170061')
       return () => {
         setProductsPacking(null)
       }
@@ -87,14 +87,12 @@ function ProductsPreps({ route }) {
         </View>
       ) : (
         <View style={{ paddingHorizontal: 43, width: '100%' }}>
-          <BtnGoBack color={colors.darkBlue} />
+          {/* <BtnGoBack color={colors.darkBlue} /> */}
           <View>
             <TouchableOpacity onLongPress={handlePressIn} delayLongPress={500}>
               <Text style={ProductStyles.customerTitle}>
-                <Text>{route.params.accountName} - </Text>
-                <Text style={{ flexWrap: 'wrap' }}>
-                  {productsPacking ? route.params.orderNumber : 'Loading...'}
-                </Text>
+                <Text>{''} - </Text>
+                <Text style={{ flexWrap: 'wrap' }}>Prep</Text>
               </Text>
             </TouchableOpacity>
           </View>
