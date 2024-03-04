@@ -105,7 +105,7 @@ function MyTabs() {
         headerShown: false,
         tabBarStyle: {
           backgroundColor: 'white',
-          height: 65,
+          height: 70,
           borderTopLeftRadius: 15,
           borderTopRightRadius: 15,
           shadowColor: '#3B3B3B',
@@ -136,7 +136,12 @@ function MyTabs() {
             </>
           ),
           unmountOnBlur: true,
-          tabBarLabelStyle: { fontFamily: 'PoppinsRegular', fontSize: 10 },
+          tabBarLabelStyle: {
+            fontFamily: 'PoppinsRegular',
+            fontSize: 10,
+            marginBottom: 5,
+            marginTop: -6,
+          },
         }}
       />
       <Tab.Screen
@@ -159,7 +164,12 @@ function MyTabs() {
             </>
           ),
           unmountOnBlur: true,
-          tabBarLabelStyle: { fontFamily: 'PoppinsRegular', fontSize: 10 },
+          tabBarLabelStyle: {
+            fontFamily: 'PoppinsRegular',
+            fontSize: 10,
+            marginBottom: 5,
+            marginTop: -6,
+          },
         }}
       />
       <Tab.Screen
@@ -186,7 +196,12 @@ function MyTabs() {
             </>
           ),
           unmountOnBlur: true,
-          tabBarLabelStyle: { fontFamily: 'PoppinsRegular', fontSize: 10 },
+          tabBarLabelStyle: {
+            fontFamily: 'PoppinsRegular',
+            fontSize: 10,
+            marginBottom: 5,
+            marginTop: -6,
+          },
         }}
       />
       <Tab.Screen
@@ -213,7 +228,12 @@ function MyTabs() {
             </>
           ),
           unmountOnBlur: true,
-          tabBarLabelStyle: { fontFamily: 'PoppinsRegular', fontSize: 10 },
+          tabBarLabelStyle: {
+            fontFamily: 'PoppinsRegular',
+            fontSize: 10,
+            marginBottom: 5,
+            marginTop: -6,
+          },
         }}
       />
       <Tab.Screen
@@ -240,7 +260,12 @@ function MyTabs() {
             </>
           ),
           unmountOnBlur: true,
-          tabBarLabelStyle: { fontFamily: 'PoppinsRegular', fontSize: 10 },
+          tabBarLabelStyle: {
+            fontFamily: 'PoppinsRegular',
+            fontSize: 10,
+            marginBottom: 5,
+            marginTop: -6,
+          },
         }}
       />
     </Tab.Navigator>
