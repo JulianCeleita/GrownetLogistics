@@ -27,6 +27,9 @@ import ShortsVans from '../screens/ShortsVan/ShortsVans'
 import useEmployeeStore from '../store/useEmployeeStore'
 import useTokenStore from '../store/useTokenStore'
 import { colors } from '../styles/GlobalStyles'
+import ProductsPreps from '../screens/Preps/ProductsPreps'
+import CustomerDayPreps from '../screens/Preps/CustomerDayPreps'
+import Preps from '../screens/Preps/Preps'
 
 const Tab = createBottomTabNavigator()
 const Stack = createNativeStackNavigator()
@@ -40,6 +43,18 @@ function StackPacking() {
       <Stack.Screen name="PackingScreen" component={Packing} />
       <Stack.Screen name="CustomerDayPacking" component={CustomerDayPacking} />
       <Stack.Screen name="ProductsPacking" component={ProductsPacking} />
+    </Stack.Navigator>
+  )
+}
+function StackPreps() {
+  return (
+    <Stack.Navigator
+      initialRouteName="PrepsScreen"
+      screenOptions={{ headerShown: false }}
+    >
+      <Stack.Screen name="PrepsScreen" component={Preps} />
+      <Stack.Screen name="CustomerDayPreps" component={CustomerDayPreps} />
+      <Stack.Screen name="ProductsPreps" component={ProductsPreps} />
     </Stack.Navigator>
   )
 }
@@ -145,6 +160,16 @@ function MyTabs() {
           ),
           unmountOnBlur: true,
           tabBarLabelStyle: { fontFamily: 'PoppinsRegular', fontSize: 10 },
+        }}
+      />
+      <Tab.Screen
+        name="Preps"
+        component={StackPreps}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <Feather name="package" size={size} color={color} />
+          ),
+          unmountOnBlur: true,
         }}
       />
       <Tab.Screen
