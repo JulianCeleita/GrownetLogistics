@@ -88,58 +88,144 @@ function MyTabs() {
       screenOptions={{
         tabBarActiveTintColor: colors.darkBlue,
         headerShown: false,
+        tabBarStyle: {
+          backgroundColor: 'white',
+          height: 65,
+          borderTopLeftRadius: 15,
+          borderTopRightRadius: 15,
+          shadowColor: '#3B3B3B',
+          shadowOffset: { width: 0, height: 2 },
+          shadowOpacity: 0.2,
+          shadowRadius: 9,
+          elevation: 3,
+        },
       }}
     >
       <Tab.Screen
         name="Packing"
         component={StackPacking}
         options={{
-          tabBarIcon: ({ color, size }) => (
-            <Feather name="package" size={size} color={color} />
+          tabBarIcon: ({ color, focused }) => (
+            <>
+              <Feather name="package" size={30} color={color} />
+              <Feather
+                name="package"
+                size={30}
+                color={colors.lightGreen}
+                style={
+                  !focused
+                    ? { display: 'none' }
+                    : { position: 'absolute', zIndex: -1, right: 21 }
+                }
+              />
+            </>
           ),
           unmountOnBlur: true,
+          tabBarLabelStyle: { fontFamily: 'PoppinsRegular', fontSize: 10 },
+        }}
+      />
+      <Tab.Screen
+        name="Preps"
+        component={StackBulk}
+        options={{
+          tabBarIcon: ({ color, focused }) => (
+            <>
+              <MaterialCommunityIcons name="knife" size={30} color={color} />
+              <MaterialCommunityIcons
+                name="knife"
+                size={30}
+                color={colors.lightGreen}
+                style={
+                  !focused
+                    ? { display: 'none' }
+                    : { position: 'absolute', zIndex: -1, right: 21 }
+                }
+              />
+            </>
+          ),
+          unmountOnBlur: true,
+          tabBarLabelStyle: { fontFamily: 'PoppinsRegular', fontSize: 10 },
         }}
       />
       <Tab.Screen
         name="Preloading"
         component={StackBulk}
         options={{
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons
-              name="package-variant"
-              size={size}
-              color={color}
-            />
+          tabBarIcon: ({ color, focused }) => (
+            <>
+              <MaterialCommunityIcons
+                name="package-variant"
+                size={30}
+                color={color}
+              />
+              <MaterialCommunityIcons
+                name="package-variant"
+                size={30}
+                color={colors.lightGreen}
+                style={
+                  !focused
+                    ? { display: 'none' }
+                    : { position: 'absolute', zIndex: -1, right: 21 }
+                }
+              />
+            </>
           ),
           unmountOnBlur: true,
+          tabBarLabelStyle: { fontFamily: 'PoppinsRegular', fontSize: 10 },
         }}
       />
       <Tab.Screen
         name="Loading"
         component={StackLoading}
         options={{
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons
-              name="truck-delivery-outline"
-              size={size}
-              color={color}
-            />
+          tabBarIcon: ({ color, focused }) => (
+            <>
+              <MaterialCommunityIcons
+                name="truck-delivery-outline"
+                size={30}
+                color={color}
+              />
+              <MaterialCommunityIcons
+                name="truck-delivery-outline"
+                size={30}
+                color={colors.lightGreen}
+                style={
+                  !focused
+                    ? { display: 'none' }
+                    : { position: 'absolute', zIndex: -1, right: 21 }
+                }
+              />
+            </>
           ),
           unmountOnBlur: true,
+          tabBarLabelStyle: { fontFamily: 'PoppinsRegular', fontSize: 10 },
         }}
       />
       <Tab.Screen
         name="Shorts Van"
         component={StackVan}
         options={{
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons
-              name="truck-fast-outline"
-              size={size}
-              color={color}
-            />
+          tabBarIcon: ({ color, focused }) => (
+            <>
+              <MaterialCommunityIcons
+                name="truck-fast-outline"
+                size={30}
+                color={color}
+              />
+              <MaterialCommunityIcons
+                name="truck-fast-outline"
+                size={30}
+                color={colors.lightGreen}
+                style={
+                  !focused
+                    ? { display: 'none' }
+                    : { position: 'absolute', zIndex: -1, right: 21 }
+                }
+              />
+            </>
           ),
           unmountOnBlur: true,
+          tabBarLabelStyle: { fontFamily: 'PoppinsRegular', fontSize: 10 },
         }}
       />
     </Tab.Navigator>
