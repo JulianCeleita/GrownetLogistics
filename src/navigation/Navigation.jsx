@@ -141,7 +141,7 @@ function MyTabs() {
       />
       <Tab.Screen
         name="Preps"
-        component={StackBulk}
+        component={StackPreps}
         options={{
           tabBarIcon: ({ color, focused }) => (
             <>
@@ -160,16 +160,6 @@ function MyTabs() {
           ),
           unmountOnBlur: true,
           tabBarLabelStyle: { fontFamily: 'PoppinsRegular', fontSize: 10 },
-        }}
-      />
-      <Tab.Screen
-        name="Preps"
-        component={StackPreps}
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <Feather name="package" size={size} color={color} />
-          ),
-          unmountOnBlur: true,
         }}
       />
       <Tab.Screen
