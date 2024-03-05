@@ -202,8 +202,8 @@ export function ProductsCard({
                           ]}
                         >
                           {userPacking === null && userLoading != null
-                            ? 'Packed by loader: ' + userLoading
-                            : 'Packed by packer: ' + userPacking}
+                            ? 'Packed by: ' + userLoading
+                            : 'Packed by: ' + userPacking}
                         </Text>
                         <Text
                           style={[
