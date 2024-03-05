@@ -139,6 +139,6 @@ export const useCardEvents = (quantityStore, products, setProducts, error) => {
     quantity,
     setQuantity,
     setAddQuantity,
-    setSelectedProduct
+    setSelectedProduct,
   }
 }

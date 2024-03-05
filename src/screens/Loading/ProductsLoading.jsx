@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import {
   ActivityIndicator,
   Platform,
@@ -6,6 +6,7 @@ import {
   Text,
   View,
   TouchableOpacity,
+  Button,
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { BtnGoBack } from '../../components/BtnGoBack'
@@ -38,6 +39,12 @@ function ProductsLoading({ route }) {
   const [searchPhrase, setSearchPhrase] = useState('')
   const [showModalDebugger, setShowModalDebugger] = useState(false)
   const [responsableDetails, setResponsableDetails] = useState(false)
+
+  const scrollViewRef = useRef()
+
+  const scrollToEnd = () => {
+    scrollViewRef.current.scrollToEnd({ animated: true })
+  }
 
   const handlePressIn = () => {
     setResponsableDetails(!responsableDetails)
@@ -110,41 +117,53 @@ function ProductsLoading({ route }) {
           </TouchableOpacity>
         </View>
       )}
+
       <KeyboardAwareScrollView
         enableOnAndroid
         extraScrollHeight={210}
         showsVerticalScrollIndicator={false}
         style={{ marginRight: -3 }}
         contentContainerStyle={{ paddingRight: 3 }}
+        ref={scrollViewRef}
       >
         <ScrollView>
           {productsLoading ? (
             filteredData.length > 0 ? (
               <AnimatedSearchCard search={search}>
                 <View style={ProductStyles.cardsProducts}>
-                  {Object.entries(groupedProducts).map(([group, products]) => (
-                    <View key={group}>
-                      <Text style={CustomerDayStyles.restaurantTypeTitle}>
-                        {group}
-                      </Text>
-                      {products.map((product) => (
-                        <ProductsCard
-                          key={product.id}
-                          item={product}
-                          colorPress={colors.green}
-                          colorRight={colors.green}
-                          colorLeft={colors.danger}
-                          products={productsLoading}
-                          setProducts={setLoadingProducts}
-                          handleSubmit={handleSubmit}
-                          error={error}
-                          responsableDetails={responsableDetails}
-                          user={product.user_loading}
-                          date={product.date_loading}
-                        />
-                      ))}
-                    </View>
-                  ))}
+                  {Object.entries(groupedProducts).map(
+                    ([group, products], groupIndex, groups) => (
+                      <View key={group}>
+                        <Text style={CustomerDayStyles.restaurantTypeTitle}>
+                          {group}
+                        </Text>
+                        {products.map(
+                          (product, productIndex, productsArray) => (
+                            <ProductsCard
+                              key={product.id}
+                              item={product}
+                              colorPress={colors.green}
+                              colorRight={colors.green}
+                              colorLeft={colors.danger}
+                              products={productsLoading}
+                              setProducts={setLoadingProducts}
+                              handleSubmit={handleSubmit}
+                              error={error}
+                              responsableDetails={responsableDetails}
+                              user={product.user_loading}
+                              date={product.date_loading}
+                              scrollToEnd={
+                                groupIndex === groups.length - 1 &&
+                                productIndex === productsArray.length - 1
+                                  ? scrollToEnd
+                                  : undefined
+                              }
+                            />
+                          ),
+                        )}
+                      </View>
+                    ),
+                  )}
                 </View>
               </AnimatedSearchCard>
             ) : (
