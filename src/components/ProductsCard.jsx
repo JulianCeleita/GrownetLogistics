@@ -19,8 +19,10 @@ export function ProductsCard({
   viewPacking,
   error,
   responsableDetails,
-  user,
-  date,
+  userPacking,
+  datePacking,
+  userLoading,
+  dateLoading,
 }) {
   const positiveOffset = 30
   const negativeOffset = -30
@@ -105,7 +107,7 @@ export function ProductsCard({
       return handleGestureEvent(e, item.id)
     }
   }
-
+  console.log('loading:' + userLoading + 'Packing' + userPacking)
   return (
     <View
       style={{
@@ -169,12 +171,32 @@ export function ProductsCard({
                   </View>
                 ) : (
                   <View>
-                    <Text style={[ProductStyles.textCard, { fontSize: 12 }]}>
-                      Last: {user}
-                    </Text>
-                    <Text style={[ProductStyles.textCard, { fontSize: 12 }]}>
-                      {date}
-                    </Text>
+                    {userPacking === null && userLoading === null ? (
+                      <Text style={[ProductStyles.textCard]}>Unchanged</Text>
+                    ) : (
+                      <View>
+                        <Text
+                          style={[
+                            ProductStyles.textCard,
+                            { fontSize: 12, marginTop: -2 },
+                          ]}
+                        >
+                          {userPacking === null && userLoading != null
+                            ? 'Packed by loader: ' + userLoading
+                            : 'Packed by packer: ' + userPacking}
+                        </Text>
+                        <Text
+                          style={[
+                            ProductStyles.textCard,
+                            { fontSize: 12, marginTop: -5 },
+                          ]}
+                        >
+                          {userPacking === null && userLoading != null
+                            ? dateLoading
+                            : datePacking}
+                        </Text>
+                      </View>
+                    )}
                   </View>
                 )}
               </View>

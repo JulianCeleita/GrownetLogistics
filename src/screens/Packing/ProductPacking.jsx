@@ -46,7 +46,7 @@ function ProductsPacking({ route }) {
   const handleSearch = () => {
     setSearch(true)
   }
-
+  console.log(productsPacking)
   const filteredData =
     productsPacking && productsPacking.data
       ? productsPacking.data.filter((item) =>
@@ -143,8 +143,10 @@ function ProductsPacking({ route }) {
                             viewPacking
                             error={error}
                             responsableDetails={responsableDetails}
-                            user={product.user_packing}
-                            date={product.date_packing}
+                            userPacking={product.user_packing}
+                            datePacking={product.date_packing}
+                            userLoading={product.user_loading}
+                            dateLoading={product.date_loading}
                           />
                         </>
                       ))}
