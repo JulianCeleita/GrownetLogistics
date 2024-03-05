@@ -27,6 +27,7 @@ import ShortsVans from '../screens/ShortsVan/ShortsVans'
 import useEmployeeStore from '../store/useEmployeeStore'
 import useTokenStore from '../store/useTokenStore'
 import { colors } from '../styles/GlobalStyles'
+import ProductsPreps from '../screens/Preps/ProductsPreps'
 
 const Tab = createBottomTabNavigator()
 const Stack = createNativeStackNavigator()
@@ -40,6 +41,16 @@ function StackPacking() {
       <Stack.Screen name="PackingScreen" component={Packing} />
       <Stack.Screen name="CustomerDayPacking" component={CustomerDayPacking} />
       <Stack.Screen name="ProductsPacking" component={ProductsPacking} />
+    </Stack.Navigator>
+  )
+}
+function StackPreps() {
+  return (
+    <Stack.Navigator
+      initialRouteName="ProductsPreps"
+      screenOptions={{ headerShown: false }}
+    >
+      <Stack.Screen name="ProductsPreps" component={ProductsPreps} />
     </Stack.Navigator>
   )
 }
@@ -88,58 +99,169 @@ function MyTabs() {
       screenOptions={{
         tabBarActiveTintColor: colors.darkBlue,
         headerShown: false,
+        tabBarStyle: {
+          backgroundColor: 'white',
+          height: 70,
+          borderTopLeftRadius: 15,
+          borderTopRightRadius: 15,
+          shadowColor: '#3B3B3B',
+          shadowOffset: { width: 0, height: 2 },
+          shadowOpacity: 0.2,
+          shadowRadius: 9,
+          elevation: 3,
+        },
       }}
     >
+      <Tab.Screen
+        name="Prep"
+        component={StackPreps}
+        options={{
+          tabBarIcon: ({ color, focused }) => (
+            <>
+              <MaterialCommunityIcons name="knife" size={30} color={color} />
+              <MaterialCommunityIcons
+                name="knife"
+                size={30}
+                color={colors.lightGreen}
+                style={
+                  !focused
+                    ? { display: 'none' }
+                    : { position: 'absolute', zIndex: -1, right: 21 }
+                }
+              />
+            </>
+          ),
+          unmountOnBlur: true,
+          tabBarLabelStyle: {
+            fontFamily: 'PoppinsRegular',
+            fontSize: 10,
+            marginBottom: 5,
+            marginTop: -6,
+          },
+        }}
+      />
       <Tab.Screen
         name="Packing"
         component={StackPacking}
         options={{
-          tabBarIcon: ({ color, size }) => (
-            <Feather name="package" size={size} color={color} />
+          tabBarIcon: ({ color, focused }) => (
+            <>
+              <Feather name="package" size={30} color={color} />
+              <Feather
+                name="package"
+                size={30}
+                color={colors.lightGreen}
+                style={
+                  !focused
+                    ? { display: 'none' }
+                    : { position: 'absolute', zIndex: -1, right: 21 }
+                }
+              />
+            </>
           ),
           unmountOnBlur: true,
+          tabBarLabelStyle: {
+            fontFamily: 'PoppinsRegular',
+            fontSize: 10,
+            marginBottom: 5,
+            marginTop: -6,
+          },
         }}
       />
       <Tab.Screen
         name="Preloading"
         component={StackBulk}
         options={{
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons
-              name="package-variant"
-              size={size}
-              color={color}
-            />
+          tabBarIcon: ({ color, focused }) => (
+            <>
+              <MaterialCommunityIcons
+                name="package-variant"
+                size={30}
+                color={color}
+              />
+              <MaterialCommunityIcons
+                name="package-variant"
+                size={30}
+                color={colors.lightGreen}
+                style={
+                  !focused
+                    ? { display: 'none' }
+                    : { position: 'absolute', zIndex: -1, right: 21 }
+                }
+              />
+            </>
           ),
           unmountOnBlur: true,
+          tabBarLabelStyle: {
+            fontFamily: 'PoppinsRegular',
+            fontSize: 10,
+            marginBottom: 5,
+            marginTop: -6,
+          },
         }}
       />
       <Tab.Screen
         name="Loading"
         component={StackLoading}
         options={{
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons
-              name="truck-delivery-outline"
-              size={size}
-              color={color}
-            />
+          tabBarIcon: ({ color, focused }) => (
+            <>
+              <MaterialCommunityIcons
+                name="truck-delivery-outline"
+                size={30}
+                color={color}
+              />
+              <MaterialCommunityIcons
+                name="truck-delivery-outline"
+                size={30}
+                color={colors.lightGreen}
+                style={
+                  !focused
+                    ? { display: 'none' }
+                    : { position: 'absolute', zIndex: -1, right: 21 }
+                }
+              />
+            </>
           ),
           unmountOnBlur: true,
+          tabBarLabelStyle: {
+            fontFamily: 'PoppinsRegular',
+            fontSize: 10,
+            marginBottom: 5,
+            marginTop: -6,
+          },
         }}
       />
       <Tab.Screen
         name="Shorts Van"
         component={StackVan}
         options={{
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons
-              name="truck-fast-outline"
-              size={size}
-              color={color}
-            />
+          tabBarIcon: ({ color, focused }) => (
+            <>
+              <MaterialCommunityIcons
+                name="truck-fast-outline"
+                size={30}
+                color={color}
+              />
+              <MaterialCommunityIcons
+                name="truck-fast-outline"
+                size={30}
+                color={colors.lightGreen}
+                style={
+                  !focused
+                    ? { display: 'none' }
+                    : { position: 'absolute', zIndex: -1, right: 21 }
+                }
+              />
+            </>
           ),
           unmountOnBlur: true,
+          tabBarLabelStyle: {
+            fontFamily: 'PoppinsRegular',
+            fontSize: 10,
+            marginBottom: 5,
+            marginTop: -6,
+          },
         }}
       />
     </Tab.Navigator>

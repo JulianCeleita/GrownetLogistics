@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { PanGestureHandler } from 'react-native-gesture-handler'
 import ModalProduct from '../components/ModalProduct'
@@ -7,6 +7,7 @@ import { GlobalStyles, colors } from '../styles/GlobalStyles'
 import { ProductStyles } from '../styles/ProductStyles'
 import { CheckQuantity } from './CheckQuantity'
 import { CheckStatusCard } from './CheckStatusCard'
+import { Animated } from 'react-native'
 
 export function ProductsCard({
   item,
@@ -19,8 +20,11 @@ export function ProductsCard({
   viewPacking,
   error,
   responsableDetails,
-  user,
-  date,
+  userPacking,
+  datePacking,
+  userLoading,
+  dateLoading,
+  scrollToEnd,
 }) {
   const positiveOffset = 30
   const negativeOffset = -30
@@ -42,6 +46,15 @@ export function ProductsCard({
     setAddQuantity,
     setSelectedProduct,
   } = useCardEvents(item.quantity, products, setProducts, error, viewPacking)
+  const [fadeAnim] = useState(new Animated.Value(0))
+
+  const fadeIn = () => {
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 500,
+      useNativeDriver: true,
+    }).start()
+  }
 
   const [showModal2, setShowModal2] = useState(false)
 
@@ -105,6 +118,15 @@ export function ProductsCard({
       return handleGestureEvent(e, item.id)
     }
   }
+  useEffect(() => {
+    if (addQuantity && selectedProduct === item.id) {
+      fadeIn()
+      if (scrollToEnd) {
+        console.log('entro aqui')
+        scrollToEnd()
+      }
+    }
+  }, [addQuantity, selectedProduct])
 
   return (
     <View
@@ -169,12 +191,32 @@ export function ProductsCard({
                   </View>
                 ) : (
                   <View>
-                    <Text style={[ProductStyles.textCard, { fontSize: 12 }]}>
-                      Last: {user}
-                    </Text>
-                    <Text style={[ProductStyles.textCard, { fontSize: 12 }]}>
-                      {date}
-                    </Text>
+                    {userPacking === null && userLoading === null ? (
+                      <Text style={[ProductStyles.textCard]}>Unchanged</Text>
+                    ) : (
+                      <View>
+                        <Text
+                          style={[
+                            ProductStyles.textCard,
+                            { fontSize: 12, marginTop: -2 },
+                          ]}
+                        >
+                          {userPacking === null && userLoading != null
+                            ? 'Packed by loader: ' + userLoading
+                            : 'Packed by packer: ' + userPacking}
+                        </Text>
+                        <Text
+                          style={[
+                            ProductStyles.textCard,
+                            { fontSize: 12, marginTop: -5 },
+                          ]}
+                        >
+                          {userPacking === null && userLoading != null
+                            ? dateLoading
+                            : datePacking}
+                        </Text>
+                      </View>
+                    )}
                   </View>
                 )}
               </View>
@@ -199,12 +241,13 @@ export function ProductsCard({
             </View>
 
             {addQuantity && selectedProduct === item.id ? (
-              <View
-                style={[
-                  ProductStyles.details,
-                  GlobalStyles.boxShadow,
-                  { borderColor: colors.orange },
-                ]}
+              <Animated.View
+                style={{
+                  ...ProductStyles.details,
+                  ...GlobalStyles.boxShadow,
+                  borderColor: colors.orange,
+                  opacity: fadeAnim,
+                }}
               >
                 <View style={ProductStyles.information}>
                   <View>
@@ -274,7 +317,7 @@ export function ProductsCard({
                     </Text>
                   </TouchableOpacity>
                 </View>
-              </View>
+              </Animated.View>
             ) : null}
           </View>
         </PanGestureHandler>

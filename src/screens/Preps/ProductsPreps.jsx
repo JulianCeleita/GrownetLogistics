@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useState, useRef } from 'react'
 import {
   ActivityIndicator,
   Platform,
@@ -6,68 +6,61 @@ import {
   Text,
   View,
   TouchableOpacity,
-  Button,
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { BtnGoBack } from '../../components/BtnGoBack'
 import { ProductsCard } from '../../components/ProductsCard'
-import { insertLoading } from '../../config/urls.config'
+import { insertPacking } from '../../config/urls.config'
 import { useProductSubmit } from '../../hooks/useProductSubmit'
 import useEmployeeStore from '../../store/useEmployeeStore'
-import useLoadingStore from '../../store/useLoadingStore'
+import { usePackingStore } from '../../store/usePackingStore'
 import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
 import { colors } from '../../styles/GlobalStyles'
 import { ProductStyles, SearchStyles } from '../../styles/ProductStyles'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { useFocusEffect } from '@react-navigation/native'
-import { Ionicons } from '@expo/vector-icons'
 import ProductSearcher from '../../components/ProductSearch'
+import { Ionicons } from '@expo/vector-icons'
 import { AnimatedSearch, AnimatedSearchCard } from '../../components/animation'
 import ModalDebugger from '../../components/ModalDebugger'
 
-function ProductsLoading({ route }) {
+function ProductsPreps({ route }) {
   const {
-    productsLoading,
-    setLoadingProducts,
+    productsPacking,
+    setProductsPacking,
     error,
-    setFetchProductsLoading,
-    selectedOrderL,
-  } = useLoadingStore()
+    setFetchPackingProducts,
+    selectedOrder,
+  } = usePackingStore()
   const { employeeToken } = useEmployeeStore()
-  const { handleSubmit } = useProductSubmit(insertLoading)
+  const { handleSubmit } = useProductSubmit(insertPacking)
   const [search, setSearch] = useState(false)
   const [searchPhrase, setSearchPhrase] = useState('')
   const [showModalDebugger, setShowModalDebugger] = useState(false)
   const [responsableDetails, setResponsableDetails] = useState(false)
-
-  const scrollViewRef = useRef()
-
-  const scrollToEnd = () => {
-    scrollViewRef.current.scrollToEnd({ animated: true })
-  }
 
   const handlePressIn = () => {
     setResponsableDetails(!responsableDetails)
   }
 
   const handleSearch = () => {
-    setSearch((prevSearch) => !prevSearch)
+    setSearch(true)
   }
 
   const filteredData =
-    productsLoading && productsLoading.data
-      ? productsLoading.data.filter((item) =>
+    productsPacking && productsPacking.data
+      ? productsPacking.data.filter((item) =>
           item.name.toLowerCase().includes(searchPhrase.toLowerCase()),
         )
       : []
 
   useFocusEffect(
     useCallback(() => {
-      setFetchProductsLoading(employeeToken, selectedOrderL)
+      setFetchPackingProducts(employeeToken, '170061')
       return () => {
-        setLoadingProducts(null)
+        setProductsPacking(null)
       }
-    }, [employeeToken, selectedOrderL]),
+    }, [employeeToken, selectedOrder]),
   )
 
   const groupedProducts = filteredData.reduce((grouped, product) => {
@@ -82,24 +75,24 @@ function ProductsLoading({ route }) {
   return (
     <SafeAreaView style={ProductStyles.products}>
       {search ? (
-        <AnimatedSearch search={search}>
-          <BtnGoBack color={colors.darkBlue} top={20} />
-          <ProductSearcher
-            setSearch={setSearch}
-            searchPhrase={searchPhrase}
-            setSearchPhrase={setSearchPhrase}
-          />
-        </AnimatedSearch>
+        <View>
+          <AnimatedSearch search={search}>
+            <BtnGoBack color={colors.darkBlue} top={20} />
+            <ProductSearcher
+              setSearch={setSearch}
+              searchPhrase={searchPhrase}
+              setSearchPhrase={setSearchPhrase}
+            />
+          </AnimatedSearch>
+        </View>
       ) : (
         <View style={{ paddingHorizontal: 43, width: '100%' }}>
-          <BtnGoBack color={colors.darkBlue} />
+          {/* <BtnGoBack color={colors.darkBlue} /> */}
           <View>
             <TouchableOpacity onLongPress={handlePressIn} delayLongPress={500}>
               <Text style={ProductStyles.customerTitle}>
-                <Text>{route.params.accountName} - </Text>
-                <Text style={{ flexWrap: 'wrap' }}>
-                  {productsLoading ? route.params.orderNumber : 'Loading...'}
-                </Text>
+                <Text>{''} - </Text>
+                <Text style={{ flexWrap: 'wrap' }}>Prep</Text>
               </Text>
             </TouchableOpacity>
           </View>
@@ -117,55 +110,44 @@ function ProductsLoading({ route }) {
           </TouchableOpacity>
         </View>
       )}
-
       <KeyboardAwareScrollView
         enableOnAndroid
         extraScrollHeight={210}
         showsVerticalScrollIndicator={false}
         style={{ marginRight: -3 }}
         contentContainerStyle={{ paddingRight: 3 }}
-        ref={scrollViewRef}
       >
         <ScrollView>
-          {productsLoading ? (
+          {productsPacking ? (
             filteredData.length > 0 ? (
               <AnimatedSearchCard search={search}>
                 <View style={ProductStyles.cardsProducts}>
-                  {Object.entries(groupedProducts).map(
-                    ([group, products], groupIndex, groups) => (
-                      <View key={group}>
-                        <Text style={CustomerDayStyles.restaurantTypeTitle}>
-                          {group}
-                        </Text>
-                        {products.map(
-                          (product, productIndex, productsArray) => (
-                            <ProductsCard
-                              key={product.id}
-                              item={product}
-                              colorPress={colors.green}
-                              colorRight={colors.green}
-                              colorLeft={colors.danger}
-                              products={productsLoading}
-                              setProducts={setLoadingProducts}
-                              handleSubmit={handleSubmit}
-                              error={error}
-                              responsableDetails={responsableDetails}
-                              userLoading={product.user_loading}
-                              dateLoading={product.date_loading}
-                              userPacking={product.user_packing}
-                              datePacking={product.date_packing}
-                              scrollToEnd={
-                                groupIndex === groups.length - 1 &&
-                                productIndex === productsArray.length - 1
-                                  ? scrollToEnd
-                                  : undefined
-                              }
-                            />
-                          ),
-                        )}
-                      </View>
-                    ),
-                  )}
+                  {Object.entries(groupedProducts).map(([group, products]) => (
+                    <View key={group}>
+                      <Text style={CustomerDayStyles.restaurantTypeTitle}>
+                        {group}
+                      </Text>
+                      {products.map((product) => (
+                        <>
+                          <ProductsCard
+                            key={product.id}
+                            item={product}
+                            colorPress={colors.orange}
+                            colorRight={colors.orange}
+                            colorLeft={colors.danger}
+                            products={productsPacking}
+                            setProducts={setProductsPacking}
+                            handleSubmit={handleSubmit}
+                            viewPacking
+                            error={error}
+                            responsableDetails={responsableDetails}
+                            user={product.user_packing}
+                            date={product.date_packing}
+                          />
+                        </>
+                      ))}
+                    </View>
+                  ))}
                 </View>
               </AnimatedSearchCard>
             ) : (
@@ -202,4 +184,5 @@ function ProductsLoading({ route }) {
     </SafeAreaView>
   )
 }
-export default ProductsLoading
+
+export default ProductsPreps
