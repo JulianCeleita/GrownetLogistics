@@ -90,8 +90,7 @@ function ProductsPreps({ route }) {
           {/* <BtnGoBack color={colors.darkBlue} /> */}
           <View>
             <TouchableOpacity onLongPress={handlePressIn} delayLongPress={500}>
-              <Text style={ProductStyles.customerTitle}>
-                <Text>{''} - </Text>
+              <Text style={ProductStyles.customerTitlePrep}>
                 <Text style={{ flexWrap: 'wrap' }}>Prep</Text>
               </Text>
             </TouchableOpacity>
@@ -128,9 +127,8 @@ function ProductsPreps({ route }) {
                         {group}
                       </Text>
                       {products.map((product) => (
-                        <>
+                        <View key={product.id}>
                           <ProductsCard
-                            key={product.id}
                             item={product}
                             colorPress={colors.orange}
                             colorRight={colors.orange}
@@ -144,7 +142,7 @@ function ProductsPreps({ route }) {
                             user={product.user_packing}
                             date={product.date_packing}
                           />
-                        </>
+                        </View>
                       ))}
                     </View>
                   ))}

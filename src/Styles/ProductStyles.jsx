@@ -124,6 +124,14 @@ export const ProductStyles = StyleSheet.create({
     marginBottom: 10,
     marginTop: 10,
   },
+  customerTitlePrep: {
+    fontSize: 20,
+    color: colors.bluePrimary,
+    fontFamily: 'PoppinsBold',
+    textAlign: 'center',
+    marginBottom: 10,
+    marginTop: 10,
+  },
   textNA: {
     fontFamily: 'PoppinsMedium',
     fontSize: 18,
