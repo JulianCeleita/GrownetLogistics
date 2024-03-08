@@ -7,9 +7,7 @@ export const usePrepStore = create((set) => ({
   error: null,
   isLoading: false,
   setError: (error) => set(() => ({ error: error })),
-
   setPrepProducts: (products) => set(() => ({ prepProducts: products })),
-
   setFetchPrepProducts: async (token, selectedDate) => {
     try {
       set({ isLoading: true })
@@ -19,16 +17,13 @@ export const usePrepStore = create((set) => ({
           end: selectedDate,
         },
       }
-
       const response = await mainAxios.post(getPrepProducts, postData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
-      console.log('resp.data prep:', response.data.detail_orders)
-
       set({ prepProducts: response.data.detail_orders })
-      set({ isLoading: false }) 
+      set({ isLoading: false })
     } catch (error) {
       set({ isLoading: false })
       console.error('Error during request prep:', error)
