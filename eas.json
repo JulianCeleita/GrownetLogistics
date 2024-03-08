@@ -20,7 +20,9 @@
         "EXPO_PUBLIC_SHORT_INSERT": "/short/insert",
         "EXPO_PUBLIC_SHORT_VAN": "/short/van",
         "EXPO_PUBLIC_PERCENTAGE_PACKING": "/orders/suppliers/packing",
-        "EXPO_PUBLIC_PERCENTAGE_LOADING": "/orders/suppliers/loading"
+        "EXPO_PUBLIC_PERCENTAGE_LOADING": "/orders/suppliers/loading",
+        "EXPO_PUBLIC_GET_PRODUCTS_PREP": "/products/getProductsPrep",
+        "EXPO_PUBLIC_PREP_INSERT": "/prepared/insert"
       }
     },
     "preview": {
@@ -42,7 +44,9 @@
         "EXPO_PUBLIC_SHORT_INSERT": "/short/insert",
         "EXPO_PUBLIC_SHORT_VAN": "/short/van",
         "EXPO_PUBLIC_PERCENTAGE_PACKING": "/orders/suppliers/packing",
-        "EXPO_PUBLIC_PERCENTAGE_LOADING": "/orders/suppliers/loading"
+        "EXPO_PUBLIC_PERCENTAGE_LOADING": "/orders/suppliers/loading",
+        "EXPO_PUBLIC_GET_PRODUCTS_PREP": "/products/getProductsPrep",
+        "EXPO_PUBLIC_PREP_INSERT": "/prepared/insert"
       }
     },
     "production": {
@@ -60,7 +64,9 @@
         "EXPO_PUBLIC_SHORT_INSERT": "/short/insert",
         "EXPO_PUBLIC_SHORT_VAN": "/short/van",
         "EXPO_PUBLIC_PERCENTAGE_PACKING": "/orders/suppliers/packing",
-        "EXPO_PUBLIC_PERCENTAGE_LOADING": "/orders/suppliers/loading"
+        "EXPO_PUBLIC_PERCENTAGE_LOADING": "/orders/suppliers/loading",
+        "EXPO_PUBLIC_GET_PRODUCTS_PREP": "/products/getProductsPrep",
+        "EXPO_PUBLIC_PREP_INSERT": "/prepared/insert"
       }
     }
   },
