@@ -4,12 +4,9 @@ import { getPrepProducts } from '../config/urls.config'
 
 export const usePrepStore = create((set) => ({
   PrepProducts: [],
-  //   selectedOrder: null,
   error: null,
 
   setError: (error) => set(() => ({ error: error })),
-
-  //   setSelectedOrder: (order) => set(() => ({ selectedOrder: order })),
 
   setPrepProducts: (products) => set(() => ({ PrepProducts: products })),
 

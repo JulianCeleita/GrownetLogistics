@@ -203,6 +203,7 @@ export function ProductsCard({
                       quantity={item.quantity}
                       quantity_packing={item.quantity_packing}
                       quantity_loading={item.quantity_loading}
+                      quantity_prep={item.quantity_prep}
                       packed={item.packed}
                       stateLoading={item.state_loading}
                       statePacking={item.state_packing}

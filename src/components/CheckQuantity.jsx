@@ -8,6 +8,7 @@ export const CheckQuantity = ({
   quantity,
   quantity_packing,
   quantity_loading,
+  quantity_prep,
   packed,
   stateLoading,
   statePacking,
@@ -32,6 +33,17 @@ export const CheckQuantity = ({
       setMessage('')
     } else if (!packed) {
       if (prepCard) {
+        if (quantity_prep) {
+          let diff = quantity - quantity_prep
+          let diffString = diff % 1 === 0 ? diff : diff.toFixed(1)
+          setMessage(
+            quantity > quantity_prep
+              ? `Missing ${diffString}`
+              : quantity < quantity_prep
+                ? `Overweight ${(quantity_prep - quantity) % 1 === 0 ? quantity_prep - quantity : (quantity_prep - quantity).toFixed(1)}`
+                : '',
+          )
+        }
         return
       } else if (viewPacking) {
         if (quantity_loading && quantity_packing) {
