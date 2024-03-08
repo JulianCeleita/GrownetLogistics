@@ -154,8 +154,7 @@ function MyTabs() {
                 style={
                   !focused
                     ? { display: 'none' }
-                    : /* : { position: 'absolute', zIndex: -1, right: 21 } */
-                      { position: 'absolute', zIndex: -1, right: 31 }
+                    : { position: 'absolute', zIndex: -1, right: 21 }
                 }
               />
             </>
@@ -187,8 +186,7 @@ function MyTabs() {
                 style={
                   !focused
                     ? { display: 'none' }
-                    : /* : { position: 'absolute', zIndex: -1, right: 21 } */
-                      { position: 'absolute', zIndex: -1, right: 31 }
+                    : { position: 'absolute', zIndex: -1, right: 21 }
                 }
               />
             </>
@@ -220,8 +218,7 @@ function MyTabs() {
                 style={
                   !focused
                     ? { display: 'none' }
-                    : /* : { position: 'absolute', zIndex: -1, right: 21 } */
-                      { position: 'absolute', zIndex: -1, right: 31 }
+                    : { position: 'absolute', zIndex: -1, right: 21 }
                 }
               />
             </>
@@ -253,8 +250,7 @@ function MyTabs() {
                 style={
                   !focused
                     ? { display: 'none' }
-                    : /* : { position: 'absolute', zIndex: -1, right: 21 } */
-                      { position: 'absolute', zIndex: -1, right: 31 }
+                    : { position: 'absolute', zIndex: -1, right: 21 }
                 }
               />
             </>
