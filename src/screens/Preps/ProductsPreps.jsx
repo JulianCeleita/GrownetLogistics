@@ -26,8 +26,13 @@ import { usePrepStore } from '../../store/usePrepStore'
 import useOrdersByDate from '../../store/useOrdersByDateStore'
 
 function PrepProductsComp() {
-  const { setFetchPrepProducts, PrepProducts, setPrepProducts, error } =
-    usePrepStore()
+  const {
+    setFetchPrepProducts,
+    prepProducts,
+    setPrepProducts,
+    error,
+    isLoading,
+  } = usePrepStore()
   const { selectedDate } = useOrdersByDate()
   const { employeeToken } = useEmployeeStore()
   const { handleSubmit } = useProductSubmit(insertPrep)
@@ -50,7 +55,7 @@ function PrepProductsComp() {
     setSearch(true)
   }
 
-  const filteredData = PrepProducts?.filter((item) =>
+  const filteredData = prepProducts?.filter((item) =>
     item.product_name.includes(searchPhrase),
   )
 
@@ -109,61 +114,68 @@ function PrepProductsComp() {
         ref={scrollViewRef}
       >
         <ScrollView>
-          {PrepProducts ? (
-            filteredData.length > 0 ? (
-              <AnimatedSearchCard search={search}>
-                <View style={ProductStyles.cardsProducts}>
-                  <View>
-                    {filteredData.map((product, indexFilter, arrayData) => (
-                      <View key={indexFilter}>
-                        <Text style={CustomerDayStyles.restaurantTypeTitle}>
-                          {product.product_name} - {product.quantity}
-                        </Text>
-                        {product.products.map((e, index, array) => (
-                          <View key={index}>
-                            <ProductsCard
-                              item={e}
-                              colorPress={colors.orange}
-                              colorRight={colors.orange}
-                              colorLeft={colors.danger}
-                              products={PrepProducts}
-                              setProducts={setPrepProducts}
-                              handleSubmit={handleSubmit}
-                              error={error}
-                              responsableDetails={responsableDetails}
-                              scrollToEnd={
-                                indexFilter === arrayData.length - 1 &&
-                                index === array.length - 1
-                                  ? scrollToEnd
-                                  : undefined
-                              }
-                              prepCard
-                            />
-                          </View>
-                        ))}
-                      </View>
-                    ))}
+          {!isLoading ? (
+            <View>
+              {prepProducts && filteredData.length > 0 ? (
+                <AnimatedSearchCard search={search}>
+                  <View style={ProductStyles.cardsProducts}>
+                    <View>
+                      {filteredData.map((product, indexFilter, arrayData) => (
+                        <View key={indexFilter}>
+                          <Text style={CustomerDayStyles.restaurantTypeTitle}>
+                            {product.product_name} - {product.quantity}
+                          </Text>
+                          {product.products.map((e, index, array) => (
+                            <View key={index}>
+                              <ProductsCard
+                                item={e}
+                                colorPress={colors.orange}
+                                colorRight={colors.orange}
+                                colorLeft={colors.danger}
+                                products={prepProducts}
+                                setProducts={setPrepProducts}
+                                handleSubmit={handleSubmit}
+                                error={error}
+                                responsableDetails={responsableDetails}
+                                scrollToEnd={
+                                  indexFilter === arrayData.length - 1 &&
+                                  index === array.length - 1
+                                    ? scrollToEnd
+                                    : undefined
+                                }
+                                prepCard
+                              />
+                            </View>
+                          ))}
+                        </View>
+                      ))}
+                    </View>
                   </View>
-                </View>
-              </AnimatedSearchCard>
-            ) : (
-              <View style={SearchStyles.alertSearch}>
-                <Ionicons
-                  name="alert-circle-outline"
-                  size={180}
-                  color={colors.gray}
-                />
-                <Text style={SearchStyles.textAlert}>
-                  No products found, please search again
-                </Text>
-              </View>
-            )
+                </AnimatedSearchCard>
+              ) : (
+                <>
+                  {prepProducts && filteredData.length <= 0 ? (
+                    <View style={SearchStyles.alertSearch}>
+                      <Ionicons
+                        name="alert-circle-outline"
+                        size={180}
+                        color={colors.gray}
+                      />
+                      <Text style={SearchStyles.textAlert}>
+                        No products found, please search again
+                      </Text>
+                    </View>
+                  ) : null}
+                </>
+              )}
+            </View>
           ) : (
             <View
               style={{
                 flex: 1,
                 justifyContent: 'center',
                 alignItems: 'center',
+                paddingTop: 40,
               }}
             >
               <ActivityIndicator size="large" color="#0000ff" />
