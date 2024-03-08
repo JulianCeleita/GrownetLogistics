@@ -10,10 +10,9 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { BtnGoBack } from '../../components/BtnGoBack'
 import { ProductsCard } from '../../components/ProductsCard'
-import { insertPacking } from '../../config/urls.config'
+import { insertPrep } from '../../config/urls.config'
 import { useProductSubmit } from '../../hooks/useProductSubmit'
 import useEmployeeStore from '../../store/useEmployeeStore'
-import { usePackingStore } from '../../store/usePackingStore'
 import { CustomerDayStyles } from '../../styles/CustomerDayStyles'
 import { colors } from '../../styles/GlobalStyles'
 import { ProductStyles, SearchStyles } from '../../styles/ProductStyles'
@@ -23,21 +22,25 @@ import ProductSearcher from '../../components/ProductSearch'
 import { Ionicons } from '@expo/vector-icons'
 import { AnimatedSearch, AnimatedSearchCard } from '../../components/animation'
 import ModalDebugger from '../../components/ModalDebugger'
+import { usePrepStore } from '../../store/usePrepStore'
+import useOrdersByDate from '../../store/useOrdersByDateStore'
 
-function ProductsPreps({ route }) {
-  const {
-    productsPacking,
-    setProductsPacking,
-    error,
-    setFetchPackingProducts,
-    selectedOrder,
-  } = usePackingStore()
+function PrepProductsComp() {
+  const { setFetchPrepProducts, PrepProducts, setPrepProducts, error } =
+    usePrepStore()
+  const { selectedDate } = useOrdersByDate()
   const { employeeToken } = useEmployeeStore()
-  const { handleSubmit } = useProductSubmit(insertPacking)
+  const { handleSubmit } = useProductSubmit(insertPrep)
   const [search, setSearch] = useState(false)
   const [searchPhrase, setSearchPhrase] = useState('')
   const [showModalDebugger, setShowModalDebugger] = useState(false)
   const [responsableDetails, setResponsableDetails] = useState(false)
+
+  const scrollViewRef = useRef()
+
+  const scrollToEnd = () => {
+    scrollViewRef.current.scrollToEnd({ animated: true })
+  }
 
   const handlePressIn = () => {
     setResponsableDetails(!responsableDetails)
@@ -47,30 +50,18 @@ function ProductsPreps({ route }) {
     setSearch(true)
   }
 
-  const filteredData =
-    productsPacking && productsPacking.data
-      ? productsPacking.data.filter((item) =>
-          item.name.toLowerCase().includes(searchPhrase.toLowerCase()),
-        )
-      : []
+  const filteredData = PrepProducts?.filter((item) =>
+    item.product_name.includes(searchPhrase),
+  )
 
   useFocusEffect(
     useCallback(() => {
-      setFetchPackingProducts(employeeToken, '170061')
+      setFetchPrepProducts(employeeToken, selectedDate)
       return () => {
-        setProductsPacking(null)
+        setPrepProducts(null)
       }
-    }, [employeeToken, selectedOrder]),
+    }, [employeeToken, selectedDate]),
   )
-
-  const groupedProducts = filteredData.reduce((grouped, product) => {
-    const key = product.presentationType
-    if (!grouped[key]) {
-      grouped[key] = []
-    }
-    grouped[key].push(product)
-    return grouped
-  }, {})
 
   return (
     <SafeAreaView style={ProductStyles.products}>
@@ -115,37 +106,44 @@ function ProductsPreps({ route }) {
         showsVerticalScrollIndicator={false}
         style={{ marginRight: -3 }}
         contentContainerStyle={{ paddingRight: 3 }}
+        ref={scrollViewRef}
       >
         <ScrollView>
-          {productsPacking ? (
+          {PrepProducts ? (
             filteredData.length > 0 ? (
               <AnimatedSearchCard search={search}>
                 <View style={ProductStyles.cardsProducts}>
-                  {Object.entries(groupedProducts).map(([group, products]) => (
-                    <View key={group}>
-                      <Text style={CustomerDayStyles.restaurantTypeTitle}>
-                        {group}
-                      </Text>
-                      {products.map((product) => (
-                        <View key={product.id}>
-                          <ProductsCard
-                            item={product}
-                            colorPress={colors.orange}
-                            colorRight={colors.orange}
-                            colorLeft={colors.danger}
-                            products={productsPacking}
-                            setProducts={setProductsPacking}
-                            handleSubmit={handleSubmit}
-                            viewPacking
-                            error={error}
-                            responsableDetails={responsableDetails}
-                            user={product.user_packing}
-                            date={product.date_packing}
-                          />
-                        </View>
-                      ))}
-                    </View>
-                  ))}
+                  <View>
+                    {filteredData.map((product, indexFilter, arrayData) => (
+                      <View key={indexFilter}>
+                        <Text style={CustomerDayStyles.restaurantTypeTitle}>
+                          {product.product_name} - {product.quantity}
+                        </Text>
+                        {product.products.map((e, index, array) => (
+                          <View key={index}>
+                            <ProductsCard
+                              item={e}
+                              colorPress={colors.orange}
+                              colorRight={colors.orange}
+                              colorLeft={colors.danger}
+                              products={PrepProducts}
+                              setProducts={setPrepProducts}
+                              handleSubmit={handleSubmit}
+                              error={error}
+                              responsableDetails={responsableDetails}
+                              scrollToEnd={
+                                indexFilter === arrayData.length - 1 &&
+                                index === array.length - 1
+                                  ? scrollToEnd
+                                  : undefined
+                              }
+                              prepCard
+                            />
+                          </View>
+                        ))}
+                      </View>
+                    ))}
+                  </View>
                 </View>
               </AnimatedSearchCard>
             ) : (
@@ -177,10 +175,10 @@ function ProductsPreps({ route }) {
         showModalDebugger={showModalDebugger}
         setShowModalDebugger={setShowModalDebugger}
         Title="Debugger"
-        message={JSON.stringify(groupedProducts, null, 2)}
+        message={JSON.stringify(filteredData, null, 2)}
       />
     </SafeAreaView>
   )
 }
 
-export default ProductsPreps
+export default PrepProductsComp

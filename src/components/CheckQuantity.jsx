@@ -11,6 +11,7 @@ export const CheckQuantity = ({
   packed,
   stateLoading,
   statePacking,
+  prepCard,
 }) => {
   const [message, setMessage] = useState('')
 
@@ -27,8 +28,12 @@ export const CheckQuantity = ({
   }
 
   useEffect(() => {
-    if (!packed) {
-      if (viewPacking) {
+    if (packed === 0) {
+      setMessage('')
+    } else if (!packed) {
+      if (prepCard) {
+        return
+      } else if (viewPacking) {
         if (quantity_loading && quantity_packing) {
           calculateMO()
         } else if (!quantity_packing && quantity_loading) {
@@ -59,7 +64,6 @@ export const CheckQuantity = ({
           calculateMO()
         } else if (quantity_loading && !quantity_packing) {
           calculateMO()
-
         }
       }
     } else {
@@ -88,10 +92,8 @@ export const CheckQuantity = ({
             : '',
       )
     }
-    if (packed === 0) {
-      setMessage('')
-    }
-  }, [viewPacking, quantity_packing, quantity_loading, packed])
+    // console.log('packed 2:', packed)
+  }, [viewPacking, quantity_packing, quantity_loading, packed, prepCard])
 
   return (
     <Text

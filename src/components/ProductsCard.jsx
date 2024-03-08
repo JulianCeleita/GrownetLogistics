@@ -25,6 +25,7 @@ export function ProductsCard({
   userLoading,
   dateLoading,
   scrollToEnd,
+  prepCard,
 }) {
   const positiveOffset = 30
   const negativeOffset = -30
@@ -45,7 +46,7 @@ export function ProductsCard({
     declareDifferentQty,
     setAddQuantity,
     setSelectedProduct,
-  } = useCardEvents(item.quantity, products, setProducts, error, viewPacking)
+  } = useCardEvents(item.quantity, products, setProducts, error, prepCard)
   const [fadeAnim] = useState(new Animated.Value(0))
 
   const fadeIn = () => {
@@ -61,14 +62,14 @@ export function ProductsCard({
   const isNA = item.state_definitive === 'N/A'
 
   const confirm = () => {
-    declareNotAvailable(item.id)
+    declareNotAvailable(item.detail_order_id || item.id)
     setShowModal(false)
-    handleSubmit(item.id)
+    handleSubmit(item.id || item.detail_order_id)
   }
   const confirm2 = () => {
-    handlePress(item.id)
+    handlePress(item.detail_order_id || item.id)
     setShowModal2(false)
-    handleSubmit(item.id)
+    handleSubmit(item.id || item.detail_order_id)
   }
   const quantityLoading = viewPacking
     ? quantity
@@ -78,8 +79,8 @@ export function ProductsCard({
 
   const handleCardSubmit = async () => {
     const cardPromises = [
-      handlePress(item.id),
-      handleSubmit(item.id, quantityLoading, note),
+      handlePress(item.detail_order_id || item.id),
+      handleSubmit(item.id || item.detail_order_id, quantityLoading, note),
     ]
     await Promise.allSettled(cardPromises)
   }
@@ -93,16 +94,24 @@ export function ProductsCard({
     if (item.state_definitive === 'N/A') {
       return () => {}
     }
-    if (!viewPacking) {
+    if (!viewPacking && !prepCard) {
       if (item.state_packing !== 'ND' && item.state_packing !== 'SHORT') {
         if (!leftStates[item.id] || rightStates[item.id]) {
           handlePress(item.id)
         }
         handleCardSubmit()
       }
-    } else {
+    } else if (viewPacking && !prepCard) {
       if (!leftStates[item.id] || rightStates[item.id]) {
         handlePress(item.id)
+      }
+      handleCardSubmit()
+    } else if (!viewPacking && prepCard) {
+      if (
+        !leftStates[prepCard ? item.detail_order_id : item.id] ||
+        rightStates[prepCard ? item.detail_order_id : item.id]
+      ) {
+        handlePress(item.detail_order_id)
       }
       handleCardSubmit()
     }
@@ -115,14 +124,13 @@ export function ProductsCard({
     ) {
       return () => {}
     } else {
-      return handleGestureEvent(e, item.id)
+      return handleGestureEvent(e, item.detail_order_id || item.id)
     }
   }
   useEffect(() => {
-    if (addQuantity && selectedProduct === item.id) {
+    if (addQuantity && selectedProduct === (item.detail_order_id || item.id)) {
       fadeIn()
       if (scrollToEnd) {
-        console.log('entro aqui')
         scrollToEnd()
       }
     }
@@ -133,7 +141,7 @@ export function ProductsCard({
       style={{
         alignItems: 'center',
       }}
-      key={item.id}
+      key={prepCard ? item.detail_order_id : item.id}
     >
       <TouchableOpacity
         onPress={handlePressAction}
@@ -147,7 +155,18 @@ export function ProductsCard({
           <View>
             <View style={[ProductStyles.card, GlobalStyles.boxShadow]}>
               <View style={ProductStyles.productTittle}>
-                {item.uom != 'Ea' && item.uom != 'Kg' ? (
+                {prepCard ? (
+                  <Text
+                    style={[
+                      ProductStyles.tittleCard,
+                      {
+                        textDecorationLine: isNA ? 'line-through' : 'none',
+                      },
+                    ]}
+                  >
+                    {item.customer_name}
+                  </Text>
+                ) : item.uom != 'Ea' && item.uom != 'Kg' ? (
                   <Text
                     style={[
                       ProductStyles.tittleCard,
@@ -187,6 +206,7 @@ export function ProductsCard({
                       packed={item.packed}
                       stateLoading={item.state_loading}
                       statePacking={item.state_packing}
+                      prepCard={prepCard}
                     />
                   </View>
                 ) : (
@@ -222,9 +242,11 @@ export function ProductsCard({
               </View>
 
               <CheckStatusCard
-                itemId={item.id}
+                itemId={prepCard ? item.detail_order_id : item.id}
                 statePacking={item.state_packing}
                 stateLoading={item.state_loading}
+                statePrep={item.state_prep}
+                prepCard={prepCard}
                 viewPacking={viewPacking}
                 pressedStates={pressedStates}
                 rightStates={rightStates}
@@ -232,15 +254,12 @@ export function ProductsCard({
                 colorPress={colorPress}
                 colorRight={colorRight}
                 colorLeft={colorLeft}
-                quantity={item.quantity}
-                quantity_packing={item.quantity_packing}
-                quantity_loading={item.quantity_loading}
-                packed={item.packed}
                 isNA={isNA}
               />
             </View>
 
-            {addQuantity && selectedProduct === item.id ? (
+            {addQuantity &&
+            selectedProduct === (prepCard ? item.detail_order_id : item.id) ? (
               <Animated.View
                 style={{
                   ...ProductStyles.details,
@@ -296,13 +315,26 @@ export function ProductsCard({
                     style={[GlobalStyles.btnPrimary]}
                     onPress={() => {
                       console.log(typeof quantity, quantity)
-                      if (addQuantity && selectedProduct === item.id) {
+                      if (
+                        addQuantity &&
+                        selectedProduct ===
+                          (prepCard ? item.detail_order_id : item.id)
+                      ) {
                         if (quantity === item.quantity) {
-                          handlePress([item.id])
-                          handleSubmit(item.id, quantity, note)
+                          handlePress([item.detail_order_id || item.id])
+
+                          handleSubmit(
+                            item.id || item.detail_order_id,
+                            quantity,
+                            note,
+                          )
                         } else {
-                          declareDifferentQty(item.id)
-                          handleSubmit(item.id, quantity, note)
+                          declareDifferentQty(item.id || item.detail_order_id)
+                          handleSubmit(
+                            item.id || item.detail_order_id,
+                            quantity,
+                            note,
+                          )
                         }
                       }
                     }}
@@ -323,21 +355,23 @@ export function ProductsCard({
         </PanGestureHandler>
       </TouchableOpacity>
 
-      {showModal && selectedProduct === item.id ? (
+      {showModal &&
+      selectedProduct === (prepCard ? item.detail_order_id : item.id) ? (
         <ModalProduct
           showModal={showModal}
           setShowModal={setShowModal}
           confirm={confirm}
-          title={item.name + ' not available'}
+          title={item.name || item.customer_name + ' not available'}
           text={' Are you sure you want to mark this item as unavailable?'}
         />
       ) : null}
-      {showModal2 && selectedProduct === item.id ? (
+      {showModal2 &&
+      selectedProduct === (prepCard ? item.detail_order_id : item.id) ? (
         <ModalProduct
           showModal={showModal2}
           setShowModal={setShowModal2}
           confirm={confirm2}
-          title={'Confirm ' + item.name}
+          title={'Confirm ' + item.name || item.customer_name}
           text={'Are you sure to confirm that all products have been packed?'}
         />
       ) : null}
