@@ -8,6 +8,8 @@ export const CheckStatusCard = ({
   itemId,
   statePacking,
   stateLoading,
+  statePrep,
+  prepCard,
   viewPacking,
   pressedStates,
   rightStates,
@@ -21,7 +23,23 @@ export const CheckStatusCard = ({
 
   useEffect(() => {
     if (!pressedStates[itemId] && !rightStates[itemId] && !leftStates[itemId]) {
-      if (viewPacking) {
+      if (prepCard) {
+        if (statePrep) {
+          if (statePrep === 'SHORT') {
+            setColorCheck(colorLeft)
+            setIconCheck('closecircleo')
+          } else if (statePrep === 'ND') {
+            setColorCheck(colorPress)
+            setIconCheck('arrowright')
+          } else if (statePrep === 'FULL') {
+            setColorCheck(colorPress)
+            setIconCheck('checkcircleo')
+          } else if (statePrep === 'PD') {
+            setColorCheck(colorPress)
+            setIconCheck('arrowright')
+          }
+        }
+      } else if (viewPacking) {
         //Vista packing
         if (statePacking === null) {
           if (stateLoading === 'SHORT') {
@@ -52,7 +70,6 @@ export const CheckStatusCard = ({
             setIconCheck('arrowright')
           }
         }
-
       } else {
         if (stateLoading === null) {
           if (statePacking === 'SHORT') {
@@ -83,7 +100,7 @@ export const CheckStatusCard = ({
         setIconCheck('closecircleo')
       }
     }
-  }, [statePacking, pressedStates, rightStates, leftStates])
+  }, [statePacking, pressedStates, rightStates, leftStates, statePrep])
 
   let backgroundColorValue = isNA ? colors.bluePrimary : colorCheck
 

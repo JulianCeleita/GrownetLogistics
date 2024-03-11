@@ -112,8 +112,7 @@ function MyTabs() {
         },
       }}
     >
-      {/* TODO AGREGAR PREP Y DESCOMENTAR LAS LINEAS DE LOS ICONOS MÁS ABAJO */}
-      {/* <Tab.Screen
+      <Tab.Screen
         name="Prep"
         component={StackPreps}
         options={{
@@ -140,7 +139,7 @@ function MyTabs() {
             marginTop: -6,
           },
         }}
-      /> */}
+      />
       <Tab.Screen
         name="Packing"
         component={StackPacking}
@@ -155,8 +154,7 @@ function MyTabs() {
                 style={
                   !focused
                     ? { display: 'none' }
-                    /* : { position: 'absolute', zIndex: -1, right: 21 } */
-                    : { position: 'absolute', zIndex: -1, right: 31 }
+                    : { position: 'absolute', zIndex: -1, right: 21 }
                 }
               />
             </>
@@ -188,8 +186,7 @@ function MyTabs() {
                 style={
                   !focused
                     ? { display: 'none' }
-                    /* : { position: 'absolute', zIndex: -1, right: 21 } */
-                    : { position: 'absolute', zIndex: -1, right: 31 }
+                    : { position: 'absolute', zIndex: -1, right: 21 }
                 }
               />
             </>
@@ -221,8 +218,7 @@ function MyTabs() {
                 style={
                   !focused
                     ? { display: 'none' }
-                    /* : { position: 'absolute', zIndex: -1, right: 21 } */
-                    : { position: 'absolute', zIndex: -1, right: 31 }
+                    : { position: 'absolute', zIndex: -1, right: 21 }
                 }
               />
             </>
@@ -254,8 +250,7 @@ function MyTabs() {
                 style={
                   !focused
                     ? { display: 'none' }
-                    /* : { position: 'absolute', zIndex: -1, right: 21 } */
-                    : { position: 'absolute', zIndex: -1, right: 31 }
+                    : { position: 'absolute', zIndex: -1, right: 21 }
                 }
               />
             </>

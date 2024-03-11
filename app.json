@@ -2,7 +2,7 @@
   "expo": {
     "name": "Grownet Logistics",
     "slug": "grownet-logistics",
-    "version": "1.0.16",
+    "version": "1.0.17",
     "orientation": "portrait",
     "icon": "./assets/IconBlanco.png",
     "userInterfaceStyle": "light",
@@ -18,10 +18,10 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.creativejungle.grownetlogistic",
       "icon": "./assets/IconBlanco.png",
-      "buildNumber": "1.0.16"
+      "buildNumber": "1.0.17"
     },
     "android": {
-      "versionCode": 16,
+      "versionCode": 17,
       "adaptiveIcon": {
         "foregroundImage": "./assets/IconBlancoAndroid.png",
         "backgroundColor": "#ffffff"

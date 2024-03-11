@@ -1,6 +1,12 @@
 import { useEffect, useState } from 'react'
 
-export const useCardEvents = (quantityStore, products, setProducts, error) => {
+export const useCardEvents = (
+  quantityStore,
+  products,
+  setProducts,
+  error,
+  prepCard,
+) => {
   const [pressedStates, setPressedStates] = useState({})
   const [rightStates, setRightStates] = useState({})
   const [leftStates, setLeftStates] = useState({})
@@ -35,23 +41,41 @@ export const useCardEvents = (quantityStore, products, setProducts, error) => {
       newRightStates[itemId] = false
       newLeftStates[itemId] = false
 
-      const updatedProducts = {
-        ...products,
-        data: products.data.map((item) => {
-          if (item.id === itemId) {
-            return {
-              ...item,
-              packed: newPressedStates[itemId] ? item.quantity : '',
+      if (prepCard) {
+        const updatedProducts = products.map((item) => {
+          const updatedItem = { ...item }
+
+          updatedItem.products = item.products.map((product) => {
+            if (product.detail_order_id === itemId) {
+              return {
+                ...product,
+                packed: newPressedStates[itemId] ? product.quantity : '',
+              }
             }
-          }
-          return item
-        }),
+            return product
+          })
+          return updatedItem
+        })
+        setProducts(updatedProducts)
+      } else {
+        const updatedProducts = {
+          ...products,
+          data: products.data.map((item) => {
+            if (item.id === itemId) {
+              return {
+                ...item,
+                packed: newPressedStates[itemId] ? item.quantity : '',
+              }
+            }
+            return item
+          }),
+        }
+        setProducts(updatedProducts)
       }
 
       setPressedStates(newPressedStates)
       setRightStates(newRightStates)
       setLeftStates(newLeftStates)
-      setProducts(updatedProducts)
       setAddQuantity(false)
     })
   }
@@ -85,20 +109,38 @@ export const useCardEvents = (quantityStore, products, setProducts, error) => {
     newPressedStates[itemId] = false
     newRightStates[itemId] = false
 
-    const updatedProducts = {
-      ...products,
-      data: products.data.map((item) => {
-        if (item.id === itemId) {
-          return { ...item, packed: newLeftStates[itemId] ? 0 : '' }
-        }
-        return item
-      }),
+    if (prepCard) {
+      const updatedProducts = products.map((item) => {
+        const updatedItem = { ...item }
+
+        updatedItem.products = item.products.map((product) => {
+          if (product.detail_order_id === itemId) {
+            return {
+              ...product,
+              packed: newLeftStates[itemId] ? 0 : '',
+            }
+          }
+          return product
+        })
+        return updatedItem
+      })
+      setProducts(updatedProducts)
+    } else {
+      const updatedProducts = {
+        ...products,
+        data: products.data.map((item) => {
+          if (item.id === itemId) {
+            return { ...item, packed: newLeftStates[itemId] ? 0 : '' }
+          }
+          return item
+        }),
+      }
+      setProducts(updatedProducts)
     }
 
     setLeftStates(newLeftStates)
     setPressedStates(newPressedStates)
     setRightStates(newRightStates)
-    setProducts(updatedProducts)
     setAddQuantity(false)
   }
 
@@ -106,17 +148,36 @@ export const useCardEvents = (quantityStore, products, setProducts, error) => {
     const newRightStates = Object.assign({}, rightStates)
     newRightStates[itemId] = true
 
-    const updatedProducts = {
-      ...products,
-      data: products.data.map((item) => {
-        if (item.id === itemId) {
-          return { ...item, packed: newRightStates[itemId] ? quantity : '' }
-        }
-        return item
-      }),
+    if (prepCard) {
+      const updatedProducts = products.map((item) => {
+        const updatedItem = { ...item }
+
+        updatedItem.products = item.products.map((product) => {
+          if (product.detail_order_id === itemId) {
+            return {
+              ...product,
+              packed: newRightStates[itemId] ? quantity : '',
+            }
+          }
+          return product
+        })
+        return updatedItem
+      })
+      setProducts(updatedProducts)
+    } else {
+      const updatedProducts = {
+        ...products,
+        data: products.data.map((item) => {
+          if (item.id === itemId) {
+            return { ...item, packed: newRightStates[itemId] ? quantity : '' }
+          }
+          return item
+        }),
+      }
+      setProducts(updatedProducts)
     }
+
     setRightStates(newRightStates)
-    setProducts(updatedProducts)
     setSelectedProduct(null)
     setAddQuantity(false)
   }

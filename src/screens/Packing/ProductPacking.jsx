@@ -1,7 +1,6 @@
 import React, { useCallback, useState, useRef } from 'react'
 import {
   ActivityIndicator,
-  Platform,
   ScrollView,
   Text,
   View,
@@ -52,7 +51,7 @@ function ProductsPacking({ route }) {
   const handleSearch = () => {
     setSearch(true)
   }
-  console.log(productsPacking)
+
   const filteredData =
     productsPacking && productsPacking.data
       ? productsPacking.data.filter((item) =>
