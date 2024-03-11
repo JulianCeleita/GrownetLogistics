@@ -108,14 +108,9 @@ export const CustomerDayStyles = StyleSheet.create({
     fontSize: 16,
     color: colors.darkBlue,
     fontFamily: 'PoppinsSemi',
-    marginRight: 5,
+    marginHorizontal: 5,
   },
-  restaurantTypeTitle: {
-    fontSize: 16,
-    color: colors.darkBlue,
-    fontFamily: 'PoppinsSemi',
-    marginRight: 5,
-  },
+
   toggleButton: {
     width: 55,
     height: 30,
