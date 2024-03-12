@@ -47,7 +47,7 @@ const Packing = () => {
   return (
     <View style={{ backgroundColor: 'white', height: '100%' }}>
       <ScrollView>
-        <BtnGoBack color="white" top={Platform.OS === 'ios' ? 65 : 20} />
+        <BtnGoBack color="white" top={Platform.OS === 'ios' ? 65 : 20} toDate />
         <View
           style={[
             DeliveryStyles.tittle,

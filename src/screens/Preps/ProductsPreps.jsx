@@ -68,6 +68,8 @@ function PrepProductsComp() {
     }, [employeeToken, selectedDate]),
   )
 
+  console.log('prepProducts', JSON.stringify(prepProducts, null, 2));
+
   return (
     <SafeAreaView style={ProductStyles.products}>
       {search ? (
@@ -83,7 +85,7 @@ function PrepProductsComp() {
         </View>
       ) : (
         <View style={{ paddingHorizontal: 43, width: '100%' }}>
-          {/* <BtnGoBack color={colors.darkBlue} /> */}
+          <BtnGoBack color={colors.darkBlue} />
           <View>
             <TouchableOpacity onLongPress={handlePressIn} delayLongPress={500}>
               <Text style={ProductStyles.customerTitlePrep}>
@@ -139,7 +141,7 @@ function PrepProductsComp() {
                                 responsableDetails={responsableDetails}
                                 scrollToEnd={
                                   indexFilter === arrayData.length - 1 &&
-                                  index === array.length - 1
+                                    index === array.length - 1
                                     ? scrollToEnd
                                     : undefined
                                 }
