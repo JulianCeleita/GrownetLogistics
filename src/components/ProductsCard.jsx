@@ -164,7 +164,7 @@ export function ProductsCard({
                       },
                     ]}
                   >
-                    {item.customer_name} - {item.presentation_name}
+                    {item.customer_name}
                   </Text>
                 ) : item.uom != 'Ea' && item.uom != 'Kg' ? (
                   <Text
