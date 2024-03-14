@@ -125,7 +125,7 @@ function PrepProductsComp() {
                       {filteredData.map((product, indexFilter, arrayData) => (
                         <View key={indexFilter}>
                           <Text style={CustomerDayStyles.restaurantTypeTitle}>
-                            {product.product_name} - {product.presentation_name}
+                            {product.product_name} - {product.presentation_name} - {product.quantity}
                           </Text>
                           {product.products.map((e, index, array) => (
                             <View key={index}>
