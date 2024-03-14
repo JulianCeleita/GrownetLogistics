@@ -28,7 +28,7 @@ export const ProductsCardBulkVan = ({
 
   const positiveOffset = 30
   const negativeOffset = -30
-  const quantityPressed = (item.quantity - item.cant_insert).toFixed(1)
+  const quantityPressed = (item.quantity).toFixed(1)
 
   const handlePress = (itemId) => {
     if (isNA) {
@@ -86,7 +86,7 @@ export const ProductsCardBulkVan = ({
     setIsNA(false)
     handleSubmit(item.id, 0, '', 'null')
   }
-  console.log('van: ', item)
+
   const setStateCardDefault = () => {
     setIsPressed(false)
     setLeft(false)

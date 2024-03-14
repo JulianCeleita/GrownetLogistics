@@ -222,9 +222,13 @@ export function ProductsCard({
                             { fontSize: 12, marginTop: -2 },
                           ]}
                         >
-                          {userPacking === null && userLoading != null
-                            ? 'Packed by: ' + userLoading
-                            : 'Packed by: ' + userPacking}
+                          {viewPacking ? (
+                            userPacking === null && userLoading != null
+                              ? 'Packed by: ' + userLoading
+                              : 'Packed by: ' + userPacking
+                          ) : (
+                            'Loaded by: ' + userLoading
+                          )}
                         </Text>
                         <Text
                           style={[
@@ -232,9 +236,13 @@ export function ProductsCard({
                             { fontSize: 12, marginTop: -5 },
                           ]}
                         >
-                          {userPacking === null && userLoading != null
-                            ? dateLoading
-                            : datePacking}
+                          {viewPacking ? (
+                            userPacking === null && userLoading != null
+                              ? dateLoading
+                              : datePacking
+                          ) : (
+                            dateLoading
+                          )}
                         </Text>
                       </View>
                     )}

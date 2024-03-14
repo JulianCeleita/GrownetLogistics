@@ -28,6 +28,7 @@ import useEmployeeStore from '../store/useEmployeeStore'
 import useTokenStore from '../store/useTokenStore'
 import { colors } from '../styles/GlobalStyles'
 import ProductsPreps from '../screens/Preps/ProductsPreps'
+import { Platform } from 'react-native'
 
 const Tab = createBottomTabNavigator()
 const Stack = createNativeStackNavigator()
@@ -135,7 +136,7 @@ function MyTabs() {
           tabBarLabelStyle: {
             fontFamily: 'PoppinsRegular',
             fontSize: 10,
-            marginBottom: 5,
+            marginBottom: Platform.OS === 'android' ? 5 : 0,
             marginTop: -6,
           },
         }}
@@ -163,7 +164,7 @@ function MyTabs() {
           tabBarLabelStyle: {
             fontFamily: 'PoppinsRegular',
             fontSize: 10,
-            marginBottom: 5,
+            marginBottom: Platform.OS === 'android' ? 5 : 0,
             marginTop: -6,
           },
         }}
@@ -195,7 +196,7 @@ function MyTabs() {
           tabBarLabelStyle: {
             fontFamily: 'PoppinsRegular',
             fontSize: 10,
-            marginBottom: 5,
+            marginBottom: Platform.OS === 'android' ? 5 : 0,
             marginTop: -6,
           },
         }}
@@ -227,7 +228,7 @@ function MyTabs() {
           tabBarLabelStyle: {
             fontFamily: 'PoppinsRegular',
             fontSize: 10,
-            marginBottom: 5,
+            marginBottom: Platform.OS === 'android' ? 5 : 0,
             marginTop: -6,
           },
         }}
@@ -259,7 +260,7 @@ function MyTabs() {
           tabBarLabelStyle: {
             fontFamily: 'PoppinsRegular',
             fontSize: 10,
-            marginBottom: 5,
+            marginBottom: Platform.OS === 'android' ? 5 : 0,
             marginTop: -6,
           },
         }}
@@ -279,7 +280,7 @@ export default function Navigation() {
     PoppinsSemi: Poppins_600SemiBold,
     PoppinsItalic: Poppins_300Light_Italic,
   })
-  useEffect(() => {}, [fontsLoaded])
+  useEffect(() => { }, [fontsLoaded])
 
   if (!fontsLoaded) {
     return null
