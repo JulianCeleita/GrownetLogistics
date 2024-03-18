@@ -243,6 +243,12 @@ export const ProductsCardBulkVan = ({
     colorStatus = colors.green
   }
 
+  // if (item.quantity === item.quantity_defitive) {
+  //   message = null
+  // }
+
+  console.log(JSON.stringify(item, null, 2));
+
   return (
     <View style={{ alignSelf: 'center' }}>
       <TouchableOpacity
