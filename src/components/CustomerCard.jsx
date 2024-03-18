@@ -81,11 +81,14 @@ const CustomerCard = ({ customer, loadingCard, prepsCard }) => {
   const strokeDashoffset =
     circumference - (roundedPercentage / 100) * circumference
 
+  const isDisabled =
+    customer.state_order === 'Printed' || customer.state_order === 'Delivered'
+
   return (
     <View>
       <TouchableOpacity
         style={[CustomerDayStyles.card, GlobalStyles.boxShadow]}
-        onPress={handleNavigateToProducts}
+        onPress={isDisabled ? null : handleNavigateToProducts}
       >
         <View style={CustomerDayStyles.cardsLayout}>
           <Svg height={radius * 2} width={radius * 2}>
