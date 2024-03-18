@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native'
-import React from 'react'
+import React, { useState } from 'react'
 import { Text, TouchableOpacity, View } from 'react-native'
 import Svg, { Circle, Text as SvgText } from 'react-native-svg'
 import useLoadingStore from '../store/useLoadingStore'
@@ -8,11 +8,13 @@ import usePercentageStore from '../store/usePercentageStore'
 import { CustomerDayStyles } from '../styles/CustomerDayStyles'
 import { GlobalStyles, colors } from '../styles/GlobalStyles'
 import { Ionicons } from '@expo/vector-icons'
+import CustomAlert from './CustomAlert'
 
 const CustomerCard = ({ customer, loadingCard, prepsCard }) => {
   const { setSelectedOrder } = usePackingStore()
   const { setSelectedOrderL } = useLoadingStore()
   const { percentagesP, percentagesL } = usePercentageStore()
+  const [alertVisible, setAlertVisible] = useState(false)
 
   const navigation = useNavigation()
   const radius = 33
@@ -89,6 +91,11 @@ const CustomerCard = ({ customer, loadingCard, prepsCard }) => {
       <TouchableOpacity
         style={[CustomerDayStyles.card, GlobalStyles.boxShadow]}
         onPress={isDisabled ? null : handleNavigateToProducts}
+        onLongPress={() => {
+          if (isDisabled) {
+            setAlertVisible(true)
+          }
+        }}
       >
         <View style={CustomerDayStyles.cardsLayout}>
           <Svg height={radius * 2} width={radius * 2}>
@@ -160,6 +167,12 @@ const CustomerCard = ({ customer, loadingCard, prepsCard }) => {
           </Text>
         </View>
       </TouchableOpacity>
+      <CustomAlert
+        visible={alertVisible}
+        onClose={() => setAlertVisible(false)}
+        title="Order cannot be manipulated"
+        message="The order is already Printed or Delivered."
+      />
     </View>
   )
 }
