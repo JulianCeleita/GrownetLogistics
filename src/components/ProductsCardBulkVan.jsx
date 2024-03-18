@@ -28,7 +28,7 @@ export const ProductsCardBulkVan = ({
 
   const positiveOffset = 30
   const negativeOffset = -30
-  const quantityPressed = (item.quantity).toFixed(1)
+  const quantityPressed = item.quantity % 1 !== 0 ? item.quantity.toFixed(1) : item.quantity
 
   const handlePress = (itemId) => {
     if (isNA) {
@@ -242,6 +242,12 @@ export const ProductsCardBulkVan = ({
     overStatus = true
     colorStatus = colors.green
   }
+
+  // if (item.quantity === item.quantity_defitive) {
+  //   message = null
+  // }
+
+  console.log(JSON.stringify(item, null, 2));
 
   return (
     <View style={{ alignSelf: 'center' }}>
