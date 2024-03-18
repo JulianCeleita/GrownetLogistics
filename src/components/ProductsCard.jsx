@@ -92,7 +92,7 @@ export function ProductsCard({
 
   const handlePressAction = () => {
     if (item.state_definitive === 'N/A') {
-      return () => { }
+      return () => {}
     }
     if (!viewPacking && !prepCard) {
       if (item.state_packing !== 'ND' && item.state_packing !== 'SHORT') {
@@ -122,7 +122,7 @@ export function ProductsCard({
       item.state_definitive === 'N/A' ||
       (viewPacking && item.state_loading !== null)
     ) {
-      return () => { }
+      return () => {}
     } else {
       return handleGestureEvent(e, item.detail_order_id || item.id)
     }
@@ -135,6 +135,18 @@ export function ProductsCard({
       }
     }
   }, [addQuantity, selectedProduct])
+
+  const formatDateToShow = (dateString) => {
+    if (!dateString) return 'Loading...'
+
+    const parts = dateString.split('-').map((part) => parseInt(part, 10))
+    const utcDate = new Date(Date.UTC(parts[0], parts[1] - 1, parts[2]))
+
+    const day = String(utcDate.getUTCDate()).padStart(2, '0')
+    const month = String(utcDate.getUTCMonth() + 1).padStart(2, '0')
+    const year = String(utcDate.getUTCFullYear()).slice(-2)
+    return `${day}/${month}/${year}`
+  }
 
   return (
     <View
@@ -222,13 +234,11 @@ export function ProductsCard({
                             { fontSize: 12, marginTop: -2 },
                           ]}
                         >
-                          {viewPacking ? (
-                            userPacking === null && userLoading != null
+                          {viewPacking
+                            ? userPacking === null && userLoading != null
                               ? 'Packed by: ' + userLoading
                               : 'Packed by: ' + userPacking
-                          ) : (
-                            'Loaded by: ' + userLoading
-                          )}
+                            : 'Loaded by: ' + userLoading}
                         </Text>
                         <Text
                           style={[
@@ -236,13 +246,11 @@ export function ProductsCard({
                             { fontSize: 12, marginTop: -5 },
                           ]}
                         >
-                          {viewPacking ? (
-                            userPacking === null && userLoading != null
-                              ? dateLoading
-                              : datePacking
-                          ) : (
-                            dateLoading
-                          )}
+                          {viewPacking
+                            ? userPacking === null && userLoading != null
+                              ? formatDateToShow(dateLoading)
+                              : formatDateToShow(datePacking)
+                            : formatDateToShow(dateLoading)}
                         </Text>
                       </View>
                     )}
@@ -268,7 +276,7 @@ export function ProductsCard({
             </View>
 
             {addQuantity &&
-              selectedProduct === (prepCard ? item.detail_order_id : item.id) ? (
+            selectedProduct === (prepCard ? item.detail_order_id : item.id) ? (
               <Animated.View
                 style={{
                   ...ProductStyles.details,
@@ -327,7 +335,7 @@ export function ProductsCard({
                       if (
                         addQuantity &&
                         selectedProduct ===
-                        (prepCard ? item.detail_order_id : item.id)
+                          (prepCard ? item.detail_order_id : item.id)
                       ) {
                         if (quantity === item.quantity) {
                           handlePress([item.detail_order_id || item.id])
@@ -365,7 +373,7 @@ export function ProductsCard({
       </TouchableOpacity>
 
       {showModal &&
-        selectedProduct === (prepCard ? item.detail_order_id : item.id) ? (
+      selectedProduct === (prepCard ? item.detail_order_id : item.id) ? (
         <ModalProduct
           showModal={showModal}
           setShowModal={setShowModal}
@@ -375,7 +383,7 @@ export function ProductsCard({
         />
       ) : null}
       {showModal2 &&
-        selectedProduct === (prepCard ? item.detail_order_id : item.id) ? (
+      selectedProduct === (prepCard ? item.detail_order_id : item.id) ? (
         <ModalProduct
           showModal={showModal2}
           setShowModal={setShowModal2}
