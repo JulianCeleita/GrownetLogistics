@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native'
-import React from 'react'
+import React, { useState } from 'react'
 import { Text, TouchableOpacity, View } from 'react-native'
 import Svg, { Circle, Text as SvgText } from 'react-native-svg'
 import useLoadingStore from '../store/useLoadingStore'
@@ -20,6 +20,9 @@ const CustomerCard = ({ customer, loadingCard, prepsCard }) => {
   const circumference = 2 * Math.PI * radius
   let roundedPercentage = 0
 
+  const isDisabled =
+    customer.state_order === 'Printed' || customer.state_order === 'Delivered'
+
   const handleNavigateToProducts = () => {
     if (loadingCard) {
       setSelectedOrderL(customer.orders_reference)
@@ -27,6 +30,7 @@ const CustomerCard = ({ customer, loadingCard, prepsCard }) => {
         selectedCustomer: customer.accountNumber,
         accountName: customer.accountName,
         orderNumber: customer.orders_reference,
+        isDisabled: isDisabled,
       })
     } else if (prepsCard) {
       setSelectedOrder(customer.orders_reference)
@@ -34,6 +38,7 @@ const CustomerCard = ({ customer, loadingCard, prepsCard }) => {
         selectedCustomer: customer.accountNumber,
         accountName: customer.accountName,
         orderNumber: customer.orders_reference,
+        isDisabled: isDisabled,
       })
     } else {
       setSelectedOrder(customer.orders_reference)
@@ -41,6 +46,7 @@ const CustomerCard = ({ customer, loadingCard, prepsCard }) => {
         selectedCustomer: customer.accountNumber,
         accountName: customer.accountName,
         orderNumber: customer.orders_reference,
+        isDisabled: isDisabled,
       })
     }
   }

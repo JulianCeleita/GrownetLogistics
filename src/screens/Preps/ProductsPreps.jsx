@@ -126,10 +126,12 @@ function PrepProductsComp() {
                             <Text style={CustomerDayStyles.restaurantTypeTitle}>
                               {product.product_name} -
                             </Text>
-                            <Text style={[
-                              CustomerDayStyles.restaurantTypeTitle,
-                              { color: colors.gray, fontSize: 15 },
-                            ]}>
+                            <Text
+                              style={[
+                                CustomerDayStyles.restaurantTypeTitle,
+                                { color: colors.gray, fontSize: 15 },
+                              ]}
+                            >
                               {product.presentation_name}
                             </Text>
                             <Text style={CustomerDayStyles.restaurantTypeTitle}>-</Text>
