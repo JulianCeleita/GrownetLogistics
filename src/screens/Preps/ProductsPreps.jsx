@@ -124,7 +124,7 @@ function PrepProductsComp() {
                     <View>
                       {filteredData.map((product, indexFilter, arrayData) => (
                         <View key={indexFilter}>
-                          <View style={{ flexDirection: 'row' }}>
+                          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                             <Text style={CustomerDayStyles.restaurantTypeTitle}>
                               {product.product_name} -
                             </Text>
