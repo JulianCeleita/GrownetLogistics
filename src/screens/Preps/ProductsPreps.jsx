@@ -68,8 +68,6 @@ function PrepProductsComp() {
     }, [employeeToken, selectedDate]),
   )
 
-  console.log('prepProducts', JSON.stringify(prepProducts, null, 2));
-
   return (
     <SafeAreaView style={ProductStyles.products}>
       {search ? (
