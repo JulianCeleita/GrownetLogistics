@@ -124,12 +124,7 @@ function PrepProductsComp() {
                     <View>
                       {filteredData.map((product, indexFilter, arrayData) => (
                         <View key={indexFilter}>
-                          <View
-                            style={{
-                              flexDirection: 'row',
-                              justifyContent: 'space-between',
-                            }}
-                          >
+                          <View style={{ flexDirection: 'row', marginTop: 12 }}>
                             <Text style={CustomerDayStyles.restaurantTypeTitle}>
                               {product.product_name} -
                             </Text>
@@ -141,18 +136,11 @@ function PrepProductsComp() {
                             >
                               {product.presentation_name}
                             </Text>
-                            <Text style={CustomerDayStyles.restaurantTypeTitle}>
-                              -
-                            </Text>
-                            <Text
-                              style={[
-                                CustomerDayStyles.restaurantTypeTitle,
-                                {
-                                  color: colors.bluePrimary,
-                                  fontWeight: 'bold',
-                                },
-                              ]}
-                            >
+                            <Text style={CustomerDayStyles.restaurantTypeTitle}>-</Text>
+                            <Text style={[
+                              CustomerDayStyles.restaurantTypeTitle,
+                              { color: colors.bluePrimary, fontWeight: '900' },
+                            ]}>
                               {product.quantity}
                             </Text>
                           </View>
