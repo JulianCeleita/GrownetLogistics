@@ -169,7 +169,9 @@ export function ProductsCard({
       >
         <PanGestureHandler
           enabled={!addQuantity}
-          onGestureEvent={isDisabled ? null : handleGestureEventWrapper}
+          onGestureEvent={
+            isDisabled ? () => setAlertVisible(true) : handleGestureEventWrapper
+          }
           activeOffsetX={[negativeOffset, positiveOffset]}
         >
           <View>
