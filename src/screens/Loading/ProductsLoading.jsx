@@ -160,6 +160,7 @@ function ProductsLoading({ route }) {
                                   ? scrollToEnd
                                   : undefined
                               }
+                              isDisabled={route.params.isDisabled}
                             />
                           ),
                         )}

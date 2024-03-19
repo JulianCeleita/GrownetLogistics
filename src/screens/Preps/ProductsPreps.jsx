@@ -68,7 +68,7 @@ function PrepProductsComp() {
     }, [employeeToken, selectedDate]),
   )
 
-  console.log('prepProducts', JSON.stringify(prepProducts, null, 2));
+  console.log('prepProducts', JSON.stringify(prepProducts, null, 2))
 
   return (
     <SafeAreaView style={ProductStyles.products}>
@@ -128,10 +128,12 @@ function PrepProductsComp() {
                             <Text style={CustomerDayStyles.restaurantTypeTitle}>
                               {product.product_name} -
                             </Text>
-                            <Text style={[
-                              CustomerDayStyles.restaurantTypeTitle,
-                              { color: colors.gray, fontSize: 15 },
-                            ]}>
+                            <Text
+                              style={[
+                                CustomerDayStyles.restaurantTypeTitle,
+                                { color: colors.gray, fontSize: 15 },
+                              ]}
+                            >
                               {product.presentation_name}
                             </Text>
                             <Text style={CustomerDayStyles.restaurantTypeTitle}>-</Text>
@@ -156,7 +158,7 @@ function PrepProductsComp() {
                                 responsableDetails={responsableDetails}
                                 scrollToEnd={
                                   indexFilter === arrayData.length - 1 &&
-                                    index === array.length - 1
+                                  index === array.length - 1
                                     ? scrollToEnd
                                     : undefined
                                 }
