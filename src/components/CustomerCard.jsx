@@ -8,19 +8,20 @@ import usePercentageStore from '../store/usePercentageStore'
 import { CustomerDayStyles } from '../styles/CustomerDayStyles'
 import { GlobalStyles, colors } from '../styles/GlobalStyles'
 import { Ionicons } from '@expo/vector-icons'
-import CustomAlert from './CustomAlert'
 
 const CustomerCard = ({ customer, loadingCard, prepsCard }) => {
   const { setSelectedOrder } = usePackingStore()
   const { setSelectedOrderL } = useLoadingStore()
   const { percentagesP, percentagesL } = usePercentageStore()
-  const [alertVisible, setAlertVisible] = useState(false)
 
   const navigation = useNavigation()
   const radius = 33
   const strokeWidth = 10
   const circumference = 2 * Math.PI * radius
   let roundedPercentage = 0
+
+  const isDisabled =
+    customer.state_order === 'Printed' || customer.state_order === 'Delivered'
 
   const handleNavigateToProducts = () => {
     if (loadingCard) {
@@ -29,6 +30,7 @@ const CustomerCard = ({ customer, loadingCard, prepsCard }) => {
         selectedCustomer: customer.accountNumber,
         accountName: customer.accountName,
         orderNumber: customer.orders_reference,
+        isDisabled: isDisabled,
       })
     } else if (prepsCard) {
       setSelectedOrder(customer.orders_reference)
@@ -36,6 +38,7 @@ const CustomerCard = ({ customer, loadingCard, prepsCard }) => {
         selectedCustomer: customer.accountNumber,
         accountName: customer.accountName,
         orderNumber: customer.orders_reference,
+        isDisabled: isDisabled,
       })
     } else {
       setSelectedOrder(customer.orders_reference)
@@ -43,6 +46,7 @@ const CustomerCard = ({ customer, loadingCard, prepsCard }) => {
         selectedCustomer: customer.accountNumber,
         accountName: customer.accountName,
         orderNumber: customer.orders_reference,
+        isDisabled: isDisabled,
       })
     }
   }
@@ -83,19 +87,11 @@ const CustomerCard = ({ customer, loadingCard, prepsCard }) => {
   const strokeDashoffset =
     circumference - (roundedPercentage / 100) * circumference
 
-  const isDisabled =
-    customer.state_order === 'Printed' || customer.state_order === 'Delivered'
-
   return (
     <View>
       <TouchableOpacity
         style={[CustomerDayStyles.card, GlobalStyles.boxShadow]}
-        onPress={isDisabled ? null : handleNavigateToProducts}
-        onLongPress={() => {
-          if (isDisabled) {
-            setAlertVisible(true)
-          }
-        }}
+        onPress={handleNavigateToProducts}
       >
         <View style={CustomerDayStyles.cardsLayout}>
           <Svg height={radius * 2} width={radius * 2}>
@@ -167,12 +163,6 @@ const CustomerCard = ({ customer, loadingCard, prepsCard }) => {
           </Text>
         </View>
       </TouchableOpacity>
-      <CustomAlert
-        visible={alertVisible}
-        onClose={() => setAlertVisible(false)}
-        title="Order cannot be manipulated"
-        message="The order is already Printed or Delivered."
-      />
     </View>
   )
 }

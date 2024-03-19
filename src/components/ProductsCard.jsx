@@ -8,6 +8,7 @@ import { ProductStyles } from '../styles/ProductStyles'
 import { CheckQuantity } from './CheckQuantity'
 import { CheckStatusCard } from './CheckStatusCard'
 import { Animated } from 'react-native'
+import CustomAlert from './CustomAlert'
 
 export function ProductsCard({
   item,
@@ -26,6 +27,7 @@ export function ProductsCard({
   dateLoading,
   scrollToEnd,
   prepCard,
+  isDisabled,
 }) {
   const positiveOffset = 30
   const negativeOffset = -30
@@ -48,6 +50,7 @@ export function ProductsCard({
     setSelectedProduct,
   } = useCardEvents(item.quantity, products, setProducts, error, prepCard)
   const [fadeAnim] = useState(new Animated.Value(0))
+  const [alertVisible, setAlertVisible] = useState(false)
 
   const fadeIn = () => {
     Animated.timing(fadeAnim, {
@@ -156,12 +159,17 @@ export function ProductsCard({
       key={prepCard ? item.detail_order_id : item.id}
     >
       <TouchableOpacity
-        onPress={handlePressAction}
+        onPress={isDisabled ? () => setAlertVisible(true) : handlePressAction}
         disabled={viewPacking && item.state_loading !== null}
+        onLongPress={() => {
+          if (isDisabled) {
+            setAlertVisible(true)
+          }
+        }}
       >
         <PanGestureHandler
           enabled={!addQuantity}
-          onGestureEvent={handleGestureEventWrapper}
+          onGestureEvent={isDisabled ? null : handleGestureEventWrapper}
           activeOffsetX={[negativeOffset, positiveOffset]}
         >
           <View>
@@ -392,6 +400,12 @@ export function ProductsCard({
           text={'Are you sure to confirm that all products have been packed?'}
         />
       ) : null}
+      <CustomAlert
+        visible={alertVisible}
+        onClose={() => setAlertVisible(false)}
+        title="Order cannot be manipulated"
+        message="The order is already Printed or Delivered."
+      />
     </View>
   )
 }

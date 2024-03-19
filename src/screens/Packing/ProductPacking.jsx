@@ -160,6 +160,7 @@ function ProductsPacking({ route }) {
                                     ? scrollToEnd
                                     : undefined
                                 }
+                                isDisabled={route.params.isDisabled}
                               />
                             </View>
                           ),

@@ -65,12 +65,14 @@ const styles = StyleSheet.create({
   modalText: {
     marginBottom: 15,
     textAlign: 'center',
+    color: colors.darkBlue,
   },
   modalText1: {
     marginBottom: 15,
     textAlign: 'center',
     fontWeight: 'bold',
     fontSize: 20,
+    color: colors.darkBlue,
   },
 })
 
