@@ -43,7 +43,6 @@ export const CustomerDayStyles = StyleSheet.create({
     justifyContent: 'center',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    paddingBottom: 20,
   },
   tittleText: {
     fontSize: 24,

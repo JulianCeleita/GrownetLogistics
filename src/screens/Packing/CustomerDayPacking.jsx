@@ -17,21 +17,27 @@ import ModalDebugger from '../../components/ModalDebugger'
 
 function CustomerDayPacking({ route }) {
   const { nameRoute } = route.params
-  const {
-    ordersByDate,
-    setOrdersByDate,
-    setOrdersByDateClean,
-    routesByDate
-  } = useOrdersByDate()
+  const { ordersByDate, setOrdersByDate, setOrdersByDateClean, routesByDate } =
+    useOrdersByDate()
   const { employeeToken } = useEmployeeStore()
-  const { setPercentagesP, setFetchPercentagesPacking, setPercentagesL, setFetchPercentagesLoading } = usePercentageStore()
+  const {
+    setPercentagesP,
+    setFetchPercentagesPacking,
+    setPercentagesL,
+    setFetchPercentagesLoading,
+  } = usePercentageStore()
   const [searchPhrase, setSearchPhrase] = useState('')
   const [search, setSearch] = useState(false)
   const [showModalDebugger, setShowModalDebugger] = useState(false)
 
   const filteredData = ordersByDate.filter((order) => {
-    return order.accountName.toLowerCase().includes(searchPhrase.toLowerCase()) ||
-      order.orders_reference.toString().trim().includes(searchPhrase.toString().trim())
+    return (
+      order.accountName.toLowerCase().includes(searchPhrase.toLowerCase()) ||
+      order.orders_reference
+        .toString()
+        .trim()
+        .includes(searchPhrase.toString().trim())
+    )
   })
 
   const handleSearch = () => {
@@ -72,9 +78,7 @@ function CustomerDayPacking({ route }) {
           ) : (
             <View style={CustomerDayStyles.title2}>
               <BtnGoBack color={colors.darkBlue} />
-              <Text style={CustomerDayStyles.customerTitle}>
-                {nameRoute}
-              </Text>
+              <Text style={CustomerDayStyles.customerTitle}>{nameRoute}</Text>
               <TouchableOpacity
                 onPress={handleSearch}
                 onLongPress={() => setShowModalDebugger(true)}
@@ -95,7 +99,12 @@ function CustomerDayPacking({ route }) {
           <View style={CustomerDayStyles.cardsCustomers}>
             {filteredData.length > 0 ? (
               filteredData.map((order, index) => (
-                <View key={index}>
+                <View
+                  key={index}
+                  style={{
+                    paddingBottom: index === filteredData.length - 1 ? 20 : 0,
+                  }}
+                >
                   <CustomerCard customer={order} />
                 </View>
               ))
